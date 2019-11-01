@@ -1,0 +1,341 @@
+# vim: filetype=i3
+
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod4
+set $term st
+set $shutdown sudo -A shutdown -h now
+set $reboot sudo -A reboot
+set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
+
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+new_window pixel 1
+new_float normal
+# new_float pixel 0
+
+
+bindsym $mod+y border pixel 5
+
+
+# Hide borders
+hide_edge_borders smart
+
+# i3-gaps
+gaps inner 10 
+gaps outer -4
+smart_gaps on
+
+# Font for window titles.
+# font pango: SauceCodePro Nerd Font Black 9
+font pango:Roboto, Light 12
+title_align center
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+
+#smart_gaps on
+#for_window [class="^.*"] border pixel 0px
+#for_window [title="^.*"] border pixel 0px
+smart_borders on
+
+# start a terminal
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec termite -d "$(xcwd)"
+
+# bindsym $mod+z exec pcmanfm
+bindsym $mod+z exec nautilus
+bindsym $mod+x exec code
+# bindsym $mod+c exec google-chrome-stable
+bindsym $mod+c exec chromium
+bindsym $mod+v exec persepolis
+bindsym $mod+b exec spotify
+bindsym $mod+n exec emacsclient -a "" -c
+
+bindsym $mod+m exec rhythmbox-client
+
+bindsym $mod+p exec --no-startup-id sh ~/.i3/lock.sh
+bindsym Print exec "scrot -e 'mv $f ~/Pictures/Screenshots'"
+bindsym $mod+Print exec "scrot -ue 'mv $f ~/Pictures/Screenshots'"
+
+bindsym $mod+Shift+i exec "nvim-gtk ~/.config/i3/config"
+
+
+set $mode_launcher Launch: [r]anger [h]top
+bindsym $mod+t mode "$mode_launcher"
+
+mode "$mode_launcher" {
+    bindsym r exec $term -e ranger
+    bindsym h exec $term -e htop
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+bindsym $mod+Shift+x exec --no-startup-id [ $(echo -e "No\nYes" | dmenu -i -p "Shutdown computer?") == "Yes" ] && $shutdown
+
+# kill focused window
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+
+# Start rofi
+bindsym $mod+d exec rofi -show drun
+# bindsym $mod+d exec dmenu_run -i  -nb '#292d3e' -nf '#bbc5ff' -sb '#82AAFF' -sf '#292d3e' -fn 'UbuntuMono Nerd Font:bold:pixelsize=14'
+bindsym $mod+g exec ~/.dmenu/dmenu-edit-configs.sh
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+# bindsym $mod+semicolon split h
+
+# split in vertical orientation
+bindsym $mod+i split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+
+# Switch to workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+
+
+
+# Specific window configuration
+# for_window    [class=".*"]                      sticky disable
+# for_window    [window_role="pop-up"]            floating enable
+for_window    [class="code-oss"]                move container to workspace number 1
+for_window    [class="Google-chrome"]           move container to workspace number 3, title_format "Google Chrome"
+for_window    [class="Chromium"]                move container to workspace number 3, title_format "Chromium"
+for_window    [class="Firefox"]                 move container to workspace number 3, title_format "Firefox"
+for_window    [class="Telegram"]                move container to workspace number 3
+for_window    [class="Spotify"]                 move container to workspace number 7
+for_window    [class="Steam"]                   move container to workspace number 5
+for_window    [class="Pcmanfm"]                 move container to workspace number 5
+for_window    [class="persepolis"]              move container to workspace number 6
+for_window    [class="Rhythmbox"]               move container to workspace number 9
+for_window    [class="Rofi"]                    floating enable
+# for_window    [class="Pinentry"]              floating enable
+# for_window    [class="copyq"]                 floating enable
+# for_window    [class="Peek"]                  floating enable
+# for_window    [class="Wire"]                  move container to $workspace3
+# for_window [class="xfreerdp"] move container to $workspace9
+
+# Always open some programs on specified workspace
+# assign [class="Gnome-terminal"] workspace number 1
+#
+# https://github.com/ValveSoftware/steam-for-linux/issues/1040
+for_window [class="^Steam$" title="^Friends$"] floating enable
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
+
+
+# Audio volume controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 1%+ && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 1%- && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse set Master toggle && pkill -RTMIN+10 i3blocks
+bindsym $mod+shift+n exec --no-startup-id amixer -q set Master 1%+ && pkill -RTMIN+10 i3blocks
+bindsym $mod+shift+b exec --no-startup-id amixer -q set Master 1%- && pkill -RTMIN+10 i3blocks
+bindsym $mod+shift+m exec --no-startup-id amixer -q -D pulse set Master toggle && pkill -RTMIN+10 i3blocks
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 && pkill -RTMIN+12 i3blocks
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 && pkill -RTMIN+12 i3blocks
+
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 4 px or 4 ppt
+        bindsym j resize grow height 4 px or 4 ppt
+        bindsym k resize shrink height 4 px or 4 ppt
+        bindsym l resize grow width 4 px or 4 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Set shut down, restart and locking features
+bindsym $mod+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
+#Colors
+set $back       #383C4A
+set $primary    #D0D0D0
+set $secondary  #0FE0C9
+set $black      #282A2E
+set $grey       #303030
+set $white      #C5C8C6
+set $elegant    #00002c00
+
+# RGBA
+set $cyan       #4ec2f799
+set $acqua      #00708999
+set $wine       #72003e99
+set $magenta    #af005f99
+set $silver     #e4e4e499
+set $toxic      #8EC00099
+# set $elegant    #00002c00
+set $elegant    #1d1f21
+
+# Set some nice colors      border      background  text        indicator
+client.focused              $grey       $grey       $elegant    $cyan
+client.unfocused            $elegant    $elegant    $cyan       $elegant
+client.focused_inactive     $acqua      $acqua      $silver     $acqua
+client.urgent               $magenta    $magenta    $silver     $magenta
+client.placeholder          $magenta    $magenta    $silver     $magenta
+
+# class                 border   backgr.  text    indicator child_border
+# client.focused          $primary $primary $black  #2e9ef4   $primary
+# client.focused_inactive $black   $primary $black  #484e50   $black
+# client.unfocused        $black   $back    $white  #292d2e   $black
+# client.urgent           #2f343a  #900000  $white  #900000   #900000
+# client.placeholder      #000000  #0c0c0c  $white  #000000   #0c0c0c
+# client.background $white
+
+bar {
+    status_command i3blocks
+    i3bar_command i3bar
+    strip_workspace_numbers no
+    #output eDP-1-1
+    # tray_output eDP-1-1
+    tray_output primary
+    mode dock
+    position top
+    height 24
+    font pango: SauceCodePro Nerd Font Black 10
+    colors {
+        background $elegant
+        separator $primary
+        statusline $primary
+        focused_workspace $primary $primary $back
+        active_workspace $elegant $elegant $primary
+        inactive_workspace $elegant $elegant $primary
+        urgent_workspace #CC241D #CC241D #EBDBB2
+    }
+}
+
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Startup programs
+# exec_always --no-startup-id feh --bg-scale ~/.wallpapers/village.jpg # Wallpaper
+# exec_always --no-startup-id feh --bg-scale ~/.wallpapers/wall1.png # Wallpaper
+exec_always --no-startup-id feh --bg-scale ~/.wallpapers/01.jpg
+# exec_always --no-startup-id hsetroot -solid "#282a36"
+exec_always --no-startup-id python3 ~/.i3/i3-autoname-workspaces.py
+exec_always --no-startup-id sh ~/.i3/keyboard.sh
+# exec_always --no-startup-id conky -c ~/.i3/bin/conky-left
+exec --no-startup-id volumeicon
+
+exec --no-startup-id fix_xcursor
+
+# exec --no-startup-id pulseaudio
+# exec --no-startup-id pulseaudio -k ; pulseaudio --start
+# exec --no-startup-id compton --config $HOME/.config/compton.conf
+exec --no-startup-id clipit
+# exec --no-startup-id emacs --daemon
+exec --no-startup-id xbindkeys
+exec --no-startup-id nm-applet
+exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Tapping Enabled' 1
+exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Natural Scrolling Enabled' 1

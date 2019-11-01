@@ -1,1 +1,25 @@
-/home/mahdi/dotfiles/zsh/zsh_aliases
+alias updateArch="sudo pacman -Syu"
+alias v=nvim
+alias ng=nvim-gtk
+alias updateMirror="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
+#alias ls="colorls"
+alias lc='colorls -lA --sd'
+alias l='colorls'
+alias torConfig="sudo nvim /etc/tor/torrc"
+alias torRestart="sudo systemctl restart tor.service"
+alias wmClass="xprop WM_CLASS"
+alias e="exit"
+alias c="clear"
+alias removeFilesSpaces="for f in *\ *; do mv "$f" "${f// /_}"; done"
+alias art="php artisan"
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+
+# fo [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fo() {
+  local files
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}

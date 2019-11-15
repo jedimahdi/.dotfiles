@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/mahdi/apps/vue/food-app/src/components'
+let g:netrw_dirhist_6='/home/mahdi/.config/fontconfig/conf.d'
+let g:netrw_dirhist_5='/home/mahdi/apps/unity/project/TileVania/Assets/Scripts'
+let g:netrw_dirhist_4='/home/mahdi/.dmenu'
+let g:netrw_dirhist_3='/home/mahdi/apps/cpp/project7/movie-network/server'
+let g:netrw_dirhist_2='/home/mahdi/apps/config/jarvis'
+let g:netrw_dirhist_1='/home/mahdi/apps/config/jarvis/install'

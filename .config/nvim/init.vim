@@ -1,366 +1,349 @@
-" ~~~ Plugins ~~~
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'shougo/deoplete.nvim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-commentary'
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set exrc  										" Allows project specific .vimrc
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" Themes
+Plug 'mhartington/oceanic-next'
+Plug 'kaicataldo/material.vim'
+Plug 'ryanoasis/vim-devicons'
+
+" Language Syntax Support
+Plug 'pangloss/vim-javascript' "JS highlighting
+Plug 'mxw/vim-jsx' "JSX syntax highlighting
+Plug 'posva/vim-vue'
+
+" Tools
+Plug 'mitermayer/vim-prettier'
+" Plug 'jiangmiao/auto-pairs' "Autocomplete brackets. 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive' "Git tools
 Plug 'tpope/vim-surround'
-Plug 'lambdalisue/suda.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'machakann/vim-highlightedyank'
-Plug 'vimwiki/vimwiki'
-Plug 'tpope/vim-markdown'
-Plug 'nelstrom/vim-markdown-folding'
 Plug 'tpope/vim-vinegar'
+Plug 'farmergreg/vim-lastplace'                             " Restore cursor position
+Plug 'terryma/vim-multiple-cursors'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'} "autocompletion
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'} "Nerdtree
+
+
+" Plug 'ervandew/supertab'
+
+"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+Plug 'christoomey/vim-tmux-navigator'
+
+"Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+
+" Initialize plugin system
 call plug#end()
 
-" Highlight the line on which the cursor lives.
-set nocursorline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Core Functionality (general settings, keyboard shortcuts)
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" deal with swps and backups here
+" create backups
+set backup
+" tell vim where to put its backup files
+set backupdir=~/tmp/vim
+" tell vim where to put swap files
+set dir=~/tmp/vim
+set timeoutlen=1000        " speed vim up
+set ttimeoutlen=0          " https://stackoverflow.com/questions/37644682/why-is-vim-so-slow/37645334
+set ttyfast                " Rendering
+set tw=500
+" Disable Autocommenting
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" map jk to esc
+" :imap jk <Esc>
 
-" Always show at least one line above/below the cursor.
-set scrolloff=1
-" Always show at least one line left/right of the cursor.
-set sidescrolloff=5
+" save with zz
+" nnoremap zz :update<cr>
 
-" Relative line numbers
-set number relativenumber
+" set clipboard to easily copy from vim and paste into OSx
+set clipboard=unnamed
 
-" Highlight matching pairs of brackets. Use the '%' character to jump between them.
-set matchpairs+=<:>
+" remap Ctrl-p for finding files run Fzf :Files command
+nnoremap <C-p> :Files<Cr>
 
-" Display different types of white spaces.
-set list
-set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 
-" Use system clipboard
-set clipboard=unnamedplus
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDTree 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Changes NerdTree Toggle to Ctrl + n
+map <C-n> :NERDTreeToggle<CR> 
+" autocmd VimEnter * NERDTree "Toggles Nerdtree on vim open
+let NERDTreeQuitOnOpen = 1 "closes NerdTree when opening a file
 
-" Remove timeout for partially typed commands
-set notimeout
+let g:NERDTreeGitStatusWithFlags = 1
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"let g:NERDTreeGitStatusNodeColorization = 1
+"let g:NERDTreeColorMapCustom = {
+    "\ "Staged"    : "#0ee375",  
+    "\ "Modified"  : "#d9bf91",  
+    "\ "Renamed"   : "#51C9FC",  
+    "\ "Untracked" : "#FCE77C",  
+    "\ "Unmerged"  : "#FC51E6",  
+    "\ "Dirty"     : "#FFBD61",  
+    "\ "Clean"     : "#87939A",   
+    "\ "Ignored"   : "#808080"   
+    "\ }                         
 
-" F keys
-" Quick write session with F2
-map <F2> :mksession! ~/.vim_session<cr>
-" And load session with F3
-map <F3> :source ~/.vim_session<cr>
+let g:NERDTreeIgnore = ['^node_modules$']
 
-" Fix indentation
-map <F7> gg=G<C-o><C-o>
-" Toggle auto change directory
-map <F8> :set autochdir! autochdir?<CR>
-
-" Toggle vertical line
-set colorcolumn=
-fun! ToggleCC()
-  if &cc == ''
-    " set cc=1,4,21
-    set cc=80
-  else
-    set cc=
-  endif
-endfun
-nnoremap <silent> <F9> :call ToggleCC()<CR>
-
-" Beginning and end of line
-imap <C-a> <home>
-imap <C-e> <end>
-cmap <C-a> <home>
-cmap <C-e> <end>
-
-" Control-S Save
-nmap <C-S> :w<cr>
-vmap <C-S> <esc>:w<cr>
-imap <C-S> <esc>:w<cr>
-" Save + back into insert
-" imap <C-S> <esc>:w<cr>a
-
-" Control-C Copy in visual mode
-vmap <C-C> y
-
-" Control-V Paste in insert and command mode
-imap <C-V> <esc>pa
-cmap <C-V> <C-r>0
-
-" Window Movement
-nmap <M-h> <C-w>h
-nmap <M-j> <C-w>j
-nmap <M-k> <C-w>k
-nmap <M-l> <C-w>l
-
-" Resizing
-nmap <C-M-H> 2<C-w><
-nmap <C-M-L> 2<C-w>>
-nmap <C-M-K> <C-w>-
-nmap <C-M-J> <C-w>+
-
-" Insert mode movement
-imap <M-h> <left>
-imap <M-j> <down>
-imap <M-k> <up>
-imap <M-l> <right>
-imap <M-f> <C-right>
-imap <M-b> <C-left>
-
-" Spacemacs-like keybinds
-" Change <leader> bind from default \
-" nnoremap <space> <nop>
-" let mapleader=" "
-
-" Make ci( work like quotes do
-function! New_cib()
-    if search("(","bn") == line(".")
-        sil exe "normal! f)ci("
-        sil exe "normal! l"
-        startinsert
-    else
-        sil exe "normal! f(ci("
-        sil exe "normal! l"
-        startinsert
-    endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Conquer of Completion 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-" And for curly brackets
-function! New_ciB()
-    if search("{","bn") == line(".")
-        sil exe "normal! f}ci{"
-        sil exe "normal! l"
-        startinsert
-    else
-        sil exe "normal! f{ci{"
-        sil exe "normal! l"
-        startinsert
-    endif
-endfunction
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
-nnoremap ci( :call New_cib()<CR>
-nnoremap cib :call New_cib()<CR>
-nnoremap ci{ :call New_ciB()<CR>
-nnoremap ciB :call New_ciB()<CR>
 
-" Alt-m for creating a new line in insert mode
-imap <M-m> <esc>o
 
-" netrw configuration
-let g:netrw_browse_split = 0
-let g:netrw_altfile = 1
-
-" Cycle windows
-nmap <M-o> <C-W>w
-vmap <M-o> <C-W>w
-tmap <M-o> <esc><C-W>w
-imap <M-o> <esc><C-W>w
-
-" Command mode history
-cmap <M-p> <up>
-cmap <M-n> <down>
-cmap <M-k> <up>
-cmap <M-j> <down>
-
-" Back to normal mode from insert
-" inoremap jk <esc>
-" inoremap JK <esc>
-
-" Manually refresh file
-nmap <F5> :e!<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set relativenumber
 
 " Indentation
-set smarttab
-set expandtab
-set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
+set ts=2 sts=2 sw=2 " 2 spaces tabs
+set expandtab " Tabs -> Spaces
+set autoindent " Follow indent on next line
+set cindent " Auto indent braces
 
-"set smartindent
-set autoindent
-"set cindent
+" Blink cursor on error instead of beeping (grr)
+set visualbell
+set t_vb=
 
-set nocompatible
-filetype plugin indent on
+" Set encoding
+set encoding=utf-8  " The encoding displayed.
+set fileencoding=utf-8  " The encoding written to file.
 
-" Write buffer through sudo (works on vim but not neovim)
-" cnoreabbrev w!! w !sudo -S tee % >/dev/null
-" Neovim: suda plugin
-cnoreabbrev w!! w suda://%
+"Better line wrapping
+set wrap
+set linebreak
+set textwidth=0
+set wrapmargin=0
 
-" Allow switching between buffers without saving
-set hidden
+" Highlight current line
+set cursorline
 
-" Mouse support
+" Allow mouse
 set mouse=a
 
-"Case insensitive searching
-set ignorecase
+" Hide Mode line
+set noruler
+set laststatus=0
+set noshowcmd
 
-"Will automatically switch to case sensitive if you use any capitals
-set smartcase
+" Automatically write the file when switching buffers.
+set autowriteall
 
-" Auto toggle smart case of for ex commands
-" Assumes 'set ignorecase smartcase'
-augroup dynamic_smartcase
-    autocmd!
-    autocmd CmdLineEnter : set nosmartcase
-    autocmd CmdLineLeave : set smartcase
-augroup END
+" Theme settings 
+" colors OceanicNext
+colorscheme material
 
-" Substitute live preview
-set inccommand=nosplit
-
-" Markdown Folding
-let g:markdown_fold_style = 'nested'
-
-" Vimwiki
-" let g:vimwiki_list = [{'path': '~/dox/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_global_ext=0
-let g:vimwiki_table_mappings=0
-let g:vimwiki_folding='expr'
-nmap <leader>vv <Plug>VimwikiIndex
-nmap <leader>vV <Plug>VimwikiTabIndex
-nmap <leader>vs <Plug>VimwikiUISelect
-nmap <leader>vi <Plug>VimwikiDiaryIndex
-nmap <leader>vdd <Plug>VimwikiMakeDiaryNote
-nmap <leader>vDD <Plug>VimwikiTabMakeDiaryNote
-nmap <leader>vdy <Plug>VimwikiMakeYesterdayDiaryNote
-nmap <leader>vdt <Plug>VimwikiMakeTomorrowDiaryNote
-nmap <M-space> <Plug>VimwikiToggleListItem
-
-" Highlighted yank (-1 for persistent)
-let g:highlightedyank_highlight_duration = 400
-
-" If lightline/airline is enabled, don't show mode under it
-set noshowmode
-
-" Shell
-set shell=/bin/zsh
-
-" Ctrlp
-let g:ctrlp_switch_buffer = '0'
-" Useful for large projects
-let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=10
-" So that it does not only index starting from current directory
-let g:ctrlp_working_path_mode = ""
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-" Use ag AKA the_silver_searcher for indexing. Faster!!!
-" TIP: Use ~/.ignore to ignore directories/files
-" set grepprg=ag\ --nogroup\ --nocolor
-" let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-""if executable('ag')
-""  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-""endif
-let g:ctrlp_show_hidden =1
-let g:ctrlp_clear_cache_on_exit = 0
-
-" Lightline
-" Get default from :h lightline
-let g:lightline = {
-    \ 'colorscheme': 'lena',
-    \ }
-
-let g:lightline.active = {
-    \ 'left': [ [ 'mode', 'paste', 'sep1' ],
-    \           [ 'readonly', 'filename', 'modified' ],
-    \           [ ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'filetype' ] ]
-    \ }
-
-let g:lightline.inactive = {
-    \ 'left': [ [ 'mode', 'paste', 'sep1' ],
-    \           [ 'readonly', 'filename', 'modified' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'filetype' ] ]
-    \ }
-
-let g:lightline.tabline = {
-    \ 'left': [ [ 'tabs' ] ],
-    \ 'right': [ ] }
-
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'filename', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
-
-let g:lightline.component = {
-    \ 'mode': '%{lightline#mode()}',
-    \ 'absolutepath': '%F',
-    \ 'relativepath': '%f',
-    \ 'filename': '%t',
-    \ 'modified': '%M',
-    \ 'bufnum': '%n',
-    \ 'paste': '%{&paste?"PASTE":""}',
-    \ 'readonly': '%R',
-    \ 'charvalue': '%b',
-    \ 'charvaluehex': '%B',
-    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
-    \ 'fileformat': '%{&ff}',
-    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
-    \ 'percent': '%3p%%',
-    \ 'percentwin': '%P',
-    \ 'spell': '%{&spell?&spelllang:""}',
-    \ 'lineinfo': '%3l:%-2v',
-    \ 'line': '%l',
-    \ 'column': '%c',
-    \ 'close': '%999X X ',
-    \ 'winnr': '%{winnr()}',
-    \ 'sep1': ''
-    \}
-
-let g:lightline.mode_map = {
-    \ 'n' : 'N',
-    \ 'i' : 'I',
-    \ 'R' : 'R',
-    \ 'v' : 'V',
-    \ 'V' : 'L',
-    \ "\<C-v>": 'B',
-    \ 'c' : 'C',
-    \ 's' : 'S',
-    \ 'S' : 'S-LINE',
-    \ "\<C-s>": 'S-BLOCK',
-    \ 't': 'T',
-    \ }
-
-
-let g:lightline.separator = {
-    \   'left': '', 'right': ''
-    \}
-let g:lightline.subseparator = {
-    \   'left': '', 'right': '' 
-    \}
-
-let g:lightline.tabline_separator = g:lightline.separator
-let g:lightline.tabline_subseparator = g:lightline.subseparator
-
-let g:lightline.enable = {
-    \ 'statusline': 1,
-    \ 'tabline': 1
-    \ }
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" Clear search highlighting with Escape key
-nnoremap <silent><esc> :noh<return><esc>
-
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
+if (has("termguicolors"))
+  set termguicolors
+endif
+if (has('nvim'))
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
-set wildmenu
-colorscheme lena
-set encoding=utf8
-scriptencoding utf-8
-
-" Colorscheme
-set fillchars=vert::
-
-" Restore last cursor position and marks on open
-au BufReadPost *
-         \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' 
-         \ |   exe "normal! g`\""
-         \ | endif
+let g:material_theme_style = 'ocean'
+let g:material_terminal_italics = 1
 
 
-source ~/.config/nvim/statusline.vim
+" Syntax and colors
+set t_Co=256
+let base16colorspace=256 " https://github.com/chriskempson/base16-vim
+syntax enable
+
+" Persist undo over buffer switches and exits
+:silent call system('mkdir -p ' . $HOME . '/.vim/undo')
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
+" always uses spaces instead of tab characters
+filetype plugin indent on
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Prettier
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autosave
+" disables autosave feature
+let g:prettier#autoformat = 0
+
+" print spaces between brackets
+" Prettier default: true
+let g:prettier#config#tab_width = 2
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#single_quote = 'true'
+
+" runs prettier on file formats
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+
+" j/k will move virtual lines (lines that wrap)
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+
+
+" sync open file with NERDTree
+" " Check if NERDTree is open or active
+function! IsNERDTreeOpen()        
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+
+" Highlight currently open buffer in NERDTree
+" autocmd BufEnter * call SyncTree()
+
+" coc config
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint', 
+  \ 'coc-prettier', 
+  \ 'coc-json', 
+  \ ]
+" from readme
+" if hidden is not set, TextEdit might fail.
+set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+"inoremap <silent><expr> <TAB>
+      "\ pumvisible() ? "\<C-n>" :
+      "\ <SID>check_back_space() ? "\<TAB>" :
+      "\ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"
+ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <F2> <Plug>(coc-rename)
+
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+
+
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+
+let mapleader=","
+nmap <leader>f :Files<CR>
+
+nmap <leader>q :NERDTreeToggle<CR>
+nmap \ <leader>q
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+nmap <leader>r :so ~/.config/nvim/init.vim<CR>
+nmap <leader>ev :e ~/.config/nvim/init.vim<CR>
+nmap <leader>es :e ~/.config/nvim/UltiSnips/
+nmap <leader>et :e ~/.tmux.conf<CR>
+
+nmap <silent> <leader><space> :noh<CR>
+
+nmap <Tab> :bnext<CR>
+nmap <S-Tab> :bprevious<CR>

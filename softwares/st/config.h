@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Mononoki Nerd Font:pixelsize=22:antialias=true:autohint=true";
+// static char *font = "Mononoki Nerd Font:pixelsize=22:antialias=true:autohint=true";
+static char *font = "Consolas:pixelsize=19:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -25,7 +26,7 @@ char *vtiden = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
 static float cwscale = 1.0;
-static float chscale = 1.0;
+static float chscale = 1.5;
 
 /*
  * word delimiter string
@@ -110,7 +111,7 @@ static const char *colorname[] = {
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#282a36",
+	"#0e111a",
 	"#f8f8f2",
 	"#d7d7d7",
 };

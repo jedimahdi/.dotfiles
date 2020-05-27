@@ -1,0 +1,79 @@
+env:
+  TERM: xterm-256color
+
+font:
+  normal:
+    family: 'Victor Mono' 
+    style: Semibold
+
+  bold:
+    family: 'Victor Mono' 
+ 
+  italic:
+    family: 'Victor Mono' 
+ 
+  size: 14.0
+
+  offset:
+    x: 0
+    y: 3
+
+# Colors (One Dark)
+colors:
+  # Default colors
+  primary:
+    background: '#282c34'
+    foreground: '#abb2bf'
+
+  # Normal colors
+  normal:
+    # NOTE: Use '#131613' for the `black` color if you'd like to see
+    # black text on the background.
+    black:   '#282c34'
+    red:     '#e06c75'
+    green:   '#98c379'
+    yellow:  '#d19a66'
+    blue:    '#61afef'
+    magenta: '#c678dd'
+    cyan:    '#56b6c2'
+    white:   '#abb2bf'
+
+  # Bright colors
+  bright:
+    black:   '#5c6370'
+    red:     '#e06c75'
+    green:   '#98c379'
+    yellow:  '#d19a66'
+    blue:    '#61afef'
+    magenta: '#c678dd'
+    cyan:    '#56b6c2'
+    white:   '#ffffff'
+
+# Colors (Material Theme)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x0e111a'
+#     foreground: '0xf8f8f2'
+#
+#   # Normal colors
+#   normal:
+#     black:   '0x282a36'
+#     red:     '0xff5555'
+#     green:   '0x50fa7b'
+#     yellow:  '0xf1fa8c'
+#     blue:    '0xbd93f9'
+#     magenta: '0xff79c6'
+#     cyan:    '0x8be9fd'
+#     white:   '0xbbbbbb'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x44475a'
+#     red:     '0xFF6E67'
+#     green:   '0x5AF78E'
+#     yellow:  '0xF4F99D'
+#     blue:    '0xCAA9FA'
+#     magenta: '0xFF92D0'
+#     cyan:    '0x9AEDFE'
+#     white:   '0xE6E6E6'

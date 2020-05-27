@@ -1,0 +1,69 @@
+snippet ref "TypeScript reference comment" b
+/// <reference path="$1"/>
+endsnippet
+
+snippet log
+console.log($1);
+endsnippet
+
+snippet logc
+console.log('%c$1', 'font-weight:bold;color:${2:green};');
+endsnippet
+
+snippet des "Describe" b
+describe('$1', () => {
+	$2
+});
+endsnippet
+
+snippet it
+it('$1', () => {
+	$2
+});
+endsnippet
+
+snippet doc "Doc Comment" b
+/**
+ * $1
+ */
+endsnippet
+
+snippet ign "TSLint ignore line"
+// tslint:disable-line ${1}
+endsnippet
+
+snippet imp "import default from" b
+import $1 from '$2';
+endsnippet
+
+snippet imd "import destructure" b
+import { $1 } from '$2';
+endsnippet
+
+snippet ima "import * as " b
+import * as $1 from '$2'
+endsnippet
+
+snippet dojotsx "Start a new Dojo Widget"
+import { WidgetBase } from '@dojo/framework/core/WidgetBase';
+import { tsx } from '@dojo/framework/core/vdom';
+
+export interface $1Properties {
+}
+
+export class $1 extends WidgetBase<$1Properties> {
+	protected render() {
+		return (
+			<div/>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
+snippet dojotest "Start a new dojo test file"
+import assertionTemplate from '@dojo/framework/testing/assertionTemplate';
+import harness from '@dojo/framework/testing/harness';
+import { tsx } from '@dojo/framework/core/vdom';
+endsnippet

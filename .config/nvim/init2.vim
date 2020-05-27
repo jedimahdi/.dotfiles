@@ -57,7 +57,7 @@ call plug#begin('~/.config/nvim/plugged')
     set wrap " turn on line wrapping
     set wrapmargin=8 " wrap lines when coming within n characters from side
     set linebreak " set soft wrapping
-    set showbreak=↪
+    set showbreak=… " show ellipsis at breaking
     set autoindent " automatically set indent of new line
     set ttyfast " faster redrawing
     set diffopt+=vertical,iwhite,internal,algorithm:patience,hiddenoff
@@ -79,9 +79,9 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Tab control
     set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-    set tabstop=4 " the visible width of tabs
-    set softtabstop=4 " edit as if the tabs are 4 characters wide
-    set shiftwidth=4 " number of spaces to use for indent and unindent
+    set tabstop=2 " the visible width of tabs
+    set softtabstop=2 " edit as if the tabs are 4 characters wide
+    set shiftwidth=2 " number of spaces to use for indent and unindent
     set shiftround " round indent to a multiple of 'shiftwidth'
 
     " code folding settings
@@ -92,8 +92,9 @@ call plug#begin('~/.config/nvim/plugged')
     set foldlevel=1
 
     " toggle invisible characters
-    set list
+    " set list
     set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+    " set showbreak=↪
 
     set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
     " switch cursor to line when in insert mode, and block when not
@@ -121,10 +122,6 @@ call plug#begin('~/.config/nvim/plugged')
     " Load colorschemes
     Plug 'chriskempson/base16-vim'
     Plug 'joshdick/onedark.vim'
-    Plug 'flazz/vim-colorschemes'
-    Plug 'morhetz/gruvbox'
-
-
 
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
@@ -228,12 +225,12 @@ call plug#begin('~/.config/nvim/plugged')
     " move line mappings
     " ∆ is <A-j> on macOS
     " ˚ is <A-k> on macOS
-    nnoremap <A-j> :m .+1<cr>==
-    nnoremap <A-k> :m .-2<cr>==
-    inoremap <A-j> <Esc>:m .+1<cr>==gi
-    inoremap <A-k> <Esc>:m .-2<cr>==gi
-    vnoremap <A-j> :m '>+1<cr>gv=gv
-    vnoremap <A-k> :m '<-2<cr>gv=gv
+    nnoremap ∆ :m .+1<cr>==
+    nnoremap ˚ :m .-2<cr>==
+    inoremap ∆ <Esc>:m .+1<cr>==gi
+    inoremap ˚ <Esc>:m .-2<cr>==gi
+    vnoremap ∆ :m '>+1<cr>gv=gv
+    vnoremap ˚ :m '<-2<cr>gv=gv
 
     vnoremap $( <esc>`>a)<esc>`<i(<esc>
     vnoremap $[ <esc>`>a]<esc>`<i[<esc>
@@ -311,6 +308,8 @@ call plug#begin('~/.config/nvim/plugged')
 
     " easy commenting motions
     Plug 'tpope/vim-commentary'
+    Plug 'tomtom/tcomment_vim'
+
 
     " mappings which are simply short normal mode aliases for commonly used ex commands
     Plug 'tpope/vim-unimpaired'
@@ -323,6 +322,12 @@ call plug#begin('~/.config/nvim/plugged')
 
     " tmux integration for vim
     Plug 'benmills/vimux'
+    Plug 'PotatoesMaster/i3-vim-syntax'
+
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'terryma/vim-multiple-cursors'
+
+
 
     " enables repeating other supported plugins with the . command
     Plug 'tpope/vim-repeat'
@@ -332,6 +337,9 @@ call plug#begin('~/.config/nvim/plugged')
 
     " single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
     Plug 'AndrewRadev/splitjoin.vim'
+
+    " add end, endif, etc. automatically
+    Plug 'tpope/vim-endwise'
 
     " detect indent style (tabs vs. spaces)
     Plug 'tpope/vim-sleuth'
@@ -493,7 +501,6 @@ call plug#begin('~/.config/nvim/plugged')
 
         Plug 'tpope/vim-rhubarb' " hub extension for fugitive
         Plug 'sodapopcan/vim-twiggy'
-        Plug 'rbong/vim-flog'
     " }}}
 
     " UltiSnips {{{
@@ -506,21 +513,17 @@ call plug#begin('~/.config/nvim/plugged')
     " coc {{{
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+
         let g:coc_global_extensions = [
         \ 'coc-css',
         \ 'coc-json',
-        \ 'coc-tsserver',
-        \ 'coc-git',
         \ 'coc-eslint',
         \ 'coc-tslint-plugin',
-        \ 'coc-pairs',
         \ 'coc-sh',
         \ 'coc-vimlsp',
         \ 'coc-emmet',
         \ 'coc-prettier',
-        \ 'coc-ultisnips',
-        \ 'coc-explorer',
-        \ 'coc-diagnostic'
+        \ 'coc-ultisnips'
         \ ]
 
         autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -580,18 +583,6 @@ call plug#begin('~/.config/nvim/plugged')
         let col = col('.') - 1
         return !col || getline('.')[col - 1]  =~# '\s'
         endfunction
-
-        " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-        " position. Coc only does snippet and additional edit on confirm.
-        if exists('*complete_info')
-            inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-        else
-            imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-        endif
-
-        " For enhanced <CR> experience with coc-pairs checkout :h coc#on_enter()
-        inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
     " }}}
 " }}}
 
@@ -613,10 +604,7 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
 
 		" nunjucks support
-        Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'njk' }
-
-        " liquid support
-        Plug 'tpope/vim-liquid'
+        Plug 'niftylettuce/vim-jinja', { 'for': 'njk' }
     " }}}
 
     " JavaScript {{{
@@ -660,7 +648,17 @@ call plug#begin('~/.config/nvim/plugged')
 
     Plug 'ekalinin/Dockerfile.vim'
 " }}}
-"
+
+Plug 'tpope/vim-vinegar'
+Plug 'neovimhaskell/haskell-vim'
+
+Plug 'reasonml-editor/vim-reason-plus'
+
+Plug 'exitface/synthwave.vim'
+Plug 'kaicataldo/material.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'morhetz/gruvbox'
+
 
 call plug#end()
 
@@ -674,9 +672,13 @@ call plug#end()
         let g:onedark_termcolors=16
         let g:onedark_terminal_italics=1
         colorscheme onedark
+        " color synthwave
+        let g:material_theme_style = 'ocean'
 
-        " colorscheme Tomorrow-Night
+        " colorscheme material
+        " colorscheme OceanicNext
         " colorscheme gruvbox
+
     endif
     syntax on
     filetype plugin indent on
@@ -691,5 +693,7 @@ call plug#end()
     " highlight Type cterm=italic term=italic gui=italic
     highlight Normal ctermbg=none
 " }}}
+
+command! W w
 
 " vim:set foldmethod=marker foldlevel=0

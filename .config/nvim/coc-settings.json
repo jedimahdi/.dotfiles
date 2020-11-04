@@ -1,11 +1,15 @@
 {
     "suggest.enablePreview": true,
-    "coc.preferences.extensionUpdateCheck": "never",
+    "metals.javaHome": "/usr/lib/jvm/java-11-openjdk",
     "codeLens.enable": false,
     "git.addedSign.text": "┃",
     "git.removedSign.text": "┃",
     "git.changedSign.text": "┃",
     "git.changeRemovedSign.text": "┃",
+
+    "suggest.noselect": true,
+    "suggest.acceptSuggestionOnCommitCharacter": false,
+
     "suggest.maxPreviewWidth": 100,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.maxWindowHeight": 20,
@@ -15,18 +19,10 @@
     "diagnostic.hintSign": "○",
     "git.addGBlameToBufferVar": true,
     "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "javascript.jsx", "typescript.tsx", "typescriptreact", "javascriptreact"],
-    "prettier.printWidth": 80,
-    "prettier.tabWidth": 2,
-    "prettier.singleQuote": true,
-    "prettier.trailingComma": "all",
-    "prettier.jsxBracketSameLine": false,
-    "prettier.semi": false,
-    "prettier.useTabs": false,
-    "prettier.proseWrap": "always",
-    "prettier.bracketSpacing": false,
-    "prettier.jsxSingleQuote": false,
-    "prettier.endOfLine": "lf",
     "prettier.arrowParens": "avoid",
+    "prettier.printWidth": 80,
+    "prettier.useTabs": false,
+    "prettier.singleQuote": true,
     "explorer.icon.enableNerdfont": true,
     "explorer.sources": [
         {"name": "buffer", "expand": true},
@@ -39,6 +35,69 @@
     "explorer.file.column.git.icon.untracked": "?",
     "explorer.file.column.git.icon.modified": "✹",
     "explorer.file.column.git.icon.ignored": "☒",
-    "explorer.openAction.changeDirectory": false,
-    "eslint.enable": false
+    "explorer.openAction.for.directory": "expandOrCollapse",
+    "explorer.previewAction.onHover": false,
+    "explorer.keyMappings": {
+        "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
+    },
+    "eslint.enable": true,
+    "eslint.autoFixOnSave": false,
+    "eslint.autoFix": false,
+    "diagnostic-languageserver.filetypes": {
+        "sh": "shellcheck"
+    },
+    "diagnostic-languageserver.linters": {
+        "shellcheck": {
+            "args": [
+                "--format=gcc",
+                "--external-sources",
+                "-"
+            ],
+            "command": "shellcheck",
+            "debounce": 100,
+            "formatLines": 1,
+            "formatPattern": [
+                "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+                {
+                    "column": 2,
+                    "line": 1,
+                    "message": 4,
+                    "security": 3
+                }
+            ],
+            "offsetColumn": 0,
+            "offsetLine": 0,
+            "securities": {
+                "error": "error",
+                "note": "warning",
+                "warning": "warning"
+            },
+            "sourceName": "shellcheck"
+        }
+    },
+    "languageserver": {
+          "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
+    },
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh"],
+            "ignoredRootPaths": ["~"]
+        },
+        "elmLS": {
+            "command": "elm-language-server",
+            "filetypes": ["elm"],
+            "rootPatterns": ["elm.json"],
+            "initializationOptions": {
+                "elmPath": "elm", // optional
+                "elmFormatPath": "elm-format", // optional
+                "elmTestPath": "elm-test", // optional
+                "elmAnalyseTrigger": "change" // optional
+            }
+        }
+    }
 }

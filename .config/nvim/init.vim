@@ -79,9 +79,9 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Tab control
     set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-    set tabstop=4 " the visible width of tabs
-    set softtabstop=4 " edit as if the tabs are 4 characters wide
-    set shiftwidth=4 " number of spaces to use for indent and unindent
+    set tabstop=2 " the visible width of tabs
+    set softtabstop=2 " edit as if the tabs are 4 characters wide
+    set shiftwidth=2 " number of spaces to use for indent and unindent
     set shiftround " round indent to a multiple of 'shiftwidth'
 
     " code folding settings
@@ -119,9 +119,9 @@ call plug#begin('~/.config/nvim/plugged')
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
     " Load colorschemes
-    Plug 'chriskempson/base16-vim'
+    " Plug 'chriskempson/base16-vim'
     Plug 'joshdick/onedark.vim'
-    Plug 'flazz/vim-colorschemes'
+    " Plug 'flazz/vim-colorschemes'
     Plug 'morhetz/gruvbox'
 
 
@@ -476,7 +476,7 @@ call plug#begin('~/.config/nvim/plugged')
         \  'down':    '40%'})
 
         command! -bang -nargs=* Find call fzf#vim#grep(
-            \ 'rg --column --line-number --no-heading --follow --color=always '.<q-args>, 1,
+            \ 'rg --column --line-number --no-heading --follow --color=always -- '.shellescape(<q-args>).' || true',
             \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
         command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%', '?'), <bang>0)
@@ -535,7 +535,7 @@ call plug#begin('~/.config/nvim/plugged')
         nmap gs <Plug>(coc-git-chunkinfo)
         nmap gu :CocCommand git.chunkUndo<cr>
 
-        nmap <silent> <leader>k :CocCommand explorer<cr>
+        nmap <silent> <leader>k :CocCommand explorer --sources buffer-,file+<cr>
 
         "remap keys for gotos
         nmap <silent> gd <Plug>(coc-definition)
@@ -548,12 +548,17 @@ call plug#begin('~/.config/nvim/plugged')
         nmap <silent> [c <Plug>(coc-diagnostic-prev)
         nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
+        " Remap keys for applying codeAction to the current buffer.
+        nmap <leader>ac  <Plug>(coc-codeaction)
+        " Apply AutoFix to problem on the current line.
+        nmap <leader>qf  <Plug>(coc-fix-current)
+
         " rename
         nmap <silent> <leader>rn <Plug>(coc-rename)
 
         " Remap for format selected region
         xmap <leader>f  <Plug>(coc-format-selected)
-        nmap <leader>f  <Plug>(coc-format-selected)
+        " nmap <leader>f  <Plug>(coc-format-selected)
 
         " organize imports
         command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
@@ -583,6 +588,7 @@ call plug#begin('~/.config/nvim/plugged')
 
         " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
         " position. Coc only does snippet and additional edit on confirm.
+
         if exists('*complete_info')
             inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
         else
@@ -590,8 +596,9 @@ call plug#begin('~/.config/nvim/plugged')
         endif
 
         " For enhanced <CR> experience with coc-pairs checkout :h coc#on_enter()
-        inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+        " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+        "       \: '\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
     " }}}
 " }}}
 
@@ -635,8 +642,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 
     " Styles {{{
-        Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
-        Plug 'groenewege/vim-less', { 'for': 'less' }
         Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
         Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
         Plug 'stephenway/postcss.vim', { 'for': 'css' }
@@ -662,6 +667,46 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 "
 
+" Plug 'alx741/vim-hindent'
+Plug 'sdiehl/vim-ormolu', { 'for': 'haskell' }
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+
+Plug 'tpope/vim-vinegar'
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'purescript-contrib/purescript-vim'
+" Plug 'frigoeu/psc-ide-vim'
+
+Plug 'mileszs/ack.vim'
+
+" Plug 'Olical/conjure', {'tag': 'v3.5.0'}
+
+
+" Plug 'othree/xml.vim'
+"
+Plug 'alvan/vim-closetag', { 'for': 'html' }
+
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh'
+"     \ }
+
+Plug 'ElmCast/elm-vim'
+
+Plug 'terryma/vim-multiple-cursors'
+
+
+
+" command W w
+command! -bang -range=% -complete=file -nargs=* W <line1>,<line2>write<bang> <args>
+
+
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+let g:user_emmet_leader_key=','
+
+
+
 call plug#end()
 
 " Colorscheme and final setup {{{
@@ -674,9 +719,10 @@ call plug#end()
         let g:onedark_termcolors=16
         let g:onedark_terminal_italics=1
         colorscheme onedark
+        " colorscheme horizon
+
 
         " colorscheme Tomorrow-Night
-        " colorscheme gruvbox
     endif
     syntax on
     filetype plugin indent on

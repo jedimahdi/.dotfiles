@@ -3,7 +3,8 @@ set REACT_APP_BROWSER chromium
 set BROWSER chromium 
 
 set PATH ~/.npm-global/bin $PATH
-set PATH $JAVA_HOME/bin $PATH
+set PATH ~/.cargo/bin $PATH
+# set PATH $JAVA_HOME/bin $PATH
 
 set -gx PROJECT_PATHS ~/apps ~/ghq
 kitty + complete setup fish | source
@@ -15,8 +16,8 @@ test -f /home/mahdi/.ghcup/env ; and set -gx PATH $HOME/.cabal/bin /home/mahdi/.
 set -U fish_user_paths $fish_user_paths $HOME/.local/bin/
 set fish_greeting                      # Supresses fish's intro message
 set TERM "xterm-256color"              # Sets the terminal type
-set EDITOR "emacsclient -t -a ''"      # $EDITOR use Emacs in terminal
-set VISUAL "emacsclient -c -a emacs"   # $VISUAL use Emacs in GUI mode
+set EDITOR "nvim"      # $EDITOR use Emacs in terminal
+# set VISUAL "emacsclient -c -a emacs"   # $VISUAL use Emacs in GUI mode
 
 
 ### PROMPT ###
@@ -115,8 +116,8 @@ end
 
 ### DEFAULT EMACS MODE OR VI MODE ###
 function fish_user_key_bindings
-  # fish_default_key_bindings
-  fish_vi_key_bindings
+  fish_default_key_bindings
+  # fish_vi_key_bindings
 end
 ### END OF VI MODE ###
 
@@ -211,7 +212,7 @@ end
 
 ### ALIASES ###
 alias c="clear"
-alias clear='clear; echo; echo; seq 1 (tput cols) | sort -R | spark | lolcat; echo; echo'
+# alias clear='clear; echo; echo; seq 1 (tput cols) | sort -R | spark | lolcat; echo; echo'
 alias v="nvim"
 alias gs="git status"
 alias ns="BROWSER=chromium npm start"
@@ -251,5 +252,7 @@ alias fgrep='fgrep --color=auto'
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 
+
+# starship init fish | source
 
 

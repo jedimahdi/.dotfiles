@@ -1,4 +1,9 @@
-# vim: filetype=i3
+# vim: filetype=i3config
+
+# set modifier
+set $super Mod4
+set $alt Mod1
+
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -39,20 +44,18 @@ floating_modifier $mod
 smart_borders on
 
 # start a terminal
-bindsym $mod+Return exec $term
-bindsym $mod+Shift+Return exec --no-startup-id samedir
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec ~/.local/bin/spawn-alacritty-cwd
 
 # Emoji
 bindsym $mod+grave exec --no-startup-id dmenuunicode
 
-# bindsym $mod+z exec pcmanfm
-bindsym $mod+z exec nautilus
-bindsym $mod+x exec code
-# bindsym $mod+c exec google-chrome-stable
-bindsym $mod+c exec chromium
+bindsym $mod+z exec pcmanfm;workspace number 5;focus
+# bindsym $mod+z exec nautilus
+bindsym $mod+x exec xfce4-screenshooter
+bindsym $mod+c exec google-chrome-stable
 bindsym $mod+v exec uget
 bindsym $mod+b exec spotify
-bindsym $mod+n exec emacsclient -a "" -c
 
 bindsym $mod+m exec rhythmbox-client
 
@@ -81,7 +84,8 @@ bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
 # Start rofi
-bindsym $mod+d exec rofi -show drun
+# bindsym $mod+d exec rofi -show drun
+bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
 bindsym $mod+Shift+d exec dmenu_run -i  -nb '#292d3e' -nf '#bbc5ff' -sb '#82AAFF' -sf '#292d3e' -fn 'UbuntuMono Nerd Font:bold:pixelsize=14'
 bindsym $mod+g exec ~/.dmenu/dmenu-edit-configs.sh
 
@@ -196,14 +200,16 @@ for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
 for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
 for_window [title="^Steam Keyboard$"] floating enable
 
+#change volume
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer set Master toggle
 
-# Audio volume controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 1%+ && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 1%- && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse set Master toggle && pkill -RTMIN+10 i3blocks
-bindsym $mod+shift+n exec --no-startup-id amixer -q set Master 1%+ && pkill -RTMIN+10 i3blocks
-bindsym $mod+shift+b exec --no-startup-id amixer -q set Master 1%- && pkill -RTMIN+10 i3blocks
-bindsym $mod+shift+m exec --no-startup-id amixer -q -D pulse set Master toggle && pkill -RTMIN+10 i3blocks
+# music control
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioStop exec playerctl stop
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5 && pkill -RTMIN+12 i3blocks
@@ -342,6 +348,7 @@ exec --no-startup-id fix_xcursor
 # exec --no-startup-id emacs --daemon
 exec --no-startup-id xbindkeys
 exec --no-startup-id nm-applet
+exec --no-startup-id picom
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Tapping Enabled' 1
-exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Natural Scrolling Enabled' 1
+# exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Tapping Enabled' 1
+# exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Natural Scrolling Enabled' 1

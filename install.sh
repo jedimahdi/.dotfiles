@@ -16,7 +16,8 @@ pacman -S alacritty kitty fish tmux neovim python-pynvim --needed --noconfirm
 
 # gui
 pacman -S firefox xarchiver mpc mpv lxappearance --needed --noconfirm
-pacman -S telegram-desktop xfce4-screenshooter
+pacman -S telegram-desktop xfce4-screenshooter uget
+pacman -S zathura zathura-pdf-mupdf zathura-ps
 
 ## Services
 systemctl enable lightdm
@@ -79,4 +80,12 @@ initdb --locale=en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data
 sudo systemctl start postgresql.service
 # [postgres]$ createuser --interactive
 sudo snap install postbird
+
+
+# ZSH
+pacman -S zsh
+mkdir ~/.zsh
+git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
+git clone https://github.com/zdharma/fast-syntax-highlighting ~/.zsh/fast-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 

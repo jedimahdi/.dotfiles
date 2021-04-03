@@ -101,7 +101,6 @@ sub cmus {
             buttons('cmus');
 
             # metadata found so we are done
-            print "\x{266A} ";
             print(join ' - ', @metadata);
             exit 0;
         }
@@ -121,6 +120,7 @@ sub playerctl {
     buttons('playerctl');
 
     my $artist = qx(playerctl $player_arg metadata artist);
+    chomp $artist;
     # exit status will be nonzero when playerctl cannot find your player
     exit(0) if $? || $artist eq '(null)';
 
@@ -131,7 +131,6 @@ sub playerctl {
 
     push(@metadata, $title) if $title;
 
-    print "\x{266A} ";
     print(join(" - ", @metadata)) if @metadata;
 }
 
@@ -139,7 +138,6 @@ sub rhythmbox {
     buttons('rhythmbox');
 
     my $data = qx(rhythmbox-client --print-playing --no-start);
-    print "\x{266A} ";
     print($data);
 }
 
@@ -155,3 +153,4 @@ elsif ($player_arg =~ /rhythmbox/) {
 else {
     playerctl;
 }
+print("\n");

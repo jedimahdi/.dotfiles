@@ -1,2 +1,9 @@
-rofi.theme: ~/.config/rofi/themes/distrotube.rasi
-rofi.display-drun:
+rofi.modi: drun,window
+rofi.lines: 12
+rofi.columns: 1
+rofi.width: 100
+rofi.drun-icon-theme: Pop
+rofi.show-icons: true
+rofi.sidebar-mode: true
+rofi.m: -4
+rofi.theme: andrea

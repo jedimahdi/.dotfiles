@@ -84,8 +84,8 @@ bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 
 # Start rofi
-# bindsym $mod+d exec rofi -show drun
-bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
+bindsym $mod+d exec rofi -show drun
+# bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
 bindsym $mod+Shift+d exec dmenu_run -i  -nb '#292d3e' -nf '#bbc5ff' -sb '#82AAFF' -sf '#292d3e' -fn 'UbuntuMono Nerd Font:bold:pixelsize=14'
 bindsym $mod+g exec ~/.dmenu/dmenu-edit-configs.sh
 
@@ -272,6 +272,7 @@ mode "$mode_system" {
 # finds out, if available)
 
 #Colors
+# set $back       #383C4A
 set $back       #383C4A
 set $primary    #D0D0D0
 set $secondary  #0FE0C9
@@ -315,7 +316,7 @@ bar {
     mode dock
     position top
     height 24
-    font pango: SauceCodePro Nerd Font Black 10
+    font pango: Space Mono Nerd Font Black 10
     colors {
         background $elegant
         separator $primary
@@ -330,14 +331,14 @@ bar {
 # exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Startup programs
-exec_always --no-startup-id feh --bg-scale ~/.wallpapers/a.jpg
+# exec_always --no-startup-id feh --bg-scale ~/.wallpapers/a.jpg
 # exec_always --no-startup-id hsetroot -solid "#282a36"
 exec_always --no-startup-id python3 ~/.i3/i3-autoname-workspaces.py
 exec_always --no-startup-id sh ~/.i3/keyboard.sh
 # exec_always --no-startup-id conky -c ~/.i3/bin/conky-left
 exec --no-startup-id volumeicon
 
-exec --no-startup-id fix_xcursor
+# exec --no-startup-id fix_xcursor
 # exec --no-startup-id polybar nord
 
 
@@ -346,9 +347,10 @@ exec --no-startup-id fix_xcursor
 # exec --no-startup-id compton --config $HOME/.config/compton.conf
 # exec --no-startup-id clipit
 # exec --no-startup-id emacs --daemon
-exec --no-startup-id xbindkeys
+# exec --no-startup-id xbindkeys
 exec --no-startup-id nm-applet
 exec --no-startup-id picom
 exec --no-startup-id xfce4-power-manager
+exec --no-startup-id nitrogen --restore &
 # exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Tapping Enabled' 1
 # exec --no-startup-id xinput set-prop 'DELL0767:00 06CB:7E92 Touchpad' 'libinput Natural Scrolling Enabled' 1

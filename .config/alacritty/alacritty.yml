@@ -3,20 +3,20 @@ env:
 
 font:
   normal:
-    family: 'Victor Mono' 
-    style: Semibold
+    family: 'Iosevka Nerd Font' 
+    style: Medium
 
   bold:
-    family: 'Victor Mono' 
+    family: 'Iosevka Nerd Font' 
  
   italic:
-    family: 'Victor Mono' 
+    family: 'Iosevka Nerd Font' 
  
-  size: 14.0
+  size: 10.0
 
   offset:
     x: 0
-    y: 3
+    y: 0
 
 # Colors (One Dark)
 colors:

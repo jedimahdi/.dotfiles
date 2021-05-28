@@ -69,6 +69,9 @@ cabal install brittany
 cabal install hpack-dhall
 cabal install ghcid
 
+# headroom problem arch linux
+sudo ln -s /usr/lib/libpcre.so /usr/lib/libpcre.so.3
+
 # Snap
 paru -S snapd
 sudo systemctl enable --now snapd.socket
@@ -88,4 +91,13 @@ mkdir ~/.zsh
 git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 git clone https://github.com/zdharma/fast-syntax-highlighting ~/.zsh/fast-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+mkdir ~/.cache/zsh
 
+# git
+git config --global credential.helper store
+
+# purescript
+yay -S ncurses5-compat-libs
+npm install -g purescript
+npm install -g spago
+npm install -g purescript-language-server

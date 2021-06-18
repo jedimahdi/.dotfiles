@@ -41,14 +41,14 @@ git clone https://github.com/savq/paq-nvim.git \
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 
 # lua language server
+yay -S ninja
 git clone https://github.com/sumneko/lua-language-server
 cd lua-language-server
 git submodule update --init --recursive
 cd 3rd/luamake
-ninja -f ninja/macos.ninja
+compile/install.sh
 cd ../..
 ./3rd/luamake/luamake rebuild
-
 
 # npm (add to PATH: ~/.npm-global/bin)
 mkdir ~/.npm-global
@@ -92,6 +92,8 @@ git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 git clone https://github.com/zdharma/fast-syntax-highlighting ~/.zsh/fast-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 mkdir ~/.cache/zsh
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # git
 git config --global credential.helper store

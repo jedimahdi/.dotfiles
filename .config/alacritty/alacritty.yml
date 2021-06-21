@@ -3,14 +3,14 @@ env:
 
 font:
   normal:
-    family: 'Iosevka Nerd Font' 
+    family: 'Iosevka' 
     style: Medium
 
   bold:
-    family: 'Iosevka Nerd Font' 
+    family: 'Iosevka' 
  
   italic:
-    family: 'Iosevka Nerd Font' 
+    family: 'Iosevka' 
  
   size: 10.0
 

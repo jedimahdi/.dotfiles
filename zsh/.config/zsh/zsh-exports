@@ -1,0 +1,15 @@
+#!/bin/sh
+HISTFILE=~/.cache/zsh/history
+HISTSIZE=1000000
+SAVEHIST=1000000
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
+export PATH="$HOME/.local/bin":$PATH
+export PATH="$HOME/.local/bin/scripts":$PATH
+export PATH="$HOME/.npm-global/bin":$PATH
+export PATH="$HOME/.cabal/bin":$PATH
+export PATH="$HOME/.ghcup/bin":$PATH
+
+# eval "$(fnm env)"
+# eval "$(zoxide init zsh)"
+# eval "`pip completion --zsh`"

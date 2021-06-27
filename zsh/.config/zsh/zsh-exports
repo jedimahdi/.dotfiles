@@ -11,5 +11,5 @@ export PATH="$HOME/.cabal/bin":$PATH
 export PATH="$HOME/.ghcup/bin":$PATH
 
 # eval "$(fnm env)"
-# eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
 # eval "`pip completion --zsh`"

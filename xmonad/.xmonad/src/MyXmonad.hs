@@ -63,7 +63,7 @@ myStartupHook = mapM_
   , "xfce4-power-manager"
   , "/usr/lib/xfce4/notifyd/xfce4-notifyd"
   , "volumeicon"
-  , "feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg"
+  , "feh --bg-fill ~/Pictures/wallpapers/sensei-1920×1080.jpg"
   , "picom"
   ]
 

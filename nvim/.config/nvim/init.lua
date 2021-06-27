@@ -1,7 +1,7 @@
-require('globals')
-require('keymappings')
-require('plugins')
--- require('colorscheme')
+require 'globals'
+require 'keymappings'
+require 'plugins'
+require 'colorscheme'
 
 require 'options'
 
@@ -21,7 +21,9 @@ require 'plugins.quickscope'
 require 'plugins.dadbod-ui'
 require 'plugins.trouble'
 require 'plugins.lspinstall'
+-- require 'plugins.spectre'
 
+-- LSP
 require 'lsp'
 require 'lsp.haskell'
 require 'lsp.ts'

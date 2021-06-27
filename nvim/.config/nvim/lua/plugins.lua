@@ -65,6 +65,9 @@ return require('packer').startup(function(use)
   -- Navigation
   use 'unblevable/quick-scope'
 
+  -- Search
+  use 'windwp/nvim-spectre'
+
   -- Other
   use 'tpope/vim-surround'
   -- use 'itchyny/vim-cursorword'
@@ -73,6 +76,8 @@ return require('packer').startup(function(use)
   use 'windwp/nvim-ts-autotag'
   use 'moll/vim-bbye'
   use 'rhysd/accelerated-jk'
+
+  use 'folke/which-key.nvim'
 
   use 'tpope/vim-dadbod'
   use 'kristijanhusak/vim-dadbod-ui'

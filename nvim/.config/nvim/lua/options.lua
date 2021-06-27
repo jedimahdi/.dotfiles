@@ -98,7 +98,3 @@ apply_options {
   foldenable = false,
   hlsearch = true,
 }
--- vim.cmd("colorscheme onedark")
-vim.cmd('colorscheme zephyr')
--- vim.cmd[[colorscheme tokyonight]]
--- vim.g.onedark_style = 'deep'

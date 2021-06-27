@@ -1,7 +1,9 @@
+local which_key = require('which-key')
+
 vim.g.mapleader = ','
 
 -- explorer
-vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>F', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>.', '<C-^>', { noremap = true, silent = true })
 
@@ -33,11 +35,11 @@ vim.api.nvim_set_keymap('x', 'J', ':move \'>+1<CR>gv-gv', { noremap = true, sile
 vim.api.nvim_set_keymap('n', '<space>', ':set hlsearch! hlsearch?<CR>', { noremap = true, silent = true })
 
 -- Telescope
-vim.api.nvim_set_keymap('n', '<leader>f', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>g', ':Telescope git_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>w', ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>c', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>r', ':Telescope oldfiles<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>f', ':Telescope find_files<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>g', ':Telescope git_files<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>w', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>c', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>r', ':Telescope oldfiles<CR>', { noremap = true, silent = true })
 
 -- LSP
 vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
@@ -59,14 +61,14 @@ vim.api.nvim_set_keymap('n', ']e', ':Lspsaga diagnostic_jump_prev<CR>', { silent
 vim.api.nvim_set_keymap('n', '<leader>p', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
 
 -- Trouble
-vim.api.nvim_set_keymap('n', '<leader>xx', '<cmd>Trouble<cr>', { silent = true, noremap = true })
+--[[ vim.api.nvim_set_keymap('n', '<leader>xx', '<cmd>Trouble<cr>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>xw', '<cmd>Trouble lsp_workspace_diagnostics<cr>',
                         { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>xd', '<cmd>Trouble lsp_document_diagnostics<cr>',
                         { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>xl', '<cmd>Trouble loclist<cr>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>xq', '<cmd>Trouble quickfix<cr>', { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', 'gr', '<cmd>Trouble lsp_references<cr>', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>Trouble lsp_references<cr>', { silent = true, noremap = true }) ]]
 
 -- Format
 -- vim.api.nvim_set_keymap('n', '<leader>p', ':Neoformat<CR>', {noremap = true, silent = true})
@@ -80,3 +82,84 @@ vim.cmd('nmap k <Plug>(accelerated_jk_gk)')
 
 vim.cmd('command Q q')
 vim.cmd('command W w')
+
+which_key.register({
+  e = { '<cmd>NvimTreeToggle<cr>', 'Explorer' },
+  f = { '<cmd>Telescope find_files<cr>', 'Find File' },
+  d = {
+    name = 'Diagnostics',
+    t = { '<cmd>TroubleToggle<cr>', 'trouble' },
+    w = { '<cmd>TroubleToggle lsp_workspace_diagnostics<cr>', 'workspace' },
+    d = { '<cmd>TroubleToggle lsp_document_diagnostics<cr>', 'document' },
+    q = { '<cmd>TroubleToggle quickfix<cr>', 'quickfix' },
+    l = { '<cmd>TroubleToggle loclist<cr>', 'loclist' },
+    r = { '<cmd>TroubleToggle lsp_references<cr>', 'references' },
+  },
+  g = {
+    name = 'Git',
+    j = { '<cmd>NextHunk<cr>', 'Next Hunk' },
+    k = { '<cmd>PrevHunk<cr>', 'Prev Hunk' },
+    p = { '<cmd>PreviewHunk<cr>', 'Preview Hunk' },
+    r = { '<cmd>ResetHunk<cr>', 'Reset Hunk' },
+    R = { '<cmd>ResetBuffer<cr>', 'Reset Buffer' },
+    s = { '<cmd>StageHunk<cr>', 'Stage Hunk' },
+    u = { '<cmd>UndoStageHunk<cr>', 'Undo Stage Hunk' },
+    o = { '<cmd>Telescope git_status<cr>', 'Open changed file' },
+    b = { '<cmd>Telescope git_branches<cr>', 'Checkout branch' },
+    c = { '<cmd>Telescope git_commits<cr>', 'Checkout commit' },
+    C = { '<cmd>Telescope git_bcommits<cr>', 'Checkout commit(for current file)' },
+  },
+  l = {
+    name = 'LSP',
+    a = { '<cmd>Lspsaga code_action<cr>', 'Code Action' },
+    A = { '<cmd>Lspsaga range_code_action<cr>', 'Selected Action' },
+    d = { '<cmd>Telescope lsp_document_diagnostics<cr>', 'Document Diagnostics' },
+    D = { '<cmd>Telescope lsp_workspace_diagnostics<cr>', 'Workspace Diagnostics' },
+    f = { '<cmd>LspFormatting<cr>', 'Format' },
+    h = { '<cmd>Lspsaga hover_doc<cr>', 'Hover Doc' },
+    i = { '<cmd>LspInfo<cr>', 'Info' },
+    L = { '<cmd>Lspsaga lsp_finder<cr>', 'LSP Finder' },
+    l = { '<cmd>Lspsaga show_line_diagnostics<cr>', 'Line Diagnostics' },
+    p = { '<cmd>Lspsaga preview_definition<cr>', 'Preview Definition' },
+    q = { '<cmd>Telescope quickfix<cr>', 'Quickfix' },
+    r = { '<cmd>Lspsaga rename<cr>', 'Rename' },
+    t = { '<cmd>LspTypeDefinition<cr>', 'Type Definition' },
+    x = { '<cmd>cclose<cr>', 'Close Quickfix' },
+    s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
+    S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
+  },
+  r = {
+    name = 'Replace',
+    f = { '<cmd>lua require(\'spectre\').open_file_search()<cr>', 'Current File' },
+    p = { '<cmd>lua require(\'spectre\').open()<cr>', 'Project' },
+  },
+  t = {
+    name = 'Search',
+    b = { '<cmd>Telescope git_branches<cr>', 'Checkout branch' },
+    c = { '<cmd>Telescope colorscheme<cr>', 'Colorscheme' },
+    d = { '<cmd>Telescope lsp_document_diagnostics<cr>', 'Document Diagnostics' },
+    D = { '<cmd>Telescope lsp_workspace_diagnostics<cr>', 'Workspace Diagnostics' },
+    f = { '<cmd>Telescope find_files<cr>', 'Find File' },
+    h = { '<cmd>Telescope help_tags<cr>', 'Find Help' },
+    m = { '<cmd>Telescope marks<cr>', 'Marks' },
+    M = { '<cmd>Telescope man_pages<cr>', 'Man Pages' },
+    r = { '<cmd>Telescope oldfiles<cr>', 'Open Recent File' },
+    R = { '<cmd>Telescope registers<cr>', 'Registers' },
+    t = { '<cmd>Telescope live_grep<cr>', 'Text' },
+  },
+  --[[ f = {
+    name = 'find',
+    b = { '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', 'buffers' },
+    f = { '<cmd>lua require(\'telescope.builtin\').find_files({follow = true})<cr>', 'files' },
+    g = { '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', 'whit live grep' },
+    h = { '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', 'help tags' },
+  },
+  ['t'] = 'toggle terminal', ]]
+}, {
+  mode = 'n', -- NORMAL mode
+  prefix = '<leader>',
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
+})

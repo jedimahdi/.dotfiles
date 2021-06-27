@@ -1,11 +1,11 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-    execute "packadd packer.nvim"
+  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  execute 'packadd packer.nvim'
 end
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
@@ -15,12 +15,12 @@ return require('packer').startup(function(use)
 
   -- Theme
   use 'ulwlu/elly.vim'
-  use {"christianchiarulli/nvcode-color-schemes.vim"}
+  use { 'christianchiarulli/nvcode-color-schemes.vim' }
   use 'joshdick/onedark.vim'
   -- use 'navarasu/onedark.nvim'
   use 'glepnir/zephyr-nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use {'ryanoasis/vim-devicons', opt = true}
+  use { 'ryanoasis/vim-devicons', opt = true }
   use 'glepnir/galaxyline.nvim'
   use 'folke/tokyonight.nvim'
   use 'bluz71/vim-moonfly-colors'
@@ -40,15 +40,15 @@ return require('packer').startup(function(use)
   use 'b3nj5m1n/kommentary'
 
   -- Syntax
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  use {'neovimhaskell/haskell-vim'}
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'neovimhaskell/haskell-vim' }
   use 'norcalli/nvim-colorizer.lua'
   use 'purescript-contrib/purescript-vim'
 
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'glepnir/lspsaga.nvim'
-  use {"~/apps/lua/nvim-lspinstall"}
+  use { '~/apps/lua/nvim-lspinstall' }
   use 'folke/trouble.nvim'
 
   -- Autocomplete
@@ -57,7 +57,7 @@ return require('packer').startup(function(use)
 
   -- Git
   use 'TimUntersberger/neogit'
-  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
+  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
   -- Format
   use 'sbdchd/neoformat'

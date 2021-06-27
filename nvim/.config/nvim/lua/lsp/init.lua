@@ -1,6 +1,6 @@
-local home = os.getenv("HOME")
-local sumneko_root_path = home..'/.local/share/lsp/lua-language-server'
-local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
+local home = os.getenv('HOME')
+local sumneko_root_path = home .. '/.local/share/lsp/lua-language-server'
+local sumneko_binary = sumneko_root_path .. '/bin/Linux/lua-language-server'
 
 -- Lua
 --[[ require'lspconfig'.sumneko_lua.setup {
@@ -43,10 +43,10 @@ local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
 } ]]
 
 -- Purescript
-require'lspconfig'.purescriptls.setup{}
+require'lspconfig'.purescriptls.setup {}
 
 -- C++
-require'lspconfig'.clangd.setup{}
+require'lspconfig'.clangd.setup {}
 
 -- add LspLog and LspRestart
 function _G.reload_lsp()
@@ -56,7 +56,7 @@ end
 
 function _G.open_lsp_log()
   local path = vim.lsp.get_log_path()
-  vim.cmd("edit " .. path)
+  vim.cmd('edit ' .. path)
 end
 
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])

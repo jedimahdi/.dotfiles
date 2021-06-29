@@ -1,4 +1,6 @@
-module MyXmonad.Layout (myLayout) where
+module MyXmonad.Layout
+    ( myLayout
+    ) where
 
 import           XMonad
 import           XMonad.Hooks.ManageDocks

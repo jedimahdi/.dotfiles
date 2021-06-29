@@ -1,17 +1,20 @@
-module MyXmonad (main) where
+module MyXmonad
+    ( main
+    ) where
 
-import qualified Data.Map                           as M
-import           Data.Maybe                          ( fromJust )
+import qualified Data.Map                  as M
+import           Data.Maybe                ( fromJust )
 import           Graphics.X11.Xlib
-import           MyXmonad.Keybindings                ( myKeys )
-import           MyXmonad.Layout                     ( myLayout )
-import           System.IO                           ( hPutStrLn )
+import           MyXmonad.Keybindings      ( myKeys )
+import           MyXmonad.Layout           ( myLayout )
+import           System.IO                 ( hPutStrLn )
 import           XMonad
+import           XMonad.Actions.ShowText
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
-import qualified XMonad.StackSet                    as W
-import           XMonad.Util.Run                     ( spawnPipe )
+import qualified XMonad.StackSet           as W
+import           XMonad.Util.Run           ( spawnPipe )
 import           XMonad.Util.SpawnOnce
 
 myTerminal :: String
@@ -77,6 +80,7 @@ main = do
     , workspaces         = myWorkspaces
     , startupHook        = myStartupHook
     , layoutHook         = myLayout
+    , handleEventHook    = handleTimerEvent
     , normalBorderColor  = myNormalBorderColor
     , focusedBorderColor = myFocusedBorderColor
     , borderWidth        = myBorderWidth

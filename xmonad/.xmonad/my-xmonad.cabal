@@ -7,9 +7,11 @@ library
   exposed-modules: 
     MyXmonad
     MyXmonad.Keybindings
-    MyXmonad.Prompt
     MyXmonad.Layout
     MyXmonad.Util.Dmenu.Configs
+    MyXmonad.Util.Prompt.Prelude
+    MyXmonad.Util.Prompt.Calculator
+    MyXmonad.Util.Prompt.Hoogle
   build-depends:       base
                      , xmonad
                      , xmonad-contrib

@@ -1,22 +1,20 @@
-module MyXmonad.Prompt (myXPConfig, calcPrompt) where
+module MyXmonad.Util.Prompt.Prelude
+    ( config
+    ) where
 
-import           Control.Arrow                       ( first )
-import           Data.Char                           ( isSpace )
-import qualified Data.Map                           as M
-import           XMonad
+import           Control.Arrow            ( first )
+import qualified Data.Map                 as M
+import           XMonad                   hiding ( config )
 import           XMonad.Config.Dmwit
 import           XMonad.Prompt
 import           XMonad.Prompt.FuzzyMatch
-import           XMonad.Prompt.Input
-import qualified XMonad.StackSet                    as W
-import           XMonad.Util.Run                     ( runProcessWithInput )
-
+import qualified XMonad.StackSet          as W
 
 myFont :: String
-myFont = "xft:Ubuntu:medium:size=11:antialias=true:hinting=true"
+myFont = "xft:Ubuntu:regular:size=13:antialias=true:hinting=true"
 
-myXPConfig :: XPConfig
-myXPConfig = def { font                = myFont
+config :: XPConfig
+config = def { font                = myFont
                  , bgColor             = "#282c34"
                  , fgColor             = "#bbc2cf"
                  , bgHLight            = "#c792ea"
@@ -25,7 +23,7 @@ myXPConfig = def { font                = myFont
                  , promptBorderWidth   = 0
                  , promptKeymap        = dtXPKeymap
                  , position            = Top
-                 , height              = 23
+                 , height              = 25
                  , historySize         = 256
                  , historyFilter       = id
                  , defaultText         = []
@@ -79,7 +77,3 @@ dtXPKeymap =
          , (xK_Escape   , quit)
          ]
 
-
-calcPrompt :: XPConfig -> String -> X ()
-calcPrompt c ans = inputPrompt c (trim ans) ?+ \input -> liftIO (runProcessWithInput "qalc" [input] "") >>= calcPrompt c
-  where trim = f . f where f = reverse . dropWhile isSpace

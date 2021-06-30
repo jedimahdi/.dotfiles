@@ -136,6 +136,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
   },
+  ["nvim-spectre"] = {
+    loaded = true,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-spectre"
+  },
   ["nvim-tree.lua"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"

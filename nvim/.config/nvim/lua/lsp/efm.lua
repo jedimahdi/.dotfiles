@@ -1,29 +1,4 @@
 -- Example configuations here: https://github.com/mattn/efm-langserver
--- python
-local python_arguments = {}
-
--- TODO replace with path argument
-local flake8 = {
-  LintCommand = 'flake8 --ignore=E501 --stdin-display-name ${INPUT} -',
-  lintStdin = true,
-  lintFormats = { '%f:%l:%c: %m' },
-}
-
-local isort = { formatCommand = 'isort --quiet -', formatStdin = true }
-
-local yapf = { formatCommand = 'yapf --quiet', formatStdin = true }
-local black = { formatCommand = 'black --quiet -', formatStdin = true }
-
-if O.python.linter == 'flake8' then table.insert(python_arguments, flake8) end
-
-if O.python.isort then table.insert(python_arguments, isort) end
-
-if O.python.formatter == 'yapf' then
-  table.insert(python_arguments, yapf)
-elseif O.python.formatter == 'black' then
-  table.insert(python_arguments, black)
-end
-
 -- lua
 local lua_arguments = {}
 
@@ -74,28 +49,16 @@ if O.tsserver.formatter == 'prettier' then table.insert(tsserver_args, prettier)
 
 if O.tsserver.linter == 'eslint' then table.insert(tsserver_args, eslint) end
 
--- local markdownlint = {
---     -- TODO default to global lintrc
---     -- lintcommand = 'markdownlint -s -c ./markdownlintrc',
---     lintCommand = 'markdownlint -s',
---     lintStdin = true,
---     lintFormats = {'%f:%l %m', '%f:%l:%c %m', '%f: %l: %m'}
--- }
-
-local markdownPandocFormat = { formatCommand = 'pandoc -f markdown -t gfm -sp --tab-stop=2', formatStdin = true }
-
 require'lspconfig'.efm.setup {
   -- init_options = {initializationOptions},
   cmd = { DATA_PATH .. '/lspinstall/efm/efm-langserver' },
   init_options = { documentFormatting = true, codeAction = false },
   filetypes = {
-    'lua', 'python', 'javascriptreact', 'javascript', 'typescript', 'typescriptreact', 'sh', 'html', 'css', 'json',
-    'yaml', 'markdown', 'vue',
+    'lua', 'javascriptreact', 'javascript', 'typescript', 'typescriptreact', 'sh', 'html', 'css', 'json', 'yaml', 'vue',
   },
   settings = {
     rootMarkers = { '.git/' },
     languages = {
-      python = python_arguments,
       lua = lua_arguments,
       sh = sh_arguments,
       javascript = tsserver_args,
@@ -106,10 +69,6 @@ require'lspconfig'.efm.setup {
       css = { prettier },
       json = { prettier },
       yaml = { prettier },
-      markdown = { markdownPandocFormat },
-      -- javascriptreact = {prettier, eslint},
-      -- javascript = {prettier, eslint},
-      -- markdown = {markdownPandocFormat, markdownlint},
     },
   },
 }

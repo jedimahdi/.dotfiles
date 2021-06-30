@@ -3,10 +3,10 @@ module MyXmonad.Util.Prompt.Hoogle
     ) where
 
 import           Data.List                    ( findIndex, isPrefixOf, tails )
+import           MyXmonad.Util.Prompt.Prelude ( completionFunctionWith )
 import qualified MyXmonad.Util.Prompt.Prelude as Prompt
 import           XMonad                       hiding ( config )
 import           XMonad.Prompt
-import           XMonad.Util.Run
 
 data Hoogle = Hoogle
 
@@ -34,5 +34,3 @@ hoogleRun s = do
 pathToHoogleBin :: String
 pathToHoogleBin = "/home/mahdi/.cabal/bin/hoogle"
 
-completionFunctionWith :: String -> [String] -> IO [String]
-completionFunctionWith cmd args = lines <$> runProcessWithInput cmd args ""

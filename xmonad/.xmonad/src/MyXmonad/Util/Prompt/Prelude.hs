@@ -1,5 +1,6 @@
 module MyXmonad.Util.Prompt.Prelude
-    ( config
+    ( completionFunctionWith
+    , config
     ) where
 
 import           Control.Arrow            ( first )
@@ -9,6 +10,10 @@ import           XMonad.Config.Dmwit
 import           XMonad.Prompt
 import           XMonad.Prompt.FuzzyMatch
 import qualified XMonad.StackSet          as W
+import           XMonad.Util.Run          ( runProcessWithInput )
+
+completionFunctionWith :: String -> [String] -> IO [String]
+completionFunctionWith cmd args = lines <$> runProcessWithInput cmd args ""
 
 myFont :: String
 myFont = "xft:Ubuntu:regular:size=13:antialias=true:hinting=true"

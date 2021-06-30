@@ -5,6 +5,7 @@ module MyXmonad.Keybindings
 import           Data.Map                        ( Map )
 import qualified Data.Map                        as Map
 import           Graphics.X11.ExtraTypes.XF86
+import qualified MyXmonad.Settings               as Settings
 import qualified MyXmonad.Util.Dmenu.Configs     as Dmenu
 import qualified MyXmonad.Util.Prompt.Calculator as Prompt
 import qualified MyXmonad.Util.Prompt.Hoogle     as Prompt
@@ -20,11 +21,12 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } =
     $  [ ((myModMask, xK_Return)              , spawn $ XMonad.terminal conf)
        , ((myModMask, xK_d)                   , spawn "dmenu_run")
        , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Pictures/wallpapers/*")
-       , ((myModMask .|. shiftMask, xK_Return), spawn "kitty --directory `xcwd`")
+       , ((myModMask .|. shiftMask, xK_Return), spawn $ Settings.terminal ++ " " ++ Settings.terminalDirectoryFlag ++ " `xcwd`")
        , ((myModMask, xK_z)                   , spawn "pcmanfm")
        , ((myModMask, xK_x)                   , spawn "dmkill")
        , ((myModMask, xK_c)                   , Dmenu.configs)
        , ((myModMask, xK_g)                   , Prompt.hoogle)
+       , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
        , ((myModMask, xK_space)               , sendMessage NextLayout)
        , ((myModMask .|. shiftMask, xK_space) , setLayout $ XMonad.layoutHook conf)
        , ((myModMask, xK_j)                   , windows W.focusDown)
@@ -39,7 +41,6 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } =
        , ((myModMask, xK_comma)               , sendMessage (IncMasterN 1))
        , ((myModMask, xK_period)              , sendMessage (IncMasterN (-1)))
        , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
-       , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
        , ((myModMask, xK_Tab)                 , toggleWS)
        , ((myModMask, xK_q)                   , kill)
        , ((myModMask, xK_f)                   , sendMessage ToggleStruts)

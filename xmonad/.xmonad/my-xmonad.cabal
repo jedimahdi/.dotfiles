@@ -6,6 +6,7 @@ cabal-version:      >= 1.8
 library
   exposed-modules: 
     MyXmonad
+    MyXmonad.Settings
     MyXmonad.Keybindings
     MyXmonad.Layout
     MyXmonad.Util.Dmenu.Configs

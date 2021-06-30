@@ -7,6 +7,7 @@ import           Data.Maybe                ( fromJust )
 import           Graphics.X11.Xlib
 import           MyXmonad.Keybindings      ( myKeys )
 import           MyXmonad.Layout           ( myLayout )
+import qualified MyXmonad.Settings         as Settings
 import           System.IO                 ( hPutStrLn )
 import           XMonad
 import           XMonad.Actions.ShowText
@@ -16,9 +17,6 @@ import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet           as W
 import           XMonad.Util.Run           ( spawnPipe )
 import           XMonad.Util.SpawnOnce
-
-myTerminal :: String
-myTerminal = "kitty"
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -49,7 +47,7 @@ myManageHook = mconcat
   , className =? "Uget-gtk" --> doShift (myWorkspaces !! 5)
   , className =? "Pcmanfm" --> doShift (myWorkspaces !! 3)
   , className =? "TelegramDesktop" --> doShift (myWorkspaces !! 4)
-  , className =? "Spotify" --> doShift (myWorkspaces !! 7)
+  , (title =? "Spotify Premium" <||> title =? "Spotify") --> doShift (myWorkspaces !! 7)
   , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat
   ]
 
@@ -75,7 +73,7 @@ main = do
   xmproc <- spawnPipe "xmobar"
   xmonad . ewmh . docks $ def
     { modMask            = mod4Mask
-    , terminal           = myTerminal
+    , terminal           = Settings.terminal
     , keys               = myKeys
     , workspaces         = myWorkspaces
     , startupHook        = myStartupHook

@@ -14,6 +14,20 @@ import           XMonad
 import           XMonad.Actions.CycleWS          ( toggleWS )
 import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet                 as W
+import System.IO
+
+debugStuff :: X ()
+debugStuff = withWindowSet (\ws -> do
+    liftIO $ logToTmpFile $ show ws 
+  )
+
+myAppendFile :: FilePath -> String -> IO ()
+myAppendFile f s = do
+  withFile f AppendMode $ \h -> do
+    hPutStrLn h s
+
+logToTmpFile :: String -> IO ()
+logToTmpFile = myAppendFile "~/tmp/xmonad.log" . (++ "\n")
 
 myKeys :: XConfig Layout -> Map (ButtonMask, KeySym) (X ())
 myKeys conf@XConfig { XMonad.modMask = myModMask } =
@@ -23,7 +37,8 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } =
        , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Pictures/wallpapers/*")
        , ((myModMask .|. shiftMask, xK_Return), spawn $ Settings.terminal ++ " " ++ Settings.terminalDirectoryFlag ++ " `xcwd`")
        , ((myModMask, xK_z)                   , spawn "pcmanfm")
-       , ((myModMask, xK_x)                   , spawn "dmkill")
+       , ((myModMask, xK_x)                   , debugStuff)
+       -- , ((myModMask, xK_x)                   , spawn "dmkill")
        , ((myModMask, xK_c)                   , Dmenu.configs)
        , ((myModMask, xK_g)                   , Prompt.hoogle)
        , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)

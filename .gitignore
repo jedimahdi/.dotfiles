@@ -65,3 +65,4 @@ coverage
 
 xmonad.errors
 cabal.project.freeze
+prompt-history

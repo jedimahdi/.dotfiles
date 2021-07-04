@@ -15,16 +15,20 @@ return require('packer').startup(function(use)
 
   -- Theme
   use 'ulwlu/elly.vim'
-  use { 'christianchiarulli/nvcode-color-schemes.vim' }
+  -- use { 'christianchiarulli/nvcode-color-schemes.vim' }
   use 'joshdick/onedark.vim'
   -- use 'navarasu/onedark.nvim'
   use 'glepnir/zephyr-nvim'
   use 'kyazdani42/nvim-web-devicons'
   use { 'ryanoasis/vim-devicons', opt = true }
   use 'glepnir/galaxyline.nvim'
-  use 'folke/tokyonight.nvim'
+  -- use 'folke/tokyonight.nvim'
+  use 'ghifarit53/tokyonight-vim'
   use 'bluz71/vim-moonfly-colors'
-  use 'shaunsingh/moonlight.nvim'
+  use 'w0ng/vim-hybrid'
+  use 'sainnhe/everforest'
+  use 'rakr/vim-one'
+  -- use 'shaunsingh/moonlight.nvim'
   -- use 'RRethy/nvim-base16'
 
   -- File finder
@@ -70,9 +74,7 @@ return require('packer').startup(function(use)
   -- use 'itchyny/vim-cursorword'
   use 'hrsh7th/vim-eft'
   use 'windwp/nvim-autopairs'
-  use 'windwp/nvim-ts-autotag'
   use 'moll/vim-bbye'
-  use 'rhysd/accelerated-jk'
 
   use 'folke/which-key.nvim'
 

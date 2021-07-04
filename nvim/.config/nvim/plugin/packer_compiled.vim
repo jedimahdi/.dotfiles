@@ -80,6 +80,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/elly.vim"
   },
+  everforest = {
+    loaded = true,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/everforest"
+  },
   ["galaxyline.nvim"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
@@ -100,21 +104,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
   },
-  ["moonlight.nvim"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/moonlight.nvim"
-  },
-  neoformat = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/neoformat"
-  },
   neogit = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/neogit"
-  },
-  ["nvcode-color-schemes.vim"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvcode-color-schemes.vim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -188,9 +180,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
-  ["tokyonight.nvim"] = {
+  ["tokyonight-vim"] = {
     loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/tokyonight.nvim"
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/tokyonight-vim"
   },
   ["trouble.nvim"] = {
     loaded = true,
@@ -217,9 +209,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-eft"
   },
+  ["vim-hybrid"] = {
+    loaded = true,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-hybrid"
+  },
   ["vim-moonfly-colors"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-moonfly-colors"
+  },
+  ["vim-one"] = {
+    loaded = true,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-one"
   },
   ["vim-surround"] = {
     loaded = true,

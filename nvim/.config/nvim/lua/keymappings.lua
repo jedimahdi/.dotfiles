@@ -154,7 +154,6 @@ which_key.register({
     g = { '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', 'whit live grep' },
     h = { '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', 'help tags' },
   }, ]]
-  ['t'] = 'toggle terminal',
 }, {
   mode = 'n', -- NORMAL mode
   prefix = '<leader>',

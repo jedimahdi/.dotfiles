@@ -1,6 +1,5 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
-local packer = require('packer')
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -11,6 +10,9 @@ end
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
 
+local packer_ok, packer = pcall(require, 'packer')
+if not packer_ok then return end
+
 return packer.startup({
   function(use)
     use 'wbthomason/packer.nvim'
@@ -19,6 +21,7 @@ return packer.startup({
     use 'neovim/nvim-lspconfig'
     use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
     use 'glepnir/lspsaga.nvim'
+    use { 'tjdevries/astronauta.nvim' }
     use 'folke/trouble.nvim'
 
     -- Theme
@@ -54,8 +57,8 @@ return packer.startup({
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
     use { 'norcalli/nvim-colorizer.lua' }
-    use { 'purescript-contrib/purescript-vim' }
-    use { 'p00f/nvim-ts-rainbow' }
+    use { 'purescript-contrib/purescript-vim', ft = 'purescript' }
+    -- use { 'p00f/nvim-ts-rainbow' }
 
     -- Autocomplete
     use {
@@ -68,12 +71,12 @@ return packer.startup({
     use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
 
     -- Git
-    use { 'TimUntersberger/neogit' }
+    -- use { 'TimUntersberger/neogit' }
     use {
       'lewis6991/gitsigns.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-        require('plugins.gitsigns').config()
+        require('plugins.gitsigns')
       end,
       event = 'BufRead',
     }
@@ -84,12 +87,12 @@ return packer.startup({
     -- Other
     use 'tpope/vim-surround'
     -- use 'itchyny/vim-cursorword'
-    use 'hrsh7th/vim-eft'
+    -- use 'hrsh7th/vim-eft'
     use {
       'steelsojka/pears.nvim',
       event = 'InsertEnter',
       config = function()
-        require('pears').config()
+        require('pears').setup()
       end,
     }
     -- use 'windwp/nvim-autopairs'

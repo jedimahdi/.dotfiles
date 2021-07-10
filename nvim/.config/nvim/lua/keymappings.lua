@@ -97,13 +97,6 @@ which_key.register({
   },
   g = {
     name = 'Git',
-    j = { '<cmd>NextHunk<cr>', 'Next Hunk' },
-    k = { '<cmd>PrevHunk<cr>', 'Prev Hunk' },
-    p = { '<cmd>PreviewHunk<cr>', 'Preview Hunk' },
-    r = { '<cmd>ResetHunk<cr>', 'Reset Hunk' },
-    R = { '<cmd>ResetBuffer<cr>', 'Reset Buffer' },
-    s = { '<cmd>StageHunk<cr>', 'Stage Hunk' },
-    u = { '<cmd>UndoStageHunk<cr>', 'Undo Stage Hunk' },
     o = { '<cmd>Telescope git_status<cr>', 'Open changed file' },
     b = { '<cmd>Telescope git_branches<cr>', 'Checkout branch' },
     c = { '<cmd>Telescope git_commits<cr>', 'Checkout commit' },

@@ -1,13 +1,18 @@
-local actions = require('telescope.actions')
-require('telescope').setup {
+local telescope_ok, telescope = pcall(require, 'telescope')
+local actions_ok, actions = pcall(require, 'telescope.actions')
+if not telescope_ok or not actions_ok then
+  return
+end
+
+telescope.setup {
   defaults = {
-    -- prompt_prefix = '🔭 ',
     initial_mode = 'insert',
     sorting_strategy = 'ascending',
-    -- results_width = 0.6,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+    file_previewer = require('telescope.previewers').vim_buffer_cat.new,
+    grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
+    qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
+    file_sorter = require('telescope.sorters').get_fzy_sorter,
+    generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
 
     layout_config = { prompt_position = 'top' },
 
@@ -24,10 +29,4 @@ require('telescope').setup {
       },
     },
   },
-  extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
 }
-require('telescope').load_extension('fzy_native')
-
--- require('telescope').load_extension('fzy_native')
--- require'telescope'.load_extension('dotfiles')
--- require'telescope'.load_extension('gosource')

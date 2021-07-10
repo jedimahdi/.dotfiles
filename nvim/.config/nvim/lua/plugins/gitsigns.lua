@@ -1,10 +1,10 @@
-require('gitsigns').setup({
-  signs = {
-    add = { hl = 'GitGutterAdd' },
-    change = { hl = 'GitGutterChange' },
-    delete = { hl = 'GitGutterDelete' },
-    topdelete = { hl = 'GitGutterDelete' },
-    changedelete = { hl = 'GitGutterChange' },
-  },
+require('gitsigns').setup {
+  -- signs = {
+  --   add = { hl = 'GitGutterAdd' },
+  --   change = { hl = 'GitGutterChange' },
+  --   delete = { hl = 'GitGutterDelete' },
+  --   topdelete = { hl = 'GitGutterDelete' },
+  --   changedelete = { hl = 'GitGutterChange' },
+  -- },
   numhl = false,
-})
+}

@@ -45,6 +45,7 @@ zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
 # Key-bindings
 bindkey -s '^o' 'ranger^M'
 bindkey -s '^f' 'zi^M'
+bindkey -s '^g' 'lazygit^M'
 bindkey -s '^s' 'ncdu^M'
 # bindkey -s '^n' 'nvim $(fzf)^M'
 # bindkey -s '^v' 'nvim\n'

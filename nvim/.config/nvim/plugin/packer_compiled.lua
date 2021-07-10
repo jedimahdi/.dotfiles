@@ -88,10 +88,6 @@ _G.packer_plugins = {
     needs_bufread = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/opt/haskell-vim"
   },
-  kommentary = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/kommentary"
-  },
   ["lspsaga.nvim"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
@@ -100,9 +96,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvcode-color-schemes.vim"
   },
-  ["nvim-colorizer.lua"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
+  ["nvim-comment"] = {
+    config = { "\27LJ\1\2P\0\0\3\0\4\0\n4\0\0\0004\1\1\0%\2\2\0>\0\3\3\14\0\0\0T\2\1€G\0\1\0007\2\3\1>\2\1\1G\0\1\0\nsetup\17nvim_comment\frequire\npcall\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/opt/nvim-comment"
   },
   ["nvim-compe"] = {
     after_files = { "/home/mahdi/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe.vim" },
@@ -125,16 +123,13 @@ _G.packer_plugins = {
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-spectre"
   },
   ["nvim-tree.lua"] = {
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21plugins.nvimtree\frequire\0" },
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
-  },
-  ["nvim-ts-rainbow"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -163,13 +158,11 @@ _G.packer_plugins = {
     needs_bufread = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim"
   },
-  ["telescope-fzy-native.nvim"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
-  },
   ["telescope.nvim"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.telescope\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/mahdi/.local/share/nvim/site/pack/packer/opt/telescope.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
@@ -179,10 +172,6 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/opt/vim-devicons"
-  },
-  ["vim-surround"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
   ["vim-vsnip"] = {
     loaded = false,
@@ -200,6 +189,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21plugins.nvimtree\frequire\0", "config", "nvim-tree.lua")
+time([[Config for nvim-tree.lua]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
@@ -209,9 +202,10 @@ vim.cmd [[au FileType haskell ++once lua require("packer.load")({'haskell-vim'},
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'telescope.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au VimEnter * ++once lua require("packer.load")({'nvim-lspinstall'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'vim-vsnip', 'nvim-compe', 'pears.nvim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'gitsigns.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-comment', 'gitsigns.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

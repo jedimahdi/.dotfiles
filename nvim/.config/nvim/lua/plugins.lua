@@ -1,19 +1,19 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local install_path = DATA_PATH .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
   execute 'packadd packer.nvim'
 end
 
-vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
+vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
 
 local packer_ok, packer = pcall(require, 'packer')
 if not packer_ok then return end
 
-return packer.startup({
+return packer.startup {
   function(use)
     use 'wbthomason/packer.nvim'
 
@@ -30,34 +30,42 @@ return packer.startup({
     use 'kyazdani42/nvim-web-devicons'
     use { 'ryanoasis/vim-devicons', opt = true }
     use 'glepnir/galaxyline.nvim'
-    -- use 'folke/tokyonight.nvim'
-    -- use 'ghifarit53/tokyonight-vim'
-    -- use 'bluz71/vim-moonfly-colors'
-    -- use 'w0ng/vim-hybrid'
-    -- use 'sainnhe/everforest'
-    -- use 'rakr/vim-one'
-    -- use 'sonph/onehalf'
-    -- use 'sheerun/vim-polyglot'
-    -- use 'shaunsingh/moonlight.nvim'
-    -- use 'RRethy/nvim-base16'
 
     -- File finder
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
+    use { 'nvim-lua/popup.nvim' }
+    use { 'nvim-lua/plenary.nvim' }
+    use {
+      'nvim-telescope/telescope.nvim',
+      config = function()
+        require 'plugins.telescope'
+      end,
+      event = 'BufWinEnter',
+    }
 
     -- File tree
-    use { 'kyazdani42/nvim-tree.lua' }
+    use {
+      'kyazdani42/nvim-tree.lua',
+      config = function()
+        require 'plugins.nvimtree'
+      end,
+    }
 
     -- Comment
-    use { 'b3nj5m1n/kommentary' }
+    use {
+      'terrortylor/nvim-comment',
+      event = 'BufRead',
+      config = function()
+        local status_ok, nvim_comment = pcall(require, 'nvim_comment')
+        if not status_ok then return end
+        nvim_comment.setup()
+      end,
+    }
 
     -- Syntax
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
-    use { 'norcalli/nvim-colorizer.lua' }
     use { 'purescript-contrib/purescript-vim', ft = 'purescript' }
+    -- use { 'norcalli/nvim-colorizer.lua' }
     -- use { 'p00f/nvim-ts-rainbow' }
 
     -- Autocomplete
@@ -65,18 +73,17 @@ return packer.startup({
       'hrsh7th/nvim-compe',
       event = 'InsertEnter',
       config = function()
-        require('plugins.compe')
+        require 'plugins.compe'
       end,
     }
     use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
 
     -- Git
-    -- use { 'TimUntersberger/neogit' }
     use {
       'lewis6991/gitsigns.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-        require('plugins.gitsigns')
+        require 'plugins.gitsigns'
       end,
       event = 'BufRead',
     }
@@ -85,9 +92,7 @@ return packer.startup({
     use { 'windwp/nvim-spectre' }
 
     -- Other
-    use 'tpope/vim-surround'
-    -- use 'itchyny/vim-cursorword'
-    -- use 'hrsh7th/vim-eft'
+    -- use 'tpope/vim-surround'
     use {
       'steelsojka/pears.nvim',
       event = 'InsertEnter',
@@ -95,22 +100,22 @@ return packer.startup({
         require('pears').setup()
       end,
     }
-    -- use 'windwp/nvim-autopairs'
-    -- use 'windwp/nvim-ts-autotag'
-    -- use 'moll/vim-bbye'
-    -- use 'rhysd/accelerated-jk'
 
     use { 'folke/which-key.nvim' }
-
-    --[[ use 'tpope/vim-dadbod'
-  use 'kristijanhusak/vim-dadbod-ui' ]]
+    -- use {
+    --   'mhartington/formatter.nvim',
+    --   config = function()
+    --     require 'plugins.formatter'
+    --   end,
+    --   event = 'BufRead',
+    -- }
   end,
   config = {
     git = { clone_timeout = 300 },
     display = {
       open_fn = function()
-        return require('packer.util').float({ border = 'single' })
+        return require('packer.util').float { border = 'single' }
       end,
     },
   },
-})
+}

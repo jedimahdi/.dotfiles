@@ -1,6 +1,3 @@
-local home = os.getenv('HOME')
-local cache_dir = home .. '/.cache/nvim/'
-
 local function apply_options(opts)
   for k, v in pairs(opts) do
     if v == true then
@@ -33,11 +30,11 @@ apply_options {
   writebackup = false,
   undofile = true,
   swapfile = false,
-  directory = cache_dir .. 'swag/',
-  undodir = cache_dir .. 'undo/',
-  backupdir = cache_dir .. 'backup/',
-  viewdir = cache_dir .. 'view/',
-  spellfile = cache_dir .. 'spell/en.uft-8.add',
+  directory = CACHE_PATH .. '/swag/',
+  undodir = CACHE_PATH .. '/undo/',
+  backupdir = CACHE_PATH .. '/backup/',
+  viewdir = CACHE_PATH .. '/view/',
+  spellfile = CACHE_PATH .. '/spell/en.uft-8.add',
   history = 2000,
   shada = '!,\'300,<50,@100,s10,h',
   smarttab = true,

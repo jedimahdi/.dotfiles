@@ -1,7 +1,7 @@
 local sumneko_root_path = DATA_PATH .. '/lspinstall/lua'
 local sumneko_binary = sumneko_root_path .. '/sumneko-lua-language-server'
 
-require'lspconfig'.sumneko_lua.setup {
+require('lspconfig').sumneko_lua.setup {
   filetypes = { 'lua' },
   cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
   settings = {
@@ -18,7 +18,7 @@ require'lspconfig'.sumneko_lua.setup {
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
-        library = { [vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true },
+        library = { [vim.fn.expand '$VIMRUNTIME/lua'] = true, [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true },
         maxPreload = 10000,
       },
     },

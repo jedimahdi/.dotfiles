@@ -1,4 +1,4 @@
-local gl = require('galaxyline')
+local gl = require 'galaxyline'
 -- get my theme in galaxyline repo
 -- local colors = require('galaxyline.theme').default
 local colors = {
@@ -21,7 +21,7 @@ local colors = {
   error_red = '#F44747',
   info_yellow = '#FFCC66',
 }
-local condition = require('galaxyline.condition')
+local condition = require 'galaxyline.condition'
 local gls = gl.section
 gl.short_line_list = { 'NvimTree', 'vista', 'dbui', 'packer' }
 
@@ -127,7 +127,9 @@ table.insert(gls.right, {
 table.insert(gls.right, {
   TreesitterIcon = {
     provider = function()
-      if next(vim.treesitter.highlighter.active) ~= nil then return ' ' end
+      if next(vim.treesitter.highlighter.active) ~= nil then
+        return ' '
+      end
       return ''
     end,
     separator = ' ',
@@ -141,7 +143,9 @@ table.insert(gls.right, {
     provider = 'GetLspClient',
     condition = function()
       local tbl = { ['dashboard'] = true, [' '] = true }
-      if tbl[vim.bo.filetype] then return false end
+      if tbl[vim.bo.filetype] then
+        return false
+      end
       return true
     end,
     icon = '  ',

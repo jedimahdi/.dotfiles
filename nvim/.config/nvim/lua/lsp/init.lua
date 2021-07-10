@@ -12,6 +12,6 @@ function _G.open_lsp_log()
   vim.cmd('edit ' .. path)
 end
 
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
-vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
+-- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+vim.cmd 'command! -nargs=0 LspLog call v:lua.open_lsp_log()'
 -- vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')

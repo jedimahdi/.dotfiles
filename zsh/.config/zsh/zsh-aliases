@@ -6,6 +6,7 @@ alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git
 alias v="nvim"
 alias c="clear"
 alias gs="git status"
+alias lg="lazygit"
 alias pacman="sudo pacman"
 alias ls="ls -hN --color=auto --group-directories-first"
 

@@ -1,30 +1,13 @@
-require 'globals'
+CONFIG_PATH = vim.fn.stdpath 'config'
+DATA_PATH = vim.fn.stdpath 'data'
+CACHE_PATH = vim.fn.stdpath 'cache'
+
 require 'keymappings'
 require 'plugins'
 require 'colorscheme'
 require 'options'
-
--- Plugins
-require 'plugins.galaxyline'
-require 'plugins.telescope'
-require 'plugins.lspsaga'
--- require 'plugins.compe'
-require 'plugins.nvimtree'
-require 'plugins.treesitter'
--- require 'plugins.gitsigns'
--- require 'plugins.vsnip'
--- require 'plugins.colorizer'
--- require 'plugins.quickscope'
--- require 'plugins.trouble'
--- require 'plugins.spectre'
-
--- LSP
 require 'lsp'
--- require 'lsp.lua'
--- require 'lsp.haskell'
--- require 'lsp.purescript'
--- require 'lsp.ts'
--- require 'lsp.efm'
--- require 'lsp.html'
--- require 'pllsp.bash'
--- require 'lsp.emmet'
+
+require 'plugins.treesitter'
+require 'plugins.galaxyline'
+require 'plugins.lspsaga'

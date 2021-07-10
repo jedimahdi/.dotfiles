@@ -77,8 +77,8 @@ vim.api.nvim_set_keymap('n', 'gr', '<cmd>Trouble lsp_references<cr>', { silent =
 vim.api.nvim_set_keymap('n', '<leader>q', ':Bdelete<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>z', ':Neogit<CR>', { noremap = true, silent = true })
 
-vim.cmd('nmap j <Plug>(accelerated_jk_gj)')
-vim.cmd('nmap k <Plug>(accelerated_jk_gk)')
+--[[ vim.cmd('nmap j <Plug>(accelerated_jk_gj)')
+vim.cmd('nmap k <Plug>(accelerated_jk_gk)') ]]
 
 vim.cmd('command Q q')
 vim.cmd('command W w')
@@ -153,8 +153,8 @@ which_key.register({
     f = { '<cmd>lua require(\'telescope.builtin\').find_files({follow = true})<cr>', 'files' },
     g = { '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', 'whit live grep' },
     h = { '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', 'help tags' },
-  },
-  ['t'] = 'toggle terminal', ]]
+  }, ]]
+  ['t'] = 'toggle terminal',
 }, {
   mode = 'n', -- NORMAL mode
   prefix = '<leader>',

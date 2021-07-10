@@ -43,7 +43,7 @@ local sumneko_binary = sumneko_root_path .. '/bin/Linux/lua-language-server'
 } ]]
 
 -- Purescript
-require'lspconfig'.purescriptls.setup {}
+-- require'lspconfig'.purescriptls.setup {}
 
 -- C++
 require'lspconfig'.clangd.setup {}

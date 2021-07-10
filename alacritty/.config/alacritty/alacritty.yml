@@ -3,8 +3,7 @@ env:
 
 font:
   normal:
-    family: 'Iosevka' 
-    style: Medium
+    family: 'Hack' 
 
   bold:
     family: 'Iosevka' 
@@ -12,7 +11,7 @@ font:
   italic:
     family: 'Iosevka' 
  
-  size: 10.0
+  size: 9.0
 
   offset:
     x: 0

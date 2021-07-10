@@ -1,8 +1,8 @@
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 vim.g.nvim_tree_bindings = {
+  { key = 'l', cb = tree_cb('edit') },
   -- mappings
-  ['<CR>'] = tree_cb('edit'),
-  ['l'] = tree_cb('edit'),
+  --[[ ['<CR>'] = tree_cb('edit'),
   ['o'] = tree_cb('edit'),
   ['<2-LeftMouse>'] = tree_cb('edit'),
   ['<2-RightMouse>'] = tree_cb('cd'),
@@ -27,5 +27,5 @@ vim.g.nvim_tree_bindings = {
   ['[c'] = tree_cb('prev_git_item'),
   [']c'] = tree_cb('next_git_item'),
   ['-'] = tree_cb('dir_up'),
-  ['q'] = tree_cb('close'),
+  ['q'] = tree_cb('close'), ]]
 }

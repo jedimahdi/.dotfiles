@@ -1,5 +1,6 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
+local packer = require('packer')
 
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -10,74 +11,103 @@ end
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
 
-return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
+return packer.startup({
+  function(use)
+    use 'wbthomason/packer.nvim'
 
-  -- Theme
-  use 'ulwlu/elly.vim'
-  -- use { 'christianchiarulli/nvcode-color-schemes.vim' }
-  use 'joshdick/onedark.vim'
-  -- use 'navarasu/onedark.nvim'
-  use 'glepnir/zephyr-nvim'
-  use 'kyazdani42/nvim-web-devicons'
-  use { 'ryanoasis/vim-devicons', opt = true }
-  use 'glepnir/galaxyline.nvim'
-  -- use 'folke/tokyonight.nvim'
-  use 'ghifarit53/tokyonight-vim'
-  use 'bluz71/vim-moonfly-colors'
-  use 'w0ng/vim-hybrid'
-  use 'sainnhe/everforest'
-  use 'rakr/vim-one'
-  -- use 'shaunsingh/moonlight.nvim'
-  -- use 'RRethy/nvim-base16'
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
+    use 'glepnir/lspsaga.nvim'
+    use 'folke/trouble.nvim'
 
-  -- File finder
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-fzy-native.nvim'
+    -- Theme
+    use 'christianchiarulli/nvcode-color-schemes.vim'
+    use 'glepnir/zephyr-nvim'
+    use 'kyazdani42/nvim-web-devicons'
+    use { 'ryanoasis/vim-devicons', opt = true }
+    use 'glepnir/galaxyline.nvim'
+    -- use 'folke/tokyonight.nvim'
+    -- use 'ghifarit53/tokyonight-vim'
+    -- use 'bluz71/vim-moonfly-colors'
+    -- use 'w0ng/vim-hybrid'
+    -- use 'sainnhe/everforest'
+    -- use 'rakr/vim-one'
+    -- use 'sonph/onehalf'
+    -- use 'sheerun/vim-polyglot'
+    -- use 'shaunsingh/moonlight.nvim'
+    -- use 'RRethy/nvim-base16'
 
-  -- File tree
-  use 'kyazdani42/nvim-tree.lua'
+    -- File finder
+    use 'nvim-lua/popup.nvim'
+    use 'nvim-lua/plenary.nvim'
+    use 'nvim-telescope/telescope.nvim'
+    use 'nvim-telescope/telescope-fzy-native.nvim'
 
-  -- Comment
-  use 'b3nj5m1n/kommentary'
+    -- File tree
+    use { 'kyazdani42/nvim-tree.lua' }
 
-  -- Syntax
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'neovimhaskell/haskell-vim' }
-  use 'norcalli/nvim-colorizer.lua'
-  use 'purescript-contrib/purescript-vim'
+    -- Comment
+    use { 'b3nj5m1n/kommentary' }
 
-  -- LSP
-  use 'neovim/nvim-lspconfig'
-  use 'glepnir/lspsaga.nvim'
-  use { '~/apps/lua/nvim-lspinstall' }
-  use 'folke/trouble.nvim'
+    -- Syntax
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
+    use { 'norcalli/nvim-colorizer.lua' }
+    use { 'purescript-contrib/purescript-vim' }
+    use { 'p00f/nvim-ts-rainbow' }
 
-  -- Autocomplete
-  use 'hrsh7th/nvim-compe'
-  use 'hrsh7th/vim-vsnip'
+    -- Autocomplete
+    use {
+      'hrsh7th/nvim-compe',
+      event = 'InsertEnter',
+      config = function()
+        require('plugins.compe')
+      end,
+    }
+    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
 
-  -- Git
-  use 'TimUntersberger/neogit'
-  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+    -- Git
+    use { 'TimUntersberger/neogit' }
+    use {
+      'lewis6991/gitsigns.nvim',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = function()
+        require('plugins.gitsigns').config()
+      end,
+      event = 'BufRead',
+    }
 
-  -- Navigation
-  use 'unblevable/quick-scope'
+    -- Search
+    use { 'windwp/nvim-spectre' }
 
-  -- Search
-  use 'windwp/nvim-spectre'
+    -- Other
+    use 'tpope/vim-surround'
+    -- use 'itchyny/vim-cursorword'
+    use 'hrsh7th/vim-eft'
+    use {
+      'steelsojka/pears.nvim',
+      event = 'InsertEnter',
+      config = function()
+        require('pears').config()
+      end,
+    }
+    -- use 'windwp/nvim-autopairs'
+    -- use 'windwp/nvim-ts-autotag'
+    -- use 'moll/vim-bbye'
+    -- use 'rhysd/accelerated-jk'
 
-  -- Other
-  use 'tpope/vim-surround'
-  -- use 'itchyny/vim-cursorword'
-  use 'hrsh7th/vim-eft'
-  use 'windwp/nvim-autopairs'
-  use 'moll/vim-bbye'
+    use { 'folke/which-key.nvim' }
 
-  use 'folke/which-key.nvim'
-
-  use 'tpope/vim-dadbod'
-  use 'kristijanhusak/vim-dadbod-ui'
-end)
+    --[[ use 'tpope/vim-dadbod'
+  use 'kristijanhusak/vim-dadbod-ui' ]]
+  end,
+  config = {
+    git = { clone_timeout = 300 },
+    display = {
+      open_fn = function()
+        return require('packer.util').float({ border = 'single' })
+      end,
+    },
+  },
+})

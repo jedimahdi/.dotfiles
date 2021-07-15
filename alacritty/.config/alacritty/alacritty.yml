@@ -3,15 +3,16 @@ env:
 
 font:
   normal:
-    family: 'Hack' 
+    family: 'Iosevka Jedi' 
+    style: Medium
 
   bold:
-    family: 'Iosevka' 
+    family: 'Iosevka Jedi' 
  
   italic:
-    family: 'Iosevka' 
+    family: 'Iosevka Jedi' 
  
-  size: 9.0
+  size: 10.0
 
   offset:
     x: 0

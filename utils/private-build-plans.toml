@@ -1,0 +1,108 @@
+[buildPlans.iosevka-jedi]
+family = "Iosevka Jedi"
+spacing = "normal"
+serifs = "sans"
+no-cv-ss = true
+export-glyph-names = true
+
+  [buildPlans.iosevka-jedi.variants]
+  inherits = "ss07"
+
+    [buildPlans.iosevka-jedi.variants.design]
+    capital-a = "curly-serifless"
+    capital-b = "more-asymmetric-interrupted-serifless"
+    capital-c = "serifless"
+    capital-d = "more-rounded-serifless"
+    capital-e = "serifless"
+    capital-f = "serifless"
+    capital-g = "toothless-corner-serifless-hookless"
+    capital-h = "serifless"
+    capital-i = "short-serifed"
+    capital-j = "descending-serifed"
+    capital-k = "straight-bottom-right-serifed"
+    capital-l = "serifless"
+    capital-m = "slanted-sides-hanging"
+    capital-n = "asymmetric"
+    capital-p = "open"
+    capital-q = "crossing"
+    capital-r = "straight-open"
+    capital-s = "unilateral-inward-serifed"
+    capital-t = "serifless"
+    capital-u = "toothed"
+    capital-v = "curly"
+    capital-w = "straight-vertical-sides"
+    capital-x = "curly-serifless"
+    capital-y = "curly-serifless"
+    capital-z = "cursive"
+    a = "single-storey-earless-rounded-tailed"
+    b = "toothless-rounded"
+    c = "serifless"
+    d = "toothless-rounded-serifless"
+    e = "rounded"
+    f = "tailed-crossbar-at-x-height"
+    g = "single-storey-earless-rounded-flat-hook"
+    h = "tailed"
+    i = "tailed"
+    j = "flat-hook-serifless"
+    k = "cursive-serifless"
+    l = "tailed"
+    m = "earless-rounded-double-arch-short-leg-tailed"
+    n = "earless-corner-straight"
+    p = "earless-rounded"
+    q = "earless-rounded-tailed"
+    r = "earless-rounded"
+    s = "unilateral-inward-serifed"
+    t = "standard"
+    u = "bottom-right-serifed"
+    v = "curly"
+    w = "curly"
+    x = "curly-serifless"
+    y = "cursive-flat-hook"
+    z = "cursive"
+    zero = "dotted-oval"
+    one = "nobase-long-top-serif"
+    two = "curly-neck"
+    three = "flattop"
+    four = "open-non-crossing"
+    five = "oblique-upper-left-bar"
+    six = "open-contour"
+    seven = "curly-serifless"
+    eight = "crossing"
+    nine = "open-contour"
+    asterisk = "penta-low"
+    underscore = "high"
+    paren = "large-contour"
+    brace = "curly"
+    number-sign = "upright-open"
+    ampersand = "upper-open"
+    at = "short"
+    dollar = "open-cap"
+    percent = "dots"
+    lig-ltgteq = "slanted"
+    ascii-single-quote = "straight"
+    question = "corner-flat-hooked"
+    punctuation-dot = "round"
+
+  [buildPlans.iosevka-jedi.ligations]
+  inherits = "haskell"
+  enables = ["eqeqeq"]
+
+
+[buildPlans.iosevka-jedi.weights.regular]
+shape = 400
+menu = 400
+css = 400
+
+[buildPlans.iosevka-jedi.weights.medium]
+shape = 500
+menu = 500
+css = 500
+
+[buildPlans.iosevka-jedi.weights.semibold]
+shape = 600
+menu = 600
+css = 600
+
+  [buildPlans.iosevka-jedi.slopes]
+  upright = "normal"
+  italic = "italic"

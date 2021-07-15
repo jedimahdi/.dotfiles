@@ -25,11 +25,11 @@ return packer.startup {
     use 'folke/trouble.nvim'
 
     -- Theme
-    use 'christianchiarulli/nvcode-color-schemes.vim'
     use 'glepnir/zephyr-nvim'
     use 'kyazdani42/nvim-web-devicons'
     use { 'ryanoasis/vim-devicons', opt = true }
     use 'glepnir/galaxyline.nvim'
+    -- use 'joshdick/onedark.vim'
 
     -- File finder
     use { 'nvim-lua/popup.nvim' }
@@ -102,6 +102,8 @@ return packer.startup {
     }
 
     use { 'folke/which-key.nvim' }
+
+    -- use { 'editorconfig/editorconfig-vim' }
     -- use {
     --   'mhartington/formatter.nvim',
     --   config = function()
@@ -109,6 +111,8 @@ return packer.startup {
     --   end,
     --   event = 'BufRead',
     -- }
+
+    use 'tpope/vim-surround'
   end,
   config = {
     git = { clone_timeout = 300 },

@@ -7,18 +7,19 @@ import qualified Data.Map                        as Map
 import           Graphics.X11.ExtraTypes.XF86
 import qualified MyXmonad.Settings               as Settings
 import qualified MyXmonad.Util.Dmenu.Configs     as Dmenu
+import qualified MyXmonad.Util.Dmenu.Prompts     as Dmenu
 import qualified MyXmonad.Util.Prompt.Calculator as Prompt
 import qualified MyXmonad.Util.Prompt.Hoogle     as Prompt
 import           System.Exit                     ( exitSuccess )
+import           System.IO
 import           XMonad
 import           XMonad.Actions.CycleWS          ( toggleWS )
 import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet                 as W
-import System.IO
 
 debugStuff :: X ()
 debugStuff = withWindowSet (\ws -> do
-    liftIO $ logToTmpFile $ show ws 
+    liftIO $ logToTmpFile $ show ws
   )
 
 myAppendFile :: FilePath -> String -> IO ()
@@ -40,6 +41,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } =
        , ((myModMask, xK_x)                   , debugStuff)
        -- , ((myModMask, xK_x)                   , spawn "dmkill")
        , ((myModMask, xK_c)                   , Dmenu.configs)
+       , ((myModMask, xK_p)                   , Dmenu.prompts)
        , ((myModMask, xK_g)                   , Prompt.hoogle)
        , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
        , ((myModMask, xK_space)               , sendMessage NextLayout)

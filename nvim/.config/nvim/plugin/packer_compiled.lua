@@ -92,10 +92,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
   },
-  ["nvcode-color-schemes.vim"] = {
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/nvcode-color-schemes.vim"
-  },
   ["nvim-comment"] = {
     config = { "\27LJ\1\2P\0\0\3\0\4\0\n4\0\0\0004\1\1\0%\2\2\0>\0\3\3\14\0\0\0T\2\1€G\0\1\0007\2\3\1>\2\1\1G\0\1\0\nsetup\17nvim_comment\frequire\npcall\0" },
     loaded = false,

@@ -10,6 +10,7 @@ library
     MyXmonad.Keybindings
     MyXmonad.Layout
     MyXmonad.Util.Dmenu.Configs
+    MyXmonad.Util.Dmenu.Prompts
     MyXmonad.Util.Prompt.Prelude
     MyXmonad.Util.Prompt.Calculator
     MyXmonad.Util.Prompt.Hoogle

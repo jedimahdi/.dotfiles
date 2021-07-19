@@ -22,7 +22,7 @@ return packer.startup {
     use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
     use 'glepnir/lspsaga.nvim'
     use { 'tjdevries/astronauta.nvim' }
-    use 'folke/trouble.nvim'
+    -- use 'folke/trouble.nvim'
 
     -- Theme
     use 'glepnir/zephyr-nvim'
@@ -64,6 +64,7 @@ return packer.startup {
     -- Syntax
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
+    use { 'LnL7/vim-nix', ft = 'nix' }
     use { 'purescript-contrib/purescript-vim', ft = 'purescript' }
     -- use { 'norcalli/nvim-colorizer.lua' }
     -- use { 'p00f/nvim-ts-rainbow' }
@@ -71,12 +72,15 @@ return packer.startup {
     -- Autocomplete
     use {
       'hrsh7th/nvim-compe',
-      event = 'InsertEnter',
+      -- event = 'InsertEnter',
       config = function()
         require 'plugins.compe'
       end,
     }
-    use { 'hrsh7th/vim-vsnip', event = 'InsertEnter' }
+    use {
+      'hrsh7th/vim-vsnip',
+      -- event = 'InsertEnter'
+    }
 
     -- Git
     use {
@@ -89,13 +93,13 @@ return packer.startup {
     }
 
     -- Search
-    use { 'windwp/nvim-spectre' }
+    -- use { 'windwp/nvim-spectre' }
 
     -- Other
     -- use 'tpope/vim-surround'
     use {
       'steelsojka/pears.nvim',
-      event = 'InsertEnter',
+      -- event = 'InsertEnter',
       config = function()
         require('pears').setup()
       end,

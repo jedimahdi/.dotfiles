@@ -46,7 +46,7 @@ vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { norema
 vim.api.nvim_set_keymap('n', 'gD', ':Lspsaga preview_definition<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'gr', ':lua vim.lsp.buf.references()<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'gn', ':Lspsaga rename<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gn', ':lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gh', ':Lspsaga lsp_finder<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gs', ':lua vim.lsp.buf.signature_help()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>a', ':lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })

@@ -65,6 +65,7 @@ return packer.startup {
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
     use { 'LnL7/vim-nix', ft = 'nix' }
+    use { 'vmchale/dhall-vim', ft = 'dhall' }
     use { 'purescript-contrib/purescript-vim', ft = 'purescript' }
     -- use { 'norcalli/nvim-colorizer.lua' }
     -- use { 'p00f/nvim-ts-rainbow' }

@@ -7,7 +7,7 @@ alias v="nvim"
 alias c="clear"
 alias gs="git status"
 alias lg="lazygit"
-alias pacman="sudo pacman"
+alias pacman='sudo pacman --color auto'
 alias ls="ls -hN --color=auto --group-directories-first"
 
 # get fastest mirrors

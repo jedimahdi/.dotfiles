@@ -21,7 +21,6 @@ require('lspconfig').efm.setup {
     'css',
     'json',
     'yaml',
-    'vue',
   },
   settings = {
     rootMarkers = { '.git/', 'package.json' },

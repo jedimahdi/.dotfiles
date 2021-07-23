@@ -67,14 +67,7 @@
     lazygit
     feh
     uget
-    networkmanager
-    networkmanager-openvpn
-    openvpn
-    appstream
     spotify
-    systemd
-    mesa
-    protonvpn-gui
   ];
 
   services.lorri.enable = true;

@@ -59,7 +59,7 @@ myStartupHook :: X ()
 myStartupHook = mapM_
   spawnOnce
   [ trayer
-  -- , "nm-applet"
+   , "nm-applet"
   , "/home/mahdi/tmp/.dotfiles/.i3/keyboard.sh"
   -- , "xfce4-power-manager"
   -- , "/usr/lib/xfce4/notifyd/xfce4-notifyd"

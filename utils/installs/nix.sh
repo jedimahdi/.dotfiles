@@ -20,8 +20,7 @@ function add-unstable-channel() {
 
 function install-home-manager() {
   print_step "Install Home Manager."
-  cd "$DOTFILES"
-  stow nix
+  make_symlink nix
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
   export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH

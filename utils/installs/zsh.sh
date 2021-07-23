@@ -7,11 +7,14 @@ function install-zsh() {
   mkdir -p ~/.cache/zsh
   chsh -s $(which zsh)
   make_symlink zsh
-  # cd "$DOTFILES"
-  # stow zsh
 }
 
 function install-fzf() {
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
+}
+
+function install-zsh-all() {
+  install-zsh
+  install-fzf
 }

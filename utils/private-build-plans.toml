@@ -104,6 +104,3 @@ shape = 600
 menu = 600
 css = 600
 
-  [buildPlans.iosevka-jedi.slopes]
-  upright = "normal"
-  italic = "italic"

@@ -3,10 +3,10 @@ local fn = vim.fn
 
 local install_path = DATA_PATH .. '/site/pack/packer/start/packer.nvim'
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-  execute 'packadd packer.nvim'
-end
+-- if fn.empty(fn.glob(install_path)) > 0 then
+  -- execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  -- execute 'packadd packer.nvim'
+-- end
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
 
@@ -17,7 +17,7 @@ return packer.startup {
   function(use)
     use 'wbthomason/packer.nvim'
 
-    -- LSP
+       -- LSP
     use 'neovim/nvim-lspconfig'
     use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
     use 'glepnir/lspsaga.nvim'
@@ -118,6 +118,8 @@ return packer.startup {
     -- }
 
     use 'tpope/vim-surround'
+
+    -- LSP
   end,
   config = {
     git = { clone_timeout = 300 },

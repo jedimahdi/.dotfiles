@@ -25,72 +25,39 @@
     nixfmt
     niv
 
-    # Basic GNU uitls
-    coreutils
-    findutils
-    diffutils
-    binutils
-    mailutils
-    gawk
-    gnumake
-    automake
-    less
-    watch
-    wget
-    curl
-    fd
-    file
-    gnupg
-    glib
-    cmake
-    libtool
-
     # CLI
-    colordiff
-    pkg-config
-    bindfs
-    direnv
-    cloc
-    entr
-    ripgrep
-    pass
-    poppler
-    youtube-dl
-    jq
+    # direnv
     tree
-    tldr
     act
 
-    # C
-    llvm
-
     lazygit
-    feh
-    uget
     spotify
   ];
 
-  services.lorri.enable = true;
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+  # optional for nix flakes support
+  programs.direnv.nix-direnv.enableFlakes = true;
 
-  services.network-manager-applet.enable = true;
+#  services.lorri.enable = true;
 
-  services.dunst = {
-    enable = true;
-    settings = {
-      global = {
-        geometry = "300x5-30+20";
-        transparency = 10;
-        frame_color = "#eceff1";
-        font = "Droid Sans 9";
-      };
-
-      urgency_normal = {
-        background = "#37474f";
-        foreground = "#eceff1";
-        timeout = 10;
-      };
-    };
-  };
+ # services.dunst = {
+ #   enable = true;
+ #   settings = {
+ #     global = {
+ #       geometry = "300x5-30+20";
+ #       transparency = 10;
+ #       frame_color = "#eceff1";
+ #       font = "Droid Sans 9";
+ #     };
+#
+#      urgency_normal = {
+#        background = "#37474f";
+#        foreground = "#eceff1";
+#        timeout = 10;
+#      };
+#    };
+#  };
 
   programs.bat = {
     enable = true;

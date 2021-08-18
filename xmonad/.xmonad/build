@@ -1,1 +1,1 @@
-cabal install exe:xmonad --overwrite-policy=always
+PATH=~/.ghcup/bin/:$PATH cabal install exe:xmonad --overwrite-policy=always

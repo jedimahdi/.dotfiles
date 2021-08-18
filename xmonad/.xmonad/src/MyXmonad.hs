@@ -56,21 +56,16 @@ trayer =
   "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 "
 
 myStartupHook :: X ()
-myStartupHook = mapM_
-  spawnOnce
-  [ trayer
-   , "nm-applet"
-  , "/home/mahdi/tmp/.dotfiles/.i3/keyboard.sh"
-  -- , "xfce4-power-manager"
-  -- , "/usr/lib/xfce4/notifyd/xfce4-notifyd"
-  , "volumeicon"
-  , "feh --bg-fill ~/Pictures/wallpapers/sensei-1920×1080.jpg"
-  , "picom"
-  ]
+myStartupHook = do
+  spawnOnce trayer
+  spawnOnce "nm-applet"
+  spawnOnce "/home/mahdi/.dotfiles/i3/.i3/keyboard.sh"
+  spawnOnce "volumeicon"
+  spawnOnce "picom"
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe "xmobar"
+  xmproc <- spawnPipe "~/.cabal/bin/xmobar"
   xmonad . ewmh . docks $ def
     { modMask            = mod4Mask
     , terminal           = Settings.terminal

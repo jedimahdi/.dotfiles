@@ -14,3 +14,15 @@ export ZDOTDIR=$HOME/.config/zsh
 export EDITOR="nvim"
 export TERMINAL="kitty"
 export BROWSER="firefox"
+
+dwmblocks &
+
+nm-applet --indicator &
+
+volumeicon &
+
+picom -b
+
+~/.dotfiles/i3/.i3/keyboard.sh
+
+feh --bg-fill --randomize ~/Picture/Wallpaper/* &

@@ -1,23 +1,23 @@
-env:
-  TERM: xterm-256color
-
+# env:
+#   TERM: xterm-256color
+# 
 font:
-  normal:
-    family: 'Iosevka Jedi' 
-    style: Medium
-
-  bold:
-    family: 'Iosevka Jedi' 
- 
-  italic:
-    family: 'Iosevka Jedi' 
- 
-  size: 10.0
-
-  offset:
-    x: 0
-    y: 0
-
+#   normal:
+#     family: 'Victor Mono' 
+#     style: Medium
+# 
+#   bold:
+#     family: 'Victor Mono' 
+#  
+#   italic:
+#     family: 'Victor Mono' 
+#  
+  size: 14.0
+# 
+#   offset:
+#     x: 0
+#     y: 0
+# 
 # Colors (One Dark)
 colors:
   # Default colors
@@ -48,32 +48,3 @@ colors:
     magenta: '#c678dd'
     cyan:    '#56b6c2'
     white:   '#ffffff'
-
-# Colors (Material Theme)
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x0e111a'
-#     foreground: '0xf8f8f2'
-#
-#   # Normal colors
-#   normal:
-#     black:   '0x282a36'
-#     red:     '0xff5555'
-#     green:   '0x50fa7b'
-#     yellow:  '0xf1fa8c'
-#     blue:    '0xbd93f9'
-#     magenta: '0xff79c6'
-#     cyan:    '0x8be9fd'
-#     white:   '0xbbbbbb'
-#
-#   # Bright colors
-#   bright:
-#     black:   '0x44475a'
-#     red:     '0xFF6E67'
-#     green:   '0x5AF78E'
-#     yellow:  '0xF4F99D'
-#     blue:    '0xCAA9FA'
-#     magenta: '0xFF92D0'
-#     cyan:    '0x9AEDFE'
-#     white:   '0xE6E6E6'

@@ -1,5 +1,3 @@
-local which_key = require('which-key')
-
 vim.g.mapleader = ','
 
 -- explorer
@@ -83,6 +81,9 @@ vim.cmd('nmap k <Plug>(accelerated_jk_gk)') ]]
 
 vim.cmd('command Q q')
 vim.cmd('command W w')
+
+local which_key_ok, which_key = pcall(require, 'which-key')
+if not which_key_ok then return end
 
 which_key.register({
   e = { '<cmd>NvimTreeToggle<cr>', 'Explorer' },

@@ -1,6 +1,8 @@
 # utils
-pacman -S base-devel git make wget curl gcc xz coreutils xcape nitrogen ripgrep fd sysstat dunst zip unzip tar unrar openvpn python-pip volumeicon pulseaudio pulseaudio-alsa alsa-utils playerctl pcmanfm networkmanager networkmanager-openvpn networkmanager-openconnect networkmanager-pptp network-manager-applet --needed --noconfirm
+pacman -S base-devel git make wget curl xdotool gcc xz coreutils xcape nitrogen ripgrep fd sysstat dunst zip unzip tar unrar openvpn python-pip volumeicon pulseaudio pulseaudio-alsa alsa-utils playerctl pcmanfm networkmanager networkmanager-openvpn networkmanager-openconnect networkmanager-pptp network-manager-applet --needed --noconfirm
 pacman -S fzf python-i3ipc picom xdotool tree-sitter npm
+
+pacman -S gnome-keyring rsync
 
 # window manager
 pacman -S i3 dmenu rofi --needed --noconfirm
@@ -28,7 +30,7 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 
-# Aur Packages: sweet-theme-dark volantes-cursors flatery-icon-theme-git
+# Aur Packages: sweet-gtk-theme-dark volantes-cursors flatery-icon-theme-git
 # font-manager ttf-iosevka nerd-fonts-source-code-pro nerd-fonts-iosevka
 # spotify google-chrome
 # libjwt perl-app-sqitch

@@ -102,15 +102,14 @@ static const Layout layouts[] = {
 
 /* commands */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
-static const char *termcmd[]  = { "kitty", NULL };
-static const char *termherecmd[]  = { "samedir", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #include <X11/XF86keysym.h>
 #include "./patches/shiftview.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termherecmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("~/.dotfiles/spawn-alacritty-cwd") },
 	/* { MODKEY|ShiftMask,             XK_Return, zoom,           {0} }, */
 	{ MODKEY,			                  XK_b,      spawn,		       SHCMD("feh --bg-fill --randomize ~/Picture/Wallpaper/* &") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },

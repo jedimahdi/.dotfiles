@@ -8,11 +8,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
--- if fn.empty(fn.glob(install_path)) > 0 then
-  -- execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-  -- execute 'packadd packer.nvim'
--- end
-
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
 
 local packer_ok, packer = pcall(require, 'packer')
@@ -26,15 +21,15 @@ return packer.startup {
     use 'neovim/nvim-lspconfig'
     use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
     use 'glepnir/lspsaga.nvim'
-    use { 'tjdevries/astronauta.nvim' }
-    -- use 'folke/trouble.nvim'
+    use { "antoinemadec/FixCursorHold.nvim" }
 
     -- Theme
     use 'glepnir/zephyr-nvim'
+    -- use 'rakr/vim-one'
+    -- use 'joshdick/onedark.vim'
     use 'kyazdani42/nvim-web-devicons'
     use { 'ryanoasis/vim-devicons', opt = true }
     use 'glepnir/galaxyline.nvim'
-    -- use 'joshdick/onedark.vim'
 
     -- File finder
     use { 'nvim-lua/popup.nvim' }
@@ -45,7 +40,7 @@ return packer.startup {
     use {
       'kyazdani42/nvim-tree.lua',
       config = function()
-        require 'plugins.nvimtree'
+        require('plugins.nvimtree').setup()
       end,
     }
 
@@ -61,7 +56,13 @@ return packer.startup {
     }
 
     -- Syntax
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate',
+      config = function()
+        require("plugins.treesitter").setup()
+      end
+    }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
     use { 'LnL7/vim-nix', ft = 'nix' }
     use { 'vmchale/dhall-vim', ft = 'dhall' }
@@ -70,17 +71,17 @@ return packer.startup {
     -- use { 'p00f/nvim-ts-rainbow' }
 
     -- Autocomplete
-    use {
-      'hrsh7th/nvim-compe',
-      -- event = 'InsertEnter',
-      config = function()
-        require 'plugins.compe'
-      end,
-    }
-    use {
-      'hrsh7th/vim-vsnip',
-      -- event = 'InsertEnter'
-    }
+    -- use {
+    --   'hrsh7th/nvim-compe',
+    --   -- event = 'InsertEnter',
+    --   config = function()
+    --     require 'plugins.compe'
+    --   end,
+    -- }
+    -- use {
+    --   'hrsh7th/vim-vsnip',
+    --   -- event = 'InsertEnter'
+    -- }
 
     -- Git
     use {
@@ -92,11 +93,6 @@ return packer.startup {
       event = 'BufRead',
     }
 
-    -- Search
-    -- use { 'windwp/nvim-spectre' }
-
-    -- Other
-    -- use 'tpope/vim-surround'
     use {
       'steelsojka/pears.nvim',
       -- event = 'InsertEnter',
@@ -106,15 +102,6 @@ return packer.startup {
     }
 
     use { 'folke/which-key.nvim' }
-
-    -- use { 'editorconfig/editorconfig-vim' }
-    -- use {
-    --   'mhartington/formatter.nvim',
-    --   config = function()
-    --     require 'plugins.formatter'
-    --   end,
-    --   event = 'BufRead',
-    -- }
 
     use 'tpope/vim-surround'
 

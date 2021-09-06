@@ -1,24 +1,24 @@
-require('compe').setup {
-  enabled = true,
-  debug = false,
-  min_length = 1,
-  preselect = 'enable',
-  allow_prefix_unmatch = false,
-  documentation = true,
-
-  source = {
-    path = true,
-    buffer = true,
-    calc = true,
-    vsnip = true,
-    nvim_lsp = true,
-    nvim_lua = true,
-    spell = true,
-    tags = true,
-    snippets_nvim = false,
-    treesitter = true,
-  },
-}
+-- require('compe').setup {
+--   enabled = true,
+--   debug = false,
+--   min_length = 1,
+--   preselect = 'enable',
+--   allow_prefix_unmatch = false,
+--   documentation = true,
+-- 
+--   source = {
+--     path = true,
+--     buffer = true,
+--     calc = true,
+--     vsnip = true,
+--     nvim_lsp = true,
+--     nvim_lua = true,
+--     spell = true,
+--     tags = true,
+--     snippets_nvim = false,
+--     treesitter = true,
+--   },
+-- }
 
 --[[ local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)

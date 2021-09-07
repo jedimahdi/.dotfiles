@@ -1,16 +1,17 @@
-CONFIG_PATH = vim.fn.stdpath 'config'
-DATA_PATH = vim.fn.stdpath 'data'
-CACHE_PATH = vim.fn.stdpath 'cache'
+CONFIG_PATH = vim.fn.stdpath("config")
+DATA_PATH = vim.fn.stdpath("data")
+CACHE_PATH = vim.fn.stdpath("cache")
 
-require 'keymappings'
-require 'plugins'
-require 'colorscheme'
-require 'options'
-require 'lsp'
+require("keymappings")
+require("plugins")
+require("colorscheme")
+require("options")
+require("lsp")
 
-require 'plugins.galaxyline'
-require 'plugins.lspsaga'
-require 'plugins.telescope'
+-- require 'plugins.galaxyline'
+require("plugins.lspsaga")
+require("plugins.telescope")
+
 
 -- function define_augroups(definitions) -- {{{1
 --   -- Create autocommand groups based on the passed definitions

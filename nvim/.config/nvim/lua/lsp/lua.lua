@@ -4,6 +4,10 @@ local sumneko_binary = sumneko_root_path .. '/sumneko-lua-language-server'
 require('lspconfig').sumneko_lua.setup {
   filetypes = { 'lua' },
   cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
+
+  end,
   settings = {
     Lua = {
       runtime = {

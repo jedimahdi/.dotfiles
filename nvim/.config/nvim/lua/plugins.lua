@@ -19,6 +19,7 @@ return packer.startup {
 
        -- LSP
     use 'neovim/nvim-lspconfig'
+    use { "jose-elias-alvarez/null-ls.nvim" }
     use { 'kabouzeid/nvim-lspinstall', event = 'VimEnter' }
     use 'glepnir/lspsaga.nvim'
     use { "antoinemadec/FixCursorHold.nvim" }
@@ -29,7 +30,13 @@ return packer.startup {
     -- use 'joshdick/onedark.vim'
     use 'kyazdani42/nvim-web-devicons'
     use { 'ryanoasis/vim-devicons', opt = true }
-    use 'glepnir/galaxyline.nvim'
+    -- use 'glepnir/galaxyline.nvim'
+    use {
+      'shadmansaleh/lualine.nvim',
+      config = function()
+        require('plugins.lualine').setup()
+      end
+    }
 
     -- File finder
     use { 'nvim-lua/popup.nvim' }
@@ -64,7 +71,7 @@ return packer.startup {
       end
     }
     use { 'neovimhaskell/haskell-vim', ft = 'haskell' }
-    use { 'LnL7/vim-nix', ft = 'nix' }
+    -- use { 'LnL7/vim-nix', ft = 'nix' }
     use { 'vmchale/dhall-vim', ft = 'dhall' }
     use { 'purescript-contrib/purescript-vim', ft = 'purescript' }
     -- use { 'norcalli/nvim-colorizer.lua' }

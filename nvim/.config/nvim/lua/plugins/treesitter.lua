@@ -6,17 +6,33 @@ M.setup = function()
     return
   end
 
-  treesitter_configs.setup {
+  treesitter_configs.setup({
     ensure_installed = {
-      'bash', 'javascript', 'json', 'lua', 'typescript', 'tsx', 'html', 'css', 'c', 'cpp', 'toml', 'scss', 'yaml', 'nix',
-      'latex', 'elm', 'dockerfile', 'clojure', 'cmake'
+      "bash",
+      "javascript",
+      "json",
+      "lua",
+      "typescript",
+      "tsx",
+      "html",
+      "css",
+      "c",
+      "cpp",
+      "toml",
+      "scss",
+      "yaml",
+      "nix",
+      "latex",
+      "elm",
+      "dockerfile",
+      "clojure",
+      "cmake",
     },
     -- ensure_installed = 'maintained',
-    highlight = { enable = true, disable = { 'haskell' } },
+    highlight = { enable = true, disable = { "haskell" } },
     indent = { enable = false },
     autotag = { enable = true },
-  }
-
+  })
 end
 
 return M

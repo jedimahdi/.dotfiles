@@ -1,5 +1,5 @@
 local M = {}
-local components = require "plugins.lualine.components"
+local components = require("plugins.lualine.components")
 
 local styles = {
   lvim = nil,
@@ -111,14 +111,14 @@ styles.lvim = {
 function M.get_style(style)
   local style_keys = vim.tbl_keys(styles)
   if not vim.tbl_contains(style_keys, style) then
-    local Log = require "core.log"
+    local Log = require("core.log")
     Log:error(
       "Invalid lualine style",
       string.format('"%s"', style),
       "options are: ",
       string.format('"%s"', table.concat(style_keys, '", "'))
     )
-    Log:debug '"lvim" style is applied.'
+    Log:debug('"lvim" style is applied.')
     style = "lvim"
   end
 

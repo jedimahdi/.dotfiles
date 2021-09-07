@@ -1,17 +1,17 @@
 local function prettier()
   return {
-    exe = 'prettier',
-    args = { '--stdin-filepath', vim.api.nvim_buf_get_name(0), '--single-quote' },
+    exe = "prettier",
+    args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
     stdin = true,
   }
 end
 
 local function stylua()
   return {
-    exe = 'stylua',
+    exe = "stylua",
     args = {
-      '--search-parent-directories',
-      '--stdin-filepath',
+      "--search-parent-directories",
+      "--stdin-filepath",
       vim.api.nvim_buf_get_name(0),
     },
     stdin = false,
@@ -20,15 +20,15 @@ end
 
 local function stylishHaskell()
   return {
-    exe = 'stylish-haskell',
+    exe = "stylish-haskell",
     args = {
-      '-i',
+      "-i",
     },
     stdin = false,
   }
 end
 
-require('formatter').setup {
+require("formatter").setup({
   logging = false,
   filetype = {
     javascript = { prettier },
@@ -36,4 +36,4 @@ require('formatter').setup {
     lua = { stylua },
     haskell = { stylishHaskell },
   },
-}
+})

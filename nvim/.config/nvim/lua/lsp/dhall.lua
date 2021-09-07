@@ -1,1 +1,1 @@
-require'lspconfig'.dhall_lsp_server.setup{}
+require("lspconfig").dhall_lsp_server.setup({})

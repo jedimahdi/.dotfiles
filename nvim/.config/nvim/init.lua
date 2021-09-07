@@ -12,7 +12,6 @@ require("lsp")
 require("plugins.lspsaga")
 require("plugins.telescope")
 
-
 -- function define_augroups(definitions) -- {{{1
 --   -- Create autocommand groups based on the passed definitions
 --   --

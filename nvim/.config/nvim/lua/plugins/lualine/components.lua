@@ -1,5 +1,5 @@
-local conditions = require "plugins.lualine.conditions"
-local colors = require "plugins.lualine.colors"
+local conditions = require("plugins.lualine.conditions")
+local colors = require("plugins.lualine.colors")
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -85,14 +85,14 @@ return {
       vim.list_extend(buf_client_names, active_client or {})
 
       -- add formatter
---       local formatters = require "lsp.null-ls.formatters"
---       local supported_formatters = formatters.list_supported_names(buf_ft)
---       vim.list_extend(buf_client_names, supported_formatters)
+      --       local formatters = require "lsp.null-ls.formatters"
+      --       local supported_formatters = formatters.list_supported_names(buf_ft)
+      --       vim.list_extend(buf_client_names, supported_formatters)
 
---       -- add linter
---       local linters = require "lsp.null-ls.linters"
---       local supported_linters = linters.list_supported_names(buf_ft)
---       vim.list_extend(buf_client_names, supported_linters)
+      --       -- add linter
+      --       local linters = require "lsp.null-ls.linters"
+      --       local supported_linters = linters.list_supported_names(buf_ft)
+      --       vim.list_extend(buf_client_names, supported_linters)
 
       local a = table.concat(buf_client_names, ", ")
       print(a)
@@ -124,8 +124,8 @@ return {
   filetype = { "filetype", condition = conditions.hide_in_width, color = {} },
   scrollbar = {
     function()
-      local current_line = vim.fn.line "."
-      local total_lines = vim.fn.line "$"
+      local current_line = vim.fn.line(".")
+      local total_lines = vim.fn.line("$")
       local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)

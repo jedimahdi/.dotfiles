@@ -1,8 +1,8 @@
 local M = {}
-local components = require "plugins.lualine.components"
+local components = require("plugins.lualine.components")
 
 M.setup = function()
-  local lualine = require "lualine"
+  local lualine = require("lualine")
   lualine.setup({
     options = {
       theme = "onedark",
@@ -15,8 +15,7 @@ M.setup = function()
       lualine_a = {
         components.mode,
       },
-      lualine_b = {
-      },
+      lualine_b = {},
       lualine_c = {
         components.branch,
         components.filename,
@@ -29,11 +28,9 @@ M.setup = function()
         components.filetype,
       },
       lualine_y = {},
-      lualine_z = {
-      },
+      lualine_z = {},
     },
   })
-
 end
 
 return M

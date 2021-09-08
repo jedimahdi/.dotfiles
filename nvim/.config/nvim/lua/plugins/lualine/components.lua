@@ -63,39 +63,37 @@ return {
   },
   lsp = {
     function(msg)
-      msg = msg or "LS Inactive"
+      msg = msg or "LSP Inactive"
       local buf_clients = vim.lsp.buf_get_clients()
       if next(buf_clients) == nil then
         -- TODO: clean up this if statement
         if type(msg) == "boolean" or #msg == 0 then
-          return "LS Inactive"
+          return "LSP Inactive"
         end
         return msg
       end
-      local buf_ft = vim.bo.filetype
+
       local buf_client_names = {}
 
       -- add client
-      local active_client = vim.lsp.get_active_clients()
-      for _, client in pairs(buf_clients) do
+      local active_clients = vim.lsp.get_active_clients()
+      for _, client in pairs(active_clients) do
         if client.name ~= "null-ls" then
           table.insert(buf_client_names, client.name)
         end
       end
-      vim.list_extend(buf_client_names, active_client or {})
+      -- vim.list_extend(buf_client_names, active_client or {})
 
       -- add formatter
-      --       local formatters = require "lsp.null-ls.formatters"
-      --       local supported_formatters = formatters.list_supported_names(buf_ft)
-      --       vim.list_extend(buf_client_names, supported_formatters)
+      -- local formatters = require("lsp.null-ls.formatters")
+      -- local supported_formatters = formatters.list_supported_names(buf_ft)
+      -- vim.list_extend(buf_client_names, supported_formatters)
 
       --       -- add linter
       --       local linters = require "lsp.null-ls.linters"
       --       local supported_linters = linters.list_supported_names(buf_ft)
       --       vim.list_extend(buf_client_names, supported_linters)
 
-      local a = table.concat(buf_client_names, ", ")
-      print(a)
       return table.concat(buf_client_names, ", ")
     end,
     icon = " ",

@@ -24,7 +24,7 @@ M.setup = function()
       lualine_x = {
         components.diagnostics,
         components.treesitter,
-        -- components.lsp,
+        components.lsp,
         components.filetype,
       },
       lualine_y = {},

@@ -82,6 +82,33 @@ return packer.startup({
     -- use { 'p00f/nvim-ts-rainbow' }
 
     -- Autocomplete
+    use({
+      "hrsh7th/vim-vsnip",
+      requires = {
+        "hrsh7th/vim-vsnip-integ",
+      },
+      config = function()
+        require("plugins.vsnip").setup()
+      end,
+    })
+
+    use({"hrsh7th/vim-vsnip-integ"})
+
+
+    use({
+      "hrsh7th/nvim-cmp",
+      requires = {
+        "hrsh7th/vim-vsnip",
+        "hrsh7th/cmp-vsnip",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-nvim-lua",
+      },
+      config = function()
+        require("plugins.cmp").setup()
+      end,
+    })
     -- use {
     --   'hrsh7th/nvim-compe',
     --   -- event = 'InsertEnter',

@@ -2,9 +2,9 @@
   "function": {
     "prefix": ["fun"],
     "body": [
-      "function $1($2) {",
+      "function $1($2)",
       "\t$3",
-      "}"
+      "end"
     ],
     "description": "create function"
   }

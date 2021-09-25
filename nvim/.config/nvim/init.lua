@@ -8,7 +8,6 @@ require("colorscheme")
 require("options")
 require("lsp")
 
--- require 'plugins.galaxyline'
 require("plugins.lspsaga")
 require("plugins.telescope")
 

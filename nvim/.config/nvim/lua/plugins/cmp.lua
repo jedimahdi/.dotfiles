@@ -25,20 +25,22 @@ M.setup = function()
       { name = "nvim_lua" },
     },
     mapping = {
+      ["<Tab>"] = cmp.mapping.select_next_item(),
       -- ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
-      ["<Tab>"] = function(fallback)
-        if vim.fn.pumvisible() == 1 then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, true, true), "n")
-        elseif check_back_space() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n")
-        elseif vim.fn["vsnip#available"]() == 1 then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-expand-or-jump)", true, true, true), "")
-        else
-          fallback()
-        end
-      end,
+      -- ["<Tab>"] = function(fallback)
+      --   if vim.fn.pumvisible() == 1 then
+      --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, true, true), "n")
+      --   elseif check_back_space() then
+      --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n")
+      --   elseif vim.fn["vsnip#available"]() == 1 then
+      --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-expand-or-jump)", true, true, true), "")
+      --   else
+      --     fallback()
+      --   end
+      -- end,
+      ["<S-Tab>"] = cmp.mapping.select_prev_item(),
       ["<C-e>"] = cmp.mapping.close(),
-      ["<C-j>"] = cmp.mapping.confirm({
+      ["<C-k>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),

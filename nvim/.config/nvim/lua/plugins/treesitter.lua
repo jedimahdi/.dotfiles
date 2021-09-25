@@ -32,6 +32,7 @@ M.setup = function()
     highlight = { enable = true, disable = { "haskell" } },
     indent = { enable = false },
     autotag = { enable = true },
+    autopairs = { enable = true },
   })
 end
 

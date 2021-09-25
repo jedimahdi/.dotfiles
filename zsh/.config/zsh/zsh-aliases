@@ -8,6 +8,7 @@ alias c="clear"
 alias gs="git status"
 alias lg="lazygit"
 alias pacman='sudo pacman --color auto'
+alias aura='sudo aura'
 alias ls="ls -hN --color=auto --group-directories-first"
 
 # get fastest mirrors

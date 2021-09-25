@@ -1,1 +1,10 @@
-{}
+{
+  "function": {
+    "prefix": ["fu"],
+    "body": [
+      "$1 :: $2",
+      "$1 $3 = $4"
+    ],
+    "description": "create function"
+  }
+}

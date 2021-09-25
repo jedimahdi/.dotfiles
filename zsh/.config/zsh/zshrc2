@@ -1,0 +1,109 @@
+#!/bin/sh
+
+########################################################
+# Configuration
+########################################################
+
+COLOR_BLACK="\e[0;30m"
+COLOR_BLUE="\e[0;34m"
+COLOR_GREEN="\e[0;32m"
+COLOR_CYAN="\e[0;36m"
+COLOR_PINK="\e[0;35m"
+COLOR_RED="\e[0;31m"
+COLOR_PURPLE="\e[0;35m"
+COLOR_BROWN="\e[0;33m"
+COLOR_LIGHTGRAY="\e[0;37m"
+COLOR_DARKGRAY="\e[1;30m"
+COLOR_LIGHTBLUE="\e[1;34m"
+COLOR_LIGHTGREEN="\e[1;32m"
+COLOR_LIGHTCYAN="\e[1;36m"
+COLOR_LIGHTRED="\e[1;31m"
+COLOR_LIGHTPURPLE="\e[1;35m"
+COLOR_YELLOW="\e[1;33m"
+COLOR_WHITE="\e[1;37m"
+COLOR_NONE="\e[0m"
+
+if [ -z "$TMUX" ]; then
+    export TERM=xterm-256color-italic
+else
+    export TERM=tmux-256color
+fi
+
+# some useful options (man zshoptions)
+setopt autocd extendedglob nomatch menucomplete
+setopt interactive_comments
+stty stop undef		# Disable ctrl-s to freeze terminal.
+zle_highlight=('paste:none')
+
+# beeping is annoying
+unsetopt BEEP
+
+
+# completions
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+# zstyle ':completion::complete:lsof:*' menu yes select
+zmodload zsh/complist
+# compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# Colors
+autoload -Uz colors && colors
+
+# Useful Functions
+source "$ZDOTDIR/zsh-functions"
+
+# Normal files to source
+zsh_add_file "zsh-exports"
+zsh_add_file "zsh-vim-mode"
+zsh_add_file "zsh-aliases"
+
+# Plugins
+zsh_add_plugin "zsh-users/zsh-autosuggestions"
+zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+zsh_add_plugin "chriskempson/base16-shell"
+zsh_add_plugin "mafredri/zsh-async"
+source "$ZDOTDIR/plugins/zsh-async/async.zsh"
+# zsh_add_completion "esc/conda-zsh-completion" false
+# For more plugins: https://github.com/unixorn/awesome-zsh-plugins
+# More completions https://github.com/zsh-users/zsh-completions
+
+zsh_add_file "zsh-prompt2"
+
+# Key-bindings
+bindkey -s '^o' 'ranger^M'
+bindkey -s '^f' 'zi^M'
+bindkey -s '^g' 'lazygit^M'
+bindkey -s '^s' 'ncdu^M'
+# bindkey -s '^n' 'nvim $(fzf)^M'
+# bindkey -s '^v' 'nvim\n'
+bindkey -s '^z' 'zi^M'
+bindkey '^[[P' delete-char
+bindkey "^p" up-line-or-beginning-search # Up
+bindkey "^n" down-line-or-beginning-search # Down
+bindkey "^k" up-line-or-beginning-search # Up
+bindkey "^j" down-line-or-beginning-search # Down
+bindkey -r "^u"
+bindkey -r "^d"
+
+# if you want Enter to immediately execute the command line, rather than having to press it twice to first accept the
+# completion
+bindkey -M menuselect '^M' .accept-line
+
+# FZF 
+# TODO update for mac
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f $ZDOTDIR/completion/_fnm ] && fpath+="$ZDOTDIR/completion/"
+# export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+compinit
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+# bindkey '^e' edit-command-line

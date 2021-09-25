@@ -1,4 +1,3 @@
-local execute = vim.api.nvim_command
 local fn = vim.fn
 
 local install_path = DATA_PATH .. "/site/pack/packer/start/packer.nvim"
@@ -24,14 +23,16 @@ return packer.startup({
     use({ "jose-elias-alvarez/null-ls.nvim" })
     use({ "kabouzeid/nvim-lspinstall", event = "VimEnter" })
     use({ "glepnir/lspsaga.nvim" })
+    -- use({ "tamago324/nlsp-settings.nvim" })
     use({ "antoinemadec/FixCursorHold.nvim" })
 
     -- Theme
     use("glepnir/zephyr-nvim")
+    -- use("LunarVim/onedarker.nvim")
     -- use 'rakr/vim-one'
     -- use 'joshdick/onedark.vim'
+    -- use({ "RRethy/nvim-base16" })
     use("kyazdani42/nvim-web-devicons")
-    use({ "ryanoasis/vim-devicons", opt = true })
     -- use 'glepnir/galaxyline.nvim'
     use({
       "shadmansaleh/lualine.nvim",
@@ -92,8 +93,9 @@ return packer.startup({
       end,
     })
 
-    use({"hrsh7th/vim-vsnip-integ"})
+    use({ "hrsh7th/vim-vsnip-integ" })
 
+    use({ "rafamadriz/friendly-snippets" })
 
     use({
       "hrsh7th/nvim-cmp",
@@ -132,12 +134,21 @@ return packer.startup({
     })
 
     use({
-      "steelsojka/pears.nvim",
-      -- event = 'InsertEnter',
+      "windwp/nvim-autopairs",
+      -- event = "InsertEnter",
+      after = "nvim-cmp",
       config = function()
-        require("pears").setup()
+        require("plugins.autopairs")
       end,
     })
+
+    -- use({
+    --   "steelsojka/pears.nvim",
+    --   -- event = 'InsertEnter',
+    --   config = function()
+    --     require("pears").setup()
+    --   end,
+    -- })
 
     use({ "folke/which-key.nvim" })
 

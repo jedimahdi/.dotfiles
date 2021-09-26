@@ -5,16 +5,27 @@ if not telescope_ok or not actions_ok then
 end
 
 telescope.setup({
+  extensions = {
+    fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true },
+  },
   defaults = {
     initial_mode = "insert",
     sorting_strategy = "ascending",
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-    file_sorter = require("telescope.sorters").get_fzy_sorter,
-    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
 
     layout_config = { prompt_position = "top" },
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--ignore",
+      "--hidden",
+      "-g",
+      "!.git",
+    },
 
     mappings = {
       i = {
@@ -30,3 +41,5 @@ telescope.setup({
     },
   },
 })
+
+telescope.load_extension("fzf")

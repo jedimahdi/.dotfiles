@@ -7,8 +7,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd("packadd packer.nvim")
 end
 
-vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
-
 local packer_ok, packer = pcall(require, "packer")
 if not packer_ok then
   return
@@ -16,13 +14,21 @@ end
 
 return packer.startup({
   function(use)
+    local config = function(name)
+      return string.format("require('plugins.%s')", name)
+    end
+
+    local use_with_config = function(path, name)
+      use({ path, config = config(name) })
+    end
+
     use("wbthomason/packer.nvim")
 
     -- LSP
     use("neovim/nvim-lspconfig")
-    use({ "jose-elias-alvarez/null-ls.nvim" })
+    use("jose-elias-alvarez/null-ls.nvim")
     use({ "kabouzeid/nvim-lspinstall", event = "VimEnter" })
-    use({ "glepnir/lspsaga.nvim" })
+    use("glepnir/lspsaga.nvim")
     -- use({ "tamago324/nlsp-settings.nvim" })
     use({ "antoinemadec/FixCursorHold.nvim" })
 
@@ -31,28 +37,25 @@ return packer.startup({
     -- use("LunarVim/onedarker.nvim")
     -- use 'rakr/vim-one'
     -- use 'joshdick/onedark.vim'
+    -- use("sainnhe/sonokai")
     -- use({ "RRethy/nvim-base16" })
     use("kyazdani42/nvim-web-devicons")
-    -- use 'glepnir/galaxyline.nvim'
-    use({
-      "shadmansaleh/lualine.nvim",
-      config = function()
-        require("plugins.lualine").setup()
-      end,
-    })
+    use_with_config("shadmansaleh/lualine.nvim", "lualine")
 
     -- File finder
     use({ "nvim-lua/popup.nvim" })
     use({ "nvim-lua/plenary.nvim" })
-    use({ "nvim-telescope/telescope.nvim" })
+    use({
+      "nvim-telescope/telescope.nvim",
+      config = config("telescope"),
+      requires = { {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make",
+      } },
+    })
 
     -- File tree
-    use({
-      "kyazdani42/nvim-tree.lua",
-      config = function()
-        require("plugins.nvimtree").setup()
-      end,
-    })
+    use_with_config("kyazdani42/nvim-tree.lua", "nvimtree")
 
     -- Comment
     use({
@@ -75,6 +78,7 @@ return packer.startup({
         require("plugins.treesitter").setup()
       end,
     })
+    use({ "windwp/nvim-ts-autotag", ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" } })
     use({ "neovimhaskell/haskell-vim", ft = "haskell" })
     -- use { 'LnL7/vim-nix', ft = 'nix' }
     use({ "vmchale/dhall-vim", ft = "dhall" })

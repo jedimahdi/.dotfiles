@@ -3,7 +3,7 @@ vim.cmd("command W w")
 
 vim.g.mapleader = ","
 
-vim.api.nvim_set_keymap("n", "<leader><leader>", "<C-^>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>.", "<C-^>", { noremap = true, silent = true })
 
 -- better window movement
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
@@ -45,11 +45,10 @@ vim.api.nvim_set_keymap("n", "<space>", ":set hlsearch! hlsearch?<CR>", { norema
 
 -- Telescope
 vim.api.nvim_set_keymap("n", "<leader>b", ":Telescope buffers<CR>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>f', ':Telescope find_files<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>g', ':Telescope git_files<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>w', ':Telescope live_grep<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>c', ':Telescope colorscheme<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>r', ':Telescope oldfiles<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>f", ":Telescope find_files<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>w", ":Telescope live_grep<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>r", ":Telescope oldfiles<CR>", { noremap = true, silent = true })
 
 -- LSP
 vim.api.nvim_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
@@ -75,7 +74,6 @@ end
 
 which_key.register({
   e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  f = { "<cmd>Telescope find_files<cr>", "Find File" },
   g = {
     name = "Git",
     o = { "<cmd>Telescope git_status<cr>", "Open changed file - Telescope" },
@@ -116,13 +114,13 @@ which_key.register({
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     t = { "<cmd>Telescope live_grep<cr>", "Text" },
   },
-  --[[ f = {
-    name = 'find',
-    b = { '<cmd>lua require(\'telescope.builtin\').buffers()<cr>', 'buffers' },
-    f = { '<cmd>lua require(\'telescope.builtin\').find_files({follow = true})<cr>', 'files' },
-    g = { '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', 'whit live grep' },
-    h = { '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>', 'help tags' },
-  }, ]]
+  -- f = {
+  --   name = "find",
+  --   b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers" },
+  --   f = { "<cmd>lua require('telescope.builtin').find_files({follow = true})<cr>", "files" },
+  --   g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "whit live grep" },
+  --   h = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "help tags" },
+  -- },
 }, {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",

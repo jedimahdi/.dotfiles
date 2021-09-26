@@ -109,7 +109,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("~/.dotfiles/spawn-alacritty-cwd") },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("~/.dotfiles/bin/spawn-alacritty-cwd") },
 	/* { MODKEY|ShiftMask,             XK_Return, zoom,           {0} }, */
 	{ MODKEY,			                  XK_b,      spawn,		       SHCMD("feh --bg-fill --randomize ~/Picture/Wallpaper/* &") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },

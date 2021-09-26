@@ -1,3 +1,3 @@
-vim.cmd("let g:nvcode_termcolors=256")
+vim.cmd("let g:sonokai_style = 'andromeda'")
 vim.cmd("set background=dark")
 vim.cmd("colorscheme zephyr")

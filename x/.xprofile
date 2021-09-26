@@ -1,6 +1,8 @@
+export LC_ALL="en_US.UTF-8"
+export LANG="en_us.UTF-8"
 export GHCUP_INSTALL_BASE_PREFIX="$HOME"
 
-export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+# export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 
 # XDG Paths
 export XDG_CONFIG_HOME=$HOME/.config
@@ -12,7 +14,7 @@ export ZDOTDIR=$HOME/.config/zsh
 
 # Environment variables set everywhere
 export EDITOR="nvim"
-export TERMINAL="kitty"
+export TERMINAL="alacritty"
 export BROWSER="firefox"
 
 dwmblocks &
@@ -23,6 +25,6 @@ volumeicon &
 
 picom -b
 
-~/.dotfiles/i3/.i3/keyboard.sh
+~/.dotfiles/bin/keyboard
 
 feh --bg-fill --randomize ~/Picture/Wallpaper/* &

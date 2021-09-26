@@ -30,7 +30,7 @@ M.setup = function()
     },
     -- ensure_installed = 'maintained',
     highlight = { enable = true, disable = { "haskell" } },
-    indent = { enable = false },
+    indent = { enable = true },
     autotag = { enable = true },
     autopairs = { enable = true },
   })

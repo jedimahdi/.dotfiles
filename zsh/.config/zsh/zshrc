@@ -53,16 +53,11 @@ fi
 autoload -U compinit add-zsh-hook
 compinit
 
-# prepend_path $HOME/npmbin/node_modules/.bin
-prepend_path /usr/local/opt/grep/libexec/gnubin
-prepend_path /usr/local/sbin
 prepend_path $DOTFILES/bin
-prepend_path $HOME/bin
-export PATH="$HOME/.local/bin":$PATH
-export PATH="$HOME/.local/bin/scripts":$PATH
-export PATH="$HOME/.npm-global/bin":$PATH
-export PATH="$HOME/.cabal/bin":$PATH
-export PATH="$HOME/.ghcup/bin":$PATH
+prepend_path $HOME/.local/bin
+prepend_path $HOME/.npm-global/bin
+prepend_path $HOME/.cabal/bin
+prepend_path $HOME/.ghcup/bin
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 # define the code directory
@@ -161,7 +156,7 @@ fi
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,elm-stuff,dist-newstyle}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # add color to man pages

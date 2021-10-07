@@ -110,6 +110,8 @@ bindkey -M viins "^F" vi-forward-word               # [Ctrl-f] - move to next wo
 bindkey -M viins "^E" vi-add-eol                    # [Ctrl-e] - move to end of line
 bindkey "^J" history-beginning-search-forward
 bindkey "^K" history-beginning-search-backward
+bindkey -s '^g' 'lazygit^M'
+bindkey -s '^f' "tmux-sessionizer^M"
 
 # matches case insensitive for lowercase
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -130,7 +132,7 @@ export ZPLUGDIR="$CACHEDIR/zsh/plugins"
 # array containing plugin information (managed by zfetch)
 typeset -A plugins
 
-zfetch mafredri/zsh-async async.plugin.zsh
+# zfetch mafredri/zsh-async async.plugin.zsh
 zfetch zsh-users/zsh-syntax-highlighting
 zfetch zsh-users/zsh-autosuggestions
 zfetch Aloxaf/fzf-tab
@@ -212,6 +214,8 @@ alias rmf="rm -rf"
 
 # Helpers
 alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 alias df='df -h' # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 
@@ -228,8 +232,8 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 alias clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
 
 # git aliases
-alias gs='git s'
-alias glog="git l"
+alias gs='git status'
+alias glog="git log"
 
 # tmux aliases
 alias ta='tmux attach'
@@ -241,5 +245,31 @@ alias lpath='echo $PATH | tr ":" "\n"' # list the PATH separated by new lines
 
 alias nr="npm run"
 
+# confirm before overwriting something
+alias cp="cp -iv"
+alias mv='mv -iv'
+alias rm='rm -vI'
+
+alias lg="lazygit"
+alias pacman='sudo pacman --color auto'
+alias aura='sudo aura'
+# gpg encryption
+# verify signature for isos
+alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
+# receive the key of a developer
+alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
+
+# For when keys break
+alias archlinx-fix-keys="sudo pacman-key --init && sudo pacman-key --populate archlinux && sudo pacman-key --refresh-keys"
+
+# get fastest mirrors
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+# eval "$(zoxide init zsh)"
+eval "$(direnv hook zsh)"
+
 source "$ZSH/utils.zsh"
-source "$ZSH/prompt.zsh"
+source "$ZSH/prompt2.zsh"

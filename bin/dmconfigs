@@ -1,0 +1,17 @@
+#!/bin/sh
+
+configs="
+neovim init.lua .config/nvim
+alacritty alacritty.yml .config/alacritty
+kitty kitty.conf .config/kitty
+picom picom.conf .config/picom
+tmux .tmux.conf
+zsh zshrc .config/zsh
+profile .xprofile
+"
+
+selected=$(echo "$configs" | grep -P "^$(echo "$configs" | sed '/^$/d' | awk '{print $1}' | dmenu -i -p "Edit Config: ")\s")
+
+[[ -z "$selected" ]] && exit 0
+
+alacritty --working-directory $HOME/$(echo $selected | awk '{print $3}') -e nvim $(echo $selected | awk '{print $2}')

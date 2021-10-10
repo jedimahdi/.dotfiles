@@ -204,6 +204,7 @@ alias .....="cd ../../../.."
 
 alias c="clear"
 alias v="nvim"
+alias e="nvim ."
 alias ls="ls -hN --color=auto --group-directories-first"
 
 alias l="ls -lah ${colorflag}"
@@ -272,4 +273,5 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 eval "$(direnv hook zsh)"
 
 source "$ZSH/utils.zsh"
-source "$ZSH/prompt2.zsh"
+eval "$(starship init zsh)"
+# source "$ZSH/prompt2.zsh"

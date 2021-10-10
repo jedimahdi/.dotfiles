@@ -75,8 +75,10 @@ u.nmap("]q", ":cnext<CR>")
 
 u.command("Q", "q")
 u.command("W", "w")
+u.command("Wq", "wq")
+u.command("WQ", "wq")
 
-u.nmap("<leader>e", ':Ex<CR>')
+-- u.nmap("<leader>e", '-')
 
 require("tmux")
 require("plugins")
@@ -88,6 +90,7 @@ function! NetrwMapping()
   nmap <buffer> H u
   nmap <buffer> h -^
   nmap <buffer> l <CR>
+  nmap <buffer> <leader>e <C-^>
 
   nmap <buffer> . gh
   nmap <buffer> P <C-w>z
@@ -101,4 +104,6 @@ augroup netrw_mapping
   autocmd filetype netrw call NetrwMapping()
 augroup END
 
+
+  nmap <leader>e -
 ]])

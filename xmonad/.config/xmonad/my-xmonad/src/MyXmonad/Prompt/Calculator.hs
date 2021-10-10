@@ -1,9 +1,9 @@
-module MyXmonad.Util.Prompt.Calculator
+module MyXmonad.Prompt.Calculator
     ( calculator
     ) where
 
 import           Data.Char                    ( isSpace )
-import qualified MyXmonad.Util.Prompt.Prelude as Prompt
+import qualified MyXmonad.Prompt.Prelude as Prompt
 import           XMonad                       ( MonadIO (liftIO), X )
 import           XMonad.Prompt                ( XPConfig )
 import           XMonad.Prompt.Input          ( inputPrompt, (?+) )

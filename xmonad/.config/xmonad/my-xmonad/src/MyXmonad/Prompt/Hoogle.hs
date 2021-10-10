@@ -1,10 +1,10 @@
-module MyXmonad.Util.Prompt.Hoogle
+module MyXmonad.Prompt.Hoogle
     ( hoogle
     ) where
 
 import           Data.List                    ( findIndex, isPrefixOf, tails )
-import           MyXmonad.Util.Prompt.Prelude ( completionFunctionWith )
-import qualified MyXmonad.Util.Prompt.Prelude as Prompt
+import           MyXmonad.Prompt.Prelude ( completionFunctionWith )
+import qualified MyXmonad.Prompt.Prelude as Prompt
 import           XMonad                       hiding ( config )
 import           XMonad.Prompt
 
@@ -17,7 +17,7 @@ hoogle :: X ()
 hoogle = mkXPrompt Hoogle Prompt.config hoogleCompletion hoogleRun
 
 hoogleCompletion :: String -> IO [String]
-hoogleCompletion s = completionFunctionWith pathToHoogleBin ["--count", "8", "--link", s]
+hoogleCompletion s = completionFunctionWith pathToHoogleBin ["--count", "10", "--link", s]
 
 hoogleRun :: String -> X ()
 hoogleRun s = do

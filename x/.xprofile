@@ -31,5 +31,3 @@ volumeicon &
 ~/.dotfiles/bin/remaps
 
 feh --bg-fill --randomize ~/Picture/Wallpaper/* &
-
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --alpha 0 --tint 0x1e222a --height 28 --iconspacing 2 &

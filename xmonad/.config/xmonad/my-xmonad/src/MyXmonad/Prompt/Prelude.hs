@@ -1,4 +1,4 @@
-module MyXmonad.Util.Prompt.Prelude
+module MyXmonad.Prompt.Prelude
     ( completionFunctionWith
     , config
     ) where
@@ -16,15 +16,15 @@ completionFunctionWith :: String -> [String] -> IO [String]
 completionFunctionWith cmd args = lines <$> runProcessWithInput cmd args ""
 
 myFont :: String
-myFont = "xft:Ubuntu:regular:size=13:antialias=true:hinting=true"
+myFont = "xft:JetBrainsMono Nerd Font:medium:size=14:antialias=true:hinting=true"
 
 config :: XPConfig
-config = def { font                = myFont
-                 , bgColor             = "#282c34"
-                 , fgColor             = "#bbc2cf"
-                 , bgHLight            = "#c792ea"
-                 , fgHLight            = "#000000"
-                 , borderColor         = "#535974"
+config = def { font                    = myFont
+                 , bgColor             = "#1a1b26"
+                 , fgColor             = "#d6d5d5"
+                 , bgHLight            = "#1a1b26"
+                 , fgHLight            = "#71abeb"
+                 , borderColor         = "#1a1b26"
                  , promptBorderWidth   = 0
                  , promptKeymap        = dtXPKeymap
                  , position            = Top
@@ -32,10 +32,9 @@ config = def { font                = myFont
                  , historySize         = 256
                  , historyFilter       = id
                  , defaultText         = []
-                 , autoComplete        = Just 100000
+                 , autoComplete        = Nothing
                  , showCompletionOnTab = False
                  , searchPredicate     = fuzzyMatch
-                 , defaultPrompter     = id
                  , alwaysHighlight     = True
                  , maxComplRows        = Nothing
                  }
@@ -47,16 +46,14 @@ dtXPKeymap =
     $  map
          (first $ (,) controlMask)      -- control + <key>
          [ (xK_z          , killBefore)               -- kill line backwards
-         , (xK_k          , killAfter)                -- kill line forwards
-         , (xK_a          , startOfLine)              -- move to the beginning of the line
-         , (xK_e          , endOfLine)                -- move to the end of the line
-         , (xK_m          , deleteString Next)        -- delete a character foward
-         , (xK_b          , moveCursor Prev)          -- move cursor forward
-         , (xK_f          , moveCursor Next)          -- move cursor backward
-         , (xK_BackSpace  , killWord Prev)    -- kill the previous word
-         , (xK_y          , pasteString)              -- paste a string
-         , (xK_g          , quit)                     -- quit out of prompt
-         , (xK_bracketleft, quit)
+         , (xK_w, killWord Prev)
+         , (xK_a, startOfLine)
+         , (xK_e, endOfLine)
+         , (xK_d, deleteString Next)
+         , (xK_v, pasteString)              -- paste a string
+         , (xK_b, moveCursor Prev) -- move cursor forward
+         , (xK_f, moveCursor Next)
+         , (xK_g, quit)                     -- quit out of prompt
          ]
     ++ map
          (first $ (,) altMask)          -- meta key + <key>

@@ -1,10 +1,10 @@
-module MyXmonad.Util.Dmenu.Configs
+module MyXmonad.Dmenu.Configs
     ( configs
     ) where
 
 import           Data.Map          ( Map )
 import qualified Data.Map          as Map
-import qualified MyXmonad.Settings as Settings
+-- import qualified MyXmonad.Settings as Settings
 import           XMonad            ( X, spawn )
 import           XMonad.Util.Dmenu ( dmenuMap )
 
@@ -15,16 +15,19 @@ data Config = Config { directory :: String
 myConfigs :: Map String Config
 myConfigs = Map.fromList
   [ ("neovim"   , Config "~/.config/nvim" "init.lua")
-  , ("xmonad"   , Config "~/.xmonad" "src/MyXmonad.hs")
+  , ("xmonad"   , Config "~/.config/xmonad" "my-xmonad/src/MyXmonad.hs")
   , ("alacritty", Config "~/.config/alacritty" "alacritty.yml")
   , ("kitty"    , Config "~/.config/kitty" "kitty.conf")
   , ("picom"    , Config "~/.config/picom" "picom.conf")
-  , ("xmobar"   , Config "~/.config/xmobar" "xmobarrc")
+  , ("xmobar"   , Config "~/" ".xmobarrc")
+  , ("profile"  , Config "~/" ".xprofile")
+  , ("tmux"     , Config "~/" ".tmux.conf")
+  , ("zsh"      , Config "~/.config/zsh" "zshrc")
   ]
 
 spawnEditor :: Config -> X ()
 spawnEditor config = spawn
-  $ Settings.terminal ++ " --title nvim " ++ Settings.terminalDirectoryFlag ++ " " ++ directory config ++ " " ++ Settings.terminalExecuteFlag ++ " nvim " ++ firstFile config
+  $ "alacritty" ++ " --title nvim " ++ "--working-directory" ++ " " ++ directory config ++ " " ++ "-e" ++ " nvim " ++ firstFile config
 
 configs :: X ()
 configs = dmenuMap myConfigs >>= maybe (pure ()) spawnEditor

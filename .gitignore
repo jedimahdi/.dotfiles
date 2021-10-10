@@ -66,3 +66,8 @@ coverage
 xmonad.errors
 cabal.project.freeze
 prompt-history
+xmonad/.config/xmonad/xmonad
+xmonad/.config/xmonad/xmonad-extras
+xmonad/.config/xmonad/xmonad-contrib
+xmonad/.config/xmonad/dist-newstyle
+

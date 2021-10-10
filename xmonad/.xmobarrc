@@ -1,0 +1,39 @@
+-- http://projects.haskell.org/xmobar/
+-- install xmobar with these flags: --flags="with_alsa" --flags="with_mpd" --flags="with_xft"  OR --flags="all_extensions"
+-- you can find weather location codes here: http://weather.noaa.gov/index.html
+
+
+Config { font    = "xft:JetBrainsMono Nerd Font:weight=bold:pixelsize=14:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:UbuntuMono Nerd Font:pixelsize=14:antialias=true:hinting=true"
+                           , "xft:JetBrainsMono Nerd Font:size=14"
+                           , "xft:UbuntuMono Nerd Font:size=16"
+                           , "xft:Weather Icons:size=14"
+                           , "xft:JetBrainsMono Nerd Font:weight=bold:pixelsize=14:antialias=true:hinting=true"
+                           ]
+       , bgColor = "#1a1b26"
+       , fgColor = "#ff6c6b"
+     --  , position = Static { xpos = 20, ypos = 12, width = 3800, height = 32 }
+       , position = Static { xpos = 0 , ypos = 0, width = 1920, height = 24 }
+       , overrideRedirect = False
+       , lowerOnStart = False
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , commands = [
+                      Run Date "  %a %b %d - %R " "date" 50
+                    , Run Uptime ["-t", " <hours>h <minutes>m"] 60
+                    , Run Network "wlp36s0" ["-t","  <rx> kb    <tx> kb"] 20
+                    , Run Cpu ["-t", "﬙  <total>%"] 20
+                    -- , Run Com "~/.local/bin/memory2" ["--listen"] "" 40
+                    -- , Run Com "~/.lcoal/bin/dwmpulse" ["--listen"] "" 10
+                    -- , Run Com "~/.local/bin/weather.sh" ["--listen"] "" 1800
+                    , Run K10Temp "0000:00:18.3" ["--template", "﨎 <Tdie>ºC"] 60
+                    , Run UnsafeXMonadLog
+                    , Run Com "/home/mahdi/.config/xmonad/scripts/padding-icon.sh" ["panel"] "trayerpad" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template =" <fn=5>%UnsafeXMonadLog%</fn> }{ <fc=#9ec07c,#1a1b26:0>%date%</fc>%trayerpad%"
+       }
+
+

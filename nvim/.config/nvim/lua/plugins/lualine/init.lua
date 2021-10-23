@@ -1,9 +1,10 @@
 local components = require("plugins.lualine.components")
 local lualine = require("lualine")
+local onedarker = require("plugins.lualine.themes.onedarker")
 
 lualine.setup({
   options = {
-    theme = "onedark",
+    theme = onedarker,
     icons_enabled = true,
     component_separators = "",
     section_separators = "",

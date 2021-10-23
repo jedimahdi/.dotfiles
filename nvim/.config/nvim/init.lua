@@ -48,7 +48,7 @@ vim.opt.showcmd = false
 global = {}
 
 vim.cmd("set background=dark")
-vim.cmd("colorscheme zephyr")
+vim.cmd("colorscheme onedarker")
 
 u.nmap("<BS>", "<C-^>")
 u.nmap("<leader>.", "<C-^>")

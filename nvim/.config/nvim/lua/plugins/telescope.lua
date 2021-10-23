@@ -32,6 +32,9 @@ telescope.setup({
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<Esc>"] = actions.close,
+        ["<C-u>"] = false,
+        ["<M-u>"] = actions.preview_scrolling_up,
+        ["<M-d>"] = actions.preview_scrolling_down,
       },
       n = {
         ["<C-j>"] = actions.move_selection_next,
@@ -44,7 +47,7 @@ telescope.setup({
 
 telescope.load_extension("fzf")
 
-_G.global.telescope = {
+global.telescope = {
   -- try git_files and fall back to find_files
   find_files = function()
     local set = require("telescope.actions.set")
@@ -99,6 +102,7 @@ u.command("HelpTags", "Telescope help_tags")
 u.command("ManPages", "Telescope man_pages")
 
 u.map("n", "<Leader>f", "<cmd>Files<CR>")
+u.map("n", "<Leader>F", "<cmd>Telescope find_files<CR>")
 u.map("n", "<Leader>w", "<cmd>Rg<CR>")
 u.map("n", "<Leader>b", "<cmd>Buffers<CR>")
 u.map("n", "<Leader>to", "<cmd>History<CR>")

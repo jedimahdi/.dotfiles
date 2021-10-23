@@ -1,6 +1,8 @@
 export LC_ALL="en_US.UTF-8"
 export LANG="en_us.UTF-8"
+
 export GHCUP_INSTALL_BASE_PREFIX="$HOME"
+export JAVA_HOME=/usr/lib/jvm/default
 
 # export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 

@@ -23,6 +23,8 @@ return require("packer").startup({
     use("neovim/nvim-lspconfig")
 
     use("glepnir/zephyr-nvim")
+    use("joshdick/onedark.vim")
+    use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
     use_with_config("shadmansaleh/lualine.nvim", "lualine")
 

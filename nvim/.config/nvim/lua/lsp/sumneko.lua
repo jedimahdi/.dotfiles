@@ -16,6 +16,7 @@ local settings = {
     diagnostics = {
       enable = true,
       globals = {
+        "global",
         "vim",
         "use",
         "describe",

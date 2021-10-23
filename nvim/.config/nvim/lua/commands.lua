@@ -110,32 +110,14 @@ vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-a
 u.command("VsplitLast", "Vsplit #")
 u.map("n", "<Leader>v", ":VsplitLast<CR>")
 
-commands.save_on_cr = function()
-  return vim.bo.buftype ~= "" and u.t("<CR>") or u.t(":write<CR>")
-end
-
-u.map("n", "<CR>", "v:lua.global.commands.save_on_cr()", { expr = true })
-
-commands.yank_highlight = function()
-  vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
-end
-
-u.augroup("YankHighlight", "TextYankPost", "lua global.commands.yank_highlight()")
-
-commands.edit_test_file = function(cmd, post)
+commands.edit_test_file = function(cmd)
   cmd = cmd or "edit"
 
   local done = function(file)
-    vim.cmd(cmd .. " " .. file)
-    if post then
-      post()
-    end
+    vim.cmd(cmd:gsub("$FILE", file))
   end
 
-  local root, ft = vim.fn.expand("%:t:r"), vim.bo.filetype
-  -- escape potentially conflicting characters in filename
-  root = root:gsub("%-", "%%-")
-  root = root:gsub("%.", "%%.")
+  local root, ft = vim.pesc(vim.fn.expand("%:t:r")), vim.bo.filetype
 
   local patterns = {}
   if ft == "lua" then
@@ -149,7 +131,7 @@ commands.edit_test_file = function(cmd, post)
   for _, pattern in ipairs(patterns) do
     -- go from test file to non-test file
     if root:match(pattern) then
-      pattern = u.replace(root, pattern, "")
+      pattern = root:gsub(vim.pesc(pattern), "")
     else
       pattern = root .. pattern
     end
@@ -191,31 +173,7 @@ commands.edit_test_file = function(cmd, post)
 end
 
 vim.cmd("command! -complete=command -nargs=* TestFile lua global.commands.edit_test_file(<f-args>)")
-u.map("n", "<Leader>tv", ":TestFile Vsplit<CR>")
-
-commands.terminal = {
-  on_open = function()
-    -- start in insert mode and turn off line numbers
-    vim.cmd("startinsert")
-    vim.cmd("setlocal nonumber norelativenumber")
-  end,
-
-  -- suppress exit code message
-  on_close = function()
-    if vim.bo.filetype ~= "nnn" then
-      vim.api.nvim_input("<CR>")
-    end
-  end,
-}
-
-u.augroup("OnTermOpen", "TermOpen", "lua global.commands.terminal.on_open()")
-u.augroup("OnTermClose", "TermClose", "lua global.commands.terminal.on_close()")
-
-u.command(
-  "WipeReg",
-  [[for r in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')| silent! call setreg(r, []) | endfor]]
-)
-u.augroup("WipeRegisters", "VimEnter", "WipeReg")
+u.map("n", "<Leader>tv", ":TestFile vsplit<CR>")
 
 -- reset LSP diagnostics and treesitter
 u.command("R", "w | :e")
@@ -223,6 +181,10 @@ u.command("R", "w | :e")
 -- delete current file and buffer
 u.command("Remove", "call delete(expand('%')) | Bdelete")
 
-_G.global.commands = commands
+global.commands = commands
+
+-- misc
+-- highlight on yank
+vim.cmd('autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })')
 
 return commands

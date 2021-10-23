@@ -11,3 +11,8 @@ require("nvim-autopairs.completion.cmp").setup({
     tex = "{",
   },
 })
+
+-- require("nvim-autopairs.completion.cmp").setup({
+--   map_complete = false,
+--   insert = true,
+-- })

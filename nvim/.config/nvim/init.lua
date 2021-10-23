@@ -41,9 +41,11 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.wrap = true
 vim.opt.encoding = "utf-8"
+vim.opt.showcmd = false
 -- vim.opt.statusline = [[%f %y %m %= %p%% %l:%c]]
 
-_G.global = {}
+-- initialize global object for config
+global = {}
 
 vim.cmd("set background=dark")
 vim.cmd("colorscheme zephyr")

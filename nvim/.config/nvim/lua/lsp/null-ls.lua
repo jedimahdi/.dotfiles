@@ -2,7 +2,7 @@ local null_ls = require("null-ls")
 local b = null_ls.builtins
 
 local sources = {
-  b.formatting.prettierd.with({
+  b.formatting.prettier.with({
     -- filetypes = { "html", "json", "yaml", "markdown" },
   }),
   b.formatting.stylua.with({

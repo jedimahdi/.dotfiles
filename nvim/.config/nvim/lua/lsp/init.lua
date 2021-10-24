@@ -4,6 +4,7 @@ local null_ls = require("lsp.null-ls")
 local tsserver = require("lsp.tsserver")
 local hls = require("lsp.hls")
 local purescriptls = require("lsp.purescriptls")
+local ccls = require("lsp.ccls")
 
 local lsp = vim.lsp
 
@@ -61,4 +62,5 @@ sumneko.setup(on_attach, capabilities)
 tsserver.setup(on_attach, capabilities)
 hls.setup(on_attach, capabilities)
 purescriptls.setup(on_attach, capabilities)
+ccls.setup(on_attach, capabilities)
 null_ls.setup(on_attach)

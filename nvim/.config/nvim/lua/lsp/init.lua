@@ -5,6 +5,8 @@ local tsserver = require("lsp.tsserver")
 local hls = require("lsp.hls")
 local purescriptls = require("lsp.purescriptls")
 local ccls = require("lsp.ccls")
+local rls = require("lsp.rls")
+local pyright = require("lsp.pyright")
 
 local lsp = vim.lsp
 
@@ -63,4 +65,6 @@ tsserver.setup(on_attach, capabilities)
 hls.setup(on_attach, capabilities)
 purescriptls.setup(on_attach, capabilities)
 ccls.setup(on_attach, capabilities)
+rls.setup(on_attach, capabilities)
+pyright.setup(on_attach, capabilities)
 null_ls.setup(on_attach)

@@ -1,0 +1,134 @@
+{
+  "define": {
+    "prefix": ["define"],
+    "body": [
+      "←"
+    ]
+  },
+  "export": {
+    "prefix": ["export"],
+    "body": [
+      "⇐"
+    ]
+  },
+  "system": {
+    "prefix": ["system"],
+    "body": [
+      "•"
+    ]
+  },
+  "fold": {
+    "prefix": ["fold"],
+    "body": [
+      "´"
+    ]
+  },
+  "scan": {
+    "prefix": ["scan"],
+    "body": [
+      "`"
+    ]
+  },
+  "multiply/sign": {
+    "prefix": ["multiply", "sign"],
+    "body": [
+      "×"
+    ]
+  },
+  "divide/reciprocal": {
+    "prefix": ["divide", "reciprocal"],
+    "body": [
+      "÷"
+    ]
+  },
+  "power/exponential": {
+    "prefix": ["power", "exponential"],
+    "body": [
+      "⋆"
+    ]
+  },
+  "map": {
+    "prefix": ["map"],
+    "body": [
+      "¨"
+    ]
+  },
+  "swap/self": {
+    "prefix": ["swap", "self"],
+    "body": [
+      "˜"
+    ]
+  },
+  "atop": {
+    "prefix": ["compose", "atop"],
+    "body": [
+      "∘"
+    ]
+  },
+  "right argument": {
+    "prefix": ["right argument", "x"],
+    "body": [
+      "𝕩"
+    ]
+  },
+  "left argument": {
+    "prefix": ["left argument", "w"],
+    "body": [
+      "𝕨"
+    ]
+  },
+  "rotate/reverse": {
+    "prefix": ["rotate", "reverse"],
+    "body": [
+      "⌽"
+    ]
+  },
+  "not equals/length": {
+    "prefix": ["not equals", "length"],
+    "body": [
+      "≠"
+    ]
+  },
+  "minimum/floor": {
+    "prefix": ["min", "floor"],
+    "body": [
+      "⌊"
+    ]
+  },
+  "maximum/ceiling": {
+    "prefix": ["max", "ceiling"],
+    "body": [
+      "⌈"
+    ]
+  },
+  "join to/join": {
+    "prefix": ["join", "join to", "concat"],
+    "body": [
+      "∾"
+    ]
+  },
+  "left/id": {
+    "prefix": ["idl", "left"],
+    "body": [
+      "⊣"
+    ]
+  },
+  "right/id": {
+    "prefix": ["idr", "right"],
+    "body": [
+      "⊢"
+    ]
+  },
+  "bind left": {
+    "prefix": ["bindl"],
+    "body": [
+      "⊸"
+    ]
+  },
+  "bind right": {
+    "prefix": ["bindr"],
+    "body": [
+      "⟜"
+    ]
+  }
+}

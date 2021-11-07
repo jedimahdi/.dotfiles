@@ -9,6 +9,15 @@
   home.username = "mahdi";
   home.homeDirectory = "/home/mahdi";
 
+  home.sessionVariables = {
+    LANG = "en_US.UTF-8";
+    LC_CTYPE = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    EDITOR = "nvim";
+    PAGER = "less -FirSwX";
+    MANPAGER = "less -FirSwX";
+  };
+
   # Set nixpkgs options (for home-manager installed packages only).
   nixpkgs.config = {
     allowUnfree = true;
@@ -17,8 +26,8 @@
   };
 
   # Documentation!
-  programs.man.enable = true;
-  programs.info.enable = true;
+  programs.man.enable = false;
+  programs.info.enable = false;
 
   home.packages = with pkgs; [
     # Nix

@@ -12,7 +12,6 @@ Config { font    = "xft:JetBrainsMono Nerd Font:weight=bold:pixelsize=14:antiali
                            ]
        , bgColor = "#1a1b26"
        , fgColor = "#ff6c6b"
-     --  , position = Static { xpos = 20, ypos = 12, width = 3800, height = 32 }
        , position = Static { xpos = 0 , ypos = 0, width = 1920, height = 24 }
        , overrideRedirect = False
        , lowerOnStart = False
@@ -29,11 +28,11 @@ Config { font    = "xft:JetBrainsMono Nerd Font:weight=bold:pixelsize=14:antiali
                     -- , Run Com "~/.local/bin/weather.sh" ["--listen"] "" 1800
                     , Run K10Temp "0000:00:18.3" ["--template", "﨎 <Tdie>ºC"] 60
                     , Run UnsafeXMonadLog
-                    , Run Com "/home/mahdi/.config/xmonad/scripts/padding-icon.sh" ["panel"] "trayerpad" 10
+                    , Run Com "/home/mahdi/.config/xmonad/scripts/padding-icon.sh" [] "trayerpad" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template =" <fn=5>%UnsafeXMonadLog%</fn> }{ <fc=#9ec07c,#1a1b26:0>%date%</fc>%trayerpad%"
+       , template =" <fn=5>%UnsafeXMonadLog%</fn> }{ <fc=#9ec07c,#1a1b26:0>%date%</fc> %trayerpad%"
        }
 
 

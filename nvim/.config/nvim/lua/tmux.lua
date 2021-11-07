@@ -102,6 +102,8 @@ local test_commands = {
     lua = "FILE=%s make test-file",
     typescript = "npm run test -- %s",
     typescriptreact = "npm run test -- %s",
+    bqn = "~/tmp/CBQN/BQN %s",
+    python = "python %s",
   },
   suite = {
     lua = "make test",

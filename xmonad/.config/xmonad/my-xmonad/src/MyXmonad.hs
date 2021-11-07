@@ -36,7 +36,7 @@ _keys conf@XConfig { XMonad.modMask = myModMask } =
   Map.fromList
     $  [ ((myModMask, xK_Return)              , spawn $ XMonad.terminal conf)
        , ((myModMask, xK_d)                   , spawn "dmenu_run")
-       , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Pictures/wallpapers/*")
+       , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Pictures/Wallpaper/*")
        , ((myModMask .|. shiftMask, xK_Return), spawn $ _terminal ++ " --working-directory `xcwd`")
        -- , ((myModMask .|. shiftMask, xK_Return), spawn $ Settings.terminal ++ " " ++ Settings.terminalDirectoryFlag ++ " `xcwd`")
        , ((myModMask, xK_z)                   , spawn "pcmanfm")
@@ -78,6 +78,21 @@ _keys conf@XConfig { XMonad.modMask = myModMask } =
     ++ [ ((myModMask, k)                      , windows $ W.greedyView i) | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9] ]
     ++ [ ((myModMask .|. shiftMask, k)        , windows $ W.shift i) | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9] ]
 
+-- | Mouse bindings: default actions bound to mouse events
+-- _mouseBindings :: XConfig Layout -> Map (KeyMask, Button) (Window -> X ())
+-- _mouseBindings (XConfig {XMonad.modMask = modMask}) = Map.fromList
+--     -- mod-button1 %! Set the window to floating mode and move by dragging
+--     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w
+--                                           >> windows W.shiftMaster)
+--     -- mod-button2 %! Raise the window to the top of the stack
+--     , ((modMask, button2), windows . (W.shiftMaster .) . W.focusWindow)
+--     -- mod-button3 %! Set the window to floating mode and resize by dragging
+--     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w
+--                                          >> windows W.shiftMaster)
+-- 
+--     -- you may also bind events to the mouse scroll wheel (button4 and button5)
+--     ]
+
 _normalBorderColor :: String
 _normalBorderColor = "#282c34"
 
@@ -114,6 +129,7 @@ trayer =
 
 myStartupHook :: X ()
 myStartupHook = do
+  spawnOnce "killall trayer"
   spawnOnce trayer
 
 --------------------------
@@ -159,4 +175,4 @@ _config = def
     }
 
 main :: IO ()
-main = xmonad . docks . withSB xmobar0 . ewmhFullscreen . ewmh $ _config
+main = xmonad . docks . withSB xmobar0 . ewmh $ _config

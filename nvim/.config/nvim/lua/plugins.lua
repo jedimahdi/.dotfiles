@@ -26,7 +26,7 @@ return require("packer").startup({
     use("joshdick/onedark.vim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
-    use_with_config("shadmansaleh/lualine.nvim", "lualine")
+    use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
     use("jose-elias-alvarez/null-ls.nvim")
     use("jose-elias-alvarez/nvim-lsp-ts-utils")
@@ -66,6 +66,7 @@ return require("packer").startup({
     -- use { 'LnL7/vim-nix', ft = 'nix' }
     use({ "vmchale/dhall-vim", ft = "dhall" })
     use({ "purescript-contrib/purescript-vim", ft = "purescript" })
+    use({"mlochbaum/BQN", ft = "bqn", rtp= 'editors/vim'})
     -- use { 'norcalli/nvim-colorizer.lua' }
     -- use { 'p00f/nvim-ts-rainbow' }
 

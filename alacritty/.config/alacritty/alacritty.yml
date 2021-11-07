@@ -22,6 +22,7 @@ font:
 
   bold:
     family: 'Victor Mono' 
+    style: Bold
  
   italic:
     family: 'Victor Mono' 

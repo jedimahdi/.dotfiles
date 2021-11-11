@@ -14,7 +14,7 @@ M.map = function(mode, target, source, opts)
   api.nvim_set_keymap(mode, target, source, get_map_options(opts))
 end
 
-for _, mode in ipairs({ "n", "o", "i", "x" }) do
+for _, mode in ipairs({ "n", "o", "i", "x", "t" }) do
   M[mode .. "map"] = function(...)
     M.map(mode, ...)
   end
@@ -99,6 +99,10 @@ M.buf_augroup = function(name, event, fn)
     ),
     false
   )
+end
+
+M.warn = function(msg)
+    api.nvim_echo({ { msg, "WarningMsg" } }, true, {})
 end
 
 return M

@@ -100,6 +100,8 @@ u.nmap("<Leader>td", ":lua require'tmux'.kill()<CR>")
 local test_commands = {
   file = {
     lua = "FILE=%s make test-file",
+    javascript = "npm run test -- %s",
+    javascriptreact = "npm run test -- %s",
     typescript = "npm run test -- %s",
     typescriptreact = "npm run test -- %s",
     bqn = "~/tmp/CBQN/BQN %s",
@@ -107,8 +109,10 @@ local test_commands = {
   },
   suite = {
     lua = "make test",
-    typescript = "npm run test:cov",
-    typescriptreact = "npm run test:cov",
+    javascript = "npm run test",
+    javascriptreact = "npm run test",
+    typescript = "npm run test",
+    typescriptreact = "npm run test",
   },
 }
 

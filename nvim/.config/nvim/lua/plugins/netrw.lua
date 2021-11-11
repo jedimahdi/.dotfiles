@@ -2,7 +2,7 @@ vim.cmd([[
 function! NetrwMapping()
   nmap <buffer> h -^
   nmap <buffer> l <CR>
-  nmap <buffer> a %:w<CR>:buffer #<CR>
+  nmap <buffer> a %
   nmap <buffer> H u
 
   nmap <buffer> <leader>e <C-^>
@@ -37,4 +37,7 @@ augroup END
 
 
   nmap <leader>e -
+
+  let g:netrw_fastbrowse = 0
+  let g:netrw_altfile = 1
 ]])

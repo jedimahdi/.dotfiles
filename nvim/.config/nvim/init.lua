@@ -50,6 +50,8 @@ global = {}
 vim.cmd("set background=dark")
 vim.cmd("colorscheme onedarker")
 
+u.nmap("<leader><leader>", ":w<CR>")
+
 u.nmap("<BS>", "<C-^>")
 u.nmap("<leader>.", "<C-^>")
 u.nmap("<TAB>", ":bnext<CR>")
@@ -74,6 +76,13 @@ u.nmap("<Space>", ":set hlsearch! hlsearch?<CR>")
 
 u.nmap("[q", ":cprev<CR>")
 u.nmap("]q", ":cnext<CR>")
+
+-- always redirect small operations to black hole register
+u.nmap("c", '"_c')
+u.nmap("C", '"_C')
+
+u.nmap("x", '"_x')
+u.nmap("X", '"_X')
 
 u.command("Q", "q")
 u.command("W", "w")

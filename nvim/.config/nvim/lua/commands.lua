@@ -110,66 +110,75 @@ vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-a
 u.command("VsplitLast", "Vsplit #")
 u.map("n", "<Leader>v", ":VsplitLast<CR>")
 
+-- cmd should be in the form of "edit $FILE",
+-- where $FILE is replaced with the found file's name
 commands.edit_test_file = function(cmd)
-  cmd = cmd or "edit"
-
-  local done = function(file)
-    vim.cmd(cmd:gsub("$FILE", file))
-  end
-
-  local root, ft = vim.pesc(vim.fn.expand("%:t:r")), vim.bo.filetype
-
-  local patterns = {}
-  if ft == "lua" then
-    table.insert(patterns, "_spec")
-  elseif ft == "typescript" or ft == "typescriptreact" then
-    table.insert(patterns, "%.test")
-    table.insert(patterns, "%.spec")
-  end
-
-  local final_patterns = {}
-  for _, pattern in ipairs(patterns) do
-    -- go from test file to non-test file
-    if root:match(pattern) then
-      pattern = root:gsub(vim.pesc(pattern), "")
-    else
-      pattern = root .. pattern
+    cmd = cmd or "edit"
+    if not cmd:find("$FILE") then
+        cmd = cmd .. " $FILE"
     end
-    -- make sure extension matches
-    pattern = pattern .. "%." .. vim.fn.expand("%:e") .. "$"
-    table.insert(final_patterns, pattern)
-  end
 
-  -- check buffers first
-  for _, b in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-    for _, pattern in ipairs(final_patterns) do
-      if b.name:match(pattern) then
-        vim.cmd(cmd .. " #" .. b.bufnr)
-        return
-      end
+    local done = function(file)
+        vim.cmd(cmd:gsub("$FILE", file))
     end
-  end
 
-  local scandir = function(path, depth, next)
-    require("plenary.scandir").scan_dir_async(path, {
-      depth = depth,
-      search_pattern = final_patterns,
-      on_exit = vim.schedule_wrap(function(found)
-        if found[1] then
-          done(found[1])
-          return
+    local root, ft = vim.pesc(vim.fn.expand("%:t:r")), vim.bo.filetype
+
+    local patterns = {}
+    if ft == "lua" then
+        table.insert(patterns, "_spec")
+    elseif ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
+        table.insert(patterns, "%.test")
+        table.insert(patterns, "%.spec")
+    end
+
+    local final_patterns = {}
+    for _, pattern in ipairs(patterns) do
+        -- go from test file to non-test file
+        if root:match(pattern) then
+            pattern = root:gsub(vim.pesc(pattern), "")
+        else
+            pattern = root .. pattern
         end
+        -- make sure extension matches
+        pattern = pattern .. "%." .. vim.fn.expand("%:e") .. "$"
+        table.insert(final_patterns, pattern)
+    end
 
-        assert(next, "test file not found")
-        next()
-      end),
-    })
-  end
+    -- check buffers first
+    for _, b in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+        for _, pattern in ipairs(final_patterns) do
+            if b.name:match(pattern) then
+                done(b.name)
+                return
+            end
+        end
+    end
 
-  -- check same dir files first, then cwd
-  scandir(vim.fn.expand("%:p:h"), 1, function()
-    scandir(vim.fn.getcwd(), 5)
-  end)
+    local scandir = function(path, depth, next)
+        require("plenary.scandir").scan_dir_async(path, {
+            depth = depth,
+            search_pattern = final_patterns,
+            on_exit = vim.schedule_wrap(function(found)
+                if found[1] then
+                    done(found[1])
+                    return
+                end
+
+                if not next then
+                    u.warn("test_file: corresponding file not found for file " .. vim.fn.expand("%:t"))
+                    return
+                end
+
+                next()
+            end),
+        })
+    end
+
+    -- check same dir files first, then cwd
+    scandir(vim.fn.expand("%:p:h"), 1, function()
+        scandir(vim.fn.getcwd(), 5)
+    end)
 end
 
 vim.cmd("command! -complete=command -nargs=* TestFile lua global.commands.edit_test_file(<f-args>)")
@@ -182,6 +191,9 @@ u.command("R", "w | :e")
 u.command("Remove", "call delete(expand('%')) | Bdelete")
 
 global.commands = commands
+
+-- get help for word under cursor
+u.command("Help", 'execute ":help" expand("<cword>")')
 
 -- misc
 -- highlight on yank

@@ -4,7 +4,11 @@ local M = {}
 M.setup = function(on_attach, capabilities)
   lspconfig.hls.setup({
     on_attach = on_attach,
-    settings = { languageServerHaskell = { formattingProvider = "stylish-haskell" } },
+    settings = {
+      haskell = {
+        formattingProvider = "stylish-haskell"
+      }
+    },
     capabilities = capabilities,
   })
 end

@@ -36,7 +36,7 @@ _keys conf@XConfig { XMonad.modMask = myModMask } =
   Map.fromList
     $  [ ((myModMask, xK_Return)              , spawn $ XMonad.terminal conf)
        , ((myModMask, xK_d)                   , spawn "dmenu_run")
-       , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Pictures/Wallpaper/*")
+       , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Picture/Wallpaper/*")
        , ((myModMask .|. shiftMask, xK_Return), spawn $ _terminal ++ " --working-directory  \"`xcwd`\"")
        -- , ((myModMask .|. shiftMask, xK_Return), spawn $ Settings.terminal ++ " " ++ Settings.terminalDirectoryFlag ++ " `xcwd`")
        , ((myModMask, xK_z)                   , spawn "pcmanfm")

@@ -24,8 +24,8 @@ vim.opt.updatetime = 300
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 2
 vim.opt.cursorline = false
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.number = false
+vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
 vim.opt.timeoutlen = 800
 vim.opt.shortmess:append("cA")

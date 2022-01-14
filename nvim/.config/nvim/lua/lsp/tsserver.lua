@@ -36,10 +36,9 @@ M.setup = function(on_attach, capabilities)
       ts_utils.setup(ts_utils_settings)
       ts_utils.setup_client(client)
 
-      u.buf_map("n", "gs", ":TSLspOrganize<CR>", nil, bufnr)
-      u.buf_map("n", "gI", ":TSLspRenameFile<CR>", nil, bufnr)
-      u.buf_map("n", "go", ":TSLspImportAll<CR>", nil, bufnr)
-      u.buf_map("n", "qq", ":TSLspFixCurrent<CR>", nil, bufnr)
+      u.buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+      u.buf_map(bufnr, "n", "gI", ":TSLspRenameFile<CR>")
+      u.buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
     end,
     flags = {
       debounce_text_changes = 150,

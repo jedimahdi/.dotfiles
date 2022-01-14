@@ -42,13 +42,16 @@ vim.opt.swapfile = false
 vim.opt.wrap = true
 vim.opt.encoding = "utf-8"
 vim.opt.showcmd = false
--- vim.opt.statusline = [[%f %y %m %= %p%% %l:%c]]
+vim.opt.statusline = [[%f %y %m %= %p%% %l:%c]]
+
+vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 
 -- initialize global object for config
 global = {}
 
 vim.cmd("set background=dark")
-vim.cmd("colorscheme onedarker")
+-- vim.cmd("colorscheme onedarker")
+vim.cmd("colorscheme kanagawa")
 
 u.nmap("<leader><leader>", ":w<CR>")
 
@@ -56,6 +59,13 @@ u.nmap("<BS>", "<C-^>")
 u.nmap("<leader>.", "<C-^>")
 u.nmap("<TAB>", ":bnext<CR>")
 u.nmap("<TAB>", ":bprevious<CR>")
+
+u.nmap("H", "^")
+u.omap("H", "^")
+u.xmap("H", "^")
+u.nmap("L", "$")
+u.omap("L", "$")
+u.xmap("L", "$")
 
 u.nmap("<leader>x", ":!chmod +x %<CR>")
 

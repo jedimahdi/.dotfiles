@@ -1,18 +1,35 @@
-require("nvim-autopairs").setup({
-  disable_filetype = { "TelescopePrompt", "vim" },
+local autopairs = require("nvim-autopairs")
+
+autopairs.setup({
+    check_ts = true,
+    enable_check_bracket_line = false,
+    fast_wrap = {
+        map = "<M-e>",
+    },
 })
 
--- require("nvim-autopairs.completion.cmp").setup({
---   map_cr = true, --  map <CR> on insert mode
---   map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
---   auto_select = false, -- automatically select the first item
---   map_char = { -- modifies the function or method delimiter by filetypes
---     all = "(",
---     tex = "{",
---   },
--- })
+local disabled = false
+local enable = function()
+    autopairs.enable()
+    disabled = false
+end
+local disable = function()
+    autopairs.disable()
+    disabled = true
+end
 
--- require("nvim-autopairs.completion.cmp").setup({
---   map_complete = false,
---   insert = true,
--- })
+global.toggle_autopairs = function()
+    if disabled then
+        enable()
+        return
+    end
+
+    disable()
+    vim.cmd("autocmd InsertLeave * ++once lua global.reset_autopairs()")
+end
+
+global.reset_autopairs = function()
+    if disabled then
+        enable()
+    end
+end

@@ -75,9 +75,7 @@ global.telescope = {
         -- edit file and matching test file in split
         map("i", "<C-f>", function(prompt_bufnr)
           set.edit(prompt_bufnr, "edit")
-          commands.edit_test_file("Vsplit", function()
-            vim.cmd("wincmd w")
-          end)
+          commands.edit_test_file("vsplit $FILE | wincmd w")
         end)
 
         return true

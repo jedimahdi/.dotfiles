@@ -204,7 +204,6 @@ alias .....="cd ../../../.."
 
 alias c="clear"
 alias v="nvim"
-alias e="nvim ."
 alias ls="ls -hN --color=auto --group-directories-first"
 
 alias l="ls -lah ${colorflag}"

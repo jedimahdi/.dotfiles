@@ -4,9 +4,9 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require("lspconfig").html.setup({
   cmd = {
-    'node',
-    DATA_PATH .. '/lspinstall/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js',
-    '--stdio',
+    "node",
+    DATA_PATH .. "/lspinstall/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js",
+    "--stdio",
   },
   -- cmd = { "html-languageserver", "--stdio" },
   capabilities = capabilities,

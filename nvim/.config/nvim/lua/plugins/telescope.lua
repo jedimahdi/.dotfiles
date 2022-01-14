@@ -53,23 +53,10 @@ global.telescope = {
     local set = require("telescope.actions.set")
     local builtin = require("telescope.builtin")
 
-    local current = vim.api.nvim_get_current_buf()
     local opts = {
       attach_mappings = function(_, map)
         map("i", "<C-v>", function(prompt_bufnr)
-          set.edit(prompt_bufnr, "Vsplit")
-        end)
-
-        -- replace current buffer
-        map("i", "<C-r>", function(prompt_bufnr)
-          set.edit(prompt_bufnr, "edit")
-          commands.bdelete(current)
-        end)
-
-        -- close all other buffers
-        map("i", "<C-x>", function(prompt_bufnr)
-          set.edit(prompt_bufnr, "edit")
-          commands.bonly()
+          set.edit(prompt_bufnr, "vsplit")
         end)
 
         -- edit file and matching test file in split

@@ -2,113 +2,64 @@ local u = require("utils")
 
 local api = vim.api
 
-local for_each_buffer = function(cb, force)
-  u.for_each(vim.fn.getbufinfo({ buflisted = true }), function(b)
-    if b.changed == 0 and not force then
-      cb(b)
-    end
-  end)
+-- make global to make ex commands easier
+_G.inspect = function(...)
+  print(vim.inspect(...))
 end
 
 local commands = {}
 
-commands.bonly = function(bufnr)
-  bufnr = bufnr or api.nvim_get_current_buf()
-  for_each_buffer(function(b)
-    if b.bufnr ~= bufnr then
-      vim.cmd("silent! bdelete " .. b.bufnr)
-    end
-  end)
+-- open file manager in floating terminal window and edit selected file(s)
+-- requires file manager to output paths to stdout, split w/ newlines
+commands.file_manager = function(command, edit_command)
+  edit_command = edit_command or "edit"
+  local winnr, win_bufnr = u.make_floating_window()
+
+  local map_edit_command = function(keys, new_command)
+    vim.keymap.set("t", keys, function()
+      edit_command = new_command
+      u.input("<CR>")
+    end, {
+      buffer = win_bufnr,
+    })
+  end
+
+  map_edit_command("<C-v>", "vsplit")
+  map_edit_command("<C-s>", "split")
+  map_edit_command("<C-t>", "tabedit")
+
+  vim.fn.termopen(command, {
+    on_exit = function()
+      local output = api.nvim_buf_get_lines(win_bufnr, 0, -1, false)
+      api.nvim_win_close(winnr, true)
+
+      local files = vim.tbl_filter(u.is_file, output)
+      vim.tbl_map(function(file)
+        vim.cmd(table.concat({ edit_command, file }, " "))
+      end, files)
+
+      api.nvim_buf_delete(win_bufnr, { force = true })
+    end,
+  })
 end
 
-u.lua_command("Bonly", "global.commands.bonly()")
+api.nvim_add_user_command("Nnn", function(opts)
+  local dir = opts.args ~= "" and opts.args or vim.fn.expand("%:p:h")
+  commands.file_manager(table.concat({ "nnn", "-p", "-", dir }, " "))
+end, {
+  nargs = "?",
+  complete = "dir",
+})
+u.nmap("_", ":Nnn<CR>")
 
-commands.bwipeall = function()
-  for_each_buffer(function(b)
-    vim.cmd("silent! bdelete " .. b.bufnr)
-  end)
-end
-
-u.lua_command("Bwipeall", "global.commands.bwipeall()")
-
-commands.wwipeall = function()
-  local win = api.nvim_get_current_win()
-  u.for_each(vim.fn.getwininfo(), function(w)
-    if w.winid ~= win then
-      if w.loclist == 1 then
-        vim.cmd("lclose")
-      elseif w.quickfix == 1 then
-        vim.cmd("cclose")
-      else
-        vim.cmd(w.winnr .. " close")
-      end
-    end
-  end)
-end
-
-u.lua_command("Wwipeall", "global.commands.wwipeall()")
-
-commands.bdelete = function(bufnr)
-  local win = api.nvim_get_current_win()
-  bufnr = bufnr or api.nvim_win_get_buf(win)
-
-  local target
-  local previous = vim.fn.bufnr("#")
-  if previous ~= -1 and previous ~= bufnr and vim.fn.buflisted(previous) == 1 then
-    target = previous
-  end
-
-  if not target then
-    for_each_buffer(function(b)
-      if not target and b.bufnr ~= bufnr then
-        target = b.bufnr
-      end
-    end)
-  end
-
-  if not target then
-    target = api.nvim_create_buf(false, false)
-  end
-
-  local windows = vim.fn.getbufinfo(bufnr)[1].windows
-  u.for_each(windows, function(w)
-    api.nvim_win_set_buf(w, target)
-  end)
-
-  vim.cmd("silent! bdelete " .. bufnr)
-end
-
-u.lua_command("Bdelete", "global.commands.bdelete()")
-u.map("n", "<Leader>cc", ":Bdelete<CR>")
-
-commands.vsplit = function(args)
-  if not args then
-    vim.cmd("vsplit")
-    return
-  end
-
-  local edit_in_win = function(winnr)
-    vim.cmd(winnr .. "windo edit " .. args)
-  end
-
-  local current = vim.fn.winnr()
-  local right_split = vim.fn.winnr("l")
-  local left_split = vim.fn.winnr("h")
-  if left_split < current then
-    edit_in_win(left_split)
-    return
-  end
-  if right_split > current then
-    edit_in_win(right_split)
-    return
-  end
-
-  vim.cmd("vsplit " .. args)
-end
-
-vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-args>)")
-u.command("VsplitLast", "Vsplit #")
-u.map("n", "<Leader>v", ":VsplitLast<CR>")
+api.nvim_add_user_command("Broot", function(opts)
+  local dir = opts.args ~= "" or vim.fn.expand("%:p:h")
+  commands.file_manager(table.concat({ "broot", dir }, " "))
+end, {
+  nargs = "?",
+  complete = "dir",
+})
+-- u.nmap("_", ":Broot<CR>")
 
 -- cmd should be in the form of "edit $FILE",
 -- where $FILE is replaced with the found file's name
@@ -127,7 +78,7 @@ commands.edit_test_file = function(cmd)
   local patterns = {}
   if ft == "lua" then
     table.insert(patterns, "_spec")
-  elseif ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
+  elseif ft == "typescript" or ft == "typescriptreact" then
     table.insert(patterns, "%.test")
     table.insert(patterns, "%.spec")
   end
@@ -182,21 +133,56 @@ commands.edit_test_file = function(cmd)
 end
 
 vim.cmd("command! -complete=command -nargs=* TestFile lua global.commands.edit_test_file(<f-args>)")
-u.map("n", "<Leader>tv", ":TestFile vsplit<CR>")
+u.nmap("<Leader>tv", ":TestFile vsplit<CR>")
 
--- reset LSP diagnostics and treesitter
-u.command("R", "w | :e")
+commands.open_on_github = function(count, start_line, end_line)
+  local remote = u.get_system_output("git remote -v")[1]
 
--- delete current file and buffer
-u.command("Remove", "call delete(expand('%')) | Bdelete")
+  if remote == "" then
+    u.warn("not in a git repo")
+    return
+  end
+  local username, repo = remote:match("github.com/(%S+)/(%S+)%.")
+  if not (username and repo) then
+    u.warn("failed to get repo info")
+    return
+  end
+
+  local branch = u.get_system_output("git rev-parse --abbrev-ref --symbolic-full-name HEAD")[1]
+  if branch == "HEAD" then
+    branch = u.get_system_output("git rev-parse HEAD")[1]
+  end
+  local repo_root = u.get_system_output("git rev-parse --show-toplevel")[1] .. "/"
+  local path = api.nvim_buf_get_name(0):gsub(vim.pesc(repo_root), "")
+
+  local url = table.concat({ "https://github.com", username, repo, "blob", branch, path }, "/")
+
+  if count > 0 then
+    local line_template = start_line == end_line and "#L%d" or "#L%d-L%d"
+    url = url .. string.format(line_template, start_line, end_line)
+  end
+
+  vim.fn.system("firefox " .. url)
+end
+
+vim.cmd("command! -range Gb lua global.commands.open_on_github(<count>, <line1>, <line2>)")
 
 global.commands = commands
+
+-- misc
+u.command("Bonly", '%bdelete | edit # | normal `"')
+u.command("Bdelete", "%bdelete")
+
+u.command("Git", "tabnew term://lazygit")
+u.nmap("<Leader>g", ":Git<CR>")
+
+-- delete current file and buffer
+u.command("Remove", "call delete(expand('%')) | bdelete")
 
 -- get help for word under cursor
 u.command("Help", 'execute ":help" expand("<cword>")')
 
--- misc
--- highlight on yank
-vim.cmd('autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })')
+-- reset treesitter and lsp diagnostics
+u.command("R", "w | :e")
 
 return commands

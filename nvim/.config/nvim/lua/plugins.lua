@@ -24,7 +24,7 @@ return require("packer").startup({
 
     use("rebelot/kanagawa.nvim")
     use("glepnir/zephyr-nvim")
-    use("joshdick/onedark.vim")
+    -- use("joshdick/onedark.vim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
@@ -33,17 +33,14 @@ return require("packer").startup({
     use("jose-elias-alvarez/nvim-lsp-ts-utils")
     use("kabouzeid/nvim-lspinstall")
 
-    use({
-      "nvim-telescope/telescope.nvim",
-      config = config("telescope"),
-      requires = { {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        run = "make",
-      } },
-    })
-
-    -- File tree
-    -- use_with_config("kyazdani42/nvim-tree.lua", "nvimtree")
+    -- use({
+    --   "nvim-telescope/telescope.nvim",
+    --   config = config("telescope"),
+    --   requires = { {
+    --     "nvim-telescope/telescope-fzf-native.nvim",
+    --     run = "make",
+    --   } },
+    -- })
 
     -- Comment
     use_with_config("numToStr/Comment.nvim", "comment")
@@ -67,7 +64,6 @@ return require("packer").startup({
     use({ "purescript-contrib/purescript-vim", ft = "purescript" })
     use({ "mlochbaum/BQN", ft = "bqn", rtp = "editors/vim" })
     -- use { 'norcalli/nvim-colorizer.lua' }
-    -- use { 'p00f/nvim-ts-rainbow' }
 
     -- Autocomplete
     use({
@@ -111,6 +107,7 @@ return require("packer").startup({
     use_with_config("nathom/filetype.nvim", "filetype") -- greatly reduces startup time
     use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
     use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
+    use_with_config("ibhagwan/fzf-lua", "fzf")
   end,
   config = {
     git = { clone_timeout = 300 },

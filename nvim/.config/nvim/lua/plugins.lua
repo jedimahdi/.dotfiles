@@ -46,12 +46,7 @@ return require("packer").startup({
     -- use_with_config("kyazdani42/nvim-tree.lua", "nvimtree")
 
     -- Comment
-    use({
-      "terrortylor/nvim-comment",
-      config = function()
-        require("nvim_comment").setup()
-      end,
-    })
+    use_with_config("numToStr/Comment.nvim", "comment")
 
     -- Syntax
     use({
@@ -62,7 +57,10 @@ return require("packer").startup({
       end,
     })
     use({ "windwp/nvim-ts-autotag", ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" } })
-    use({ "JoosepAlviste/nvim-ts-context-commentstring", ft = { "typescript", "typescriptreact" } }) -- makes jsx comments actually work
+    use({
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    }) -- makes jsx comments actually work
     use({ "neovimhaskell/haskell-vim", ft = "haskell" })
     -- use { 'LnL7/vim-nix', ft = 'nix' }
     use({ "vmchale/dhall-vim", ft = "dhall" })
@@ -108,6 +106,11 @@ return require("packer").startup({
     use_with_config("tpope/vim-vinegar", "netrw")
     use("tpope/vim-fugitive")
     use("godlygeek/tabular")
+
+    use("ggandor/lightspeed.nvim") -- motion
+    use_with_config("nathom/filetype.nvim", "filetype") -- greatly reduces startup time
+    use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
+    use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
   end,
   config = {
     git = { clone_timeout = 300 },

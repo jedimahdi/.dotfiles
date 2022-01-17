@@ -77,20 +77,20 @@
     };
   };
 
-  programs.git = {
-    enable = true;
-    userName = "Mahdi Seyedan";
-    userEmail = "seyedmahdiseydan78@yahoo.com";
-    aliases = {
-      ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi";
-    };
-    extraConfig = {
-      github.user = "jedimahdi";
-      credential = {
-        helper = "store";
-      };
-    };
-  };
+  # programs.git = {
+    # enable = true;
+    # userName = "Mahdi Seyedan";
+    # userEmail = "seyedmahdiseydan78@yahoo.com";
+    # aliases = {
+      # ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi";
+    # };
+    # extraConfig = {
+      # github.user = "jedimahdi";
+      # credential = {
+        # helper = "store";
+      # };
+    # };
+  # };
 
   programs.mpv = {
     enable = true;

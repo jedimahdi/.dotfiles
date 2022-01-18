@@ -1,26 +1,27 @@
-module MyXmonad (main) where
+module MyXmonad
+    ( main
+    ) where
 
-import           XMonad
 import           Data.Map                        ( Map )
 import qualified Data.Map                        as Map
-import qualified XMonad.StackSet                 as W
-import           XMonad.Actions.CycleWS          ( toggleWS )
-import           System.Exit                     ( exitSuccess )
-import           XMonad.Hooks.ManageDocks
 import           Graphics.X11.ExtraTypes.XF86
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.NoBorders
+import qualified MyXmonad.Dmenu.Configs          as Dmenu
+import qualified MyXmonad.Prompt.Calculator      as Prompt
+import qualified MyXmonad.Prompt.Hoogle          as Prompt
+import           System.Exit                     ( exitSuccess )
+import           XMonad
+import           XMonad.Actions.CycleWS          ( toggleWS )
+import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
 import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.StatusBar
+import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.Spacing
+import qualified XMonad.StackSet                 as W
 import           XMonad.Util.ClickableWorkspaces
-import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.Loggers
-import qualified MyXmonad.Prompt.Hoogle as Prompt
-import qualified MyXmonad.Prompt.Calculator as Prompt
-import qualified MyXmonad.Dmenu.Configs as Dmenu
+import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.SpawnOnce
 
 
@@ -89,7 +90,7 @@ _keys conf@XConfig { XMonad.modMask = myModMask } =
 --     -- mod-button3 %! Set the window to floating mode and resize by dragging
 --     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w
 --                                          >> windows W.shiftMaster)
--- 
+--
 --     -- you may also bind events to the mouse scroll wheel (button4 and button5)
 --     ]
 
@@ -127,10 +128,14 @@ trayer :: String
 trayer =
   "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 "
 
+-- trayer :: String
+-- trayer =
+--   "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --alpha 0 --tint 0x1e222a --height 24 --iconspacing 2"
+
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "killall trayer"
-  spawnOnce trayer
+  -- spawnOnce ""
+  spawn "~/.dotfiles/bin/systray.sh &"
 
 --------------------------
 -- XMOBAR CONFIGURATION --
@@ -140,8 +145,8 @@ windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myXmobarPP :: X PP
-myXmobarPP = clickablePP . filterOutWsPP [scratchpadWorkspaceTag] $ def
-      { ppCurrent         = xmobarColor "#71abeb" "" 
+myXmobarPP = clickablePP $ def
+      { ppCurrent         = xmobarColor "#71abeb" ""
       , ppVisible         = xmobarColor "#5AB1BB" ""
       , ppHidden          = xmobarColor "#e5c07b" ""
       , ppHiddenNoWindows = xmobarColor "#d6d5d5" ""

@@ -11,7 +11,7 @@ vim.g.mapleader = ","
 opt.completeopt = { "menuone", "noinsert" }
 opt.tabstop = 2
 opt.shiftwidth = 2
--- opt.epandtab = true
+opt.expandtab = true
 opt.smarttab = true
 opt.ignorecase = true
 opt.smartcase = true
@@ -47,6 +47,7 @@ opt.showcmd = false
 opt.cmdheight = 1
 opt.statusline = [[%f %y %m %= %p%% %l:%c]]
 opt.laststatus = 0
+opt.ruler = false
 
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+vpns=('NL-FREE#1' 'NL-FREE#2' 'NL-FREE#3' 'NL-FREE#4' 'NL-FREE#5' 'NL-FREE#6' 'NL-FREE#7' 'NL-FREE#8' 'NL-FREE#9' 'NL-FREE#10' 'NL-FREE#11' 'NL-FREE#12')
+
+selected=$(echo ${vpns[@]} | tr ' ' '\n' | fzf)
+
+if [[ -z "$selected" ]]; then
+  echo "Not Selected"
+else
+  protonvpn-cli connect $selected
+fi 

@@ -214,6 +214,8 @@ alias c="clear"
 alias v="nvim"
 alias ls="ls -hN --color=auto --group-directories-first"
 
+alias pd="protonvpn-cli d"
+
 alias l="ls -lah ${colorflag}"
 alias la="ls -AF ${colorflag}"
 alias ll="ls -lFh ${colorflag}"

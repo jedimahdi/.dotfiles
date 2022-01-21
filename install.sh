@@ -166,7 +166,42 @@ setup_shell() {
 	fi
 }
 
-installs=('git' 'shell' 'link' 'arch' 'all')
+setup_npm() {
+	title "Configuring npm"
+
+	mkdir -p ~/.npm-global
+	npm config set prefix "$HOME/.npm-global"
+	npm install -g typescript typescript-language-server
+	npm install -g prettier
+	npm install -g @elm-tooling/elm-language-server
+	npm install -g elm elm-test elm-format elm-review
+	npm install -g tldr
+}
+
+setup_nix() {
+	title "Configuring nix"
+
+	info "Install Nix"
+	mkdir -p ~/tmp
+	cd ~/tmp || return
+	rm -rf nix-install.sh
+	curl --proto '=https' --tlsv1.2 -sSf -L https://nixos.org/nix/install -o nix-install.sh
+	chmod +x nix-install.sh
+	./nix-install.sh --daemon
+	rm -rf nix-install.sh
+
+	info "Add unstable channel"
+	nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+	nix-channel --update
+
+	info "Install Home Manager"
+	nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+	nix-channel --update
+	export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+	nix-shell '<home-manager>' -A install
+}
+
+installs=('git' 'shell' 'link' 'arch' 'npm' 'nix' 'all')
 install=$(echo "${installs[@]}" | tr ' ' '\n' | fzf)
 
 case "$install" in
@@ -181,6 +216,12 @@ arch)
 	;;
 shell)
 	setup_shell
+	;;
+npm)
+	setup_npm
+	;;
+nix)
+	setup_nix
 	;;
 all)
 	setup_arch

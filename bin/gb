@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+current=$(git rev-parse --abbrev-ref HEAD)
+selected=$(git branch --format='%(refname:short)' | fzf)
+
+if [[ -n $selected && $selected != $current ]]; then
+  git checkout -q "$selected"
+  echo "Checked out branch $selected"
+fi
+

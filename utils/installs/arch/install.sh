@@ -24,7 +24,6 @@ pacman -S zathura zathura-pdf-mupdf zathura-ps
 ## Services
 systemctl enable lightdm
 
-
 ## Aur (paru)
 git clone https://aur.archlinux.org/paru.git
 cd paru
@@ -35,9 +34,9 @@ makepkg -si
 # spotify google-chrome
 # libjwt perl-app-sqitch
 
-# Paq 
+# Paq
 git clone https://github.com/savq/paq-nvim.git \
-    "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/opt/paq-nvim
+	"${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/opt/paq-nvim
 
 # ghcup
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
@@ -56,7 +55,6 @@ cd ../..
 mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 
-
 # typescript language server
 npm install -g typescript typescript-language-server
 
@@ -66,7 +64,7 @@ npm install -g neovim
 mkdir cabal-system-exe
 cd cabal-system-exe
 cabal init
-curl https://www.stackage.org/lts-16.31/cabal.config > cabal.project.freeze
+curl https://www.stackage.org/lts-16.31/cabal.config >cabal.project.freeze
 cabal install brittany
 cabal install hpack-dhall
 cabal install ghcid
@@ -85,7 +83,6 @@ initdb --locale=en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data
 sudo systemctl start postgresql.service
 # [postgres]$ createuser --interactive
 sudo snap install postbird
-
 
 # ZSH
 pacman -S zsh

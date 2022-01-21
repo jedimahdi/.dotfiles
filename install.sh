@@ -14,6 +14,15 @@ title() {
 	echo -e "${COLOR_GRAY}==============================${COLOR_NONE}\n"
 }
 
+error() {
+	echo -e "${COLOR_RED}Error: ${COLOR_NONE}$1"
+	exit 1
+}
+
+warning() {
+	echo -e "${COLOR_YELLOW}Warning: ${COLOR_NONE}$1"
+}
+
 info() {
 	echo -e "${COLOR_BLUE}Info: ${COLOR_NONE}$1"
 }
@@ -141,7 +150,23 @@ setup_arch() {
 	fi
 }
 
-installs=('git' 'link' 'arch' 'all')
+setup_shell() {
+	title "Configuring shell"
+
+	mkdir -p ~/.cache/zsh
+	zsh_path="$(which zsh)"
+	if ! grep "$zsh_path" /etc/shells; then
+		info "adding $zsh_path to /etc/shells"
+		echo "$zsh_path" | sudo tee -a /etc/shells
+	fi
+
+	if [[ "$SHELL" != "$zsh_path" ]]; then
+		chsh -s "$zsh_path"
+		info "default shell changed to $zsh_path"
+	fi
+}
+
+installs=('git' 'shell' 'link' 'arch' 'all')
 install=$(echo "${installs[@]}" | tr ' ' '\n' | fzf)
 
 case "$install" in
@@ -154,10 +179,14 @@ git)
 arch)
 	setup_arch
 	;;
+shell)
+	setup_shell
+	;;
 all)
 	setup_arch
 	setup_symlinks
 	setup_git
+	setup_shell
 	;;
 *)
 	echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"

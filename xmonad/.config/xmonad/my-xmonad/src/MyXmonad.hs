@@ -16,6 +16,7 @@ import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.Grid
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Spacing
 import qualified XMonad.StackSet                 as W
@@ -105,7 +106,7 @@ uniformBorder i = Border i i i i
 
 smartGaps = spacingRaw True (uniformBorder 0) False (uniformBorder 5) True
 
-_layout = avoidStruts $ (smartGaps . smartBorders $ tiled) ||| noBorders Full
+_layout = avoidStruts $ (smartGaps . smartBorders $ tiled) ||| noBorders Full ||| Grid
  where
   tiled   = Tall nmaster delta ratio
   nmaster = 1

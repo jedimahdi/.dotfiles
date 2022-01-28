@@ -18,13 +18,13 @@ return require("packer").startup({
       use({ path, config = config(name) })
     end
 
+    -- use("lewis6991/impatient.nvim")
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
     use("neovim/nvim-lspconfig")
 
     use("rebelot/kanagawa.nvim")
     use("glepnir/zephyr-nvim")
-    -- use("joshdick/onedark.vim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
@@ -32,15 +32,6 @@ return require("packer").startup({
     use("jose-elias-alvarez/null-ls.nvim")
     use("jose-elias-alvarez/nvim-lsp-ts-utils")
     use("kabouzeid/nvim-lspinstall")
-
-    -- use({
-    --   "nvim-telescope/telescope.nvim",
-    --   config = config("telescope"),
-    --   requires = { {
-    --     "nvim-telescope/telescope-fzf-native.nvim",
-    --     run = "make",
-    --   } },
-    -- })
 
     -- Comment
     use_with_config("numToStr/Comment.nvim", "comment")
@@ -105,8 +96,8 @@ return require("packer").startup({
 
     use("ggandor/lightspeed.nvim") -- motion
     use_with_config("nathom/filetype.nvim", "filetype") -- greatly reduces startup time
-    use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
-    use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
+    -- use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
+    -- use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
     use_with_config("ibhagwan/fzf-lua", "fzf")
   end,
   config = {

@@ -244,12 +244,6 @@ _G.packer_plugins = {
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/tabular",
     url = "https://github.com/godlygeek/tabular"
   },
-  ["vim-cutlass"] = {
-    config = { "require('plugins.cutlass')" },
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-cutlass",
-    url = "https://github.com/svermeulen/vim-cutlass"
-  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-fugitive",
@@ -282,12 +276,6 @@ _G.packer_plugins = {
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ",
     url = "https://github.com/hrsh7th/vim-vsnip-integ"
   },
-  ["vim-yoink"] = {
-    config = { "require('plugins.yoink')" },
-    loaded = true,
-    path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/vim-yoink",
-    url = "https://github.com/svermeulen/vim-yoink"
-  },
   ["zephyr-nvim"] = {
     loaded = true,
     path = "/home/mahdi/.local/share/nvim/site/pack/packer/start/zephyr-nvim",
@@ -300,14 +288,10 @@ time([[Defining packer_plugins]], false)
 time([[Runtimepath customization]], true)
 vim.o.runtimepath = vim.o.runtimepath .. ",/home/mahdi/.local/share/nvim/site/pack/packer/opt/BQN/editors/vim"
 time([[Runtimepath customization]], false)
--- Config for: vim-vinegar
-time([[Config for vim-vinegar]], true)
-require('plugins.netrw')
-time([[Config for vim-vinegar]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-require('plugins.autopairs')
-time([[Config for nvim-autopairs]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+require('plugins.cmp')
+time([[Config for nvim-cmp]], false)
 -- Config for: filetype.nvim
 time([[Config for filetype.nvim]], true)
 require('plugins.filetype')
@@ -316,52 +300,45 @@ time([[Config for filetype.nvim]], false)
 time([[Config for Comment.nvim]], true)
 require('plugins.comment')
 time([[Config for Comment.nvim]], false)
--- Config for: vim-yoink
-time([[Config for vim-yoink]], true)
-require('plugins.yoink')
-time([[Config for vim-yoink]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require('plugins.git')
-time([[Config for gitsigns.nvim]], false)
--- Config for: vim-cutlass
-time([[Config for vim-cutlass]], true)
-require('plugins.cutlass')
-time([[Config for vim-cutlass]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+require('plugins.autopairs')
+time([[Config for nvim-autopairs]], false)
 -- Config for: fzf-lua
 time([[Config for fzf-lua]], true)
 require('plugins.fzf')
 time([[Config for fzf-lua]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: nvim-cmp
-time([[Config for nvim-cmp]], true)
-require('plugins.cmp')
-time([[Config for nvim-cmp]], false)
+-- Config for: vim-vinegar
+time([[Config for vim-vinegar]], true)
+require('plugins.netrw')
+time([[Config for vim-vinegar]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+require('plugins.git')
+time([[Config for gitsigns.nvim]], false)
 -- Config for: vim-vsnip
 time([[Config for vim-vsnip]], true)
 require('plugins.vsnip')
 time([[Config for vim-vsnip]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType haskell ++once lua require("packer.load")({'haskell-vim'}, { ft = "haskell" }, _G.packer_plugins)]]
-vim.cmd [[au FileType dhall ++once lua require("packer.load")({'dhall-vim'}, { ft = "dhall" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescriptreact ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "typescriptreact" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescript ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "typescript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
 vim.cmd [[au FileType purescript ++once lua require("packer.load")({'purescript-vim'}, { ft = "purescript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType bqn ++once lua require("packer.load")({'BQN'}, { ft = "bqn" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascriptreact ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "javascriptreact" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-autotag', 'nvim-ts-context-commentstring'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescriptreact ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "typescriptreact" }, _G.packer_plugins)]]
+vim.cmd [[au FileType dhall ++once lua require("packer.load")({'dhall-vim'}, { ft = "dhall" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescript ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "typescript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-ts-context-commentstring', 'nvim-ts-autotag'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType haskell ++once lua require("packer.load")({'haskell-vim'}, { ft = "haskell" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]], true)
-vim.cmd [[source /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]]
-time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]], false)
 time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/BQN/editors/vim/ftdetect/bqn.vim]], true)
 vim.cmd [[source /home/mahdi/.local/share/nvim/site/pack/packer/opt/BQN/editors/vim/ftdetect/bqn.vim]]
 time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/BQN/editors/vim/ftdetect/bqn.vim]], false)
@@ -371,6 +348,9 @@ time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/pack
 time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], true)
 vim.cmd [[source /home/mahdi/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]]
 time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], false)
+time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]], true)
+vim.cmd [[source /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]]
+time([[Sourcing ftdetect script at: /home/mahdi/.local/share/nvim/site/pack/packer/opt/purescript-vim/ftdetect/purescript.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

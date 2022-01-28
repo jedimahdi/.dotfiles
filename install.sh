@@ -84,7 +84,7 @@ setup_arch() {
 	title "Configuring Arch Linux"
 	if [[ "$(uname)" == "Linux" ]]; then
 		info "Installing general"
-		sudo pacman -S --noconfirm --needed base-devel git make wget curl xdotool gcc xz coreutils xcape nitrogen ripgrep fd sysstat dunst zip unzip tar unrar openvpn python-pip volumeicon pulseaudio pulseaudio-alsa alsa-utils playerctl pcmanfm networkmanager networkmanager-openvpn networkmanager-openconnect networkmanager-pptp network-manager-applet ninja cmake
+		sudo pacman -S --noconfirm --needed base-devel git stow make wget curl xdotool gcc xz coreutils xcape nitrogen ripgrep fd sysstat dunst zip unzip tar unrar openvpn python-pip volumeicon pulseaudio pulseaudio-alsa alsa-utils playerctl pcmanfm networkmanager networkmanager-openvpn networkmanager-openconnect networkmanager-pptp network-manager-applet ninja cmake
 		sudo pacman -S --noconfirm --needed tmux z gnupg bat xclip zsh rsync npm nodejs kitty gnome-keyring python-pynvim xfce4-screenshooter
 		sudo pacman -S --noconfirm --needed firefox xarchiver mpv lxappearance
 
@@ -127,7 +127,7 @@ setup_arch() {
 
 		echo -e
 		info "Installing neovim dependensies"
-		sudo pacman -S --noconfirm --needed vim shfmt
+		sudo pacman -S --noconfirm --needed vim shfmt tree-sitter
 		sudo pikaur -S --noconfirm --needed shellcheck-bin stylua-bin
 
 		echo -e

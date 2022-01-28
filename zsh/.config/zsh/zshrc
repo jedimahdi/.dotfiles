@@ -60,6 +60,7 @@ compinit
 
 prepend_path $DOTFILES/bin
 prepend_path $HOME/.local/bin
+prepend_path $HOME/.neovim/bin
 prepend_path $HOME/.npm-global/bin
 prepend_path $HOME/.cabal/bin
 prepend_path $HOME/.ghcup/bin

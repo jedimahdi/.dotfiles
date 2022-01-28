@@ -20,10 +20,10 @@ opt.mouse = "a"
 opt.pumheight = 10
 opt.splitbelow = true
 opt.splitright = true
-opt.termguicolors = true
+vim.o.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
-opt.scrolloff = 5
+opt.scrolloff = 9
 opt.sidescrolloff = 2
 opt.cursorline = false
 opt.number = false
@@ -92,6 +92,9 @@ u.map("v", "<leader>y", '"+y')
 u.nmap("<leader>Y", 'gg"+yG')
 
 u.nmap("<Space>", ":set hlsearch! hlsearch?<CR>")
+
+u.nmap("<leader><space>", [[:%s/\s\+$<cr>]])
+u.nmap("<leader><space><space>", [[:%s/\n\{2,}/\r\r/g<cr>]])
 
 u.nmap("[q", ":cprev<CR>")
 u.nmap("]q", ":cnext<CR>")

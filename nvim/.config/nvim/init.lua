@@ -55,8 +55,14 @@ vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 global = {}
 
 vim.cmd("set background=dark")
-vim.cmd("colorscheme onedarker")
+vim.g.tokyonight_style = "night"
+-- vim.cmd("colorscheme onedarker")
 -- vim.cmd("colorscheme kanagawa")
+
+if vim.fn.filereadable(vim.fn.expand("~/.vimrc_background")) then
+  vim.g.base16colorspace = 256
+  vim.cmd([[source ~/.vimrc_background]])
+end
 
 u.nmap("<leader><leader>", ":w<CR>")
 

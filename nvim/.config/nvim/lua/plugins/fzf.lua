@@ -42,6 +42,7 @@ u.nmap("<Leader>sh", "<cmd>HelpTags<CR>")
 u.nmap("<Leader>sl", "<cmd>BLines<CR>")
 u.nmap("<Leader>sc", "<cmd>BCommits<CR>")
 u.nmap("<Leader>b", "<cmd>Buffers<CR>")
+u.nmap("<Leader>tc", "<cmd>FzfLua colorschemes<CR>")
 
 u.lua_command("LspDef", "require('fzf-lua').lsp_definitions({ jump_to_single_result = true })")
 u.command("LspRef", "FzfLua lsp_references")

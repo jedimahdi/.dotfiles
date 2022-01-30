@@ -27,6 +27,8 @@ return require("packer").startup({
     use("glepnir/zephyr-nvim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
+    use("folke/tokyonight.nvim")
+    use("RRethy/nvim-base16")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
     use("jose-elias-alvarez/null-ls.nvim")

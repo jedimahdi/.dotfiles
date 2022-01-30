@@ -1,19 +1,6 @@
 env:
   TERM: xterm-256color
 
-# font:
-#   normal:
-#     family: 'Iosevka Jedi'
-#     # style: Medium
-#
-#   bold:
-#     family: 'Iosevka Jedi'
-#
-#   italic:
-#     family: 'Iosevka Jedi'
-#
-#   size: 15.5
-
 font:
   normal:
     family: "Victor Mono"
@@ -110,4 +97,3 @@ cursor:
 #     magenta: '#ff6ac1'
 #     cyan:    '#9aedfe'
 #     white:   '#f1f1f0'
-

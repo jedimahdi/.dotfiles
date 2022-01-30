@@ -141,9 +141,10 @@ export ZPLUGDIR="$CACHEDIR/zsh/plugins"
 # array containing plugin information (managed by zfetch)
 typeset -A plugins
 
-# zfetch mafredri/zsh-async async.plugin.zsh
+zfetch mafredri/zsh-async async.plugin.zsh
 zfetch zsh-users/zsh-syntax-highlighting
 zfetch zsh-users/zsh-autosuggestions
+zfetch chriskempson/base16-shell
 zfetch Aloxaf/fzf-tab
 
 if [[ -x "$(command -v fnm)" ]]; then
@@ -280,5 +281,5 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 eval "$(direnv hook zsh)"
 
 source "$ZSH/utils.zsh"
-eval "$(starship init zsh)"
-# source "$ZSH/prompt2.zsh"
+# eval "$(starship init zsh)"
+source "$ZSH/prompt.zsh"

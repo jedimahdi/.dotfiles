@@ -26,10 +26,10 @@ export PATH="$HOME/.cabal/bin":$PATH
 
 nm-applet --indicator &
 
-volumeicon &
+# volumeicon &
 
 # picom -b
 
 ~/.dotfiles/bin/remaps
 
-feh --bg-fill --randomize ~/Picture/Wallpaper/* &
+# feh --bg-fill --randomize ~/Picture/Wallpaper/* &

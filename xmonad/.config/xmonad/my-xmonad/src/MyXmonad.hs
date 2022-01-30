@@ -72,9 +72,9 @@ addEWMHFullscreen   = do
 
 clipboardy, centerlaunch, sidebarlaunch, ewwclose, maimcopy, maimsave, rofiLauncher :: MonadIO m => m ()
 clipboardy = spawn "rofi -modi \"\63053 :greenclip print\" -show \"\63053 \" -run-command '{cmd}' -theme ~/.config/rofi/launcher/style.rasi"
-centerlaunch = spawn "exec ~/.local/bin/eww open-many blur_full weather profile quote search_full incognito-icon vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full"
-sidebarlaunch = spawn "exec ~/.local/bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
-ewwclose = spawn "exec ~/.local/bin/eww close-all"
+centerlaunch = spawn "exec ~/.dotfiles/bin/eww open-many blur_full weather profile quote search_full incognito-icon vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full"
+sidebarlaunch = spawn "exec ~/.dotfiles/bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
+ewwclose = spawn "exec ~/.dotfiles/bin/eww close-all"
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png && notify-send \"Screenshot\" \"Copied to Clipboard\" -i flameshot"
 maimsave = spawn "maim -s ~/Desktop/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send \"Screenshot\" \"Saved to Desktop\" -i flameshot"
 rofiLauncher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window -theme $HOME/.config/rofi/launcher/style -drun-icon-theme \"candy-icons\" "
@@ -116,9 +116,9 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((myModMask, xK_Print)              , maimsave)
 
      -- My Stuff
-     , ((myModMask,               xK_b     ), spawn "exec ~/.local/bin/bartoggle")
-     , ((myModMask,               xK_z     ), spawn "exec ~/.local/bin/inhibit_activate")
-     , ((myModMask .|. shiftMask, xK_z     ), spawn "exec ~/.local/bin/inhibit_deactivate")
+     , ((myModMask,               xK_b     ), spawn "exec ~/.dotfiles/bin/bartoggle")
+     , ((myModMask,               xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_activate")
+     , ((myModMask .|. shiftMask, xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_deactivate")
      , ((myModMask .|. shiftMask, xK_a     ), clipboardy)
 
      -- close focused window
@@ -183,7 +183,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((myModMask, xK_period)              , sendMessage (IncMasterN (-1)))
 
      -- Quit xmonad
-     , ((myModMask .|. shiftMask, xK_q)     , spawn "~/.local/bin/powermenu.sh")
+     , ((myModMask .|. shiftMask, xK_q)     , spawn "~/.dotfiles/bin/powermenu.sh")
 
      -- Restart xmonad
      , ((myModMask .|. shiftMask , xK_r)    , spawn "xmonad --recompile && xmonad --restart")
@@ -226,18 +226,6 @@ myMouseBindings XConfig {XMonad.modMask = modm} = Map.fromList
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
--- uniformBorder :: Integer -> Border
--- uniformBorder i = Border i i i i
---
--- smartGaps = spacingRaw True (uniformBorder 0) False (uniformBorder 5) True
---
--- _layout = avoidStruts $ (smartGaps . smartBorders $ tiled) ||| noBorders Full ||| Grid
---  where
---   tiled   = Tall nmaster delta ratio
---   nmaster = 1
---   ratio   = 1 / 2
---   delta   = 3 / 100
-
 myLayout = avoidStruts(tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -269,11 +257,11 @@ myEventHook = mempty
 myLogHook = return ()
 
 myStartupHook = do
-  spawnOnce "exec ~/.local/bin/bartoggle"
-  spawnOnce "exec ~/.local/bin/eww daemon"
+  spawnOnce "exec ~/.dotfiles/bin/bartoggle"
+  spawnOnce "exec ~/.dotfiles/bin/eww daemon"
   spawn "xsetroot -cursor_name left_ptr"
-  spawn "exec ~/.local/bin/lock.sh"
-  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/mountains-45-1920×1080.jpg"
+  spawn "exec ~/.dotfiles/bin/lock.sh"
+  spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"
@@ -349,3 +337,15 @@ main = xmonad $ fullscreenSupport $ docks $ ewmh defaults
 --
 -- main :: IO ()
 -- main = xmonad . docks . withSB xmobar0 . ewmh $ _config
+
+-- uniformBorder :: Integer -> Border
+-- uniformBorder i = Border i i i i
+--
+-- smartGaps = spacingRaw True (uniformBorder 0) False (uniformBorder 5) True
+--
+-- _layout = avoidStruts $ (smartGaps . smartBorders $ tiled) ||| noBorders Full ||| Grid
+--  where
+--   tiled   = Tall nmaster delta ratio
+--   nmaster = 1
+--   ratio   = 1 / 2
+--   delta   = 3 / 100

@@ -76,7 +76,7 @@ centerlaunch = spawn "exec ~/.dotfiles/bin/eww open-many blur_full weather profi
 sidebarlaunch = spawn "exec ~/.dotfiles/bin/eww open-many weather_side time_side smol_calendar player_side sys_side sliders_side"
 ewwclose = spawn "exec ~/.dotfiles/bin/eww close-all"
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png && notify-send \"Screenshot\" \"Copied to Clipboard\" -i flameshot"
-maimsave = spawn "maim -s ~/Desktop/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send \"Screenshot\" \"Saved to Desktop\" -i flameshot"
+maimsave = spawn "maim -s --hidecursor ~/Desktop/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send \"Screenshot\" \"Saved to Desktop\" -i flameshot"
 rofiLauncher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window -theme $HOME/.config/rofi/launcher/style -drun-icon-theme \"candy-icons\" "
 
 myKeys :: XConfig Layout -> Map (ButtonMask, KeySym) (X ())
@@ -112,8 +112,8 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((0, xF86XK_MonBrightnessDown)       , spawn "brightnessctl s 10-%")
 
      -- Screenshot
-     , ((0,         xK_Print)              , maimcopy)
-     , ((myModMask, xK_Print)              , maimsave)
+     , ((0,         xK_Print)              , maimsave)
+     , ((myModMask, xK_Print)              , maimcopy)
 
      -- My Stuff
      , ((myModMask,               xK_b     ), spawn "exec ~/.dotfiles/bin/bartoggle")
@@ -126,7 +126,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
 
      -- GAPS!!!
      , ((myModMask, xK_f), sendMessage ToggleGaps)               -- toggle all gaps
-     , ((myModMask .|. shiftMask, xK_g), sendMessage $ setGaps [(L,30), (R,30), (U,40), (D,60)]) -- reset the GapSpec
+     , ((myModMask .|. shiftMask, xK_g), sendMessage $ setGaps [(L,15), (R,15), (U,60), (D,15)]) -- reset the GapSpec
 
      , ((myModMask .|. controlMask, xK_t), sendMessage $ IncGap 10 L)              -- increment the left-hand gap
      , ((myModMask .|. shiftMask, xK_t     ), sendMessage $ DecGap 10 L)           -- decrement the left-hand gap
@@ -192,7 +192,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      -- , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Picture/Wallpaper/*")
 
      -- , ((myModMask, xK_z)                   , spawn "pcmanfm")
-     , ((myModMask, xK_c)                   , Dmenu.configs)
+     , ((myModMask, xK_x)                   , Dmenu.configs)
      , ((myModMask, xK_g)                   , Prompt.hoogle)
      , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
      -- , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
@@ -283,7 +283,7 @@ defaults = def {
 
       -- hooks, layouts
         manageHook = myManageHook,
-        layoutHook = gaps [(L,30), (R,30), (U,60), (D,60)] . spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True . smartBorders $ myLayout,
+        layoutHook = gaps [(L,15), (R,15), (U,60), (D,15)] . spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True . smartBorders $ myLayout,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook >> addEWMHFullscreen

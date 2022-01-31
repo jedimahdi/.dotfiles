@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 local api = vim.api
 
@@ -14,6 +14,7 @@ end
 
 local M = {}
 
+-- move between tmux splits and neovim windows
 local tmux_directions = { h = "L", j = "D", k = "U", l = "R" }
 
 local send_move_cmd = function(direction)
@@ -29,10 +30,10 @@ M.move = function(direction)
   end
 end
 
-u.nmap("<C-h>", ":lua require'tmux'.move('h')<CR>")
-u.nmap("<C-j>", ":lua require'tmux'.move('j')<CR>")
-u.nmap("<C-k>", ":lua require'tmux'.move('k')<CR>")
-u.nmap("<C-l>", ":lua require'tmux'.move('l')<CR>")
+u.nmap("<C-h>", ":lua require'config.tmux'.move('h')<CR>")
+u.nmap("<C-j>", ":lua require'config.tmux'.move('j')<CR>")
+u.nmap("<C-k>", ":lua require'config.tmux'.move('k')<CR>")
+u.nmap("<C-l>", ":lua require'config.tmux'.move('l')<CR>")
 
 -- send commands to linked tmux pane
 local linked_pane_id, last_cmd
@@ -91,41 +92,51 @@ M.kill = function()
   send_tmux_cmd("kill-pane -t " .. linked_pane_id)
 end
 
-u.nmap("<Leader>tn", ":lua require'tmux'.send_command()<CR>")
-u.nmap("<Leader>tt", ":lua require'tmux'.send_last_command()<CR>")
-u.nmap("<Leader>td", ":lua require'tmux'.kill()<CR>")
+M.run_file = function(ft)
+  ft = ft or vim.bo.ft
+  local cmd
+  if ft == "javascript" then
+    cmd = "node"
+  end
+  assert(cmd, "no command found for filetype " .. ft)
+
+  M.send_command(cmd .. " " .. api.nvim_buf_get_name(0))
+end
+
+u.nmap("<Leader>tn", ":lua require'config.tmux'.send_command()<CR>")
+u.nmap("<Leader>tt", ":lua require'config.tmux'.send_last_command()<CR>")
+u.nmap("<Leader>tr", ":lua require'config.tmux'.run_file()<CR>")
+
+-- automatically kill pane on exit
+vim.cmd("autocmd VimLeave * silent! lua require'config.tmux'.kill()")
 
 -- testing wrappers
 
 local test_commands = {
   file = {
     lua = "FILE=%s make test-file",
-    javascript = "npm run test -- %s",
-    javascriptreact = "npm run test -- %s",
     typescript = "npm run test -- %s",
     typescriptreact = "npm run test -- %s",
-    bqn = "~/tmp/CBQN/BQN %s",
-    python = "python %s",
   },
   suite = {
     lua = "make test",
-    javascript = "npm run test",
-    javascriptreact = "npm run test",
-    typescript = "npm run test",
-    typescriptreact = "npm run test",
+    typescript = "npm run test:cov",
+    typescriptreact = "npm run test:cov",
   },
 }
 
 M.test = function()
-  M.send_command(string.format(test_commands.file[vim.bo.ft], api.nvim_buf_get_name(0)))
-  -- M.send_command(test_commands.file[vim.bo.ft])
+  local test_command = test_commands.file[vim.bo.ft]
+  assert(test_command, "no test command found for filetype " .. vim.bo.ft)
+
+  M.send_command(string.format(test_command, api.nvim_buf_get_name(0)))
 end
 
 M.test_suite = function()
   M.send_command(test_commands.suite[vim.bo.ft])
 end
 
-u.nmap("<Leader>tf", ":lua require'tmux'.test()<CR>")
-u.nmap("<Leader>ts", ":lua require'tmux'.test_suite()<CR>")
+u.nmap("<Leader>tf", ":lua require'config.tmux'.test()<CR>")
+u.nmap("<Leader>ts", ":lua require'config.tmux'.test_suite()<CR>")
 
 return M

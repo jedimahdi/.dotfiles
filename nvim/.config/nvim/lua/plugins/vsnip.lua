@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
 vim.g.vsnip_filetypes = {

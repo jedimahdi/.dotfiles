@@ -1,6 +1,11 @@
-local u = require("utils")
+local u = require("config.utils")
 
 local api = vim.api
+
+local split = function(direction)
+  vim.cmd("wincmd " .. direction)
+  return api.nvim_get_current_win()
+end
 
 -- make global to make ex commands easier
 _G.inspect = function(...)
@@ -8,6 +13,54 @@ _G.inspect = function(...)
 end
 
 local commands = {}
+
+-- like vsplit, but reuses existing splits
+api.nvim_add_user_command("Vsplit", function(opts)
+  local file = opts.args ~= "" and opts.args or vim.fn.expand("%")
+
+  local current_window = api.nvim_get_current_win()
+  -- check for right split
+  local split_window = split("l")
+  -- no right split; check for left split
+  if split_window == current_window then
+    split_window = split("h")
+  end
+
+  -- no left or right split
+  if split_window == current_window then
+    vim.cmd("vsplit " .. file)
+    return
+  end
+
+  local bufnr = vim.fn.bufadd(file)
+  api.nvim_win_set_buf(split_window, bufnr)
+end, {
+  nargs = 1,
+  complete = "file",
+})
+
+-- same but for split
+api.nvim_add_user_command("Split", function(opts)
+  local file = opts.args ~= "" and opts.args or vim.fn.expand("%")
+
+  local current_window = api.nvim_get_current_win()
+  local split_window = split("k")
+  if split_window == current_window then
+    split_window = split("j")
+  end
+
+  -- no left or right split
+  if split_window == current_window then
+    vim.cmd("split " .. file)
+    return
+  end
+
+  local bufnr = vim.fn.bufadd(file)
+  api.nvim_win_set_buf(split_window, bufnr)
+end, {
+  nargs = 1,
+  complete = "file",
+})
 
 -- open file manager in floating terminal window and edit selected file(s)
 -- requires file manager to output paths to stdout, split w/ newlines
@@ -24,8 +77,8 @@ commands.file_manager = function(command, edit_command)
     })
   end
 
-  map_edit_command("<C-v>", "vsplit")
-  map_edit_command("<C-s>", "split")
+  map_edit_command("<C-v>", "Vsplit")
+  map_edit_command("<C-s>", "Split")
   map_edit_command("<C-t>", "tabedit")
 
   vim.fn.termopen(command, {
@@ -54,12 +107,14 @@ u.nmap("_", ":Nnn<CR>")
 
 api.nvim_add_user_command("Broot", function(opts)
   local dir = opts.args ~= "" or vim.fn.expand("%:p:h")
-  commands.file_manager(table.concat({ "broot", dir }, " "))
+  commands.file_manager(
+    table.concat({ "broot", "--conf", vim.fn.expand("$HOME/.config/broot/to_stdout.hjson"), dir }, " ")
+  )
 end, {
   nargs = "?",
   complete = "dir",
 })
--- u.nmap("_", ":Broot<CR>")
+u.nmap("_", ":Broot<CR>")
 
 -- cmd should be in the form of "edit $FILE",
 -- where $FILE is replaced with the found file's name
@@ -132,17 +187,23 @@ commands.edit_test_file = function(cmd)
   end)
 end
 
-vim.cmd("command! -complete=command -nargs=* TestFile lua global.commands.edit_test_file(<f-args>)")
-u.nmap("<Leader>tv", ":TestFile vsplit<CR>")
+api.nvim_add_user_command("TestFile", function(opts)
+  commands.edit_test_file(opts.args)
+end, {
+  complete = "command",
+  nargs = 1,
+})
+u.nmap("<Leader>tv", function()
+  commands.edit_test_file("Vsplit")
+end)
 
 commands.open_on_github = function(count, start_line, end_line)
   local remote = u.get_system_output("git remote -v")[1]
-
-  if remote == "" then
+  if remote == "" or remote:find("fatal") then
     u.warn("not in a git repo")
     return
   end
-  local username, repo = remote:match("github.com/(%S+)/(%S+)%.")
+  local username, repo = remote:match(":(%S+)/(%S+)%.")
   if not (username and repo) then
     u.warn("failed to get repo info")
     return
@@ -156,16 +217,19 @@ commands.open_on_github = function(count, start_line, end_line)
   local path = api.nvim_buf_get_name(0):gsub(vim.pesc(repo_root), "")
 
   local url = table.concat({ "https://github.com", username, repo, "blob", branch, path }, "/")
-
   if count > 0 then
     local line_template = start_line == end_line and "#L%d" or "#L%d-L%d"
     url = url .. string.format(line_template, start_line, end_line)
   end
 
-  vim.fn.system("firefox " .. url)
+  vim.fn.system("open " .. url)
 end
 
-vim.cmd("command! -range Gb lua global.commands.open_on_github(<count>, <line1>, <line2>)")
+api.nvim_add_user_command("GBrowse", function(opts)
+  global.commands.open_on_github(opts.count, opts.line1, opts.line2)
+end, {
+  range = true,
+})
 
 global.commands = commands
 

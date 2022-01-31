@@ -1,5 +1,5 @@
+local u = require("config.utils")
 local cmp = require("cmp")
-local u = require("utils")
 
 cmp.setup({
   snippet = {

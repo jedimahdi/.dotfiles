@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 local opt = vim.opt
 
@@ -126,7 +126,8 @@ local colors = { black = "#202328", bg = "#202328" }
 
 vim.cmd("hi StatusLine guibg=" .. colors.bg)
 
-require("tmux")
+require("config")
 require("plugins")
 require("lsp")
-require("commands")
+-- require("tmux")
+-- require("commands")

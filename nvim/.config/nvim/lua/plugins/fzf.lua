@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 require("fzf-lua").setup({
   winopts = {
@@ -44,7 +44,9 @@ u.nmap("<Leader>sc", "<cmd>BCommits<CR>")
 u.nmap("<Leader>b", "<cmd>Buffers<CR>")
 u.nmap("<Leader>tc", "<cmd>FzfLua colorschemes<CR>")
 
-u.lua_command("LspDef", "require('fzf-lua').lsp_definitions({ jump_to_single_result = true })")
 u.command("LspRef", "FzfLua lsp_references")
 u.command("LspSym", "FzfLua lsp_workspace_symbols")
 u.command("LspAct", "FzfLua lsp_code_actions")
+u.command("LspDef", function()
+  require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+end)

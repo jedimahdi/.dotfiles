@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 local lsp = vim.lsp
 local api = vim.api
@@ -62,15 +62,16 @@ global.lsp = {
 
 local on_attach = function(client, bufnr)
   -- commands
-  u.lua_command("LspFormatting", "vim.lsp.buf.formatting()")
-  u.lua_command("LspHover", "vim.lsp.buf.hover()")
-  u.lua_command("LspRename", "vim.lsp.buf.rename()")
-  u.lua_command("LspDiagPrev", "vim.diagnostic.goto_prev()")
-  u.lua_command("LspDiagNext", "vim.diagnostic.goto_next()")
-  u.lua_command("LspDiagLine", "vim.diagnostic.open_float(nil, global.lsp.border_opts)")
-  u.lua_command("LspDiagQuickfix", "vim.diagnostic.setqflist()")
-  u.lua_command("LspSignatureHelp", "vim.lsp.buf.signature_help()")
-  u.lua_command("LspTypeDef", "vim.lsp.buf.type_definition()")
+  u.command("LspFormatting", vim.lsp.buf.formatting)
+  u.command("LspHover", vim.lsp.buf.hover)
+  u.command("LspRename", vim.lsp.buf.rename)
+  u.command("LspDiagPrev", vim.diagnostic.goto_prev)
+  u.command("LspDiagNext", vim.diagnostic.goto_next)
+  u.command("LspDiagLine", vim.diagnostic.open_float)
+  u.command("LspDiagQuickfix", vim.diagnostic.setqflist)
+  u.command("LspSignatureHelp", vim.lsp.buf.signature_help)
+  u.command("LspTypeDef", vim.lsp.buf.type_definition)
+  u.command("LspRangeAct", vim.lsp.buf.range_code_action)
 
   -- bindings
   u.buf_map(bufnr, "n", "gi", ":LspRename<CR>")
@@ -83,7 +84,6 @@ local on_attach = function(client, bufnr)
   u.buf_map(bufnr, "n", "<Leader>p", ":LspFormatting<CR>")
   u.buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>")
 
-  -- telescope
   u.buf_map(bufnr, "n", "gr", ":LspRef<CR>")
   u.buf_map(bufnr, "n", "gd", ":LspDef<CR>")
   u.buf_map(bufnr, "n", "ga", ":LspAct<CR>")
@@ -91,11 +91,11 @@ local on_attach = function(client, bufnr)
 
   if client.supports_method("textDocument/formatting") then
     vim.cmd([[
-      augroup LspFormatting
-          autocmd! * <buffer>
-          autocmd BufWritePost <buffer> lua global.lsp.formatting(vim.fn.expand("<abuf>"))
-      augroup END
-      ]])
+        augroup LspFormatting
+            autocmd! * <buffer>
+            autocmd BufWritePost <buffer> silent! lua global.lsp.formatting(vim.fn.expand("<abuf>"))
+        augroup END
+        ]])
   end
 end
 

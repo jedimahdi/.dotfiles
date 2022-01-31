@@ -1,4 +1,4 @@
-local u = require("utils")
+local u = require("config.utils")
 
 local opts = { noremap = true }
 

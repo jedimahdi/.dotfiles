@@ -1,28 +1,11 @@
-export ZSH=$HOME/.config/zsh
-export DOTFILES="$HOME/.dotfiles"
-export CACHEDIR="$HOME/.local/share"
-export VIM_TMP="$HOME/.vim-tmp"
+if [[ -d $ZSH/functions ]]; then
+    for func in $ZSH/functions/*(:t); autoload -U $func
+fi
 
 # nnn
 BLK="04" CHR="04" DIR="04" EXE="00" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
 export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
 export NNN_OPTS="Heo"
-
-[[ -d "$CACHEDIR" ]] || mkdir -p "$CACHEDIR"
-[[ -d "$VIM_TMP" ]] || mkdir -p "$VIM_TMP"
-
-fpath=(
-    $ZSH/functions
-    /usr/local/share/zsh/site-functions
-    $fpath
-)
-
-typeset -aU path
-
-
-if [[ -d $ZSH/functions ]]; then
-    for func in $ZSH/functions/*(:t); autoload -U $func
-fi
 
 ########################################################
 # Configuration

@@ -192,7 +192,8 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      -- , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Picture/Wallpaper/*")
 
      -- , ((myModMask, xK_z)                   , spawn "pcmanfm")
-     , ((myModMask, xK_x)                   , Dmenu.configs)
+     , ((myModMask, xK_c)                   , Dmenu.configs)
+     , ((myModMask, xK_x)                   , spawn "~/.dotfiles/bin/dmkill")
      , ((myModMask, xK_g)                   , Prompt.hoogle)
      , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
      -- , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)

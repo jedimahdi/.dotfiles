@@ -98,6 +98,9 @@ M.run_file = function(ft)
   if ft == "javascript" then
     cmd = "node"
   end
+  if ft == "python" then
+    cmd = "python"
+  end
   assert(cmd, "no command found for filetype " .. ft)
 
   M.send_command(cmd .. " " .. api.nvim_buf_get_name(0))

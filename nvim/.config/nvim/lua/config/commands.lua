@@ -80,6 +80,7 @@ commands.file_manager = function(command, edit_command)
   map_edit_command("<C-v>", "Vsplit")
   map_edit_command("<C-s>", "Split")
   map_edit_command("<C-t>", "tabedit")
+  map_edit_command("l", "edit")
 
   vim.fn.termopen(command, {
     on_exit = function()
@@ -103,7 +104,7 @@ end, {
   nargs = "?",
   complete = "dir",
 })
-u.nmap("_", ":Nnn<CR>")
+-- u.nmap("_", ":Nnn<CR>")
 
 api.nvim_add_user_command("Broot", function(opts)
   local dir = opts.args ~= "" or vim.fn.expand("%:p:h")
@@ -114,7 +115,7 @@ end, {
   nargs = "?",
   complete = "dir",
 })
-u.nmap("_", ":Broot<CR>")
+-- u.nmap("_", ":Broot<CR>")
 
 -- cmd should be in the form of "edit $FILE",
 -- where $FILE is replaced with the found file's name

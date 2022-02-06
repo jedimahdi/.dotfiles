@@ -23,11 +23,11 @@ return require("packer").startup({
     use("nvim-lua/plenary.nvim")
     use("neovim/nvim-lspconfig")
 
-    use("rebelot/kanagawa.nvim")
-    use("glepnir/zephyr-nvim")
+    -- use("rebelot/kanagawa.nvim")
+    -- use("glepnir/zephyr-nvim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
-    use("folke/tokyonight.nvim")
+    -- use("folke/tokyonight.nvim")
     use("RRethy/nvim-base16")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
@@ -54,8 +54,8 @@ return require("packer").startup({
     use({ "neovimhaskell/haskell-vim", ft = "haskell" })
     -- use { 'LnL7/vim-nix', ft = 'nix' }
     use({ "vmchale/dhall-vim", ft = "dhall" })
-    use({ "purescript-contrib/purescript-vim", ft = "purescript" })
-    use({ "mlochbaum/BQN", ft = "bqn", rtp = "editors/vim" })
+    use({ "purescript-contrib/purescript-vim", ft = { "purescript", "purs" } })
+    -- use({ "mlochbaum/BQN", ft = "bqn", rtp = "editors/vim" })
     -- use { 'norcalli/nvim-colorizer.lua' }
 
     -- Autocomplete
@@ -97,10 +97,12 @@ return require("packer").startup({
     use("godlygeek/tabular")
 
     use("ggandor/lightspeed.nvim") -- motion
-    use_with_config("nathom/filetype.nvim", "filetype") -- greatly reduces startup time
+    use_with_config("~/tmp/filetype.nvim", "filetype") -- greatly reduces startup time
     -- use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
     -- use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
     use_with_config("ibhagwan/fzf-lua", "fzf")
+    use("rbgrouleff/bclose.vim")
+    use("francoiscabrol/ranger.vim")
   end,
   config = {
     git = { clone_timeout = 300 },

@@ -105,6 +105,8 @@ u.nmap("<leader><space><space>", [[:%s/\n\{2,}/\r\r/g<cr>]])
 u.nmap("[q", ":cprev<CR>")
 u.nmap("]q", ":cnext<CR>")
 
+u.nmap("_", ":Ranger<CR>")
+
 u.command("Q", "q")
 u.command("W", "w")
 u.command("Wq", "wq")
@@ -125,9 +127,13 @@ vim.cmd("autocmd TermClose term://*lazygit execute 'bdelete! ' . expand('<abuf>'
 local colors = { black = "#202328", bg = "#202328" }
 
 vim.cmd("hi StatusLine guibg=" .. colors.bg)
+vim.cmd([[highlight SpecialKey ctermfg=19 guifg=#333333]])
+vim.cmd([[highlight NonText ctermfg=19 guifg=#333333]])
+
+vim.cmd([[highlight MatchParen guibg=none guifg=#555555]])
+
+vim.g.ranger_map_keys = 0
 
 require("config")
 require("plugins")
 require("lsp")
--- require("tmux")
--- require("commands")

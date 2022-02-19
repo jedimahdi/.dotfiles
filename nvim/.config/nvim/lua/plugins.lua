@@ -1,14 +1,10 @@
-local fn = vim.fn
-local install_path = DATA_PATH .. "/site/pack/packer/start/packer.nvim"
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-  vim.cmd("packadd packer.nvim")
-end
+_ = vim.cmd([[packadd packer.nvim]])
+_ = vim.cmd([[packadd vimball]])
 
 return require("packer").startup({
   function(use)
     use("wbthomason/packer.nvim")
+    use("lewis6991/impatient.nvim")
 
     local config = function(name)
       return string.format("require('plugins.%s')", name)
@@ -18,10 +14,15 @@ return require("packer").startup({
       use({ path, config = config(name) })
     end
 
-    -- use("lewis6991/impatient.nvim")
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
     use("neovim/nvim-lspconfig")
+    use({
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup({})
+      end,
+    })
 
     -- use("rebelot/kanagawa.nvim")
     -- use("glepnir/zephyr-nvim")
@@ -34,6 +35,7 @@ return require("packer").startup({
     use("jose-elias-alvarez/null-ls.nvim")
     use("jose-elias-alvarez/nvim-lsp-ts-utils")
     use("kabouzeid/nvim-lspinstall")
+    use("onsails/lspkind-nvim")
 
     -- Comment
     use_with_config("numToStr/Comment.nvim", "comment")
@@ -92,7 +94,7 @@ return require("packer").startup({
 
     use("tpope/vim-surround")
     use("tpope/vim-repeat")
-    use_with_config("tpope/vim-vinegar", "netrw")
+    -- use_with_config("tpope/vim-vinegar", "netrw")
     use("tpope/vim-fugitive")
     use("godlygeek/tabular")
 
@@ -103,6 +105,9 @@ return require("packer").startup({
     use_with_config("ibhagwan/fzf-lua", "fzf")
     use("rbgrouleff/bclose.vim")
     use("francoiscabrol/ranger.vim")
+    use("tamago324/lir.nvim")
+    use("tamago324/lir-git-status.nvim")
+    use("tamago324/lir-mmv.nvim")
   end,
   config = {
     git = { clone_timeout = 300 },

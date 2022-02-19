@@ -1,6 +1,9 @@
 local u = require("config.utils")
 local cmp = require("cmp")
 
+local lspkind = require("lspkind")
+lspkind.init()
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -40,9 +43,24 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
-    { name = "buffer" },
+    { name = "buffer", keyword_length = 5 },
     { name = "path" },
     { name = "vsnip", priority = 9999 },
+  },
+  formatting = {
+    -- Youtube: How to set up nice formatting for your sources.
+    format = lspkind.cmp_format({
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+        gh_issues = "[issues]",
+        tn = "[TabNine]",
+      },
+    }),
   },
 })
 

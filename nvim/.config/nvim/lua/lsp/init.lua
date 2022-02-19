@@ -111,6 +111,7 @@ for _, server in ipairs({
   "sumneko",
   "elm",
   "pyright",
+  "ccls",
 }) do
   require("lsp." .. server).setup(on_attach, capabilities)
 end

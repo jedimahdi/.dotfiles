@@ -134,6 +134,18 @@ vim.cmd([[highlight MatchParen guibg=none guifg=#555555]])
 
 vim.g.ranger_map_keys = 0
 
+pcall(require, "impatient")
+
+if require("config.first_load")() then
+  return
+end
+
+vim.cmd([[runtime plugin/astronauta.vim]])
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+
 require("config")
 require("plugins")
 require("lsp")

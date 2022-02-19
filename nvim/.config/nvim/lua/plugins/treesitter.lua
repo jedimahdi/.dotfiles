@@ -11,7 +11,7 @@ M.setup = function()
       "bash",
       "javascript",
       "json",
-      -- "lua",
+      "lua",
       "typescript",
       "tsx",
       "html",

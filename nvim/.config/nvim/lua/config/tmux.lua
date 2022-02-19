@@ -101,6 +101,10 @@ M.run_file = function(ft)
   if ft == "python" then
     cmd = "python"
   end
+  if ft == "cpp" then
+    M.send_command("g++ " .. api.nvim_buf_get_name(0) .. " -std=c++20 && ./a.out")
+    return
+  end
   assert(cmd, "no command found for filetype " .. ft)
 
   M.send_command(cmd .. " " .. api.nvim_buf_get_name(0))

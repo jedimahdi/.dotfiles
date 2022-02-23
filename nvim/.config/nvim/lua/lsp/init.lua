@@ -112,6 +112,7 @@ for _, server in ipairs({
   "elm",
   "pyright",
   "ccls",
+  "rust_analyzer",
 }) do
   require("lsp." .. server).setup(on_attach, capabilities)
 end

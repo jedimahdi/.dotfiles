@@ -61,15 +61,17 @@ return require("packer").startup({
     -- use { 'norcalli/nvim-colorizer.lua' }
 
     -- Autocomplete
-    use({
-      "hrsh7th/vim-vsnip",
-      requires = {
-        "hrsh7th/vim-vsnip-integ",
-      },
-      config = config("vsnip"),
-    })
+    -- use({
+    --   "hrsh7th/vim-vsnip",
+    --   requires = {
+    --     "hrsh7th/vim-vsnip-integ",
+    --   },
+    --   config = config("vsnip"),
+    -- })
 
-    use({ "rafamadriz/friendly-snippets" })
+    -- use({ "rafamadriz/friendly-snippets" })
+
+    use_with_config("L3MON4D3/LuaSnip", "luasnip")
 
     use({
       "hrsh7th/nvim-cmp",
@@ -77,7 +79,8 @@ return require("packer").startup({
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-vsnip",
+        -- "hrsh7th/cmp-vsnip",
+        "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-path",
       },
       config = config("cmp"),
@@ -108,6 +111,14 @@ return require("packer").startup({
     use("tamago324/lir.nvim")
     use("tamago324/lir-git-status.nvim")
     use("tamago324/lir-mmv.nvim")
+    use({
+      "iamcco/markdown-preview.nvim", -- preview markdown output in browser
+      opt = true,
+      ft = { "markdown" },
+      config = "vim.cmd[[doautocmd BufEnter]]",
+      run = "cd app && yarn install",
+      cmd = "MarkdownPreview",
+    })
   end,
   config = {
     git = { clone_timeout = 300 },

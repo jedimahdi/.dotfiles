@@ -1,13 +1,18 @@
 local u = require("config.utils")
-local cmp = require("cmp")
 
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 local lspkind = require("lspkind")
+
 lspkind.init()
+
+vim.opt.shortmess:append("c")
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   completion = {
@@ -30,8 +35,8 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        u.input("<Plug>(vsnip-expand-or-jump)")
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -41,11 +46,11 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = "nvim_lsp" },
     { name = "nvim_lua" },
-    { name = "buffer", keyword_length = 5 },
+    { name = "nvim_lsp" },
     { name = "path" },
-    { name = "vsnip", priority = 9999 },
+    { name = "luasnip" },
+    { name = "buffer", keyword_length = 5 },
   },
   formatting = {
     -- Youtube: How to set up nice formatting for your sources.

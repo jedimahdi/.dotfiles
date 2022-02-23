@@ -1,14 +1,10 @@
+require("config.globals")
 local u = require("config.utils")
 
 local opt = vim.opt
 
-CONFIG_PATH = vim.fn.stdpath("config")
-DATA_PATH = vim.fn.stdpath("data")
-CACHE_PATH = vim.fn.stdpath("cache")
-
 vim.g.mapleader = ","
 
-opt.completeopt = { "menuone", "noinsert" }
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
@@ -64,7 +60,7 @@ if vim.fn.filereadable(vim.fn.expand("~/.vimrc_background")) then
   vim.cmd([[source ~/.vimrc_background]])
 end
 
-u.nmap("<leader><leader>", ":w<CR>")
+-- u.nmap("<leader><leader>", ":w<CR>")
 
 u.nmap("<leader>i", ":set cursorline!<CR>")
 

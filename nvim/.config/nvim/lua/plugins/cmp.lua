@@ -6,8 +6,15 @@ local lspkind = require("lspkind")
 
 lspkind.init()
 
-vim.opt.shortmess:append("c")
-vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+-- vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+vim.opt.completeopt = {
+  -- show menu even if there is only one match
+  "menuone",
+  -- do not select any text until the user selects a match from the menu
+  "noinsert",
+  -- do not select a match in the menu, force the user to select one
+  "noselect",
+}
 
 cmp.setup({
   snippet = {
@@ -52,6 +59,7 @@ cmp.setup({
     { name = "luasnip" },
     { name = "buffer", keyword_length = 5 },
   },
+  -- experimental = { ghost_text = true },
   formatting = {
     -- Youtube: How to set up nice formatting for your sources.
     format = lspkind.cmp_format({
@@ -66,11 +74,5 @@ cmp.setup({
         tn = "[TabNine]",
       },
     }),
-  },
-})
-
-cmp.setup.cmdline("/", {
-  sources = {
-    { name = "buffer" },
   },
 })

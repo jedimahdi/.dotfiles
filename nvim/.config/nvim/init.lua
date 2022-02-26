@@ -1,52 +1,6 @@
 require("config.globals")
 local u = require("config.utils")
 
-local opt = vim.opt
-
-vim.g.mapleader = ","
-
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.expandtab = true
-opt.smarttab = true
-opt.ignorecase = true
-opt.smartcase = true
-opt.magic = true
-opt.mouse = "a"
-opt.pumheight = 10
-opt.splitbelow = true
-opt.splitright = true
-vim.o.termguicolors = true
-opt.undofile = true
-opt.updatetime = 300
-opt.scrolloff = 9
-opt.sidescrolloff = 2
-opt.cursorline = false
-opt.number = false
-opt.relativenumber = false
-opt.signcolumn = "yes"
-opt.timeoutlen = 800
-opt.shortmess:append("cA")
-opt.clipboard:append("unnamed") -- vim.opt.clipboard:append("unnamedplus")
-opt.directory = CACHE_PATH .. "/swag/"
-opt.undodir = CACHE_PATH .. "/undo/"
-opt.backupdir = CACHE_PATH .. "/backup/"
-opt.viewdir = CACHE_PATH .. "/view/"
-opt.spellfile = CACHE_PATH .. "/spell/en.uft-8.add"
-opt.backup = false
-opt.writebackup = false
-opt.undofile = true
-opt.swapfile = false
-opt.wrap = true
-opt.encoding = "utf-8"
-opt.showcmd = false
-opt.cmdheight = 1
-opt.statusline = [[%f %y %m %= %p%% %l:%c]]
-opt.laststatus = 0
-opt.ruler = false
-
-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
-
 -- initialize global object for config
 global = {}
 
@@ -59,6 +13,8 @@ if vim.fn.filereadable(vim.fn.expand("~/.vimrc_background")) then
   vim.g.base16colorspace = 256
   vim.cmd([[source ~/.vimrc_background]])
 end
+
+vim.g.mapleader = ","
 
 -- u.nmap("<leader><leader>", ":w<CR>")
 
@@ -141,6 +97,15 @@ vim.cmd([[runtime plugin/astronauta.vim]])
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tutor_mode_plugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+
+vim.g.border_style = "edge"
 
 require("config")
 require("plugins")

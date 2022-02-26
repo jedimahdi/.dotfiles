@@ -3,9 +3,6 @@ _ = vim.cmd([[packadd vimball]])
 
 return require("packer").startup({
   function(use)
-    use("wbthomason/packer.nvim")
-    use("lewis6991/impatient.nvim")
-
     local config = function(name)
       return string.format("require('plugins.%s')", name)
     end
@@ -13,6 +10,10 @@ return require("packer").startup({
     local use_with_config = function(path, name)
       use({ path, config = config(name) })
     end
+
+    use("wbthomason/packer.nvim")
+    use("lewis6991/impatient.nvim")
+    use_with_config("~/tmp/filetype.nvim", "filetype") -- greatly reduces startup time
 
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
@@ -60,15 +61,6 @@ return require("packer").startup({
     -- use({ "mlochbaum/BQN", ft = "bqn", rtp = "editors/vim" })
     -- use { 'norcalli/nvim-colorizer.lua' }
 
-    -- Autocomplete
-    -- use({
-    --   "hrsh7th/vim-vsnip",
-    --   requires = {
-    --     "hrsh7th/vim-vsnip-integ",
-    --   },
-    --   config = config("vsnip"),
-    -- })
-
     -- use({ "rafamadriz/friendly-snippets" })
 
     use_with_config("L3MON4D3/LuaSnip", "luasnip")
@@ -97,12 +89,10 @@ return require("packer").startup({
 
     use("tpope/vim-surround")
     use("tpope/vim-repeat")
-    -- use_with_config("tpope/vim-vinegar", "netrw")
     use("tpope/vim-fugitive")
     use("godlygeek/tabular")
 
     use("ggandor/lightspeed.nvim") -- motion
-    use_with_config("~/tmp/filetype.nvim", "filetype") -- greatly reduces startup time
     -- use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
     -- use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
     use_with_config("ibhagwan/fzf-lua", "fzf")
@@ -119,6 +109,8 @@ return require("packer").startup({
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
     })
+    use("andymass/vim-matchup")
+    use("ray-x/lsp_signature.nvim")
   end,
   config = {
     git = { clone_timeout = 300 },

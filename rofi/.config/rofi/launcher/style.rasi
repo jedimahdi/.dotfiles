@@ -10,7 +10,7 @@
 configuration {
     lines:							10;
     columns:						1;
-    font: 							"Museo Sans 12";
+    font: 							"Museo Sans 16";
     bw: 							0;
     location: 						0;
     padding: 						0;

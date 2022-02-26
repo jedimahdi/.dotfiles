@@ -3,7 +3,8 @@ local u = require("config.utils")
 local lsp = vim.lsp
 local api = vim.api
 
-local border_opts = { border = "single", focusable = false, scope = "line" }
+-- border = double, rounded, single, shadow, none
+local border_opts = { border = "rounded", focusable = true, scope = "line" }
 
 vim.diagnostic.config({ virtual_text = false, float = border_opts })
 
@@ -116,6 +117,16 @@ for _, server in ipairs({
 }) do
   require("lsp." .. server).setup(on_attach, capabilities)
 end
+
+local signature_config = {
+  log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
+  debug = true,
+  hint_enable = false,
+  handler_opts = { border = "single" },
+  max_width = 80,
+}
+
+require("lsp_signature").setup(signature_config)
 
 -- suppress lspconfig messages
 local notify = vim.notify

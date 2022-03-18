@@ -307,48 +307,48 @@ execp_icon_w = 20
 execp_icon_h = 20
 
 #-------------------------------------
-# Executor 4
-execp = new
-execp_command = ~/.dotfiles/bin/notieye
-execp_interval = 1200
-execp_has_icon = 0
-execp_cache_icon = 1
-execp_continuous = 0
-execp_markup = 1
-execp_tooltip = 
-execp_lclick_command = 
-execp_rclick_command = 
-execp_mclick_command = 
-execp_uwheel_command = 
-execp_dwheel_command = 
-execp_font_color = #000000 100
-execp_padding = 0 0
-execp_background_id = 0
-execp_centered = 0
-execp_icon_w = 0
-execp_icon_h = 0
-
-#-------------------------------------
-# Executor 5
-execp = new
-execp_command = ~/.dotfiles/bin/notipose
-execp_interval = 900
-execp_has_icon = 0
-execp_cache_icon = 1
-execp_continuous = 0
-execp_markup = 1
-execp_tooltip = 
-execp_lclick_command = 
-execp_rclick_command = 
-execp_mclick_command = 
-execp_uwheel_command = 
-execp_dwheel_command = 
-execp_font_color = #000000 100
-execp_padding = 0 0
-execp_background_id = 0
-execp_centered = 0
-execp_icon_w = 0
-execp_icon_h = 0
+# # Executor 4
+# execp = new
+# execp_command = ~/.dotfiles/bin/notieye
+# execp_interval = 1200
+# execp_has_icon = 0
+# execp_cache_icon = 1
+# execp_continuous = 0
+# execp_markup = 1
+# execp_tooltip = 
+# execp_lclick_command = 
+# execp_rclick_command = 
+# execp_mclick_command = 
+# execp_uwheel_command = 
+# execp_dwheel_command = 
+# execp_font_color = #000000 100
+# execp_padding = 0 0
+# execp_background_id = 0
+# execp_centered = 0
+# execp_icon_w = 0
+# execp_icon_h = 0
+# 
+# #-------------------------------------
+# # Executor 5
+# execp = new
+# execp_command = ~/.dotfiles/bin/notipose
+# execp_interval = 900
+# execp_has_icon = 0
+# execp_cache_icon = 1
+# execp_continuous = 0
+# execp_markup = 1
+# execp_tooltip = 
+# execp_lclick_command = 
+# execp_rclick_command = 
+# execp_mclick_command = 
+# execp_uwheel_command = 
+# execp_dwheel_command = 
+# execp_font_color = #000000 100
+# execp_padding = 0 0
+# execp_background_id = 0
+# execp_centered = 0
+# execp_icon_w = 0
+# execp_icon_h = 0
 
 #-------------------------------------
 # Button 1

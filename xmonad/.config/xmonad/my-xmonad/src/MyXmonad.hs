@@ -32,7 +32,7 @@ import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.SpawnOnce
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -46,7 +46,7 @@ myBorderWidth :: Dimension
 myBorderWidth   = 2
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces =  ["\63083", "\63288", "\63306", "\61723", "\63107", "\63601", "\63391", "\61713", "\61884"]
+myWorkspaces =  ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 myNormalBorderColor :: String
 myNormalBorderColor  = "#3b4252"
@@ -125,7 +125,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((myModMask, xK_q)                   , kill)
 
      -- GAPS!!!
-     , ((myModMask, xK_f), sendMessage ToggleGaps)               -- toggle all gaps
+     -- , ((myModMask, xK_f), sendMessage ToggleGaps)               -- toggle all gaps
      , ((myModMask .|. shiftMask, xK_g), sendMessage $ setGaps [(L,15), (R,15), (U,60), (D,15)]) -- reset the GapSpec
 
      , ((myModMask .|. controlMask, xK_t), sendMessage $ IncGap 10 L)              -- increment the left-hand gap
@@ -198,7 +198,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
      -- , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
      , ((myModMask, xK_Tab)                 , toggleWS)
-     -- , ((myModMask, xK_f)                   , sendMessage ToggleStruts)
+     , ((myModMask, xK_f)                   , sendMessage ToggleStruts)
      ]
 
      -- mod-[1..9], Switch to workspace N
@@ -258,15 +258,16 @@ myEventHook = mempty
 myLogHook = return ()
 
 myStartupHook = do
-  spawnOnce "exec ~/.dotfiles/bin/bartoggle"
-  spawnOnce "exec ~/.dotfiles/bin/eww daemon"
+  -- spawnOnce "exec ~/.dotfiles/bin/bartoggle"
+  -- spawnOnce "exec ~/.dotfiles/bin/eww daemon"
   spawn "xsetroot -cursor_name left_ptr"
-  spawn "exec ~/.dotfiles/bin/lock.sh"
+  -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
   spawnOnce "feh --bg-fill ~/Picture/Wallpaper/mushrooms-glow-light-1920×1080.jpg"
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"
+  spawnOnce "~/.dotfiles/bin/systray.sh"
 
 defaults = def {
       -- simple stuff
@@ -285,44 +286,40 @@ defaults = def {
 
       -- hooks, layouts
         manageHook = myManageHook,
-        layoutHook = gaps [(L,15), (R,15), (U,60), (D,15)] . spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True . smartBorders $ myLayout,
+        -- layoutHook = smartGaps . spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True . smartBorders $ myLayout,
+        layoutHook = smartGaps . smartBorders $ myLayout,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook >> addEWMHFullscreen
     }
 
 main :: IO ()
-main = xmonad $ fullscreenSupport $ docks $ ewmh defaults
+main = xmonad . ewmhFullscreen . ewmh . docks . withSB xmobar0 $ defaults
 
--- myStartupHook :: X ()
--- myStartupHook = do
---   -- spawnOnce ""
---   spawn "~/.dotfiles/bin/systray.sh &"
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
--- windowCount :: X (Maybe String)
--- windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
---
--- myXmobarPP :: X PP
--- myXmobarPP = clickablePP $ def
---       { ppCurrent         = xmobarColor "#71abeb" ""
---       , ppVisible         = xmobarColor "#5AB1BB" ""
---       , ppHidden          = xmobarColor "#e5c07b" ""
---       , ppHiddenNoWindows = xmobarColor "#d6d5d5" ""
---       , ppUrgent          = xmobarColor "#e06c75" "" . wrap "!" "!"
---       , ppTitle           = xmobarColor "#9ec07c" "" . shorten 90
---       , ppWsSep           = "  "
---       , ppLayout          = xmobarColor "#c678dd" ""
---       , ppSep             = "<fc=#4b5363> <fn=1>|</fn> </fc>"
---       , ppOrder           = \(ws : l : t : extras) -> [ws,l]++extras++[t]
---       , ppExtras          = [ xmobarColorL "#5AB1BB" "#1A1B26" windowCount]
---       }
+myXmobarPP :: X PP
+myXmobarPP = clickablePP $ def
+      { ppCurrent         = xmobarColor "#71abeb" ""
+      , ppVisible         = xmobarColor "#5AB1BB" ""
+      , ppHidden          = xmobarColor "#e5c07b" ""
+      , ppHiddenNoWindows = xmobarColor "#d6d5d5" ""
+      , ppUrgent          = xmobarColor "#e06c75" "" . wrap "!" "!"
+      , ppTitle           = xmobarColor "#9ec07c" "" . shorten 90
+      , ppWsSep           = "  "
+      , ppLayout          = xmobarColor "#c678dd" ""
+      , ppSep             = "<fc=#4b5363> <fn=1>|</fn> </fc>"
+      , ppOrder           = \(ws : l : t : extras) -> [ws,l]++extras++[t]
+      , ppExtras          = [ xmobarColorL "#5AB1BB" "#1A1B26" windowCount]
+      }
 --
 -- ----------------------
 -- -- XMOBAR INSTANCES --
 -- ----------------------
--- xmobar0 :: StatusBarConfig
--- xmobar0 = statusBarProp "xmobar" myXmobarPP
---
+xmobar0 :: StatusBarConfig
+xmobar0 = statusBarProp "xmobar" myXmobarPP
+
 --
 -- _config = def
 --     { terminal           = _terminal
@@ -340,10 +337,11 @@ main = xmonad $ fullscreenSupport $ docks $ ewmh defaults
 -- main :: IO ()
 -- main = xmonad . docks . withSB xmobar0 . ewmh $ _config
 
--- uniformBorder :: Integer -> Border
--- uniformBorder i = Border i i i i
---
--- smartGaps = spacingRaw True (uniformBorder 0) False (uniformBorder 5) True
+uniformBorder :: Integer -> Border
+uniformBorder i = Border i i i i
+
+smartGaps = spacingRaw True (uniformBorder 0) False (uniformBorder 5) True
+
 --
 -- _layout = avoidStruts $ (smartGaps . smartBorders $ tiled) ||| noBorders Full ||| Grid
 --  where

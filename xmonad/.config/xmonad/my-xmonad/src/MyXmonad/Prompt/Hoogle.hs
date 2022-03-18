@@ -25,7 +25,7 @@ hoogleRun s = do
         i <- findSeqIndex s "https://"
         pure $ drop i s
   case link of
-    Just l -> spawn $ "firefox " ++ l
+    Just l -> spawn $ "brave " ++ l
     _      -> pure ()
   where
     findSeqIndex :: (Eq a) => [a] -> [a] -> Maybe Int

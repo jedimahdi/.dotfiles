@@ -30,6 +30,12 @@ font:
 #     x: 0
 #     y: 0
 
+window:
+  padding:
+    x: 15
+    y: 15
+  dynamic_padding: true
+
 # one darked
 colors:
   # Default colors

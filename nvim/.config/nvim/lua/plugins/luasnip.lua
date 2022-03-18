@@ -1,5 +1,6 @@
 local ls = require("luasnip")
 local types = require("luasnip.util.types")
+local fmt = require("luasnip.extras.fmt").fmt
 
 ls.config.set_config({
   history = true,
@@ -16,8 +17,14 @@ local d = ls.dynamic_node
 
 local snippets = {}
 
+local same = function(index)
+  return f(function(args)
+    return args[1]
+  end, { index })
+end
+
 snippets.all = {
-  snippet("simple", t("wow, you were right!")),
+  snippet("simple", c(1, { t("wow, you were right!"), t("shit!!") })),
   -- snippet(
   --   { trig = "div.(%w+)", regTrig = true },
   --   f(function(_, snip)
@@ -27,31 +34,34 @@ snippets.all = {
 }
 
 snippets.typescript = {
-  snippet("fun", {
+  snippet("im", {
+    t("import { "),
+    i(2, ""),
+    t(" } from '"),
+    i(1, ""),
+    t("';"),
+  }),
+  snippet("f", {
     t("function "),
     i(1, "name"),
     t("("),
-    i(2, "param"),
-    t(": "),
-    i(3, "type"),
+    i(2, "param: type"),
     t("): "),
-    i(4, "type"),
+    i(3, "type"),
     t({ " {", "" }),
-    t("  return "),
+    t("  "),
     i(0),
     t({ "", "}" }),
   }),
-  snippet("efun", {
+  snippet("ef", {
     t("export function "),
     i(1, "name"),
     t("("),
-    i(2, "param"),
-    t(": "),
-    i(3, "type"),
+    i(2, "param: type"),
     t("): "),
-    i(4, "type"),
+    i(3, "type"),
     t({ " {", "" }),
-    t("  return "),
+    t("  "),
     i(0),
     t({ "", "}" }),
   }),
@@ -76,5 +86,3 @@ vim.keymap.set("i", "<c-l>", function()
     ls.change_choice(1)
   end
 end)
-
-vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/plugins/luasnip.lua<CR>")

@@ -41,7 +41,7 @@ u.nmap("<Leader>so", "<cmd>History<CR>")
 u.nmap("<Leader>sh", "<cmd>HelpTags<CR>")
 u.nmap("<Leader>sl", "<cmd>BLines<CR>")
 u.nmap("<Leader>sc", "<cmd>BCommits<CR>")
-u.nmap("<Leader>b", "<cmd>Buffers<CR>")
+u.nmap("<Leader>sb", "<cmd>Buffers<CR>")
 u.nmap("<Leader>tc", "<cmd>FzfLua colorschemes<CR>")
 
 u.command("LspRef", "FzfLua lsp_references")

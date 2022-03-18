@@ -95,7 +95,17 @@ return require("packer").startup({
     use("ggandor/lightspeed.nvim") -- motion
     -- use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
     -- use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
-    use_with_config("ibhagwan/fzf-lua", "fzf")
+    -- use_with_config("ibhagwan/fzf-lua", "fzf")
+    use({
+      "nvim-telescope/telescope.nvim", -- fuzzy finder
+      config = config("telescope"),
+      requires = {
+        {
+          "nvim-telescope/telescope-fzf-native.nvim", -- better algorithm
+          run = "make",
+        },
+      },
+    })
     use("rbgrouleff/bclose.vim")
     use("francoiscabrol/ranger.vim")
     use("tamago324/lir.nvim")
@@ -109,8 +119,7 @@ return require("packer").startup({
       run = "cd app && yarn install",
       cmd = "MarkdownPreview",
     })
-    use("andymass/vim-matchup")
-    use("ray-x/lsp_signature.nvim")
+    use("ThePrimeagen/harpoon")
   end,
   config = {
     git = { clone_timeout = 300 },

@@ -6,7 +6,7 @@ local api = vim.api
 -- border = double, rounded, single, shadow, none
 local border_opts = { border = "rounded", focusable = true, scope = "line" }
 
-vim.diagnostic.config({ virtual_text = false, float = border_opts })
+-- vim.diagnostic.config({ virtual_text = false, float = border_opts })
 
 lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, border_opts)
@@ -72,7 +72,6 @@ local on_attach = function(client, bufnr)
   u.command("LspDiagQuickfix", vim.diagnostic.setqflist)
   u.command("LspSignatureHelp", vim.lsp.buf.signature_help)
   u.command("LspTypeDef", vim.lsp.buf.type_definition)
-  u.command("LspRangeAct", vim.lsp.buf.range_code_action)
 
   -- bindings
   u.buf_map(bufnr, "n", "gi", ":LspRename<CR>")
@@ -81,7 +80,7 @@ local on_attach = function(client, bufnr)
   u.buf_map(bufnr, "n", "[a", ":LspDiagPrev<CR>")
   u.buf_map(bufnr, "n", "]a", ":LspDiagNext<CR>")
   u.buf_map(bufnr, "n", "<Leader>a", ":LspDiagLine<CR>")
-  u.buf_map(bufnr, "n", "<Leader>q", ":LspDiagQuickfix<CR>")
+  u.buf_map(bufnr, "n", "<Leader>qq", ":LspDiagQuickfix<CR>")
   u.buf_map(bufnr, "n", "<Leader>p", ":LspFormatting<CR>")
   u.buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>")
 
@@ -117,16 +116,6 @@ for _, server in ipairs({
 }) do
   require("lsp." .. server).setup(on_attach, capabilities)
 end
-
-local signature_config = {
-  log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-  debug = true,
-  hint_enable = false,
-  handler_opts = { border = "single" },
-  max_width = 80,
-}
-
-require("lsp_signature").setup(signature_config)
 
 -- suppress lspconfig messages
 local notify = vim.notify

@@ -198,14 +198,18 @@ alias .....="cd ../../../.."
 
 alias c="clear"
 alias v="nvim"
-alias ls="ls -hN --color=auto --group-directories-first"
+# alias ls="ls -hN --color=auto --group-directories-first"
+# alias l="ls -lah ${colorflag}"
+# alias la="ls -AF ${colorflag}"
+# alias ll="ls -lFh ${colorflag}"
+# alias lld="ls -l | grep ^d"
+
+alias ls="exa --group-directories-first"
+alias l="ls -la --no-user --no-time --git --no-permissions"
+# alias lg="ls -la --git"
 
 alias pd="protonvpn-cli d"
 
-alias l="ls -lah ${colorflag}"
-alias la="ls -AF ${colorflag}"
-alias ll="ls -lFh ${colorflag}"
-alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
 # Helpers
@@ -239,7 +243,6 @@ alias cp="cp -iv"
 alias mv='mv -iv'
 alias rm='rm -vI'
 
-alias lg="lazygit"
 alias pacman='sudo pacman --color auto'
 alias aura='sudo aura'
 # gpg encryption
@@ -261,5 +264,5 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 eval "$(direnv hook zsh)"
 
 source "$ZSH/utils.zsh"
-# eval "$(starship init zsh)"
-source "$ZSH/prompt.zsh"
+eval "$(starship init zsh)"
+# source "$ZSH/prompt.zsh"

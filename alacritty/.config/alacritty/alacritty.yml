@@ -10,6 +10,7 @@ font:
     style: Bold
   italic:
     family: "Victor Mono"
+    style: SemiBold Italic
   size: 15.5
   ligatures: true
 

@@ -108,7 +108,6 @@ for _, server in ipairs({
   "hls",
   "purescriptls",
   "null-ls",
-  "sumneko",
   "elm",
   "pyright",
   "ccls",

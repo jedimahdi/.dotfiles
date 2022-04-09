@@ -13,7 +13,7 @@ return require("packer").startup({
 
     use("wbthomason/packer.nvim")
     use("lewis6991/impatient.nvim")
-    use_with_config("~/tmp/filetype.nvim", "filetype") -- greatly reduces startup time
+    -- use_with_config("~/tmp/filetype.nvim", "filetype") -- greatly reduces startup time
 
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
@@ -30,7 +30,7 @@ return require("packer").startup({
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
     -- use("folke/tokyonight.nvim")
-    use("RRethy/nvim-base16")
+    -- use("RRethy/nvim-base16")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
     use("jose-elias-alvarez/null-ls.nvim")
@@ -120,6 +120,7 @@ return require("packer").startup({
       cmd = "MarkdownPreview",
     })
     use("ThePrimeagen/harpoon")
+    use("sainnhe/gruvbox-material")
   end,
   config = {
     git = { clone_timeout = 300 },

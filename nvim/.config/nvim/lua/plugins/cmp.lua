@@ -22,8 +22,9 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
+  preselect = cmp.PreselectMode.None,
   completion = {
-    completeopt = "menu,menuone,noinsert,noselect",
+    completeopt = "menuone,noinsert,noselect",
     get_trigger_characters = function(trigger_characters)
       return vim.tbl_filter(function(char)
         return char ~= " " and char ~= "\t" and char ~= "\n"

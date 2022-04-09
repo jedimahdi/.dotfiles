@@ -1,10 +1,19 @@
+local api = vim.api
+
 -- highlight on yank
-vim.cmd('autocmd TextYankPost * silent! lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })')
+api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
+  end,
+})
 
 -- terminals
--- always start in insert mode
-vim.cmd("autocmd TermOpen * startinsert")
--- disable line numbers
-vim.cmd("autocmd TermOpen * setlocal nonumber norelativenumber")
--- suppress process exited message
-vim.cmd("autocmd TermClose term://*lazygit execute 'bdelete! ' . expand('<abuf>')")
+api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    -- disable line numbers
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    -- always start in insert mode
+    vim.cmd("startinsert")
+  end,
+})

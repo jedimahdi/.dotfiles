@@ -36,7 +36,7 @@ u.command("HelpTags", "FzfLua help_tags")
 u.command("ManPages", "FzfLua man_pages")
 
 u.nmap("<Leader>f", "<cmd>Files<CR>")
-u.nmap("<Leader>w", "<cmd>Rg<CR>")
+u.nmap("<Leader>sw", "<cmd>Rg<CR>")
 u.nmap("<Leader>so", "<cmd>History<CR>")
 u.nmap("<Leader>sh", "<cmd>HelpTags<CR>")
 u.nmap("<Leader>sl", "<cmd>BLines<CR>")

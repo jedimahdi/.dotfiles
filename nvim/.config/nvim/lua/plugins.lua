@@ -25,11 +25,11 @@ return require("packer").startup({
       end,
     })
 
-    -- use("rebelot/kanagawa.nvim")
+    use("rebelot/kanagawa.nvim")
     -- use("glepnir/zephyr-nvim")
     use("LunarVim/onedarker.nvim")
     use("kyazdani42/nvim-web-devicons")
-    -- use("folke/tokyonight.nvim")
+    use("folke/tokyonight.nvim")
     -- use("RRethy/nvim-base16")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
@@ -61,9 +61,7 @@ return require("packer").startup({
     -- use({ "mlochbaum/BQN", ft = "bqn", rtp = "editors/vim" })
     -- use { 'norcalli/nvim-colorizer.lua' }
 
-    -- use({ "rafamadriz/friendly-snippets" })
-
-    use_with_config("L3MON4D3/LuaSnip", "luasnip")
+    use_with_config("dcampos/nvim-snippy", "snippy")
 
     use({
       "hrsh7th/nvim-cmp",
@@ -71,8 +69,7 @@ return require("packer").startup({
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-buffer",
-        -- "hrsh7th/cmp-vsnip",
-        "saadparwaiz1/cmp_luasnip",
+        "dcampos/cmp-snippy",
         "hrsh7th/cmp-path",
       },
       config = config("cmp"),
@@ -90,6 +87,7 @@ return require("packer").startup({
     use("tpope/vim-surround")
     use("tpope/vim-repeat")
     use("tpope/vim-fugitive")
+    use("tpope/vim-sleuth")
     use("godlygeek/tabular")
 
     use("ggandor/lightspeed.nvim") -- motion
@@ -107,7 +105,6 @@ return require("packer").startup({
       },
     })
     use("rbgrouleff/bclose.vim")
-    use("francoiscabrol/ranger.vim")
     use("tamago324/lir.nvim")
     use("tamago324/lir-git-status.nvim")
     use("tamago324/lir-mmv.nvim")
@@ -120,7 +117,25 @@ return require("packer").startup({
       cmd = "MarkdownPreview",
     })
     use("ThePrimeagen/harpoon")
-    use("sainnhe/gruvbox-material")
+    use({
+      "nacro90/numb.nvim",
+      config = function()
+        require("numb").setup()
+      end,
+    })
+    use({
+      "folke/zen-mode.nvim",
+      config = function()
+        require("zen-mode").setup({})
+      end,
+    })
+    -- use({
+    --   "ShinKage/idris2-nvim",
+    --   requires = { "neovim/nvim-lspconfig", "MunifTanjim/nui.nvim" },
+    --   config = function()
+    --     require("idris2").setup({})
+    --   end,
+    -- })
   end,
   config = {
     git = { clone_timeout = 300 },

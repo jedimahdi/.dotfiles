@@ -1,0 +1,22 @@
+snippet newtype
+	newtype ${1:Type} = ${2:$1} ${0:Int}
+
+snippet main
+	main :: IO ()
+	main = ${0:undefined}
+
+snippet fn
+	${1:fn} :: ${2:a} -> ${3:a}
+	$1 ${4} = ${0:undefined}
+
+snippet \
+	\\${1:x} -> ${0:expression}
+
+snippet lang
+	{-# LANGUAGE ${0:OverloadedStrings} #-}
+snippet haddock
+	{-# OPTIONS_HADDOCK ${0:hide} #-}
+snippet ghc
+	{-# OPTIONS_GHC ${0:-fno-warn-unused-imports} #-}
+snippet inline
+	{-# INLINE ${0:name} #-}

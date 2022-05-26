@@ -116,7 +116,7 @@ u.map("n", "[L", "<Cmd>lfirst<CR>")
 
 -- Close location list or quickfix list if they are present,
 -- Source: https://superuser.com/q/355325/736190
-u.map("n", "<leader>qx", "<Cmd>windo lclose <bar> cclose<CR>")
+-- u.map("n", "<leader>qx", "<Cmd>windo lclose <bar> cclose<CR>")
 
 --- }}}
 
@@ -125,8 +125,8 @@ u.map("n", "<leader>qx", "<Cmd>windo lclose <bar> cclose<CR>")
 -- '<leader>w': Save only when the buffer is updated
 -- '<leader>q': Save the file if modified, and quit
 -- 'Q': Save all the modified buffers and exit vim
--- u.map("n", "<leader>w", "<Cmd>silent update<CR>")
--- u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
+u.map("n", "<leader>w", "<Cmd>silent update<CR>")
+u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
 u.map("n", "Q", "<Cmd>xall<CR>")
 
 -- }}}

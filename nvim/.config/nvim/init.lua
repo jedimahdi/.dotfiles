@@ -52,7 +52,16 @@ vim.g.border_style = "edge"
 
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 
-vim.cmd("colorscheme onedarker")
+-- vim.cmd("colorscheme onedarker")
+
+vim.g.tokyonight_style = "night"
+-- vim.cmd("colorscheme tokyonight")
+
+local myColors = {
+  bg = "#1a1b26",
+}
+require("kanagawa").setup({ colors = myColors })
+vim.cmd("colorscheme kanagawa")
 
 require("config")
 require("plugins")

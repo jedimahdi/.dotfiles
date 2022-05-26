@@ -17,7 +17,7 @@ export ZDOTDIR=$HOME/.config/zsh
 # Environment variables set everywhere
 export EDITOR="nvim"
 export TERMINAL="alacritty"
-export BROWSER="brave"
+export BROWSER="firefox"
 
 export PATH="$HOME/.dotfiles/bin":$PATH
 export PATH="$HOME/.cabal/bin":$PATH

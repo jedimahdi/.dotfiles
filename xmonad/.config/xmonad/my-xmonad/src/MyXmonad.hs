@@ -32,7 +32,7 @@ import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.SpawnOnce
 
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "kitty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -117,8 +117,8 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
 
      -- My Stuff
      , ((myModMask,               xK_b     ), spawn "exec ~/.dotfiles/bin/bartoggle")
-     , ((myModMask,               xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_activate")
-     , ((myModMask .|. shiftMask, xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_deactivate")
+     -- , ((myModMask,               xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_activate")
+     -- , ((myModMask .|. shiftMask, xK_z     ), spawn "exec ~/.dotfiles/bin/inhibit_deactivate")
      , ((myModMask .|. shiftMask, xK_a     ), clipboardy)
 
      -- close focused window
@@ -192,8 +192,8 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      -- , ((myModMask, xK_b)                   , spawn "feh --bg-fill --randomize ~/Picture/Wallpaper/*")
 
      -- , ((myModMask, xK_z)                   , spawn "pcmanfm")
-     , ((myModMask, xK_c)                   , Dmenu.configs)
-     , ((myModMask, xK_x)                   , spawn "~/.dotfiles/bin/dmkill")
+     -- , ((myModMask, xK_c)                   , Dmenu.configs)
+     -- , ((myModMask, xK_x)                   , spawn "~/.dotfiles/bin/dmkill")
      , ((myModMask, xK_g)                   , Prompt.hoogle)
      , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
      -- , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
@@ -263,7 +263,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
-  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/mushrooms-glow-light-1920×1080.jpg"
+  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/fantasy-city-3-1920×1080.jpg"
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"

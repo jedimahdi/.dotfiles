@@ -238,6 +238,8 @@ alias lpath='echo $PATH | tr ":" "\n"' # list the PATH separated by new lines
 
 alias nr="npm run"
 
+alias hg="hoogle --link --color"
+
 # confirm before overwriting something
 alias cp="cp -iv"
 alias mv='mv -iv'
@@ -263,6 +265,8 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 # eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 
+autoload -U colors && colors	# Load colors
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 source "$ZSH/utils.zsh"
 eval "$(starship init zsh)"
 # source "$ZSH/prompt.zsh"

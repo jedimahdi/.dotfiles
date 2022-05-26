@@ -3,16 +3,46 @@ env:
 
 font:
   normal:
-    family: "Victor Mono"
-    style: SemiBold
+    family: "JetBrainsMono Nerd Font"
+    style: Regular
   bold:
-    family: "Victor Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Bold
   italic:
-    family: "Victor Mono"
-    style: SemiBold Italic
+    family: "JetBrainsMono Nerd Font"
+    style: Medium Italic
   size: 15.5
   ligatures: true
+  offset:
+    x: 0
+    y: 5
+
+# font:
+#   normal:
+#     family: Iosevka Curry
+#     style: Medium
+#
+#   bold:
+#     family: Iosevka Curry
+#     style: Bold
+#
+#   italic:
+#     family: Iosevka Curry
+#     style: Bold Italic
+#
+#   size: 17.0
+#
+#   offset:
+#     x: 0
+#     y: 0
+#
+#   glyph_offset:
+#     x: 0
+#     y: 0
+#
+#   use_thin_strokes: true
+
+draw_bold_text_with_bright_colors: true
 
 # font:
 #   normal:
@@ -31,76 +61,176 @@ font:
 #     x: 0
 #     y: 0
 
+# background_opacity: 0.90
+
 window:
   padding:
     x: 15
     y: 15
   dynamic_padding: true
 
-# one darked
-colors:
-  # Default colors
+# cursor:
+#   style:
+#     blinking: Never
+
+schemes:
+  onedarker: &onedarker
+    primary:
+      # background: "#232731"
+      background: "#1f2227"
+      foreground: "#abb2bf"
+
+    # Normal colors
+    # Nord
+    normal:
+      black: "#4C566A"
+      red: "#bf616a"
+      green: "#A3BE8C"
+      yellow: "#D7BA7D"
+      blue: "#5e81ac"
+      magenta: "#B48EAD"
+      cyan: "#88c0d0"
+      white: "#abb2bf"
+
+    # Bright colors
+    bright:
+      black: "#4C566A"
+      red: "#bf616a"
+      green: "#A3BE8C"
+      yellow: "#D7BA7D"
+      blue: "#5e81ac"
+      magenta: "#B48EAD"
+      cyan: "#88c0d0"
+      white: "#abb2bf"
+
+    # Change cursor colors
+    cursor:
+      text: "#3B4252"
+      cursor: "#ECEFF4"
+
+  srcery: &srcery # Default colors
+    primary:
+      background: "#1c1b19"
+      foreground: "#fce8c3"
+
+    # Cursor colors
+    cursor:
+      text: CellBackground
+      cursor: "#fbb829"
+
+    # Normal colors
+    normal:
+      black: "#1c1b19"
+      red: "#ef2f27"
+      green: "#519f50"
+      yellow: "#fbb829"
+      blue: "#2c78bf"
+      magenta: "#e02c6d"
+      cyan: "#0aaeb3"
+      white: "#baa67f"
+
+    # Bright colors
+    bright:
+      black: "#918175"
+      red: "#f75341"
+      green: "#98bc37"
+      yellow: "#fed06e"
+      blue: "#68a8e4"
+      magenta: "#ff5c8f"
+      cyan: "#2be4d0"
+      white: "#fce8c3"
+
+  onedark: &onedark
+    primary:
+      background: "0x1e2127"
+      foreground: "0xabb2bf"
+
+      bright_foreground: "0xe6efff"
+
+    # Cursor colors
+    cursor:
+      text: CellBackground
+      cursor: "#fbb829"
+
+    # Normal colors
+    normal:
+      black: "#1c1b19"
+      red: "#ef2f27"
+      green: "#519f50"
+      yellow: "#fbb829"
+      blue: "#2c78bf"
+      magenta: "#e02c6d"
+      cyan: "#0aaeb3"
+      white: "#baa67f"
+
+    # Bright colors
+    bright:
+      black: "#918175"
+      red: "#f75341"
+      green: "#98bc37"
+      yellow: "#fed06e"
+      blue: "#68a8e4"
+      magenta: "#ff5c8f"
+      cyan: "#2be4d0"
+      white: "#fce8c3"
+
+  monokai-pro: &monokai-pro
+    colors:
+
   primary:
-    # background: "#232731"
-    background: "#1f2227"
-    foreground: "#abb2bf"
+    background: "#2c2c2c"
+    foreground: "#d6d6d6"
 
-  # Normal colors
-  # Nord
-  normal:
-    black: "#4C566A"
-    red: "#bf616a"
-    green: "#A3BE8C"
-    yellow: "#D7BA7D"
-    blue: "#5e81ac"
-    magenta: "#B48EAD"
-    cyan: "#88c0d0"
-    white: "#abb2bf"
+    dim_foreground: "#dbdbdb"
+    bright_foreground: "#d9d9d9"
+    dim_background: "#202020"
+    bright_background: "#3a3a3a"
 
-  # Bright colors
-  bright:
-    black: "#4C566A"
-    red: "#bf616a"
-    green: "#A3BE8C"
-    yellow: "#D7BA7D"
-    blue: "#5e81ac"
-    magenta: "#B48EAD"
-    cyan: "#88c0d0"
-    white: "#abb2bf"
-
-  # Change cursor colors
   cursor:
-    text: "#3B4252"
-    cursor: "#ECEFF4"
+    text: "#2c2c2c"
+    cursor: "#d9d9d9"
 
-cursor:
-  style:
-    blinking: Never
-# Colors (Snazzy)
-# colors:
-#   # Default colors
-#   primary:
-#     background: '#282a36'
-#     foreground: '#eff0eb'
-#
-#   # Normal colors
-#   normal:
-#     black:   '#282a36'
-#     red:     '#ff5c57'
-#     green:   '#5af78e'
-#     yellow:  '#f3f99d'
-#     blue:    '#57c7ff'
-#     magenta: '#ff6ac1'
-#     cyan:    '#9aedfe'
-#     white:   '#f1f1f0'
-#
-#   # Bright colors
-#   bright:
-#     black:   '#686868'
-#     red:     '#ff5c57'
-#     green:   '#5af78e'
-#     yellow:  '#f3f99d'
-#     blue:    '#57c7ff'
-#     magenta: '#ff6ac1'
-#     cyan:    '#9aedfe'
-#     white:   '#f1f1f0'
+  normal:
+    black: "#1c1c1c"
+    red: "#bc5653"
+    green: "#909d63"
+    yellow: "#ebc17a"
+    blue: "#7eaac7"
+    magenta: "#aa6292"
+    cyan: "#86d3ce"
+    white: "#cacaca"
+
+  bright:
+    black: "#636363"
+    red: "#bc5653"
+    green: "#909d63"
+    yellow: "#ebc17a"
+    blue: "#7eaac7"
+    magenta: "#aa6292"
+    cyan: "#86d3ce"
+    white: "#f7f7f7"
+
+  dim:
+    black: "#232323"
+    red: "#74423f"
+    green: "#5e6547"
+    yellow: "#8b7653"
+    blue: "#556b79"
+    magenta: "#6e4962"
+    cyan: "#5c8482"
+    white: "#828282"
+
+colors: *onedarker
+
+key_bindings:
+  - { key: J, mods: Alt, chars: "\x1bj" }
+  - { key: K, mods: Alt, chars: "\x1bk" }
+  - { key: H, mods: Alt, chars: "\x1bh" }
+  - { key: L, mods: Alt, chars: "\x1bl" }
+  - { key: T, mods: Alt, chars: "\x1bt" }
+  - { key: W, mods: Alt|Shift, chars: "\x1bW" }
+  - { key: P, mods: Alt, chars: "\x1bp" }
+  - { key: N, mods: Alt, chars: "\x1bn" }
+  - { key: D, mods: Alt, chars: "\x1bd" }
+  - { key: E, mods: Alt, chars: "\x1be" }
+  - { key: X, mods: Alt|Shift, chars: "\x1bX" }

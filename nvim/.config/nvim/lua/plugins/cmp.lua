@@ -1,8 +1,14 @@
 local u = require("config.utils")
 
 local cmp = require("cmp")
-local luasnip = require("luasnip")
+-- local luasnip = require("luasnip")
+local snippy = require("snippy")
 local lspkind = require("lspkind")
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 lspkind.init()
 
@@ -19,7 +25,7 @@ vim.opt.completeopt = {
 cmp.setup({
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      snippy.expand_snippet(args.body)
     end,
   },
   preselect = cmp.PreselectMode.None,
@@ -32,19 +38,27 @@ cmp.setup({
     end,
   },
   mapping = {
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i" }),
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ["<C-Space>"] = cmp.mapping(function()
+      cmp.complete()
+    end, { "i", "s" }),
+    ["<CR>"] = cmp.mapping(function(fallback)
+      if cmp.get_selected_entry() then
+        cmp.confirm()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     ["<C-e>"] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+      elseif snippy.can_expand_or_advance() then
+        snippy.expand_or_advance()
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
@@ -52,12 +66,21 @@ cmp.setup({
       "i",
       "s",
     }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif snippy.can_jump(-1) then
+        snippy.previous()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   },
   sources = {
+    { name = "snippy", priority = 9999, max_item_count = 1 },
     { name = "nvim_lua" },
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "luasnip" },
     { name = "buffer", keyword_length = 5 },
   },
   -- experimental = { ghost_text = true },

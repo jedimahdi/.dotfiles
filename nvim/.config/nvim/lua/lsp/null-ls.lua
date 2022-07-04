@@ -13,7 +13,7 @@ local sources = {
   b.formatting.prettier,
   -- with_root_file(b.formatting.stylua, ".stylua.toml"),
   b.formatting.stylua,
-  b.formatting.trim_whitespace.with({ filetypes = { "tmux", "teal", "zsh" } }),
+  b.formatting.trim_whitespace.with({ filetypes = { "tmux", "teal", "zsh", "snippets" } }),
   b.formatting.shfmt,
   -- b.diagnostics.write_good,
   -- b.diagnostics.markdownlint,

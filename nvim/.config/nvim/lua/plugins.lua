@@ -18,12 +18,12 @@ return require("packer").startup({
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
     use("neovim/nvim-lspconfig")
-    use({
-      "j-hui/fidget.nvim",
-      config = function()
-        require("fidget").setup({})
-      end,
-    })
+    -- use({
+    --   "j-hui/fidget.nvim",
+    --   config = function()
+    --     require("fidget").setup({})
+    --   end,
+    -- })
 
     use("rebelot/kanagawa.nvim")
     -- use("glepnir/zephyr-nvim")
@@ -34,7 +34,7 @@ return require("packer").startup({
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 
     use("jose-elias-alvarez/null-ls.nvim")
-    use("jose-elias-alvarez/nvim-lsp-ts-utils")
+    use("jose-elias-alvarez/typescript.nvim")
     use("kabouzeid/nvim-lspinstall")
     use("onsails/lspkind-nvim")
 
@@ -90,20 +90,20 @@ return require("packer").startup({
     use("tpope/vim-sleuth")
     use("godlygeek/tabular")
 
-    use("ggandor/lightspeed.nvim") -- motion
+    -- use("ggandor/lightspeed.nvim") -- motion
     -- use_with_config("svermeulen/vim-cutlass", "cutlass") -- separates cut and delete operations
     -- use_with_config("svermeulen/vim-yoink", "yoink") -- improves paste
-    -- use_with_config("ibhagwan/fzf-lua", "fzf")
-    use({
-      "nvim-telescope/telescope.nvim", -- fuzzy finder
-      config = config("telescope"),
-      requires = {
-        {
-          "nvim-telescope/telescope-fzf-native.nvim", -- better algorithm
-          run = "make",
-        },
-      },
-    })
+    use_with_config("ibhagwan/fzf-lua", "fzf")
+    -- use({
+    --   "nvim-telescope/telescope.nvim", -- fuzzy finder
+    --   config = config("telescope"),
+    --   requires = {
+    --     {
+    --       "nvim-telescope/telescope-fzf-native.nvim", -- better algorithm
+    --       run = "make",
+    --     },
+    --   },
+    -- })
     use("rbgrouleff/bclose.vim")
     use("tamago324/lir.nvim")
     use("tamago324/lir-git-status.nvim")
@@ -129,6 +129,8 @@ return require("packer").startup({
         require("zen-mode").setup({})
       end,
     })
+
+    use({ "romainl/vim-cool" })
     -- use({
     --   "ShinKage/idris2-nvim",
     --   requires = { "neovim/nvim-lspconfig", "MunifTanjim/nui.nvim" },

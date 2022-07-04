@@ -125,8 +125,9 @@ u.map("n", "[L", "<Cmd>lfirst<CR>")
 -- '<leader>w': Save only when the buffer is updated
 -- '<leader>q': Save the file if modified, and quit
 -- 'Q': Save all the modified buffers and exit vim
-u.map("n", "<leader>w", "<Cmd>silent update<CR>")
-u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
+u.nmap("<leader>w", "<cmd>silent update<CR>", { silent = true })
+u.nmap("<leader>q", "<cmd>wq<CR>", { silent = true })
+-- u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
 u.map("n", "Q", "<Cmd>xall<CR>")
 
 -- }}}

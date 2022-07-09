@@ -4,6 +4,7 @@ local u = require("config.utils")
 
 vim.g.mapleader = " "
 
+u.nmap("<C-f>", ":silent !tmux neww tmux-sessionizer<CR>", { silent = true })
 u.nmap("<leader>i", ":set cursorline!<CR>")
 
 u.nmap("<leader>x", "<cmd>source %<CR>", { silent = false })
@@ -12,9 +13,9 @@ u.nmap("<leader>x", "<cmd>source %<CR>", { silent = false })
 u.nmap("<BS>", "<C-^>")
 u.map("n", "<leader><leader>", "<Cmd>buffer#<CR>")
 
-u.nmap("<Tab>", "%", { noremap = false })
-u.xmap("<Tab>", "%", { noremap = false })
-u.omap("<Tab>", "%", { noremap = false })
+-- u.nmap("<Tab>", "%", { noremap = false })
+-- u.xmap("<Tab>", "%", { noremap = false })
+-- u.omap("<Tab>", "%", { noremap = false })
 
 -- Jump to start (`^`) and end (`$`) of line using the home row keys.
 u.map({ "n", "x" }, "H", "^")
@@ -126,8 +127,8 @@ u.map("n", "[L", "<Cmd>lfirst<CR>")
 -- '<leader>q': Save the file if modified, and quit
 -- 'Q': Save all the modified buffers and exit vim
 u.nmap("<leader>w", "<cmd>silent update<CR>", { silent = true })
-u.nmap("<leader>q", "<cmd>wq<CR>", { silent = true })
--- u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
+u.map("n", "<leader>q", "<Cmd>silent xit<CR>")
+-- u.nmap("<leader>q", "<cmd>wq<CR>", { silent = true })
 u.map("n", "Q", "<Cmd>xall<CR>")
 
 -- }}}

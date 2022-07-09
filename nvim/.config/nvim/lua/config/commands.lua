@@ -55,11 +55,11 @@ end, {
   nargs = "?",
   complete = "dir",
 })
-u.nmap("-", ":Vifm<CR>")
+-- u.nmap("-", ":Vifm<CR>")
 
 -- lazygit
 u.command("Lazygit", "tabnew | term lazygit")
-u.nmap("<Leader>gg", ":Lazygit<CR>")
+-- u.nmap("<Leader>gg", ":Lazygit<CR>")
 
 api.nvim_create_autocmd("TermClose", {
   pattern = "term://*lazygit",

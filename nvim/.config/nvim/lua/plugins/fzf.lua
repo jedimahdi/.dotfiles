@@ -21,6 +21,9 @@ require("fzf-lua").setup({
       pager = "delta",
     },
   },
+  files = {
+    fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude dist-newstyle --exclude .hie --exclude LICENSE",
+  },
 })
 
 -- fzf.vim-like commands
@@ -52,12 +55,19 @@ u.nmap("<Leader>sc", "<cmd>BCommits<CR>")
 u.nmap("<Leader>sb", "<cmd>Buffers<CR>")
 u.nmap("<Leader>tc", "<cmd>FzfLua colorschemes<CR>")
 
-u.nmap("<Leader>gs", "<cmd>FzfLua git_status<CR>")
-u.nmap("<Leader>gb", "<cmd>FzfLua git_branches<CR>")
+-- u.nmap("<Leader>gs", "<cmd>FzfLua git_status<CR>")
+-- u.nmap("<Leader>gb", "<cmd>FzfLua git_branches<CR>")
 
 u.command("LspRef", "FzfLua lsp_references")
 u.command("LspSym", "FzfLua lsp_workspace_symbols")
-u.command("LspAct", "FzfLua lsp_code_actions")
+-- u.command("LspAct", "FzfLua lsp_code_actions")
+-- u.command("LspDef", function()
+--   require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+-- end)
+
+u.command("LspAct", function()
+  vim.lsp.buf.code_action()
+end)
 u.command("LspDef", function()
-  require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+  vim.lsp.buf.definition()
 end)

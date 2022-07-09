@@ -35,6 +35,16 @@ u.nmap("<C-j>", ":lua require'config.tmux'.move('j')<CR>")
 u.nmap("<C-k>", ":lua require'config.tmux'.move('k')<CR>")
 u.nmap("<C-l>", ":lua require'config.tmux'.move('l')<CR>")
 
+M.run_project = function()
+  local ft = vim.bo.ft
+
+  -- if ft == "typescriptreact" or ft == "typescript" then
+  --   send_tmux_cmd("neww -dn npm npm run dev")
+  -- end
+end
+
+u.nmap("<leader>tq", ":lua require'config.tmux'.run_project()<CR>")
+
 -- send commands to linked tmux pane
 local linked_pane_id, last_cmd
 
@@ -115,7 +125,7 @@ u.nmap("<Leader>tt", ":lua require'config.tmux'.send_last_command()<CR>")
 u.nmap("<Leader>tr", ":lua require'config.tmux'.run_file()<CR>")
 
 -- automatically kill pane on exit
-vim.cmd("autocmd VimLeave * silent! lua require'config.tmux'.kill()")
+-- vim.cmd("autocmd VimLeave * silent! lua require'config.tmux'.kill()")
 
 -- testing wrappers
 

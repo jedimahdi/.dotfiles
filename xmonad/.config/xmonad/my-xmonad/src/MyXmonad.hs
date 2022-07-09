@@ -32,7 +32,7 @@ import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.SpawnOnce
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool

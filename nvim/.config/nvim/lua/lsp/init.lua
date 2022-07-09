@@ -5,7 +5,7 @@ local lsp = vim.lsp
 -- border = double, rounded, single, shadow, none
 local border_opts = { border = "rounded", focusable = true, scope = "line" }
 
--- vim.diagnostic.config({ virtual_text = false, float = border_opts })
+-- vim.diagnostic.config({ signs = true })
 
 lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, border_opts)
@@ -18,7 +18,7 @@ lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, border_opts)
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local lsp_formatting = function(bufnr)
-  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  -- local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
   lsp.buf.format({
     bufnr = bufnr,
     async = true,

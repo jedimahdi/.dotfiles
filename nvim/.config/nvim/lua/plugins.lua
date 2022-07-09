@@ -26,10 +26,15 @@ return require("packer").startup({
     -- })
 
     use("rebelot/kanagawa.nvim")
-    -- use("glepnir/zephyr-nvim")
-    use("LunarVim/onedarker.nvim")
-    use("kyazdani42/nvim-web-devicons")
     use("folke/tokyonight.nvim")
+    use("LunarVim/onedarker.nvim")
+    use({ "ellisonleao/gruvbox.nvim" })
+    use({
+      "catppuccin/nvim",
+      as = "catppuccin",
+    })
+    -- use("glepnir/zephyr-nvim")
+    use("kyazdani42/nvim-web-devicons")
     -- use("RRethy/nvim-base16")
     -- use_with_config("nvim-lualine/lualine.nvim", "lualine")
 

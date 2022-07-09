@@ -20,8 +20,10 @@ opt.hlsearch = true -- I wouldn't use this without my DoNoHL function
 opt.scrolloff = 8 -- Make it so there are always ten lines below my cursor
 
 -- Ignore compiled files
-opt.wildignore = "__pycache__"
-opt.wildignore = opt.wildignore + { "*.o", "*~", "*.pyc", "*pycache*" }
+-- opt.wildignore = "__pycache__"
+-- opt.wildignore = opt.wildignore + { "*.o", "*~", "*.pyc", "*pycache*" }
+opt.wildignore =
+  ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 
 -- Cool floating window popup menu for completion on command line
 opt.pumheight = 15

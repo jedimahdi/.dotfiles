@@ -1,0 +1,93 @@
+repos:
+  - repo: local
+    hooks:
+      #############################################
+      # Constitutionals
+      #
+      # Reference: https://github.com/pre-commit/pre-commit-hooks/blob/d0d9883648b4b30a43cd965471c9b5fa8f8a4131/.pre-commit-hooks.yaml
+      - name: Check for case conflicts
+        id: check-case-conflict
+        language: system
+        entry: check-case-conflict
+
+      - name: Check for merge conflicts
+        id: check-merge-conflict
+        types: [text]
+        language: system
+        entry: check-merge-conflict
+
+      - name: Check for broken symlinks
+        id: check-symlinks
+        types: [symlink]
+        language: system
+        entry: check-symlinks
+
+      - name: Check vcs permalinks
+        id: check-vcs-permalinks
+        types: [text]
+        language: system
+        entry: check-vcs-permalinks
+
+      - name: Fix End of Files
+        id: end-of-file-fixer
+        types: [text]
+        language: system
+        entry: end-of-file-fixer
+
+      - name: Trim Trailing Whitespace
+        id: trailing-whitespace
+        types: [text]
+        language: system
+        entry: trailing-whitespace-fixer
+
+      #############################################
+      # YAML
+      - name: Check YAML code style with prettier
+        id: prettier-yaml
+        types: [yaml]
+        language: system
+        entry: prettier --write
+
+      - name: Static analysis YAML with yamllint
+        id: yamllint
+        types: [yaml]
+        language: system
+        entry: yamllint
+
+      #############################################
+      # Nix
+      - name: Check Nix code style with nixpkgs-fmt
+        id: nixpkgs-fmt
+        files: '\.nix$'
+        language: system
+        entry: nixpkgs-fmt
+
+      - name: Static analysis Nix with nix-linter
+        id: nix-linter
+        files: '\.nix$'
+        language: system
+        entry: nix-linter
+
+      #############################################
+      # Rust
+      - name: Lint rust sources
+        id: clippy
+        entry: cargo clippy
+        language: system
+        args: ["--", "-D", "warnings"]
+        types: [rust]
+        pass_filenames: false
+
+      - name: Format files with cargo fmt.
+        id: fmt
+        entry: cargo fmt
+        language: system
+        types: [rust]
+        args: ["--"]
+
+      - name: Check the package for errors.
+        id: cargo-check
+        entry: cargo check
+        language: system
+        types: [rust]
+        pass_filenames: false

@@ -8,6 +8,11 @@
         path = ./templates/simple;
         description = "Simple environment.";
       };
+
+      rust = {
+        path = ./templates/rust;
+        description = "Rust environment.";
+      };
     };
 
     defaultTemplate = self.templates.simple;

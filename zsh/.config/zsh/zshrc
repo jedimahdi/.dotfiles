@@ -51,6 +51,7 @@ prepend_path $HOME/.npm-global/bin
 prepend_path $HOME/.cabal/bin
 prepend_path $HOME/.ghcup/bin
 prepend_path $HOME/go/bin
+prepend_path $HOME/.pack/bin
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 # define the code directory

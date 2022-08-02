@@ -1,9 +1,9 @@
--- vim.g.did_load_filetypes = 1
+vim.g.did_load_filetypes = 1
 
--- require("filetype").setup({
---   overrides = {
---     -- extensions = {
---     --   purs = "purescript",
---     -- },
---   },
--- })
+require("filetype").setup({
+  overrides = {
+    -- extensions = {
+    --   purs = "purescript",
+    -- },
+  },
+})

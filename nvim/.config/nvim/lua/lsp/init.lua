@@ -2,53 +2,40 @@ local u = require("config.utils")
 
 local lsp = vim.lsp
 
--- border = double, rounded, single, shadow, none
-local border_opts = { border = "rounded", focusable = true, scope = "line" }
+local on_attach = function(client, bufnr)
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
--- vim.diagnostic.config({ signs = true })
-
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, border_opts)
-lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, border_opts)
-
--- use lsp formatting if it's available (and if it's good)
--- otherwise, fall back to null-ls
--- local preferred_formatting_clients = { "hls", "elmls" }
--- local fallback_formatting_client = "null-ls"
-
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-local lsp_formatting = function(bufnr)
-  -- local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-  lsp.buf.format({
-    bufnr = bufnr,
-    async = true,
-    filter = function(client)
-      if client.name == "tsserver" then
-        return false
-      end
-      return true
-    end,
-  })
-end
-
-vim.g.autoformating = true
-
-local function toggleAutoFormatting(bufnr)
-  if vim.g.autoformating == true then
-    vim.g.autoformating = false
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-  else
-    vim.g.autoformating = true
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      command = "LspFormatting",
+  local lsp_formatting = function(bufnr)
+    -- local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+    lsp.buf.format({
+      bufnr = bufnr,
+      async = true,
+      filter = function(client)
+        if client.name == "tsserver" then
+          return false
+        end
+        return true
+      end,
     })
   end
-end
 
-local on_attach = function(client, bufnr)
+  vim.g.autoformating = true
+
+  local function toggleAutoFormatting(bufnr)
+    if vim.g.autoformating == true then
+      vim.g.autoformating = false
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    else
+      vim.g.autoformating = true
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        command = "LspFormatting",
+      })
+    end
+  end
+
   -- commands
   u.buf_command(bufnr, "LspHover", vim.lsp.buf.hover)
   u.buf_command(bufnr, "LspDiagPrev", vim.diagnostic.goto_prev)
@@ -99,31 +86,44 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-for _, server in ipairs({
-  "sumneko",
-  "tsserver",
-  "hls",
-  "purescriptls",
-  "null-ls",
-  "elm",
-  "pyright",
-  "ccls",
-  "rust_analyzer",
-  "rnix",
-}) do
-  require("lsp." .. server).setup(on_attach, capabilities)
-end
+local setup = function()
+  -- border = double, rounded, single, shadow, none
+  local border_opts = { border = "rounded", focusable = true, scope = "line" }
 
--- suppress irrelevant messages
-local notify = vim.notify
-vim.notify = function(msg, ...)
-  if msg:match("%[lspconfig%]") then
-    return
+  -- vim.diagnostic.config({ signs = true })
+
+  lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, border_opts)
+  lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, border_opts)
+
+  for _, server in ipairs({
+    "sumneko",
+    "tsserver",
+    "hls",
+    "purescriptls",
+    "null-ls",
+    "elm",
+    "pyright",
+    "ccls",
+    "rust_analyzer",
+    "rnix",
+    -- "idris2",
+  }) do
+    require("lsp." .. server).setup(on_attach, capabilities)
   end
 
-  if msg:match("warning: multiple different client offset_encodings") then
-    return
-  end
+  -- suppress irrelevant messages
+  local notify = vim.notify
+  vim.notify = function(msg, ...)
+    if msg:match("%[lspconfig%]") then
+      return
+    end
 
-  notify(msg, ...)
+    if msg:match("warning: multiple different client offset_encodings") then
+      return
+    end
+
+    notify(msg, ...)
+  end
 end
+
+return { on_attach = on_attach, capabilities = capabilities, setup = setup }

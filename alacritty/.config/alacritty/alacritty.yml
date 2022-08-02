@@ -4,50 +4,25 @@ env:
 font:
   normal:
     family: "VictorMono Nerd Font"
-    style: Medium
+    style: SemiBold
   bold:
     family: "VictorMono Nerd Font"
     style: Bold
   italic:
     family: "VictorMono Nerd Font"
-    style: Medium Italic
+    style: SemiBold Italic
   size: 18.5
   ligatures: true
   offset:
     x: 0
     y: 0
 
-# font:
-#   normal:
-#     family: Iosevka Curry
-#     style: Medium
-#
-#   bold:
-#     family: Iosevka Curry
-#     style: Bold
-#
-#   italic:
-#     family: Iosevka Curry
-#     style: Bold Italic
-#
-#   size: 17.0
-#
-#   offset:
-#     x: 0
-#     y: 0
-#
-#   glyph_offset:
-#     x: 0
-#     y: 0
-#
-#   use_thin_strokes: true
-
 draw_bold_text_with_bright_colors: true
 
 window:
   padding:
-    x: 15
-    y: 15
+    x: 10
+    y: 10
   dynamic_padding: true
 
 # cursor:
@@ -58,7 +33,7 @@ schemes:
   onedarker: &onedarker
     primary:
       # background: "#232731"
-      background: "#1f2227"
+      background: "#1e222a"
       foreground: "#abb2bf"
 
     # Normal colors
@@ -289,7 +264,7 @@ schemes:
         cyan: "#427b58"
         white: "#928374"
 
-colors: *tokyonight
+colors: *onedarker
 
 key_bindings:
   - { key: J, mods: Alt, chars: "\x1bj" }

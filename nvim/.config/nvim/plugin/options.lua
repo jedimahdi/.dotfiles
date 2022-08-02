@@ -4,7 +4,7 @@ local opt = vim.opt
 opt.showmode = false
 
 opt.showcmd = true
-opt.cmdheight = 0
+opt.cmdheight = 1
 opt.incsearch = true -- Makes search act like search in modern browsers
 opt.showmatch = true -- show matching brackets when text indicator is over them
 opt.number = false

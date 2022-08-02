@@ -45,6 +45,43 @@ end
 
 u.nmap("<leader>tq", ":lua require'config.tmux'.run_project()<CR>")
 
+M.exec_project = function()
+  local ft = vim.bo.ft
+  if ft == "rust" then
+    send_tmux_cmd([[neww -n cargo bash -c "cargo run; sleep 2"]])
+  end
+
+  if ft == "haskell" then
+    send_tmux_cmd([[neww -n cabal bash -c "cabal run lazysh; sleep 2"]])
+  end
+end
+
+M.test_project = function()
+  local ft = vim.bo.ft
+  if ft == "rust" then
+    send_tmux_cmd([[neww -n cargo bash -c "cargo test; sleep 2"]])
+  end
+
+  if ft == "haskell" then
+    send_tmux_cmd([[neww -n cabal bash -c "cabal test --test-show-details=always --test-option="--color" ; sleep 2"]])
+  end
+end
+
+M.build_project = function()
+  local ft = vim.bo.ft
+  if ft == "rust" then
+    send_tmux_cmd([[neww -n cargo bash -c "cargo build; sleep 2"]])
+  end
+
+  if ft == "haskell" then
+    send_tmux_cmd([[neww -dn cabal-build bash -c "cabal build"]])
+  end
+end
+
+u.nmap("<leader>te", ":lua require'config.tmux'.exec_project()<CR>")
+u.nmap("<leader>tt", ":lua require'config.tmux'.test_project()<CR>")
+u.nmap("<leader>tb", ":lua require'config.tmux'.build_project()<CR>")
+
 -- send commands to linked tmux pane
 local linked_pane_id, last_cmd
 
@@ -120,9 +157,9 @@ M.run_file = function(ft)
   M.send_command(cmd .. " " .. api.nvim_buf_get_name(0))
 end
 
-u.nmap("<Leader>tn", ":lua require'config.tmux'.send_command()<CR>")
-u.nmap("<Leader>tt", ":lua require'config.tmux'.send_last_command()<CR>")
-u.nmap("<Leader>tr", ":lua require'config.tmux'.run_file()<CR>")
+-- u.nmap("<Leader>tn", ":lua require'config.tmux'.send_command()<CR>")
+-- u.nmap("<Leader>tt", ":lua require'config.tmux'.send_last_command()<CR>")
+-- u.nmap("<Leader>tr", ":lua require'config.tmux'.run_file()<CR>")
 
 -- automatically kill pane on exit
 -- vim.cmd("autocmd VimLeave * silent! lua require'config.tmux'.kill()")

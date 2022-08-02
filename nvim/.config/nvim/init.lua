@@ -79,36 +79,37 @@ vim.g.catppuccin_flavour = "mocha"
 --   },
 -- })
 
-vim.cmd("colorscheme kanagawa")
+-- vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme onedarker")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
 end
 
-hl("SignColumn", {
-  bg = "none",
-})
-
-hl("ColorColumn", {
-  ctermbg = 0,
-  bg = "#555555",
-})
-
-hl("CursorLineNR", {
-  bg = "None",
-})
-
-hl("Normal", {
-  bg = "none",
-})
-
-hl("LineNr", {
-  fg = "#5eacd3",
-})
-
-hl("netrwDir", {
-  fg = "#5eacd3",
-})
+-- hl("SignColumn", {
+--   bg = "none",
+-- })
+--
+-- hl("ColorColumn", {
+--   ctermbg = 0,
+--   bg = "#555555",
+-- })
+--
+-- hl("CursorLineNR", {
+--   bg = "None",
+-- })
+--
+-- hl("Normal", {
+--   bg = "none",
+-- })
+--
+-- hl("LineNr", {
+--   fg = "#5eacd3",
+-- })
+--
+-- hl("netrwDir", {
+--   fg = "#5eacd3",
+-- })
 
 -- require("base16-colorscheme").setup({
 --   base00 = "#000000",
@@ -132,4 +133,6 @@ hl("netrwDir", {
 vim.g.mapleader = " "
 require("config")
 require("plugins")
-require("lsp")
+-- require("lsp").setup()
+vim.cmd([[ au BufRead,BufNewFile *.idr set filetype=idris2 ]])
+vim.cmd([[ au BufRead,BufNewFile *.purs set filetype=purescript ]])

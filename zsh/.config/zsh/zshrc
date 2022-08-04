@@ -272,5 +272,5 @@ eval "$(direnv hook zsh)"
 autoload -U colors && colors	# Load colors
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 source "$ZSH/utils.zsh"
-eval "$(starship init zsh)"
-# source "$ZSH/prompt.zsh"
+# eval "$(starship init zsh)"
+source "$ZSH/prompt.zsh"

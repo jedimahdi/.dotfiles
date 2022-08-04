@@ -43,7 +43,7 @@
     tree
     act
 
-    lazygit
+    # lazygit
     # spotify
   ];
 

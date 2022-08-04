@@ -17,7 +17,6 @@ if has_devicons then
 end
 
 local actions = require("lir.actions")
-local has_mmv, mmv_actions = pcall(require, "lir.mmv.actions")
 
 lir.setup({
   show_hidden_files = true,
@@ -36,9 +35,6 @@ lir.setup({
     ["Y"] = actions.yank_path,
     ["D"] = actions.delete,
     ["."] = actions.toggle_show_hidden,
-
-    -- mmv
-    ["M"] = (has_mmv and mmv_actions.mmv) or nil,
   },
 })
 

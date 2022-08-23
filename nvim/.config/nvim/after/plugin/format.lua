@@ -4,7 +4,7 @@ local nnoremap = Remap.nnoremap
 nnoremap("<leader>p", function()
   local ft = vim.bo.ft
 
-  if ft == "haskell" then
+  if ft == "haskell" or ft == "rust" then
     vim.lsp.buf.format()
   else
     vim.cmd("Neoformat")

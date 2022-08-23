@@ -40,13 +40,14 @@ return require("packer").startup(function(use)
   })
 
   use("nvim-treesitter/playground")
-  use("romgrk/nvim-treesitter-context")
 
   use("mfussenegger/nvim-dap")
   use("rcarriga/nvim-dap-ui")
   use("theHamsta/nvim-dap-virtual-text")
 
   use("numToStr/Comment.nvim")
+  use("windwp/nvim-autopairs")
+  use("tpope/vim-surround")
 
   -- use({
   --   "iamcco/markdown-preview.nvim", -- preview markdown output in browser

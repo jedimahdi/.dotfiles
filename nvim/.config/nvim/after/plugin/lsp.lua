@@ -18,12 +18,19 @@ local source_mapping = {
 local lspkind = require("lspkind")
 local snippy = require("snippy")
 
+vim.opt.completeopt = {
+  "menuone",
+  "noinsert",
+  "noselect",
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
       require("snippy").expand_snippet(args.body)
     end,
   },
+  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert({
     ["<C-y>"] = cmp.mapping.confirm({ select = true }),
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
@@ -117,7 +124,16 @@ require("lspconfig").hls.setup(config({
 }))
 
 require("lspconfig").rust_analyzer.setup(config({
+  capabilities = require("cmp_nvim_lsp").update_capabilities(
+    vim.lsp.protocol.make_client_capabilities(),
+    { snippetSupport = false }
+  ),
   cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = false,
+    }),
+  },
   --[[
     settings = {
         rust = {

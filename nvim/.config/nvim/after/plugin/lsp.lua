@@ -113,7 +113,15 @@ local function config(_config)
   }, _config or {})
 end
 
-require("lspconfig").tsserver.setup(config())
+require("lspconfig").tsserver.setup(config({
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = false,
+    }),
+  },
+}))
+
+require("lspconfig").elmls.setup(config())
 
 require("lspconfig").hls.setup(config({
   settings = {

@@ -134,6 +134,7 @@ zfetch zsh-users/zsh-syntax-highlighting
 zfetch zsh-users/zsh-autosuggestions
 # zfetch chriskempson/base16-shell
 zfetch Aloxaf/fzf-tab
+zfetch sindresorhus/pure
 
 if [[ -x "$(command -v fnm)" ]]; then
     eval "$(fnm env --use-on-cd)"
@@ -273,4 +274,6 @@ autoload -U colors && colors	# Load colors
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 source "$ZSH/utils.zsh"
 # eval "$(starship init zsh)"
-source "$ZSH/prompt.zsh"
+# source "$ZSH/prompt.zsh"
+# autoload -U promptinit; promptinit
+# prompt pure

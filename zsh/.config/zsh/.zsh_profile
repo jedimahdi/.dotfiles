@@ -1,0 +1,32 @@
+export DOTFILES="$HOME/.dotfiles"
+export CACHEDIR="$HOME/.local/share"
+export VIM_TMP="$HOME/.vim-tmp"
+export XDG_CONFIG_HOME=$HOME/.config
+export VIM="nvim"
+export EDITOR='nvim'
+export GIT_EDITOR='nvim'
+
+export PATH="$DOTFILES/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.neovim/bin:$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.pack/bin:$PATH"
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+
+
+alias c="clear"
+# alias ls="exa --group-directories-first"
+alias ls="ls -hN --color=auto --group-directories-first"
+alias l="ls -la --no-user --no-time --git --no-permissions"
+alias grep='grep --color=auto'
+alias ta='tmux attach'
+alias gs='git status'
+alias cp="cp -iv"
+alias mv='mv -iv'
+alias rm='rm -vI'
+alias pacman='sudo pacman --color auto'
+
+alias pd="protonvpn-cli d"

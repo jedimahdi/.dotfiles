@@ -183,7 +183,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((myModMask, xK_period)              , sendMessage (IncMasterN (-1)))
 
      -- Quit xmonad
-     , ((myModMask .|. shiftMask, xK_q)     , spawn "~/.dotfiles/bin/powermenu.sh")
+     -- , ((myModMask .|. shiftMask, xK_q)     , spawn "~/.dotfiles/bin/powermenu.sh")
 
      -- Restart xmonad
      , ((myModMask .|. shiftMask , xK_r)    , spawn "xmonad --recompile && xmonad --restart")
@@ -196,7 +196,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      -- , ((myModMask, xK_x)                   , spawn "~/.dotfiles/bin/dmkill")
      , ((myModMask, xK_g)                   , Prompt.hoogle)
      , ((myModMask .|. shiftMask, xK_x)     , Prompt.calculator)
-     -- , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
+     , ((myModMask .|. shiftMask, xK_q)     , liftIO exitSuccess)
      , ((myModMask, xK_Tab)                 , toggleWS)
      , ((myModMask, xK_f)                   , sendMessage ToggleStruts)
      ]
@@ -227,7 +227,7 @@ myMouseBindings XConfig {XMonad.modMask = modm} = Map.fromList
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts(tiled ||| Mirror tiled ||| Full)
+myLayout = tiled ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -267,7 +267,7 @@ myStartupHook = do
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"
-  spawnOnce "~/.dotfiles/bin/systray.sh"
+  -- spawnOnce "~/.dotfiles/bin/systray.sh"
 
 defaults = def {
       -- simple stuff
@@ -294,7 +294,7 @@ defaults = def {
     }
 
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh . docks . withSB xmobar0 $ defaults
+main = xmonad . ewmhFullscreen . ewmh  $ defaults
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset

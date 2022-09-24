@@ -49,6 +49,8 @@ return require("packer").startup(function(use)
   use("windwp/nvim-autopairs")
   use("tpope/vim-surround")
 
+  use({ "purescript-contrib/purescript-vim" })
+
   -- use({
   --   "iamcco/markdown-preview.nvim", -- preview markdown output in browser
   --   opt = true,

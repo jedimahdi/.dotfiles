@@ -1,7 +1,7 @@
 vim.opt.guicursor = ""
 
-vim.opt.nu = false
-vim.opt.relativenumber = false
+vim.opt.nu = true
+vim.opt.relativenumber = true
 
 vim.opt.errorbells = false
 
@@ -44,3 +44,5 @@ vim.opt.clipboard = "unnamedplus" -- unnamed
 
 vim.g.mapleader = " "
 
+vim.opt.laststatus = 0
+vim.opt.ruler = false

@@ -15,8 +15,8 @@ nnoremap("Y", "yg$")
 nnoremap("n", "nzzzv")
 nnoremap("N", "Nzzzv")
 nnoremap("J", "mzJ`z")
-nnoremap("<C-d>", "<C-d>zz")
-nnoremap("<C-u>", "<C-u>zz")
+-- nnoremap("<C-d>", "<C-d>zz")
+-- nnoremap("<C-u>", "<C-u>zz")
 
 -- greatest remap ever
 xnoremap("<leader>p", "\"_dP")
@@ -35,7 +35,7 @@ vnoremap("<leader>d", "\"_d")
 inoremap("<C-c>", "<Esc>")
 
 -- nnoremap("Q", "<nop>")
-nnoremap("<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+-- nnoremap("<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 nnoremap("<C-n>", "<cmd>cnext<CR>zz")
 nnoremap("<C-p>", "<cmd>cprev<CR>zz")

@@ -18,6 +18,11 @@
         path = ./templates/node;
         description = "Node environment.";
       };
+
+      node = {
+        path = ./templates/purescript;
+        description = "Purescript environment.";
+      };
     };
 
     defaultTemplate = self.templates.simple;

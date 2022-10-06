@@ -1,5 +1,5 @@
 {
-  description = "Node environment";
+  description = "Purescript environment";
 
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/release-22.05";

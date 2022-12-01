@@ -1,3 +1,7 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+
 vim.opt.guicursor = ""
 
 vim.opt.nu = true
@@ -12,7 +16,7 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -46,3 +50,24 @@ vim.g.mapleader = " "
 
 vim.opt.laststatus = 0
 vim.opt.ruler = false
+
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+vim.o.conceallevel = 2
+
+vim.keymap.set("n", "<F10>", function()
+  if vim.o.conceallevel > 0 then
+    vim.o.conceallevel = 0
+  else
+    vim.o.conceallevel = 2
+  end
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<F11>", function()
+  if vim.o.concealcursor == "n" then
+    vim.o.concealcursor = ""
+  else
+    vim.o.concealcursor = "n"
+  end
+end, { noremap = true, silent = true })

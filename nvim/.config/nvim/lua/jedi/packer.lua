@@ -1,55 +1,70 @@
 return require("packer").startup(function(use)
   use("wbthomason/packer.nvim")
-  use("sbdchd/neoformat")
-
-  -- Simple plugins can be specified as strings
-  use("TimUntersberger/neogit")
-
-  -- TJ created lodash of neovim
   use("nvim-lua/plenary.nvim")
   use("nvim-lua/popup.nvim")
-  use("nvim-telescope/telescope.nvim")
-
-  -- All the things
-  use("neovim/nvim-lspconfig")
-  use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/nvim-cmp")
-  use("onsails/lspkind-nvim")
-  use("nvim-lua/lsp_extensions.nvim")
-  use("glepnir/lspsaga.nvim")
-  use("simrat39/symbols-outline.nvim")
-  use("dcampos/nvim-snippy")
-  use("dcampos/cmp-snippy")
-
-  -- Primeagen doesn"t create lodash
-  use("ThePrimeagen/git-worktree.nvim")
-  use("ThePrimeagen/harpoon")
-
-  use("mbbill/undotree")
-  use("tamago324/lir.nvim")
   use("kyazdani42/nvim-web-devicons")
 
-  -- Colorscheme section
-  use("gruvbox-community/gruvbox")
+  -- Format
+  use("sbdchd/neoformat")
+
+  -- Telescope and Navigation
+  use("nvim-telescope/telescope.nvim")
+  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+  use("ThePrimeagen/harpoon")
+  use("tamago324/lir.nvim")
+
+  -- LSP
+  use("neovim/nvim-lspconfig")
+  use("onsails/lspkind-nvim")
+  use("glepnir/lspsaga.nvim")
+  use("nvim-lua/lsp_extensions.nvim")
+  use("simrat39/symbols-outline.nvim")
+  use("j-hui/fidget.nvim")
+
+  -- cmp
+  use("hrsh7th/cmp-nvim-lsp")
+  use("hrsh7th/cmp-path")
+  use("hrsh7th/nvim-cmp")
+  use("dcampos/cmp-snippy")
+
+  -- Snippet
+  use("dcampos/nvim-snippy")
+
+  -- Git
+  use("ThePrimeagen/git-worktree.nvim")
+
+  -- Color Scheme
+  use("ellisonleao/gruvbox.nvim")
   use("folke/tokyonight.nvim")
   use("lunarvim/onedarker.nvim")
 
+  -- Tree sitter
   use("nvim-treesitter/nvim-treesitter", {
     run = ":TSUpdate",
   })
-
+  use({
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+  })
   use("nvim-treesitter/playground")
 
+  -- Comment
+  use("numToStr/Comment.nvim")
+
+  -- Auto Pairs
+  use("windwp/nvim-autopairs")
+
+  -- Debug
   use("mfussenegger/nvim-dap")
   use("rcarriga/nvim-dap-ui")
   use("theHamsta/nvim-dap-virtual-text")
 
-  use("numToStr/Comment.nvim")
-  use("windwp/nvim-autopairs")
+  -- Other
+  use("mbbill/undotree")
   use("tpope/vim-surround")
+  use("~/code/jedi")
 
-  use({ "purescript-contrib/purescript-vim" })
+  -- use({ "purescript-contrib/purescript-vim" })
 
   -- use({
   --   "iamcco/markdown-preview.nvim", -- preview markdown output in browser

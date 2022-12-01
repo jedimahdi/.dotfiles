@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
 else
 	apps=$(find ~/apps -mindepth 2 -maxdepth 2 -type d)
 	configs=$(find ~/.config -mindepth 1 -maxdepth 1 -type l)
-	selected=$(echo -e "$apps\n$configs" | fzf --color bw --margin 2)
+	selected=$(echo -e "$apps\n$configs" | fzf --margin 2)
 fi
 
 if [[ -z $selected ]]; then

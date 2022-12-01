@@ -1,62 +1,10 @@
-local sumneko_root_path = "/home/mahdi/code/sumneko"
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 local cmp = require("cmp")
-local source_mapping = {
-  buffer = "[Buffer]",
-  nvim_lsp = "[LSP]",
-  nvim_lua = "[Lua]",
-  path = "[Path]",
-}
-local lspkind = require("lspkind")
 local snippy = require("snippy")
 
 vim.opt.completeopt = {
   "menuone",
   "noinsert",
   "noselect",
-}
-
-local border = {
-  { "╭", "FoldColumn" },
-  { "─", "FoldColumn" },
-  { "╮", "FoldColumn" },
-  { "│", "FoldColumn" },
-  { "╯", "FoldColumn" },
-  { "─", "FoldColumn" },
-  { "╰", "FoldColumn" },
-  { "│", "FoldColumn" },
-}
-
-local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
 }
 
 cmp.setup({
@@ -94,34 +42,10 @@ cmp.setup({
     end, { "i", "s" }),
   }),
 
-  window = {
-    completion = {
-      border = border,
-      scrollbar = "║",
-    },
-    documentation = {
-      border = border,
-      scrollbar = "║",
-    },
-  },
-
-  formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = function(entry, vim_item)
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- kind menu
-      vim_item.menu = ({
-        luasnip = "[LuaSnip]",
-        nvim_lsp = "[LSP]",
-        path = "/",
-      })[entry.source.name]
-      return vim_item
-    end,
-  },
-
   sources = {
     { name = "snippy" },
     { name = "path" },
     { name = "nvim_lsp" },
+    { name = "buffer" },
   },
 })

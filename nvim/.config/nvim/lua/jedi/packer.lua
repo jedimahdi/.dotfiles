@@ -20,10 +20,13 @@ return require("packer").startup(function(use)
   use("nvim-lua/lsp_extensions.nvim")
   use("simrat39/symbols-outline.nvim")
   use("j-hui/fidget.nvim")
+  use("folke/neodev.nvim")
+  use("simrat39/rust-tools.nvim")
 
   -- cmp
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-path")
+  use("hrsh7th/cmp-buffer")
   use("hrsh7th/nvim-cmp")
   use("dcampos/cmp-snippy")
 
@@ -55,9 +58,9 @@ return require("packer").startup(function(use)
   use("windwp/nvim-autopairs")
 
   -- Debug
-  use("mfussenegger/nvim-dap")
-  use("rcarriga/nvim-dap-ui")
-  use("theHamsta/nvim-dap-virtual-text")
+  -- use("mfussenegger/nvim-dap")
+  -- use("rcarriga/nvim-dap-ui")
+  -- use("theHamsta/nvim-dap-virtual-text")
 
   -- Other
   use("mbbill/undotree")

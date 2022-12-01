@@ -5,6 +5,7 @@ local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>a", vim.diagnostic.open_float)
 
 local on_attach = function(_, bufnr)
   local nmap = function(keys, func, desc)
@@ -60,19 +61,41 @@ lspconfig.hls.setup({
   },
 })
 
-lspconfig.rust_analyzer.setup({
-  on_attach = on_attach,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(
-    vim.lsp.protocol.make_client_capabilities(),
-    { snippetSupport = false }
-  ),
-  cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = false,
-    }),
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(x, bufnr)
+      on_attach(x, bufnr)
+      -- Hover actions
+      -- vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "gA", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+    handlers = {
+      ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = false,
+        virtual_text = false,
+      }),
+    },
   },
 })
+
+-- lspconfig.rust_analyzer.setup({
+--   on_attach = on_attach,
+--   capabilities = require("cmp_nvim_lsp").update_capabilities(
+--     vim.lsp.protocol.make_client_capabilities(),
+--     { snippetSupport = false }
+--   ),
+--   cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+--   handlers = {
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--       underline = false,
+--     }),
+--   },
+-- })
+
+require("neodev").setup({})
 
 lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
@@ -84,7 +107,7 @@ lspconfig.sumneko_lua.setup({
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = "LuaJIT",
         -- Setup your lua path
-        path = vim.split(package.path, ";"),
+        path = vim.split(package.path, ";", {}),
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global

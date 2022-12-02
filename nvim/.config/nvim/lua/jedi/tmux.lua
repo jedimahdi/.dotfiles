@@ -2,15 +2,13 @@ local api = vim.api
 
 -- shared
 local send_tmux_cmd = function(cmd)
-  local stdout = vim.split(vim.fn.system("tmux " .. cmd), "\n")
+  local stdout = vim.split(vim.fn.system("tmux " .. cmd), "\n", {})
   return stdout, vim.v.shell_error
 end
 
 local get_pane_id = function()
   return send_tmux_cmd('display-message -p "#{pane_id}"')[1]
 end
-
-local M = {}
 
 -- move between tmux splits and neovim windows
 local tmux_directions = { h = "L", j = "D", k = "U", l = "R" }
@@ -19,7 +17,7 @@ local send_move_cmd = function(direction)
   send_tmux_cmd("selectp -" .. tmux_directions[direction])
 end
 
-M.move = function(direction)
+local move = function(direction)
   local current_win = api.nvim_get_current_win()
   vim.cmd("wincmd " .. direction)
 
@@ -28,7 +26,7 @@ M.move = function(direction)
   end
 end
 
-M.run_project = function()
+local run_project = function()
   -- local ft = vim.bo.ft
 
   -- if ft == "typescriptreact" or ft == "typescript" then
@@ -38,7 +36,7 @@ end
 
 -- u.nmap("<leader>tq", ":lua require'config.tmux'.run_project()<CR>")
 
-M.exec_project = function()
+local exec_project = function()
   local ft = vim.bo.ft
   if ft == "rust" then
     send_tmux_cmd([[neww -n cargo bash -c "cargo run; sleep 2"]])
@@ -49,7 +47,7 @@ M.exec_project = function()
   end
 end
 
-M.test_project = function()
+local test_project = function()
   local ft = vim.bo.ft
   if ft == "rust" then
     send_tmux_cmd([[neww -n cargo bash -c "cargo test; sleep 2"]])
@@ -60,7 +58,7 @@ M.test_project = function()
   end
 end
 
-M.build_project = function()
+local build_project = function()
   local ft = vim.bo.ft
   if ft == "rust" then
     send_tmux_cmd([[neww -n cargo bash -c "cargo build; sleep 2"]])
@@ -71,8 +69,13 @@ M.build_project = function()
   end
 end
 
+vim.keymap.set("n", "<C-h>", function() move("h") end)
+vim.keymap.set("n", "<C-j>", function() move("j") end)
+vim.keymap.set("n", "<C-k>", function() move("k") end)
+vim.keymap.set("n", "<C-l>", function() move("l") end)
+
+vim.keymap.set("n", "<leader>tt", exec_project)
+
 -- u.nmap("<leader>te", ":lua require'config.tmux'.exec_project()<CR>")
 -- u.nmap("<leader>tt", ":lua require'config.tmux'.test_project()<CR>")
 -- u.nmap("<leader>tb", ":lua require'config.tmux'.build_project()<CR>")
-
-return M

@@ -8,6 +8,7 @@ require("jedi.treesitter")
 require("jedi.lsp")
 require("jedi.cmp")
 require("jedi.harpoon")
+require("jedi.tmux")
 
 -- Turn on status information
 require("fidget").setup()

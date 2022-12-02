@@ -17,14 +17,36 @@ if has_devicons then
 end
 
 local actions = require("lir.actions")
-local mark_actions = require 'lir.mark.actions'
-local clipboard_actions = require'lir.clipboard.actions'
+local mark_actions = require("lir.mark.actions")
+local clipboard_actions = require("lir.clipboard.actions")
 
 lir.setup({
   show_hidden_files = true,
   devicons_enable = true,
 
-  float = { winblend = 15 },
+  float = {
+    winblend = 0,
+    win_opts = function()
+      local width = math.floor(vim.o.columns * 0.7)
+      local height = math.floor(vim.o.lines * 0.7)
+      return {
+        border = {
+          "╭",
+          "─",
+          "╮",
+          "│",
+          "╯",
+          "─",
+          "╰",
+          "│",
+        },
+        width = width,
+        height = height,
+        row = 1,
+        col = math.floor((vim.o.columns - width) / 2),
+      }
+    end,
+  },
 
   mappings = {
     ["<CR>"] = actions.edit,
@@ -39,9 +61,10 @@ lir.setup({
     ["D"] = actions.delete,
     ["."] = actions.toggle_show_hidden,
     ["q"] = actions.quit,
+    ["<ESC>"] = actions.quit,
 
     ["J"] = function()
-      mark_actions.toggle_mark('n')
+      mark_actions.toggle_mark("n")
       vim.cmd("normal! j")
     end,
     ["C"] = clipboard_actions.copy,

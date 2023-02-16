@@ -16,16 +16,19 @@ return require("packer").startup(function(use)
   -- LSP
   use("neovim/nvim-lspconfig")
   use("onsails/lspkind-nvim")
-  use("glepnir/lspsaga.nvim")
+  -- use("glepnir/lspsaga.nvim")
   use("nvim-lua/lsp_extensions.nvim")
   use("simrat39/symbols-outline.nvim")
   use("j-hui/fidget.nvim")
   use("folke/neodev.nvim")
   use("simrat39/rust-tools.nvim")
+  use({
+    "ray-x/lsp_signature.nvim",
+  })
 
   -- cmp
   use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-path")
+  -- use("hrsh7th/cmp-path")
   use("hrsh7th/cmp-buffer")
   use("hrsh7th/nvim-cmp")
   use("dcampos/cmp-snippy")
@@ -34,12 +37,11 @@ return require("packer").startup(function(use)
   use("dcampos/nvim-snippy")
 
   -- Git
-  use("ThePrimeagen/git-worktree.nvim")
+  -- use("ThePrimeagen/git-worktree.nvim")
 
   -- Color Scheme
-  use("ellisonleao/gruvbox.nvim")
-  use("folke/tokyonight.nvim")
   use("lunarvim/onedarker.nvim")
+  use("RRethy/nvim-base16")
 
   -- Tree sitter
   use("nvim-treesitter/nvim-treesitter", {
@@ -65,16 +67,16 @@ return require("packer").startup(function(use)
   -- Other
   use("mbbill/undotree")
   use("tpope/vim-surround")
-  use("~/code/jedi")
+  -- use("~/code/jedi")
 
   -- use({ "purescript-contrib/purescript-vim" })
 
-  -- use({
-  --   "iamcco/markdown-preview.nvim", -- preview markdown output in browser
-  --   opt = true,
-  --   ft = { "markdown" },
-  --   config = "vim.cmd[[doautocmd BufEnter]]",
-  --   run = "cd app && yarn install",
-  --   cmd = "MarkdownPreview",
-  -- })
+  use({
+    "iamcco/markdown-preview.nvim", -- preview markdown output in browser
+    -- opt = true,
+    -- ft = { "markdown" },
+    -- config = "vim.cmd[[doautocmd BufEnter]]",
+    run = "cd app && yarn install",
+    -- cmd = "MarkdownPreview",
+  })
 end)

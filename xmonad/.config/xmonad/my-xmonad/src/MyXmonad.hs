@@ -70,6 +70,12 @@ addEWMHFullscreen   = do
     wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
     mapM_ addNETSupported [wms, wfs]
 
+safeSpawn' :: MonadIO m => FilePath -> String -> m ()
+safeSpawn' p = safeSpawn p . words
+
+runOrRaise :: String -> [String] -> Query Bool -> X ()
+runOrRaise = (raiseMaybe .) . safeSpawn
+
 clipboardy, centerlaunch, sidebarlaunch, ewwclose, maimcopy, maimsave, rofiLauncher :: MonadIO m => m ()
 clipboardy = spawn "rofi -modi \"\63053 :greenclip print\" -show \"\63053 \" -run-command '{cmd}' -theme ~/.config/rofi/launcher/style.rasi"
 centerlaunch = spawn "exec ~/.dotfiles/bin/eww open-many blur_full weather profile quote search_full incognito-icon vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full"
@@ -263,7 +269,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
-  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/fantasy-city-3-1920×1080.jpg"
+  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/in-the-void-1920×1080.jpg"
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"

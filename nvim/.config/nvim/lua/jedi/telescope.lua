@@ -1,9 +1,23 @@
 local actions = require("telescope.actions")
 
 require("telescope").setup({
+  extensions = {
+    fzf = {
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
+    },
+  },
+  -- pickers = {
+  --   find_files = {
+  --     find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+  --   },
+  -- },
   defaults = {
-    prompt_prefix = " > ",
-    color_devicons = true,
+    -- file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    -- file_sorter = require("telescope.sorters").get_fuzzy_file,
     file_ignore_patterns = {
       "dist*",
       "node_modules",
@@ -30,8 +44,8 @@ require("telescope").setup({
   },
 })
 
-require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("fzf")
+-- require("telescope").load_extension("git_worktree")
 
 vim.keymap.set("n", "<leader>/", function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.

@@ -43,9 +43,9 @@ cmp.setup({
   }),
 
   sources = {
-    { name = "snippy" },
-    { name = "path" },
     { name = "nvim_lsp" },
-    { name = "buffer" },
+    { name = "snippy", max_item_count = 1 },
+    -- { name = "path" },
+    { name = "buffer", keyword_length = 3, max_item_count = 2 },
   },
 })

@@ -16,22 +16,37 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap("<leader>gi", vim.lsp.buf.rename, "[R]e[n]ame")
-  nmap("ga", vim.lsp.buf.code_action, "[C]ode [A]ction")
-  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-  nmap("<leader>di", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-  nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-  nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-  nmap("<leader>dw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+  local imap = function(keys, func, desc)
+    if desc then
+      desc = "LSP: " .. desc
+    end
+
+    vim.keymap.set("i", keys, func, { buffer = bufnr, desc = desc })
+  end
+
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+  nmap("<leader>gr", vim.lsp.buf.rename, "Rename Symbol")
+  nmap("ga", vim.lsp.buf.code_action, "Code Action")
+  nmap("gd", vim.lsp.buf.definition, "Goto Definition")
+  nmap("<leader>di", vim.lsp.buf.implementation, "Goto Implementation")
+  nmap("gr", require("telescope.builtin").lsp_references, "References")
+  nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+  nmap("<leader>dw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+  imap("<C-x>", vim.lsp.buf.signature_help, "Signature Documentation")
+  nmap("<leader>cr", vim.lsp.codelens.refresh, "Refresh Code Lens")
+  nmap("<leader>ca", vim.lsp.codelens.run, "Run Code Lens")
+  nmap("<leader>cd", vim.lsp.codelens.display, "Display Code Lens")
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 lspconfig.tsserver.setup({
-  on_attach = on_attach,
+  on_attach = function(x, bufnr)
+    on_attach(x, bufnr)
+    require("lsp_signature").on_attach({}, bufnr)
+  end,
   capabilities = capabilities,
   handlers = {
     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -123,3 +138,18 @@ lspconfig.sumneko_lua.setup({
     },
   },
 })
+
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+--   pattern = { "*.txt" },
+--   callback = function()
+--     -- local util = require("lspconfig.util")
+--
+--     vim.lsp.start_client({
+--       name = "lsp_demo",
+--       cmd = {
+--         "/home/mahdi/apps/haskell/lsp-demo/dist-newstyle/build/x86_64-linux/ghc-9.0.2/lsp-demo-1.1.2/x/lsp-demo/build/lsp-demo/lsp-demo",
+--       },
+--       -- root_dir = util.root_pattern(".git"),
+--     })
+--   end,
+-- })

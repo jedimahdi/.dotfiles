@@ -18,3 +18,8 @@ fish_add_path $HOME/.elan/bin
 # starship init fish | source
 
 # abbr -a -g c clear
+
+# pnpm
+set -gx PNPM_HOME "/home/mahdi/.local/share/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
+# pnpm end

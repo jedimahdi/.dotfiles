@@ -68,7 +68,7 @@
   # rebase = true
 
 [core]
-  excludesfile = ~/.gitignore_global
+	excludesFile = ~/.gitignore
   editor = nvim
   pager = delta
 

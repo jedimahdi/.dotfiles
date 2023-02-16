@@ -1,6 +1,5 @@
 local api = vim.api
 
--- shared
 local send_tmux_cmd = function(cmd)
   local stdout = vim.split(vim.fn.system("tmux " .. cmd), "\n", {})
   return stdout, vim.v.shell_error
@@ -25,6 +24,11 @@ local move = function(direction)
     send_move_cmd(direction)
   end
 end
+
+local initial_tmux_pane = function()
+
+end
+
 
 local run_project = function()
   -- local ft = vim.bo.ft

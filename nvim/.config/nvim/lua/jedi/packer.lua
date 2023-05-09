@@ -25,6 +25,7 @@ return require("packer").startup(function(use)
   use({
     "ray-x/lsp_signature.nvim",
   })
+  use("b0o/schemastore.nvim")
 
   -- cmp
   use("hrsh7th/cmp-nvim-lsp")
@@ -69,7 +70,11 @@ return require("packer").startup(function(use)
   use("tpope/vim-surround")
   -- use("~/code/jedi")
 
-  -- use({ "purescript-contrib/purescript-vim" })
+  use({ "purescript-contrib/purescript-vim" })
+  use({
+    "mrcjkb/haskell-tools.nvim",
+    branch = "1.x.x", -- recommended
+  })
 
   use({
     "iamcco/markdown-preview.nvim", -- preview markdown output in browser

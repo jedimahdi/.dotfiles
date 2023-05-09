@@ -12,3 +12,11 @@ snippet imas "import * as xyz from 'xyz'"
 	import * as ${1} from '${2:$1}';
 snippet imm "import { member } from 'xyz'"
 	import { ${1} } from '${2}';
+snippet test "jest test"
+	test("${1}", () => {
+		${0}
+	});
+snippet atest "jest async test"
+	test("${1}", async () => {
+		${0}
+	});

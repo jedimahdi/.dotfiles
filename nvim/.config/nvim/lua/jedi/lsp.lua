@@ -1,8 +1,5 @@
 local lspconfig = require("lspconfig")
 
-local sumneko_root_path = "/home/mahdi/code/sumneko"
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>a", vim.diagnostic.open_float)
@@ -55,26 +52,53 @@ lspconfig.tsserver.setup({
   },
 })
 
-lspconfig.elmls.setup({
+-- local capabilitiesWithSnippet = capabilities
+-- capabilitiesWithSnippet.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.jsonls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas {
+        select = {
+          '.eslintrc',
+          'package.json',
+          'tsconfig.json',
+          'prettierrc.json',
+          'tslint.json',
+        },
+      },
+      validate = { enable = true },
+    },
+  },
+})
+
+-- lspconfig.elmls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- })
+
+lspconfig.purescriptls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
-lspconfig.hls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = false,
-      virtual_text = false,
-    }),
-  },
-  settings = {
-    haskell = {
-      formattingProvider = "stylish-haskell",
-    },
-  },
-})
+-- lspconfig.hls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   handlers = {
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--       underline = false,
+--       virtual_text = false,
+--     }),
+--   },
+--   settings = {
+--     haskell = {
+--       formattingProvider = "stylish-haskell",
+--     },
+--   },
+-- })
 
 local rt = require("rust-tools")
 
@@ -112,17 +136,14 @@ rt.setup({
 
 require("neodev").setup({})
 
-lspconfig.sumneko_lua.setup({
+require("lspconfig").lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   settings = {
     Lua = {
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = "LuaJIT",
-        -- Setup your lua path
-        path = vim.split(package.path, ";", {}),
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
@@ -130,14 +151,42 @@ lspconfig.sumneko_lua.setup({
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-        },
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
       },
     },
   },
 })
+
+-- lspconfig.sumneko_lua.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+--   settings = {
+--     Lua = {
+--       runtime = {
+--         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--         version = "LuaJIT",
+--         -- Setup your lua path
+--         path = vim.split(package.path, ";", {}),
+--       },
+--       diagnostics = {
+--         -- Get the language server to recognize the `vim` global
+--         globals = { "vim" },
+--       },
+--       workspace = {
+--         -- Make the server aware of Neovim runtime files
+--         library = {
+--           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+--           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+--         },
+--       },
+--     },
+--   },
+-- })
 
 -- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 --   pattern = { "*.txt" },

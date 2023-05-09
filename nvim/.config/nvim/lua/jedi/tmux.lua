@@ -25,10 +25,7 @@ local move = function(direction)
   end
 end
 
-local initial_tmux_pane = function()
-
-end
-
+local initial_tmux_pane = function() end
 
 local run_project = function()
   -- local ft = vim.bo.ft
@@ -53,6 +50,10 @@ end
 
 local test_project = function()
   local ft = vim.bo.ft
+  if ft == "typescript" then
+    send_tmux_cmd([[split-window -h -p 30 -d bash -c "npx jest --watch"]])
+  end
+
   if ft == "rust" then
     send_tmux_cmd([[neww -n cargo bash -c "cargo test; sleep 2"]])
   end
@@ -73,13 +74,21 @@ local build_project = function()
   end
 end
 
-vim.keymap.set("n", "<C-h>", function() move("h") end)
-vim.keymap.set("n", "<C-j>", function() move("j") end)
-vim.keymap.set("n", "<C-k>", function() move("k") end)
-vim.keymap.set("n", "<C-l>", function() move("l") end)
+vim.keymap.set("n", "<C-h>", function()
+  move("h")
+end)
+vim.keymap.set("n", "<C-j>", function()
+  move("j")
+end)
+vim.keymap.set("n", "<C-k>", function()
+  move("k")
+end)
+vim.keymap.set("n", "<C-l>", function()
+  move("l")
+end)
 
-vim.keymap.set("n", "<leader>tt", exec_project)
-
+-- vim.keymap.set("n", "<leader>tt", exec_project)
+vim.keymap.set("n", "<leader>tt", test_project)
 -- u.nmap("<leader>te", ":lua require'config.tmux'.exec_project()<CR>")
 -- u.nmap("<leader>tt", ":lua require'config.tmux'.test_project()<CR>")
 -- u.nmap("<leader>tb", ":lua require'config.tmux'.build_project()<CR>")

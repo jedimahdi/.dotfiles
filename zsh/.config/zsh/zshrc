@@ -101,7 +101,7 @@ else
 fi
 bindkey "^A" vi-beginning-of-line
 # bindkey -M viins "^F" vi-forward-word               # [Ctrl-f] - move to next word
-bindkey -M viins "^E" vi-add-eol                    # [Ctrl-e] - move to end of line
+bindkey -M viins "^E" end-of-line                   # [Ctrl-e] - move to end of line
 bindkey "^J" history-beginning-search-forward
 bindkey "^K" history-beginning-search-backward
 bindkey -s '^g' 'lazygit^M'
@@ -118,7 +118,6 @@ zstyle ':completion:*' insert-tab pending
 
 # default to file completion
 zstyle ':completion:*' completer _expand _complete _files _correct _approximate
-
 
 ########################################################
 # Plugin setup
@@ -267,6 +266,20 @@ alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/p
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
+alias cbuild="cabal build --enable-tests --enable-benchmarks --write-ghc-environment-files=always -O0"
+alias ctest="cabal test --enable-tests --test-show-details=direct -O0"
+alias cbench="cabal bench --enable-benchmarks -O0"
+alias crun="cabal run -O0"
+alias cinstall="cabal install --installdir=$HOME/.local/bin --overwrite-policy=always --install-method=copy"
+alias cclean="cabal clean"
+alias cupdate="cabal update"
+alias crepl="cabal repl --build-depends pretty-simple"
+alias cdoc="cabal haddock --enable-documentation"
+alias cdochackage="cabal haddock --enable-documentation --haddock-for-hackage"
+alias cdist="cabal sdist"
+
+alias tc="tmux-sessionizer"
+
 # eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 
@@ -277,3 +290,5 @@ source "$ZSH/utils.zsh"
 # source "$ZSH/prompt.zsh"
 # autoload -U promptinit; promptinit
 # prompt pure
+
+[[ ! -r /home/mahdi/.opam/opam-init/init.zsh ]] || source /home/mahdi/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

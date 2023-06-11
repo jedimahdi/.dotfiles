@@ -1,3 +1,5 @@
+require("ocaml").setup()
+
 require("nvim-treesitter.configs").setup({
   ensure_installed = {
     "c",
@@ -25,6 +27,7 @@ require("nvim-treesitter.configs").setup({
     "css",
     "cpp",
     "bash",
+    "ocaml",
   },
 
   highlight = {

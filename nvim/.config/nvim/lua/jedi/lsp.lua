@@ -55,24 +55,24 @@ lspconfig.tsserver.setup({
 -- local capabilitiesWithSnippet = capabilities
 -- capabilitiesWithSnippet.textDocument.completion.completionItem.snippetSupport = true
 
-lspconfig.jsonls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    json = {
-      schemas = require('schemastore').json.schemas {
-        select = {
-          '.eslintrc',
-          'package.json',
-          'tsconfig.json',
-          'prettierrc.json',
-          'tslint.json',
-        },
-      },
-      validate = { enable = true },
-    },
-  },
-})
+-- lspconfig.jsonls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   settings = {
+--     json = {
+--       schemas = require("schemastore").json.schemas({
+--         select = {
+--           ".eslintrc",
+--           "package.json",
+--           "tsconfig.json",
+--           "prettierrc.json",
+--           "tslint.json",
+--         },
+--       }),
+--       validate = { enable = true },
+--     },
+--   },
+-- })
 
 -- lspconfig.elmls.setup({
 --   on_attach = on_attach,
@@ -159,6 +159,11 @@ require("lspconfig").lua_ls.setup({
       },
     },
   },
+})
+
+require("lspconfig").ocamllsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 -- lspconfig.sumneko_lua.setup({

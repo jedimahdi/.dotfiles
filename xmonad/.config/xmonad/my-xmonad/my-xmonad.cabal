@@ -9,6 +9,7 @@ library
     MyXmonad.Prompt.Prelude
     MyXmonad.Prompt.Hoogle
     MyXmonad.Prompt.Calculator
+    MyXmonad.Layout.CenterMainFluid
     MyXmonad.Dmenu.Configs
   build-depends:       base
                      , xmonad

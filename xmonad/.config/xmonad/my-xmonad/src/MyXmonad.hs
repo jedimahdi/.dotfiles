@@ -30,6 +30,8 @@ import           XMonad.Util.ClickableWorkspaces
 import           XMonad.Util.Loggers
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.SpawnOnce
+import MyXmonad.Layout.CenterMainFluid
+import XMonad.Layout.ThreeColumns
 
 myTerminal :: String
 myTerminal = "alacritty"
@@ -49,10 +51,12 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces =  ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 myNormalBorderColor :: String
-myNormalBorderColor  = "#3b4252"
+-- myNormalBorderColor  = "#3b4252"
+myNormalBorderColor = "#2d3436"
 
 myFocusedBorderColor :: String
-myFocusedBorderColor = "#bc96da"
+-- myFocusedBorderColor = "#bc96da"
+myFocusedBorderColor  = "#3b4252"
 
 addNETSupported :: Atom -> X ()
 addNETSupported x   = withDisplay $ \dpy -> do
@@ -70,11 +74,11 @@ addEWMHFullscreen   = do
     wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
     mapM_ addNETSupported [wms, wfs]
 
-safeSpawn' :: MonadIO m => FilePath -> String -> m ()
-safeSpawn' p = safeSpawn p . words
-
-runOrRaise :: String -> [String] -> Query Bool -> X ()
-runOrRaise = (raiseMaybe .) . safeSpawn
+-- safeSpawn' :: MonadIO m => FilePath -> String -> m ()
+-- safeSpawn' p = safeSpawn p . words
+--
+-- runOrRaise :: String -> [String] -> Query Bool -> X ()
+-- runOrRaise = (raiseMaybe .) . safeSpawn
 
 clipboardy, centerlaunch, sidebarlaunch, ewwclose, maimcopy, maimsave, rofiLauncher :: MonadIO m => m ()
 clipboardy = spawn "rofi -modi \"\63053 :greenclip print\" -show \"\63053 \" -run-command '{cmd}' -theme ~/.config/rofi/launcher/style.rasi"
@@ -233,7 +237,7 @@ myMouseBindings XConfig {XMonad.modMask = modm} = Map.fromList
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = tiled ||| Mirror tiled ||| Full ||| CenterMainFluid 1 (3/100) (80/100) ||| ThreeColMid 1 (3/100) (1/2) ||| gaps [(U,40), (R,20), (L, 20), (D, 20)] (Tall 1 (3/100) (1/2))
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -269,7 +273,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
-  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/in-the-void-1920×1080.jpg"
+  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/astronaut-in-the-jungle-using-ai-1920×1080.jpg"
   spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"

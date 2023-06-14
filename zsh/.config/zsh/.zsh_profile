@@ -4,15 +4,15 @@ export VIM_TMP="$HOME/.vim-tmp"
 export XDG_CONFIG_HOME=$HOME/.config
 export VIM="nvim"
 
-export PATH="$DOTFILES/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.neovim/bin:$PATH"
-export PATH="$HOME/.npm-global/bin:$PATH"
-export PATH="$HOME/.cabal/bin:$PATH"
-export PATH="$HOME/.ghcup/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.pack/bin:$PATH"
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+# export PATH="$DOTFILES/bin:$PATH"
+# export PATH="$HOME/.local/bin:$PATH"
+# export PATH="$HOME/.neovim/bin:$PATH"
+# export PATH="$HOME/.npm-global/bin:$PATH"
+# export PATH="$HOME/.cabal/bin:$PATH"
+# export PATH="$HOME/.ghcup/bin:$PATH"
+# export PATH="$HOME/go/bin:$PATH"
+# export PATH="$HOME/.pack/bin:$PATH"
+# export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 
 

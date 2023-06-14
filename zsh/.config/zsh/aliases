@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+# +--------+
+# | System |
+# +--------+
+
+alias bigf= 'find / -xdev -type f -size +500M'  # display "big" files > 500M
+
+# +-----+
+# | X11 |
+# +-----+
+
+alias xpropc='xprop | grep WM_CLASS' # display xprop class
+
+# +-----+
+# | Zsh |
+# +-----+
+
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index} > /dev/null"; unset index # directory stack
+
+# +----+
+# | ls |
+# +----+
+
+alias ls="exa --group-directories-first"
+alias l='ls -l'
+alias ll='ls -lahF'
+alias lls='ls -lahFtr'
+alias la='ls -A'
+alias lc='ls -CF'
+
+# +----+
+# | cp |
+# +----+
+
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias la='ls -alh'
+
+# +------+
+# | grep |
+# +------+
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# +------+
+# | xlip |
+# +------+
+
+alias cb='xclip -sel clip'
+
+# +------+
+# | Cabal |
+# +------+
+
+alias cbuild="cabal build --enable-tests --enable-benchmarks --write-ghc-environment-files=always -O0"
+alias ctest="cabal test --enable-tests --test-show-details=direct -O0"
+alias cbench="cabal bench --enable-benchmarks -O0"
+alias crun="cabal run -O0"
+alias cinstall="cabal install --installdir=$HOME/.local/bin --overwrite-policy=always --install-method=copy"
+alias cclean="cabal clean"
+alias cupdate="cabal update"
+alias crepl="cabal repl --build-depends pretty-simple"
+alias cdoc="cabal haddock --enable-documentation"
+alias cdochackage="cabal haddock --enable-documentation --haddock-for-hackage"
+alias cdist="cabal sdist"
+
+
+alias c="clear"
+alias tc="tmux-sessionizer"
+alias pacman='sudo pacman --color auto'
+alias lg='lazygit'

@@ -11,7 +11,7 @@ require("jedi.harpoon")
 require("jedi.tmux")
 
 -- Turn on status information
-require("fidget").setup()
+-- require("fidget").setup()
 
 require("Comment").setup()
 require("nvim-autopairs").setup({})

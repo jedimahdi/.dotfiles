@@ -3,5 +3,6 @@
 # ~/.xinitrc
 #
 # Executed by startx (run your window manager from here)
+[ -f ~/.xprofile ] && . ~/.xprofile
 
-exec xmonad
+DRI_PRIME=1 exec xmonad

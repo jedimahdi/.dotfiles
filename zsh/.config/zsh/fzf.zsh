@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 
 # Rebind ALT-c to CTRL-e
-bindkey -rM emacs '\ec'
-bindkey -rM vicmd '\ec'
-bindkey -rM viins '\ec'
+# bindkey -rM emacs '\ec'
+# bindkey -rM vicmd '\ec'
+# bindkey -rM viins '\ec'
 
-zle     -N              fzf-cd-widget
-bindkey -M emacs '\C-e' fzf-cd-widget
-bindkey -M vicmd '\C-e' fzf-cd-widget
-bindkey -M viins '\C-e' fzf-cd-widget
+# zle     -N              fzf-cd-widget
+# bindkey -M emacs '\C-e' fzf-cd-widget
+# bindkey -M vicmd '\C-e' fzf-cd-widget
+# bindkey -M viins '\C-e' fzf-cd-widget
 
 source $ZDOTDIR/scripts_fzf.zsh # fzf Scripts
 _fzf_comprun() {

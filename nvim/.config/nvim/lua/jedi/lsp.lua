@@ -39,18 +39,22 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-lspconfig.tsserver.setup({
-  on_attach = function(x, bufnr)
-    on_attach(x, bufnr)
-    require("lsp_signature").on_attach({}, bufnr)
-  end,
+require("typescript-tools").setup({
+  on_attach = on_attach,
   capabilities = capabilities,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = false,
-    }),
-  },
 })
+-- lspconfig.tsserver.setup({
+--   on_attach = function(x, bufnr)
+--     on_attach(x, bufnr)
+--     -- require("lsp_signature").on_attach({}, bufnr)
+--   end,
+--   capabilities = capabilities,
+--   handlers = {
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--       underline = false,
+--     }),
+--   },
+-- })
 
 -- local capabilitiesWithSnippet = capabilities
 -- capabilitiesWithSnippet.textDocument.completion.completionItem.snippetSupport = true
@@ -166,6 +170,8 @@ require("lspconfig").ocamllsp.setup({
   capabilities = capabilities,
 })
 
+require("lspconfig").pyright.setup({})
+
 -- lspconfig.sumneko_lua.setup({
 --   on_attach = on_attach,
 --   capabilities = capabilities,
@@ -207,3 +213,47 @@ require("lspconfig").ocamllsp.setup({
 --     })
 --   end,
 -- })
+
+
+local def_opts = { noremap = true, silent = true }
+
+vim.g.haskell_tools = {
+  hls = {
+    on_attach = function(client, bufnr, ht)
+      local opts = vim.tbl_extend("keep", def_opts, { buffer = bufnr })
+
+      local nmap = function(keys, func, desc)
+        if desc then
+          desc = "LSP: " .. desc
+        end
+
+        vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+      end
+
+      local imap = function(keys, func, desc)
+        if desc then
+          desc = "LSP: " .. desc
+        end
+
+        vim.keymap.set("i", keys, func, { buffer = bufnr, desc = desc })
+      end
+
+      nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+      nmap("<leader>gr", vim.lsp.buf.rename, "Rename Symbol")
+      nmap("ga", vim.lsp.buf.code_action, "Code Action")
+      nmap("gd", vim.lsp.buf.definition, "Goto Definition")
+      nmap("<leader>di", vim.lsp.buf.implementation, "Goto Implementation")
+      nmap("gr", require("telescope.builtin").lsp_references, "References")
+      nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+      nmap("<leader>dw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+      imap("<C-x>", vim.lsp.buf.signature_help, "Signature Documentation")
+      nmap("<leader>cr", vim.lsp.codelens.refresh, "Refresh Code Lens")
+      nmap("<leader>cd", vim.lsp.codelens.display, "Display Code Lens")
+      -- haskell-language-server relies heavily on codeLenses,
+      -- so auto-refresh (see advanced configuration) is enabled by default
+      vim.keymap.set("n", "<space>ca", vim.lsp.codelens.run, opts)
+      vim.keymap.set("n", "<space>hs", ht.hoogle.hoogle_signature, opts)
+      -- vim.keymap.set("n", "<space>ea", ht.lsp.buf_eval_all, opts)
+    end,
+  },
+}

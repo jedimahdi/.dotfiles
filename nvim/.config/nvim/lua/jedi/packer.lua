@@ -19,7 +19,7 @@ return require("packer").startup(function(use)
   -- use("glepnir/lspsaga.nvim")
   use("nvim-lua/lsp_extensions.nvim")
   use("simrat39/symbols-outline.nvim")
-  use("j-hui/fidget.nvim")
+  -- use("j-hui/fidget.nvim")
   use("folke/neodev.nvim")
   use("simrat39/rust-tools.nvim")
   use({
@@ -68,14 +68,23 @@ return require("packer").startup(function(use)
   -- Other
   use("mbbill/undotree")
   use("tpope/vim-surround")
+  use("romainl/vim-cool")
   -- use("~/code/jedi")
+  use "blazkowolf/gruber-darker.nvim"
 
   use({ "purescript-contrib/purescript-vim" })
   use({
     "mrcjkb/haskell-tools.nvim",
-    branch = "1.x.x", -- recommended
+    branch = "2.x.x",
   })
   use({ "tjdevries/ocaml.nvim" })
+  use({
+    "pmizio/typescript-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    -- config = function()
+    --   require("typescript-tools").setup({})
+    -- end,
+  })
 
   use({
     "iamcco/markdown-preview.nvim", -- preview markdown output in browser

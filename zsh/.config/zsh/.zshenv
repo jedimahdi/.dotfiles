@@ -60,7 +60,8 @@ export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir tree ls"
 
 # NPM
 export NPM_PATH="$HOME/.npm-global"
-export NPM_BIN="$XDG_CONFIG_HOME/.npm-global/bin"
+export NPM_BIN="$HOME/.npm-global/bin"
+export BUN_INSTALL="$HOME/.bun"
 
 # PATH
 export PATH="$NPM_BIN:$PATH"                                        # NPM
@@ -70,7 +71,8 @@ export PATH="$HOME/.cabal/bin:$PATH"
 export PATH="$HOME/.ghcup/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.pack/bin:$PATH"
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+export PATH="$BUN_INSTALL/bin:$PATH"
+# export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 # fpath=(
 #     $ZSH/functions

@@ -274,7 +274,7 @@ myStartupHook = do
   -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
   spawnOnce "feh --bg-fill ~/Picture/Wallpaper/astronaut-in-the-jungle-using-ai-1920×1080.jpg"
-  spawnOnce "picom --experimental-backends"
+  -- spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"
   -- spawnOnce "~/.dotfiles/bin/systray.sh"

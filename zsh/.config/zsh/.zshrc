@@ -47,6 +47,7 @@ fpath=($ZDOTDIR/plugins/pure $fpath)
 autoload -U promptinit; promptinit
 prompt pure
 zstyle ':prompt:pure:prompt:*' color black
+# export PURE_PROMPT_SYMBOL='t'
 
 # +-----------+
 # | VI KEYMAP |
@@ -107,3 +108,16 @@ fi
 # +---------------------+
 
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+bindkey '^e' autosuggest-accept
+
+# pnpm
+export PNPM_HOME="/home/mahdi/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+# bun completions
+[ -s "/home/mahdi/.bun/_bun" ] && source "/home/mahdi/.bun/_bun"

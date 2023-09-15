@@ -71,3 +71,5 @@ nnoremap("<leader>p", function()
     vim.cmd("Neoformat")
   end
 end)
+
+nnoremap("<leader>n", "<cmd>nohls<CR>")

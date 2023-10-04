@@ -1,5 +1,6 @@
 local cmp = require("cmp")
 local snippy = require("snippy")
+local lspkind = require("lspkind")
 
 vim.opt.completeopt = {
   "menuone",
@@ -13,9 +14,12 @@ cmp.setup({
       require("snippy").expand_snippet(args.body)
     end,
   },
+  window = {
+    documentation = cmp.config.window.bordered(),
+  },
   preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert({
-    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-j>"] = cmp.mapping.confirm({ select = true }),
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
@@ -42,8 +46,14 @@ cmp.setup({
     end, { "i", "s" }),
   }),
 
+  formatting = {
+    format = lspkind.cmp_format(),
+  },
+
   sources = {
-    { name = "nvim_lsp" },
+    {
+      name = "nvim_lsp",
+    },
     { name = "snippy", max_item_count = 1 },
     -- { name = "path" },
     { name = "buffer", keyword_length = 3, max_item_count = 2 },

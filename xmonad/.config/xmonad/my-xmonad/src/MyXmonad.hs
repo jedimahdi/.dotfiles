@@ -113,9 +113,9 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((0, xF86XK_AudioPrev)               , spawn "playerctl previous")
      , ((0, xF86XK_AudioNext)               , spawn "playerctl next")
      , ((0, xF86XK_AudioStop)               , spawn "playerctl stop")
-     , ((0, xF86XK_AudioRaiseVolume)        , spawn "pactl set-sink-volume 0 +5%")
-     , ((0, xF86XK_AudioLowerVolume)        , spawn "pactl set-sink-volume 0 -5%")
-     , ((0, xF86XK_AudioMute)               , spawn "pactl set-sink-mute 0 toggle")
+     -- , ((0, xF86XK_AudioRaiseVolume)        , spawn "pactl set-sink-volume 0 +5%")
+     -- , ((0, xF86XK_AudioLowerVolume)        , spawn "pactl set-sink-volume 0 -5%")
+     -- , ((0, xF86XK_AudioMute)               , spawn "pactl set-sink-mute 0 toggle")
 
      -- Brightness keys
      , ((0, xF86XK_MonBrightnessUp)         , spawn "brightnessctl s +10%")
@@ -195,6 +195,7 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      -- Quit xmonad
      -- , ((myModMask .|. shiftMask, xK_q)     , spawn "~/.dotfiles/bin/powermenu.sh")
 
+     , ((myModMask , xK_r)    , spawn "~/.dotfiles/bin/remaps")
      -- Restart xmonad
      , ((myModMask .|. shiftMask , xK_r)    , spawn "xmonad --recompile && xmonad --restart")
 

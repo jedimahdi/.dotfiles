@@ -14,6 +14,16 @@ vim.keymap.set("n", "C", '"_C')
 
 vim.keymap.set({ "n", "x" }, "x", '"_x')
 
+-- Go to the beginning and end of current line in insert mode quickly
+vim.keymap.set("i", "<C-A>", "<HOME>")
+vim.keymap.set("i", "<C-E>", "<END>")
+
+-- Go to beginning of command in command-line mode
+vim.keymap.set("c", "<C-A>", "<HOME>")
+
+-- Delete the character to the right of the cursor
+vim.keymap.set("i", "<C-D>", "<DEL>")
+
 -- nnoremap("<leader>e", ":Ex<CR>")
 nnoremap("<leader>u", ":UndotreeShow<CR>")
 vnoremap("K", ":m '<-2<CR>gv=gv")
@@ -52,7 +62,7 @@ nnoremap("<leader>k", "<cmd>lnext<CR>zz")
 nnoremap("<leader>j", "<cmd>lprev<CR>zz")
 
 nnoremap("<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
-nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+-- nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 nnoremap("<leader>w", "<cmd>silent update<CR>")
 nnoremap("<leader>q", "<cmd>silent xit<CR>")

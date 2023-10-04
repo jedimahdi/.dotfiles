@@ -79,3 +79,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 #     /usr/local/share/zsh/site-functions
 #     $fpath
 # )
+. "$HOME/.cargo/env"

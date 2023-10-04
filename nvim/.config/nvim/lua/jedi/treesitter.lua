@@ -32,7 +32,14 @@ require("nvim-treesitter.configs").setup({
 
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    disable = {},
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
+  autotag = {
+    enable = true,
   },
 
   playground = {
@@ -56,33 +63,35 @@ require("nvim-treesitter.configs").setup({
 })
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.jedi = {
-  install_info = {
-    url = "~/code/tree-sitter-jedi", -- local path or git repo
-    files = { "src/parser.c" },
-    -- optional entries:
-    branch = "main", -- default branch in case of git repo if different from master
-    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-  },
-  filetype = "jedi", -- if filetype does not match the parser name
-}
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 
-parser_config.alex = {
-  install_info = {
-    url = "~/code/tree-sitter-alex",
-    files = { "src/parser.c", "src/scanner.c" },
-  },
-  filetype = "alex",
-}
-
-parser_config.purescript = {
-  install_info = {
-    url = "~/code/tree-sitter-purescript",
-    files = { "src/parser.c" },
-  },
-  filetype = "purescript",
-}
-
-vim.cmd("autocmd BufNewFile,BufRead *.x setf alex")
-vim.cmd("autocmd BufNewFile,BufRead *.purs setf purescript")
+-- parser_config.jedi = {
+--   install_info = {
+--     url = "~/code/tree-sitter-jedi", -- local path or git repo
+--     files = { "src/parser.c" },
+--     -- optional entries:
+--     branch = "main", -- default branch in case of git repo if different from master
+--     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+--     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+--   },
+--   filetype = "jedi", -- if filetype does not match the parser name
+-- }
+--
+-- parser_config.alex = {
+--   install_info = {
+--     url = "~/code/tree-sitter-alex",
+--     files = { "src/parser.c", "src/scanner.c" },
+--   },
+--   filetype = "alex",
+-- }
+--
+-- parser_config.purescript = {
+--   install_info = {
+--     url = "~/code/tree-sitter-purescript",
+--     files = { "src/parser.c" },
+--   },
+--   filetype = "purescript",
+-- }
+--
+-- vim.cmd("autocmd BufNewFile,BufRead *.x setf alex")
+-- vim.cmd("autocmd BufNewFile,BufRead *.purs setf purescript")

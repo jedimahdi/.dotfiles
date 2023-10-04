@@ -42,7 +42,9 @@ return require("packer").startup(function(use)
 
   -- Color Scheme
   use("lunarvim/onedarker.nvim")
+  use("navarasu/onedark.nvim")
   use("RRethy/nvim-base16")
+  use({ "catppuccin/nvim", as = "catppuccin" })
 
   -- Tree sitter
   use("nvim-treesitter/nvim-treesitter", {
@@ -59,18 +61,19 @@ return require("packer").startup(function(use)
 
   -- Auto Pairs
   use("windwp/nvim-autopairs")
+  use("windwp/nvim-ts-autotag")
 
   -- Debug
-  -- use("mfussenegger/nvim-dap")
-  -- use("rcarriga/nvim-dap-ui")
-  -- use("theHamsta/nvim-dap-virtual-text")
+  use("mfussenegger/nvim-dap")
+  use("rcarriga/nvim-dap-ui")
+  use("theHamsta/nvim-dap-virtual-text")
 
   -- Other
   use("mbbill/undotree")
   use("tpope/vim-surround")
   use("romainl/vim-cool")
   -- use("~/code/jedi")
-  use "blazkowolf/gruber-darker.nvim"
+  use("blazkowolf/gruber-darker.nvim")
 
   use({ "purescript-contrib/purescript-vim" })
   use({

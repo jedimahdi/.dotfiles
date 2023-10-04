@@ -4,7 +4,13 @@ vim.g.tokyonight_transparent = true
 vim.g.gruvbox_invert_selection = "0"
 vim.opt.background = "dark"
 
-vim.cmd("colorscheme onedarker")
+
+require('onedark').setup {
+    style = 'darker'
+}
+require('onedark').load()
+
+-- vim.cmd("colorscheme onedarker")
 
 -- require("rose-pine").setup({
 --   disable_background = true,

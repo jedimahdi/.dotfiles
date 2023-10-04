@@ -9,6 +9,7 @@ require("jedi.lsp")
 require("jedi.cmp")
 require("jedi.harpoon")
 require("jedi.tmux")
+require("jedi.dap")
 
 -- Turn on status information
 -- require("fidget").setup()
@@ -20,8 +21,8 @@ require("nvim-autopairs").setup({})
 require("snippy").setup({
   mappings = {
     is = {
-      ["<C-j>"] = "expand_or_advance",
-      ["<C-k>"] = "previous",
+      -- ["<C-j>"] = "expand_or_advance",
+      -- ["<C-k>"] = "previous",
     },
   },
   scopes = {

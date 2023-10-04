@@ -32,6 +32,8 @@ setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 
+fpath=($ZDOTDIR/completions $fpath)
+
 
 # +---------+
 # | ALIASES |
@@ -111,6 +113,7 @@ source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 bindkey '^e' autosuggest-accept
+bindkey "^A" vi-beginning-of-line
 
 # pnpm
 export PNPM_HOME="/home/mahdi/.local/share/pnpm"

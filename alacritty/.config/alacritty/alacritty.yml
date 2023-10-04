@@ -11,7 +11,7 @@ font:
   italic:
     family: "VictorMono Nerd Font"
     style: Medium
-  size: 11
+  size: 18
   ligatures: true
   offset:
     x: 0

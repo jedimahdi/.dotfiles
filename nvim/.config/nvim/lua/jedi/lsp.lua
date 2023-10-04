@@ -36,13 +36,19 @@ local on_attach = function(_, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 require("typescript-tools").setup({
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    tsserver_file_preferences = {
+      disableSuggestions = true,
+    },
+  },
 })
+
+-- lspconfig.emmet_ls.setup({})
+
 -- lspconfig.tsserver.setup({
 --   on_attach = function(x, bufnr)
 --     on_attach(x, bufnr)
@@ -213,7 +219,6 @@ require("lspconfig").pyright.setup({})
 --     })
 --   end,
 -- })
-
 
 local def_opts = { noremap = true, silent = true }
 

@@ -1,5 +1,5 @@
 local cmp = require("cmp")
-local snippy = require("snippy")
+local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 
 vim.opt.completeopt = {
@@ -11,7 +11,7 @@ vim.opt.completeopt = {
 cmp.setup({
   snippet = {
     expand = function(args)
-      require("snippy").expand_snippet(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   window = {
@@ -20,14 +20,14 @@ cmp.setup({
   preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert({
     ["<C-j>"] = cmp.mapping.confirm({ select = true }),
-    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-d>"] = cmp.mapping.scroll_docs(4),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif snippy.can_expand_or_advance() then
-        snippy.expand_or_advance()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -38,8 +38,8 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif snippy.can_jump(-1) then
-        snippy.previous()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -54,8 +54,8 @@ cmp.setup({
     {
       name = "nvim_lsp",
     },
-    { name = "snippy", max_item_count = 1 },
+    { name = "luasnip", max_item_count = 1 },
     -- { name = "path" },
-    { name = "buffer", keyword_length = 3, max_item_count = 2 },
+    -- { name = "buffer", keyword_length = 3, max_item_count = 2 },
   },
 })

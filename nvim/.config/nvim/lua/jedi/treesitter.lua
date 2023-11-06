@@ -28,6 +28,7 @@ require("nvim-treesitter.configs").setup({
     "cpp",
     "bash",
     "ocaml",
+    "rapper",
   },
 
   highlight = {

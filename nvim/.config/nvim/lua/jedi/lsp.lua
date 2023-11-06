@@ -35,7 +35,8 @@ local on_attach = function(_, bufnr)
   nmap("<leader>cd", vim.lsp.codelens.display, "Display Code Lens")
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 require("typescript-tools").setup({
   on_attach = on_attach,

@@ -38,6 +38,20 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+require("mason").setup()
+
+require("mason-lspconfig").setup({
+  ensure_installed = { "clangd", "pyright", "tsserver" },
+})
+
+local servers = { "clangd", "pyright" }
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+  })
+end
+
 require("typescript-tools").setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -145,51 +159,19 @@ rt.setup({
 --   },
 -- })
 
-require("neodev").setup({})
-
-require("lspconfig").lua_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { "vim" },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-})
-
-require("lspconfig").ocamllsp.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").pyright.setup({})
-
--- lspconfig.sumneko_lua.setup({
+-- Make runtime files discoverable to the server
+-- local runtime_path = vim.split(package.path, ";")
+-- table.insert(runtime_path, "lua/?.lua")
+-- table.insert(runtime_path, "lua/?/init.lua")
+-- require("lspconfig").lua_ls.setup({
 --   on_attach = on_attach,
 --   capabilities = capabilities,
---   cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 --   settings = {
 --     Lua = {
 --       runtime = {
 --         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 --         version = "LuaJIT",
---         -- Setup your lua path
---         path = vim.split(package.path, ";", {}),
+--         path = runtime_path,
 --       },
 --       diagnostics = {
 --         -- Get the language server to recognize the `vim` global
@@ -197,35 +179,27 @@ require("lspconfig").pyright.setup({})
 --       },
 --       workspace = {
 --         -- Make the server aware of Neovim runtime files
---         library = {
---           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
---           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
---         },
+--         library = vim.api.nvim_get_runtime_file("", true),
+--         checkThirdParty = false,
+--       },
+--       -- Do not send telemetry data containing a randomized but unique identifier
+--       telemetry = {
+--         enable = false,
 --       },
 --     },
 --   },
 -- })
 
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
---   pattern = { "*.txt" },
---   callback = function()
---     -- local util = require("lspconfig.util")
---
---     vim.lsp.start_client({
---       name = "lsp_demo",
---       cmd = {
---         "/home/mahdi/apps/haskell/lsp-demo/dist-newstyle/build/x86_64-linux/ghc-9.0.2/lsp-demo-1.1.2/x/lsp-demo/build/lsp-demo/lsp-demo",
---       },
---       -- root_dir = util.root_pattern(".git"),
---     })
---   end,
+-- require("lspconfig").ocamllsp.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
 -- })
 
 local def_opts = { noremap = true, silent = true }
 
 vim.g.haskell_tools = {
   hls = {
-    on_attach = function(client, bufnr, ht)
+    on_attach = function(_, bufnr, ht)
       local opts = vim.tbl_extend("keep", def_opts, { buffer = bufnr })
 
       local nmap = function(keys, func, desc)
@@ -261,10 +235,10 @@ vim.g.haskell_tools = {
       vim.keymap.set("n", "<space>hs", ht.hoogle.hoogle_signature, opts)
       -- vim.keymap.set("n", "<space>ea", ht.lsp.buf_eval_all, opts)
     end,
-  },
-  settings = {
-    haskell = {
-      formattingProvider = "fourmolu",
+    settings = {
+      haskell = {
+        formattingProvider = "fourmolu",
+      },
     },
   },
 }

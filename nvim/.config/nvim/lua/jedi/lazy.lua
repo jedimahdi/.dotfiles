@@ -26,7 +26,6 @@ require("lazy").setup({
   "tpope/vim-surround",
   "romainl/vim-cool",
   "kyazdani42/nvim-web-devicons",
-  "folke/neodev.nvim",
   "tjdevries/ocaml.nvim",
   "simrat39/rust-tools.nvim",
   {
@@ -44,9 +43,6 @@ require("lazy").setup({
   },
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
-    build = function()
-      pcall(require("nvim-treesitter.install").update({ with_sync = true }))
-    end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/playground",
@@ -58,9 +54,6 @@ require("lazy").setup({
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-
-      -- Useful status updates for LSP
-      "j-hui/fidget.nvim",
     },
   },
   { -- Autocompletion
@@ -97,4 +90,30 @@ require("lazy").setup({
   },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
   "theHamsta/nvim-dap-virtual-text",
+  -- {
+  --   "folke/noice.nvim",
+  --   config = function()
+  --     require("noice").setup({
+  --       lsp = {
+  --         progress = {
+  --           enabled = false,
+  --         },
+  --         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --         override = {
+  --           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --           ["vim.lsp.util.stylize_markdown"] = true,
+  --           ["cmp.entry.get_documentation"] = true,
+  --         },
+  --       },
+  --     })
+  --   end,
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
 })

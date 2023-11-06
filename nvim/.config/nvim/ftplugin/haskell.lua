@@ -1,12 +1,11 @@
 local ht = require("haskell-tools")
-local buffer = vim.api.nvim_get_current_buf()
-local def_opts = { noremap = true, silent = true }
 
-ht.lsp.start()
+-- ht.lsp.start()
 
 -- Suggested keymaps that do not depend on haskell-language-server:
 local bufnr = vim.api.nvim_get_current_buf()
 -- set buffer = bufnr in ftplugin/haskell.lua
+local def_opts = { noremap = true, silent = true }
 local opts = { noremap = true, silent = true, buffer = bufnr }
 
 -- Toggle a GHCi repl for the current package

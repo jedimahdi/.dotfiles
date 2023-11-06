@@ -2,19 +2,19 @@ local actions = require("telescope.actions")
 
 require("telescope").setup({
   extensions = {
-    fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-      -- the default case_mode is "smart_case"
+    ["zf-native"] = {
+      file = { -- options for sorting file-like items
+        enable = true, -- override default telescope file sorter
+        highlight_results = true, -- highlight matching text in results
+        match_filename = true, -- enable zf filename match priority
+      },
+      generic = { -- options for sorting all other items
+        enable = true, -- override default telescope generic item sorter
+        highlight_results = true, -- highlight matching text in results
+        match_filename = false, -- disable zf filename match priority
+      },
     },
   },
-  -- pickers = {
-  --   find_files = {
-  --     find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-  --   },
-  -- },
   defaults = {
     -- file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     -- file_sorter = require("telescope.sorters").get_fuzzy_file,
@@ -44,7 +44,8 @@ require("telescope").setup({
   },
 })
 
-require("telescope").load_extension("fzf")
+-- require("telescope").load_extension("fzf")
+require("telescope").load_extension("zf-native")
 -- require("telescope").load_extension("git_worktree")
 
 vim.keymap.set("n", "<leader>/", function()

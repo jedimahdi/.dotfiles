@@ -261,4 +261,9 @@ vim.g.haskell_tools = {
       -- vim.keymap.set("n", "<space>ea", ht.lsp.buf_eval_all, opts)
     end,
   },
+  settings = {
+    haskell = {
+      formattingProvider = "fourmolu",
+    },
+  },
 }

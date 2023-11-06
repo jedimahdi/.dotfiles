@@ -8,6 +8,8 @@ local nmap = Remap.nmap
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
+inoremap("<C-H>", "<C-w>")
+
 vim.keymap.set({ "n", "x" }, "c", '"_c')
 vim.keymap.set("n", "cc", '"_cc')
 vim.keymap.set("n", "C", '"_C')

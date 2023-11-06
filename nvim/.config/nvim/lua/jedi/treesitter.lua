@@ -41,6 +41,15 @@ require("nvim-treesitter.configs").setup({
   autotag = {
     enable = true,
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<C-Space>", -- set to `false` to disable one of the mappings
+      node_incremental = "<C-Space>",
+      scope_incremental = false,
+      node_decremental = "<BS>",
+    },
+  },
 
   playground = {
     enable = true,

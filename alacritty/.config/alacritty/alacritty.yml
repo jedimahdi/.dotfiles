@@ -3,14 +3,14 @@ env:
 
 font:
   normal:
-    family: "Victor Mono"
+    family: "VictorMono Nerd Font"
     style: Medium
   bold:
     family: "VictorMono Nerd Font"
-    style: SemiBold
+    style: Medium
   italic:
     family: "VictorMono Nerd Font"
-    style: Medium
+    style: Regular
   size: 18
   ligatures: true
   offset:
@@ -28,6 +28,9 @@ window:
 # cursor:
 #   style:
 #     blinking: Never
+import:
+  # uncomment the flavour you want below:
+  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
 
 schemes:
   onedarker: &onedarker
@@ -361,7 +364,7 @@ schemes:
       cyan:    '0x89b482'
       white:   '0xd4be98'
 
-colors: *onedarker
+# colors: *onedarker
 
 key_bindings:
   - { key: J, mods: Alt, chars: "\x1bj" }

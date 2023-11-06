@@ -16,7 +16,7 @@ completionFunctionWith :: String -> [String] -> IO [String]
 completionFunctionWith cmd args = lines <$> runProcessWithInput cmd args ""
 
 myFont :: String
-myFont = "xft:JetBrainsMono Nerd Font:medium:size=14:antialias=true:hinting=true"
+myFont = "xft:Victor Mono:medium:size=16:antialias=true:hinting=true"
 
 config :: XPConfig
 config = def { font                    = myFont
@@ -28,8 +28,8 @@ config = def { font                    = myFont
                  , promptBorderWidth   = 0
                  , promptKeymap        = dtXPKeymap
                  , position            = Top
-                 , height              = 25
-                 , historySize         = 256
+                 , height              = 30
+                 , historySize         = 10
                  , historyFilter       = id
                  , defaultText         = []
                  , autoComplete        = Nothing

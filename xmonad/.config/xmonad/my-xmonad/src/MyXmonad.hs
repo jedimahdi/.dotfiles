@@ -34,7 +34,7 @@ import MyXmonad.Layout.CenterMainFluid
 import XMonad.Layout.ThreeColumns
 
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "kitty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -113,9 +113,9 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((0, xF86XK_AudioPrev)               , spawn "playerctl previous")
      , ((0, xF86XK_AudioNext)               , spawn "playerctl next")
      , ((0, xF86XK_AudioStop)               , spawn "playerctl stop")
-     -- , ((0, xF86XK_AudioRaiseVolume)        , spawn "pactl set-sink-volume 0 +5%")
-     -- , ((0, xF86XK_AudioLowerVolume)        , spawn "pactl set-sink-volume 0 -5%")
-     -- , ((0, xF86XK_AudioMute)               , spawn "pactl set-sink-mute 0 toggle")
+     , ((0, xF86XK_AudioRaiseVolume)        , spawn "pactl set-sink-volume 0 +5%")
+     , ((0, xF86XK_AudioLowerVolume)        , spawn "pactl set-sink-volume 0 -5%")
+     , ((0, xF86XK_AudioMute)               , spawn "pactl set-sink-mute 0 toggle")
 
      -- Brightness keys
      , ((0, xF86XK_MonBrightnessUp)         , spawn "brightnessctl s +10%")
@@ -274,7 +274,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   -- spawn "exec ~/.dotfiles/bin/lock.sh"
   -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
-  spawnOnce "feh --bg-fill ~/Picture/Wallpaper/astronaut-in-the-jungle-using-ai-1920×1080.jpg"
+  spawnOnce "feh --bg-fill ~/Downloads/anato-finnstark-anato-finnstark-web-petit-5.jpg"
   -- spawnOnce "picom --experimental-backends"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"

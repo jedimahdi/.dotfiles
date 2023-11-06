@@ -48,7 +48,7 @@ source $ZDOTDIR/aliases
 fpath=($ZDOTDIR/plugins/pure $fpath)
 autoload -U promptinit; promptinit
 prompt pure
-zstyle ':prompt:pure:prompt:*' color black
+# zstyle ':prompt:pure:prompt:*' color black
 # export PURE_PROMPT_SYMBOL='t'
 
 # +-----------+
@@ -124,3 +124,5 @@ esac
 # pnpm end
 # bun completions
 [ -s "/home/mahdi/.bun/_bun" ] && source "/home/mahdi/.bun/_bun"
+eval "$(zoxide init zsh)"
+alias cd="z"

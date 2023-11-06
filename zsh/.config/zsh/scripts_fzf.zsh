@@ -36,6 +36,14 @@ fyay() {
     yay -Slq | fzf --multi --reverse --preview 'yay -Si {1}' | xargs -ro yay -S
 }
 
+
+# +---------+
+# | Haskell |
+# +---------+
+fhoogle() {
+    hoogle | fzf --preview 'hoogle --info {1}.{2}' --disabled --bind 'change:reload:hoogle {q}' --bind 'enter:become:(echo {})'
+}
+
 # +------+
 # | tmux |
 # +------+
@@ -68,7 +76,7 @@ ftmux() {
 
 # Open pdf with Zathura
 fpdf() {
-    result=$(find -type f -name '*.pdf' | fzf --bind "ctrl-r:reload(find -type f -name '*.pdf')" --preview "pdftotext {} - | less")
+    result=$(find ~/Downloads -type f -name '*.pdf' | fzf --bind "ctrl-r:reload(find -type f -name '*.pdf')" --preview "pdftotext {} - | less")
     [ -n "$result" ] && nohup zathura "$result" &> /dev/null & disown
 }
 

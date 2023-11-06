@@ -80,3 +80,6 @@
 
 [credential]
 	helper = store
+[user]
+	email = mahdi.se@yahoo.com
+	name = Mahdi Seyedan

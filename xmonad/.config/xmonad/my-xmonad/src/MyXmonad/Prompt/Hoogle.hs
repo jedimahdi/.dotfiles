@@ -1,12 +1,12 @@
-module MyXmonad.Prompt.Hoogle
-    ( hoogle
-    ) where
+module MyXmonad.Prompt.Hoogle (
+  hoogle,
+) where
 
-import           Data.List                    ( findIndex, isPrefixOf, tails )
-import           MyXmonad.Prompt.Prelude ( completionFunctionWith )
+import Data.List (findIndex, isPrefixOf, tails)
+import MyXmonad.Prompt.Prelude (completionFunctionWith)
 import qualified MyXmonad.Prompt.Prelude as Prompt
-import           XMonad                       hiding ( config )
-import           XMonad.Prompt
+import XMonad hiding (config)
+import XMonad.Prompt
 
 data Hoogle = Hoogle
 
@@ -17,7 +17,9 @@ hoogle :: X ()
 hoogle = mkXPrompt Hoogle Prompt.config hoogleCompletion hoogleRun
 
 hoogleCompletion :: String -> IO [String]
-hoogleCompletion s = completionFunctionWith pathToHoogleBin ["--count", "10", "--link", s]
+hoogleCompletion s =
+  let arg = show s
+   in completionFunctionWith pathToHoogleBin ["--count", "10", "--link", arg]
 
 hoogleRun :: String -> X ()
 hoogleRun s = do
@@ -26,11 +28,10 @@ hoogleRun s = do
         pure $ drop i s
   case link of
     Just l -> spawn $ "firefox " ++ l
-    _      -> pure ()
-  where
-    findSeqIndex :: (Eq a) => [a] -> [a] -> Maybe Int
-    findSeqIndex xs xss = findIndex (isPrefixOf xss) $ tails xs
+    _ -> pure ()
+ where
+  findSeqIndex :: (Eq a) => [a] -> [a] -> Maybe Int
+  findSeqIndex xs xss = findIndex (isPrefixOf xss) $ tails xs
 
 pathToHoogleBin :: String
 pathToHoogleBin = "/home/mahdi/.cabal/bin/hoogle"
-

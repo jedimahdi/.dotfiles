@@ -65,7 +65,7 @@ alias cinstall="cabal install  --overwrite-policy=always --install-method=copy"
 # alias cinstall="cabal install --installdir=$HOME/.local/bin --overwrite-policy=always --install-method=copy"
 alias cclean="cabal clean"
 alias cupdate="cabal update"
-alias crepl="cabal repl --build-depends pretty-simple"
+alias crepl='cabal repl --build-depends pretty-simple --repl-options "-interactive-print=Text.Pretty.Simple.pPrint"'
 alias cdoc="cabal haddock --enable-documentation"
 alias cdochackage="cabal haddock --enable-documentation --haddock-for-hackage"
 alias cdist="cabal sdist"
@@ -73,5 +73,6 @@ alias cdist="cabal sdist"
 
 alias c="clear"
 alias tc="tmux-sessionizer"
+alias ta="tmux attach"
 alias pacman='sudo pacman --color auto'
 alias lg='lazygit'

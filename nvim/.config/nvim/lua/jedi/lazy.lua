@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.o.termguicolors = true
 
 require("lazy").setup({
-  "sbdchd/neoformat",
+  "mhartington/formatter.nvim",
   "tamago324/lir.nvim",
   "ThePrimeagen/harpoon",
   "onsails/lspkind-nvim",

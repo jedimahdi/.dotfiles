@@ -10,9 +10,7 @@ require("jedi.cmp")
 require("jedi.harpoon")
 require("jedi.tmux")
 require("jedi.dap")
-
--- Turn on status information
--- require("fidget").setup()
+require("jedi.formatter")
 
 require("Comment").setup()
 require("nvim-autopairs").setup({})

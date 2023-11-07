@@ -38,13 +38,24 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+local function merge(t1, t2)
+  for k, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
+
+  return t1
+end
+
 require("mason").setup()
 
+local servers = { "clangd", "pyright" }
+local just_ensure_installed_servers = { "tsserver" }
+local ensure_installed_servers = merge(servers, just_ensure_installed_servers)
+
 require("mason-lspconfig").setup({
-  ensure_installed = { "clangd", "pyright", "tsserver" },
+  ensure_installed = ensure_installed_servers,
 })
 
-local servers = { "clangd", "pyright" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
     on_attach = on_attach,
@@ -61,6 +72,11 @@ require("typescript-tools").setup({
     },
   },
 })
+
+-- lspconfig.purescriptls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- })
 
 -- lspconfig.emmet_ls.setup({})
 
@@ -103,11 +119,6 @@ require("typescript-tools").setup({
 --   on_attach = on_attach,
 --   capabilities = capabilities,
 -- })
-
-lspconfig.purescriptls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
 
 -- lspconfig.hls.setup({
 --   on_attach = on_attach,

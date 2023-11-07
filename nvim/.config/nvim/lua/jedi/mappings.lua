@@ -80,7 +80,7 @@ nnoremap("<leader>p", function()
   if ft == "haskell" or ft == "rust" then
     vim.lsp.buf.format()
   else
-    vim.cmd("Neoformat")
+    vim.cmd("Format")
   end
 end)
 

@@ -19,13 +19,13 @@ require("formatter").setup({
         return formatter
       end,
     },
-    javascript = {util.copyf(js_formatter)},
-    javascriptreact = {util.copyf(js_formatter)},
-    typescript = {util.copyf(js_formatter)},
-    typescriptreact = {util.copyf(js_formatter)},
-    json = {util.copyf(js_formatter)},
-    html = {util.copyf(js_formatter)},
-    css = {util.copyf(js_formatter)},
+    javascript = { util.copyf(js_formatter) },
+    javascriptreact = { util.copyf(js_formatter) },
+    typescript = { util.copyf(js_formatter) },
+    typescriptreact = { util.copyf(js_formatter) },
+    json = { util.copyf(js_formatter) },
+    html = { util.copyf(js_formatter) },
+    css = { util.copyf(js_formatter) },
     c = {
       function()
         local formatter = require("formatter.filetypes.c").clangformat()
@@ -33,8 +33,15 @@ require("formatter").setup({
         return formatter
       end,
     },
-    -- ["*"] = {
-    --   require("formatter.filetypes.any").remove_trailing_whitespace,
-    -- },
+    cpp = {
+      function()
+        local formatter = require("formatter.filetypes.c").clangformat()
+        formatter["exe"] = mason_bin_dir .. "/clang-format"
+        return formatter
+      end,
+    },
+    ["*"] = {
+      require("formatter.filetypes.any").remove_trailing_whitespace,
+    },
   },
 })

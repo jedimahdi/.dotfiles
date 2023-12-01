@@ -40,9 +40,9 @@ fyay() {
 # +---------+
 # | Haskell |
 # +---------+
-fhoogle() {
-    hoogle | fzf --preview 'hoogle --info {1}.{2}' --disabled --bind 'change:reload:hoogle {q}' --bind 'enter:become:(echo {})'
-}
+# fhoogle() {
+#     hoogle | fzf --preview 'hoogle --info {1}.{2}' --disabled --bind 'change:reload:hoogle {q}' --bind 'enter:become:(echo {})'
+# }
 
 # +------+
 # | tmux |

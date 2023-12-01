@@ -34,7 +34,7 @@ import MyXmonad.Layout.CenterMainFluid
 import XMonad.Layout.ThreeColumns
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -269,16 +269,11 @@ myEventHook = mempty
 myLogHook = return ()
 
 myStartupHook = do
-  -- spawnOnce "exec ~/.dotfiles/bin/bartoggle"
-  -- spawnOnce "exec ~/.dotfiles/bin/eww daemon"
   spawn "xsetroot -cursor_name left_ptr"
-  -- spawn "exec ~/.dotfiles/bin/lock.sh"
-  -- spawnOnce "feh --bg-fill ~/.dotfiles/utils/wallpapers/mountains.jpg"
-  spawnOnce "feh --bg-fill ~/Downloads/anato-finnstark-anato-finnstark-web-petit-5.jpg"
-  -- spawnOnce "picom --experimental-backends"
+  spawnOnce "feh --bg-fill ~/Pictures/0872cfqsya1c1.webp"
+  spawnOnce "picom"
   spawnOnce "greenclip daemon"
   spawnOnce "dunst"
-  -- spawnOnce "~/.dotfiles/bin/systray.sh"
 
 defaults = def {
       -- simple stuff

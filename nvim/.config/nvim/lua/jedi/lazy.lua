@@ -28,6 +28,7 @@ require("lazy").setup({
   "kyazdani42/nvim-web-devicons",
   "tjdevries/ocaml.nvim",
   "simrat39/rust-tools.nvim",
+  "purescript-contrib/purescript-vim",
   {
     "mrcjkb/haskell-tools.nvim",
     branch = "2.x.x",

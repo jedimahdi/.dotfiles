@@ -48,15 +48,13 @@ end
 
 require("mason").setup()
 
-local servers = { "clangd", "pyright" }
-local just_ensure_installed_servers = { "tsserver" }
-local ensure_installed_servers = merge(servers, just_ensure_installed_servers)
+local servers = { "clangd", "pyright", "tsserver" }
 
 require("mason-lspconfig").setup({
-  ensure_installed = ensure_installed_servers,
+  ensure_installed = server,
 })
 
-for _, lsp in ipairs(servers) do
+for _, lsp in ipairs({ "clangd", "pyright", "purescriptls" }) do
   lspconfig[lsp].setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -78,8 +76,6 @@ require("typescript-tools").setup({
 --   capabilities = capabilities,
 -- })
 
--- lspconfig.emmet_ls.setup({})
-
 -- lspconfig.tsserver.setup({
 --   on_attach = function(x, bufnr)
 --     on_attach(x, bufnr)
@@ -93,32 +89,6 @@ require("typescript-tools").setup({
 --   },
 -- })
 
--- local capabilitiesWithSnippet = capabilities
--- capabilitiesWithSnippet.textDocument.completion.completionItem.snippetSupport = true
-
--- lspconfig.jsonls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
---   settings = {
---     json = {
---       schemas = require("schemastore").json.schemas({
---         select = {
---           ".eslintrc",
---           "package.json",
---           "tsconfig.json",
---           "prettierrc.json",
---           "tslint.json",
---         },
---       }),
---       validate = { enable = true },
---     },
---   },
--- })
-
--- lspconfig.elmls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
--- })
 
 -- lspconfig.hls.setup({
 --   on_attach = on_attach,

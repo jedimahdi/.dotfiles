@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+hoogle --link --count 20 \
+  | fzf-tmux -p 80% --preview 'hoogle --info {1}.{2}' --disabled --bind 'change:reload:hoogle --link --count 20 {q}' --bind 'enter:become:(firefox {-1})' \
+  || exit 0

@@ -48,7 +48,7 @@ source $ZDOTDIR/aliases
 fpath=($ZDOTDIR/plugins/pure $fpath)
 autoload -U promptinit; promptinit
 prompt pure
-# zstyle ':prompt:pure:prompt:*' color black
+zstyle ':prompt:pure:prompt:*' color white
 # export PURE_PROMPT_SYMBOL='t'
 
 # +-----------+

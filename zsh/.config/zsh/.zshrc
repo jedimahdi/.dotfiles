@@ -123,6 +123,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 # bun completions
-[ -s "/home/mahdi/.bun/_bun" ] && source "/home/mahdi/.bun/_bun"
+# [ -s "/home/mahdi/.bun/_bun" ] && source "/home/mahdi/.bun/_bun"
+source $HOME/.nix-profile/etc/profile.d/nix.sh
+source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+
 eval "$(zoxide init zsh)"
 alias cd="z"

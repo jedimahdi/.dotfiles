@@ -25,6 +25,8 @@ require("telescope").setup({
       ".git/",
       "dist/",
       [[elm.stuff]],
+      "flake.lock",
+      "package-lock.json",
     },
 
     mappings = {

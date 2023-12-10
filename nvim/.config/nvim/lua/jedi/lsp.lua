@@ -54,7 +54,7 @@ require("mason-lspconfig").setup({
   ensure_installed = server,
 })
 
-for _, lsp in ipairs({ "clangd", "pyright", "purescriptls" }) do
+for _, lsp in ipairs({ "clangd", "pyright" }) do
   lspconfig[lsp].setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -71,10 +71,24 @@ require("typescript-tools").setup({
   },
 })
 
--- lspconfig.purescriptls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
--- })
+lspconfig.purescriptls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    purescript = {
+      addSpagoSources = true,
+      censorWarnings = {
+        "ImplicitImport",
+        "UnusedExplicitImport",
+        "UnusedImport",
+      },
+    },
+    formatter = "purs-tidy",
+  },
+  flags = {
+    debounce_text_changes = 150,
+  },
+})
 
 -- lspconfig.tsserver.setup({
 --   on_attach = function(x, bufnr)
@@ -88,7 +102,6 @@ require("typescript-tools").setup({
 --     }),
 --   },
 -- })
-
 
 -- lspconfig.hls.setup({
 --   on_attach = on_attach,

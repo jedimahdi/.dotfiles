@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+sudo nixos-generate-config --show-hardware-config > system/hardware-configuration.nix
+cd ~/.dotfiles
+sudo nixos-rebuild switch --flake .#system
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --update
+home-manager switch --flake .#user
+
+
 source "$DOTFILES/utils/installs/shared.sh"
 
 function install-nix() {

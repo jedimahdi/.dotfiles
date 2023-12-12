@@ -26,7 +26,7 @@ require("formatter").setup({
     json = { util.copyf(js_formatter) },
     html = { util.copyf(js_formatter) },
     css = { util.copyf(js_formatter) },
-    nix = { require("formatter.filetypes.nix").nixfmt },
+    nix = { require("formatter.filetypes.nix").nixpkgs_fmt },
     c = {
       function()
         local formatter = require("formatter.filetypes.c").clangformat()

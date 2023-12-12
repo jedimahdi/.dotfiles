@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+export ZDOTDIR=$HOME/.config/zsh
+
 fpath=($DOTFILES/zsh/plugins $fpath)
 
 # +------------+
@@ -124,8 +126,18 @@ esac
 # pnpm end
 # bun completions
 # [ -s "/home/mahdi/.bun/_bun" ] && source "/home/mahdi/.bun/_bun"
-source $HOME/.nix-profile/etc/profile.d/nix.sh
-source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+# source $HOME/.nix-profile/etc/profile.d/nix.sh
+# source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
-eval "$(zoxide init zsh)"
-alias cd="z"
+# eval "$(zoxide init zsh)"
+
+
+export DOTFILES="$HOME/.dotfiles"
+export CACHEDIR="$HOME/.local/share"
+export VIM_TMP="$HOME/.vim-tmp"
+export ZSH="$HOME/.config/zsh"
+
+[[ -d "$CACHEDIR" ]] || mkdir -p "$CACHEDIR"
+[[ -d "$VIM_TMP" ]] || mkdir -p "$VIM_TMP"
+
+export PATH="$DOTFILES/bin:$PATH"

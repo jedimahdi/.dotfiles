@@ -23,8 +23,8 @@ for index ({1..9}) alias "$index"="cd +${index} > /dev/null"; unset index # dire
 # | ls |
 # +----+
 
-alias ls="exa --group-directories-first"
-alias ll='exa -la'
+alias ls="eza --group-directories-first"
+alias ll='eza -la'
 alias l='ls -l'
 alias lls='ls -lahFtr'
 alias la='ls -A'

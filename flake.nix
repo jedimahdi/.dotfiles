@@ -2,9 +2,12 @@
   description = "jedi dotfiles";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -27,6 +30,7 @@
           inherit pkgs;
           modules = [ ./nix/home.nix ]; # load home.nix from selected PROFILE
           extraSpecialArgs = {
+            inherit inputs;
             inherit browser;
           };
         };

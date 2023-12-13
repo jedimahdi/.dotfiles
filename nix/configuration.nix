@@ -22,6 +22,8 @@
     '';
   };
 
+  programs.nix-ld.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -67,7 +69,6 @@
   programs.dconf = {
     enable = true;
   };
-
 
   hardware = {
     opengl.enable = true;

@@ -15,6 +15,8 @@ let
   };
 in
 {
+  imports = [ ./starship.nix ];
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -23,8 +25,6 @@ in
     defaultKeymap = "emacs";
     shellAliases = myAliases;
     initExtra = ''
-      PROMPT="%F{green}→%f "
-      [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
       export PATH="$HOME/.dotfiles/bin:$PATH"
       export MANPAGER='nvim +Man!'
     '';

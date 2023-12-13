@@ -91,6 +91,10 @@ require("lazy").setup({
   },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
   "theHamsta/nvim-dap-virtual-text",
+  { "norcalli/nvim-colorizer.lua" , config = function()
+    require 'colorizer'.setup()
+  end
+  }
   -- {
   --   "folke/noice.nvim",
   --   config = function()

@@ -34,6 +34,7 @@
       r = "reload";
       y = "copy";
       U = "unselect";
+      ee = "editor-open";
     };
   };
 }

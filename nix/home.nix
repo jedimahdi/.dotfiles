@@ -15,16 +15,16 @@
     ./user/hyprland.nix
     ./user/${browser}.nix
     ./user/alacritty.nix
+    ./user/imv.nix
+    ./user/zathura.nix
   ];
 
   home.stateVersion = "23.05";
 
   colorScheme = inputs.nix-colors.lib.schemeFromYAML "onedarker" (builtins.readFile ./onedarker.yaml);
 
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })
-
     cachix
     nix-prefetch-git
     nixpkgs-fmt
@@ -68,6 +68,7 @@
     nix-index
 
     pcmanfm
+    font-manager
 
     (callPackage ./ddper.nix { })
   ];

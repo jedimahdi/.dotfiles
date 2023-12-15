@@ -1,11 +1,20 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = [ pkgs.git ];
-  programs.git.enable = true;
-  programs.git.userName = "Mahdi Seyedan";
-  programs.git.userEmail = "mahdi.se@yahoo.com";
-  programs.git.extraConfig = {
-    init.defaultBranch = "main";
+  home.packages = [ pkgs.git pkgs.lazygit ];
+  programs.git = {
+    enable = true;
+    userName = "Mahdi Seyedan";
+    userEmail = "mahdi.se@yahoo.com";
+    ignores = [ "*~" "*.swp" "*result*" ".direnv" "node_modules" ];
+    aliases = {
+      s = "status --short";
+      ss = "status";
+      graph = "log --all --decorate --graph --oneline";
+    };
+
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 }

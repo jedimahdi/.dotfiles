@@ -47,9 +47,14 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager = {
+    defaultSession = "hyprland";
+    lightdm.enable = false;
+    gdm = {
+      enable = true;
+      wayland = true;
+    };
+  };
 
   programs.hyprland = {
     enable = true;
@@ -59,6 +64,28 @@
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
+  };
+
+  fonts = {
+    enableDefaultPackages = false;
+    fontDir.enable = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-emoji
+      vazir-fonts
+      (nerdfonts.override {
+        fonts = [
+          "VictorMono"
+          "JetBrainsMono"
+        ];
+      })
+    ];
+    fontconfig.defaultFonts = {
+      serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
+      sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
+      monospace = [ "JetBrainsMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
   };
 
   services.dbus = {

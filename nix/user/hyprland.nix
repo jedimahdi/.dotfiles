@@ -15,6 +15,18 @@
     pavucontrol
     pamixer
     fuzzel
+    swww
+
+    grim
+    slurp
+    swappy
+    imagemagick
+    (writeShellScriptBin "screenshot" ''
+      grim -g "$(slurp)" - | convert - -shave 1x1 PNG:- | wl-copy
+    '')
+    (writeShellScriptBin "screenshot-edit" ''
+      wl-paste | swappy -f -
+    '')
   ];
 
   wayland.windowManager.hyprland = {
@@ -23,6 +35,7 @@
     settings = { };
     extraConfig = ''
       exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
+      exec-once = swww init && swww img "~/Pictures/wallpaper.png"
 
       monitor=,preferred,auto,1
       input {
@@ -115,7 +128,7 @@
       bind=,code:232,exec,brightnessctl set 15-
       bind=,code:233,exec,brightnessctl set +15
 
-      windowrulev2 = opacity 0.95 0.95,class:^(Alacritty)$
+      windowrulev2 = opacity 0.90 0.90,class:^(Alacritty)$
     '';
     xwayland = { enable = true; };
   };

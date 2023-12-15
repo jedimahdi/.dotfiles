@@ -3,15 +3,16 @@
 let
   myAliases = {
     ls = "eza --group-directories-first";
-    l = "eza --icons -l -T -L=1";
-    cat = "bat";
+    l = "eza -la --icons --no-user --no-time --group-directories-first";
     c = "clear";
+    cat = "bat";
     tc = "tmux-sessionizer";
     ta = "tmux attach";
     ".." = "cd ..";
     "..." = "cd ../..";
     "...." = "cd ../../..";
     fetch = "neofetch";
+    lg = "lazygit";
   };
 in
 {

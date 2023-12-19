@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -8,7 +8,9 @@
 
   nix = {
     package = pkgs.nixFlakes;
+    registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
+      experimental-features = "nix-command flakes";
       substituters = [
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
@@ -16,10 +18,11 @@
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+      keep-outputs = true;
+      keep-derivations = true;
+      trusted-users = [ "root" "mahdi" ];
+      allowed-users = [ "root" "mahdi" ];
     };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
   };
 
   programs.nix-ld.enable = true;
@@ -77,13 +80,14 @@
         fonts = [
           "VictorMono"
           "JetBrainsMono"
+          "Hack"
         ];
       })
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
       sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-      monospace = [ "JetBrainsMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+      monospace = [ "Hack Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

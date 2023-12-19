@@ -14,6 +14,7 @@
     ./user/lf.nix
     ./user/hyprland.nix
     ./user/${browser}.nix
+    ./user/qutebrowser.nix
     ./user/alacritty.nix
     ./user/imv.nix
     ./user/zathura.nix
@@ -62,6 +63,7 @@
     zoxide
     tmux
     fzf
+    jq
 
     pamixer
     patchelf
@@ -69,6 +71,18 @@
 
     pcmanfm
     font-manager
+
+    nodejs-18_x
+    typescript
+    nodePackages.typescript-language-server
+    nodePackages.prettier
+    nodePackages.bash-language-server
+    shfmt
+    nodePackages.vscode-langservers-extracted
+    nodePackages.yaml-language-server
+    stylua
+    lua-language-server
+    clang-tools
 
     (callPackage ./ddper.nix { })
   ];

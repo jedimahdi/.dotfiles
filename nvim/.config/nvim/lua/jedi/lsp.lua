@@ -38,28 +38,26 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local function merge(t1, t2)
-  for k, v in ipairs(t2) do
-    table.insert(t1, v)
-  end
+local servers = { "clangd", "pyright", "jsonls", "html", "bashls" }
 
-  return t1
-end
-
-require("mason").setup()
-
-local servers = { "clangd", "pyright", "tsserver" }
-
-require("mason-lspconfig").setup({
-  ensure_installed = server,
-})
-
-for _, lsp in ipairs({ "clangd", "pyright" }) do
+for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
     on_attach = on_attach,
     capabilities = capabilities,
   })
 end
+
+require('lspconfig').yamlls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+    yaml = {
+      schemas = {
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+      },
+    },
+  }
+}
 
 require("typescript-tools").setup({
   on_attach = on_attach,
@@ -138,6 +136,39 @@ rt.setup({
     },
   },
 })
+
+require'lspconfig'.lua_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+        Lua = {
+          runtime = {
+            -- Tell the language server which version of Lua you're using
+            -- (most likely LuaJIT in the case of Neovim)
+            version = 'LuaJIT'
+          },
+          -- Make the server aware of Neovim runtime files
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME
+              -- "${3rd}/luv/library"
+              -- "${3rd}/busted/library",
+            }
+            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+            -- library = vim.api.nvim_get_runtime_file("", true)
+          }
+        }
+      })
+
+      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+    end
+    return true
+  end
+}
 
 -- lspconfig.rust_analyzer.setup({
 --   on_attach = on_attach,

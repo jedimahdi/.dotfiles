@@ -40,6 +40,7 @@
           inherit system;
           modules = [ ./nix/configuration.nix ]; # load configuration.nix from selected PROFILE
           specialArgs = {
+            inherit inputs;
             inherit browser;
           };
         };

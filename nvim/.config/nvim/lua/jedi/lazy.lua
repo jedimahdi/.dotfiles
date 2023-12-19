@@ -20,6 +20,7 @@ require("lazy").setup({
   "ThePrimeagen/harpoon",
   "onsails/lspkind-nvim",
   "navarasu/onedark.nvim",
+  { "catppuccin/nvim", name = "catppuccin" },
   "numToStr/Comment.nvim",
   "windwp/nvim-autopairs",
   "windwp/nvim-ts-autotag",
@@ -51,11 +52,6 @@ require("lazy").setup({
   },
   { -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
   },
   { -- Autocompletion
     "hrsh7th/nvim-cmp",
@@ -91,10 +87,10 @@ require("lazy").setup({
   },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
   "theHamsta/nvim-dap-virtual-text",
-  { "norcalli/nvim-colorizer.lua" , config = function()
-    require 'colorizer'.setup()
-  end
-  }
+  -- { "norcalli/nvim-colorizer.lua" , config = function()
+  --   require 'colorizer'.setup()
+  -- end
+  -- }
   -- {
   --   "folke/noice.nvim",
   --   config = function()

@@ -35,7 +35,7 @@
     settings = { };
     extraConfig = ''
       exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
-      exec-once = swww init && swww img "~/Pictures/wallpaper.png"
+      exec-once = swww init && sleep 0.1 && swww img "~/Pictures/wallpaper.png"
 
       monitor=,preferred,auto,1
       input {
@@ -122,13 +122,13 @@
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
 
-      binde=,code:122,exec,pamixer -d 10
-      binde=,code:123,exec,pamixer -i 10
-      bind=,code:121,exec,pamixer -t
-      bind=,code:232,exec,brightnessctl set 15-
-      bind=,code:233,exec,brightnessctl set +15
+      binde = $mainMod, code:122, exec, brightnessctl set 15-
+      binde = $mainMod, code:123, exec, brightnessctl set +15
+      binde = , code:122, exec, pamixer -d 10
+      binde = , code:123, exec, pamixer -i 10
+      bind = , code:121, exec, pamixer -t
 
-      windowrulev2 = opacity 0.90 0.90,class:^(Alacritty)$
+      windowrulev2 = opacity 0.80 0.80,class:^(Alacritty)$
     '';
     xwayland = { enable = true; };
   };

@@ -24,11 +24,19 @@
 
   colorScheme = inputs.nix-colors.lib.schemeFromYAML "onedarker" (builtins.readFile ./onedarker.yaml);
 
-  # fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     cachix
+    patchelf
     nix-prefetch-git
+    nix-index
+    nil
     nixpkgs-fmt
+    statix
+    manix
+    (writeShellScriptBin "fmanix" ''
+      manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf-tmux -p 80% --preview="manix '{}'" | xargs manix
+    '')
+    deadnix
 
     alacritty
     kitty
@@ -64,10 +72,7 @@
     tmux
     fzf
     jq
-
     pamixer
-    patchelf
-    nix-index
 
     pcmanfm
     font-manager
@@ -83,6 +88,7 @@
     stylua
     lua-language-server
     clang-tools
+    haskellPackages.hoogle
 
     (callPackage ./ddper.nix { })
   ];

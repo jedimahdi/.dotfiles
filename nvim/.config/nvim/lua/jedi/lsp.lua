@@ -47,17 +47,36 @@ for _, lsp in ipairs(servers) do
   })
 end
 
-require('lspconfig').yamlls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
+lspconfig.nil_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    ["nil"] = {
+      nix = {
+        -- maxMemoryMB = 7680,
+        flake = {
+          autoArchive = true,
+          -- autoEvalInputs = true,
+        },
+      },
+    },
+  },
+})
+-- lspconfig.statix.setup({
+--   single_file_support = true,
+-- })
+
+lspconfig.yamlls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
     yaml = {
       schemas = {
         ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
       },
     },
-  }
-}
+  },
+})
 
 require("typescript-tools").setup({
   on_attach = on_attach,
@@ -80,8 +99,8 @@ lspconfig.purescriptls.setup({
         "UnusedExplicitImport",
         "UnusedImport",
       },
+      formatter = "purs-tidy",
     },
-    formatter = "purs-tidy",
   },
   flags = {
     debounce_text_changes = 150,
@@ -137,38 +156,38 @@ rt.setup({
   },
 })
 
-require'lspconfig'.lua_ls.setup {
+require("lspconfig").lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+    if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+      client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
         Lua = {
           runtime = {
             -- Tell the language server which version of Lua you're using
             -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
+            version = "LuaJIT",
           },
           -- Make the server aware of Neovim runtime files
           workspace = {
             checkThirdParty = false,
             library = {
-              vim.env.VIMRUNTIME
+              vim.env.VIMRUNTIME,
               -- "${3rd}/luv/library"
               -- "${3rd}/busted/library",
-            }
+            },
             -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
             -- library = vim.api.nvim_get_runtime_file("", true)
-          }
-        }
+          },
+        },
       })
 
       client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
     end
     return true
-  end
-}
+  end,
+})
 
 -- lspconfig.rust_analyzer.setup({
 --   on_attach = on_attach,
@@ -262,7 +281,8 @@ vim.g.haskell_tools = {
     end,
     settings = {
       haskell = {
-        formattingProvider = "fourmolu",
+        cabalFormattingProvider = "cabalfmt",
+        formattingProvider = "stylish-haskell",
       },
     },
   },

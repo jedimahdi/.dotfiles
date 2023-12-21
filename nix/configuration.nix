@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./system/locale.nix
     ];
 
   nix = {
@@ -40,12 +41,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Asia/Tehran";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

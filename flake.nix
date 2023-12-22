@@ -19,7 +19,9 @@
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
         };
-        overlays = [ ];
+        overlays = [
+          (final: _: { project.haskellPackages = final.haskell.packages.ghc948; })
+        ];
       };
       browser = "firefox";
       lib = nixpkgs.lib;
@@ -28,7 +30,7 @@
       homeConfigurations = {
         user = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./nix/home.nix ]; # load home.nix from selected PROFILE
+          modules = [ ./nix/home.nix ];
           extraSpecialArgs = {
             inherit inputs;
             inherit browser;
@@ -38,12 +40,18 @@
       nixosConfigurations = {
         system = lib.nixosSystem {
           inherit system;
-          modules = [ ./nix/configuration.nix ]; # load configuration.nix from selected PROFILE
+          modules = [ ./nix/configuration.nix ];
           specialArgs = {
             inherit inputs;
             inherit browser;
           };
         };
       };
+
+      devShells.x86_64-linux.default = pkgs.mkShell
+        {
+          name = "dotfiles";
+          buildInputs = with pkgs; [ zlib.dev ];
+        };
     };
 }

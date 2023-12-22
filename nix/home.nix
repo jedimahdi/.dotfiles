@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, browser, ... }:
+{ config, pkgs, inputs, lib, browser, ... }:
 
 {
   programs.home-manager.enable = true;
@@ -43,6 +43,7 @@
     dmenu
     v2raya
 
+    zlib.dev
     gcc
     automake
     cmake
@@ -88,6 +89,10 @@
     stylua
     lua-language-server
     clang-tools
+
+    haskell.compiler.ghc948
+    haskellPackages.cabal-install
+    haskellPackages.haskell-language-server
     haskellPackages.hoogle
 
     (callPackage ./ddper.nix { })

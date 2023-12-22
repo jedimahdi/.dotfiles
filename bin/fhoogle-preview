@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+module=$1
+name=$2
+
+if [[ "$module" == "package" ]]; then
+  hoogle --info --color $name
+else
+  hoogle --info --color "$module.$name"
+fi

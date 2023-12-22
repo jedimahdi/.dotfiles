@@ -65,4 +65,12 @@ in
     enable = true;
     enableZshIntegration = true;
   };
+
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "ansi";
+      style = "header";
+    };
+  };
 }

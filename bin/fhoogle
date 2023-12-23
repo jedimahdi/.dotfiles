@@ -20,9 +20,12 @@ module=$(echo $RESULT | cut -d ' ' -f 1)
 name=$(echo $RESULT | cut -d ' ' -f 2)
 
 if [[ $module == "package" ]]; then
-  link=$(hoogle "+$name" --link --count 1 -q  | cut -d ' ' -f 4)
+  link=$(hoogle "+$name" --link --count 1 -q  | awk '{ print $NF }')
+  $BROWSER $link
+elif [[ $module == "module" ]]; then
+  link=$(hoogle "$name" --link --count 1 -q  | awk '{ print $NF }')
   $BROWSER $link
 else
-  link=$(hoogle "$module.$name" --link --count 1 -q | rev | cut -d ' ' -f 1 | rev)
+  link=$(hoogle "$module.$name" --link --count 1 -q | awk '{ print $NF }')
   $BROWSER $link
 fi

@@ -75,14 +75,14 @@
         fonts = [
           "VictorMono"
           "JetBrainsMono"
-          "Hack"
+          "CodeNewRoman"
         ];
       })
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
       sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-      monospace = [ "Hack Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+      monospace = [ "CodeNewRoman Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

@@ -7,7 +7,7 @@ else
   apps=$(find ~/code -mindepth 1 -maxdepth 1 -type d)
   configs=$(find ~/.config -mindepth 1 -maxdepth 1 -type l)
   selected=$(
-    echo -e "$apps\n$configs" | sed "s/\/home\/mahdi\///" | tr ' ' '\n' | fzf-tmux -p 90% \
+    echo -e "$apps\n$configs" | cut -d '/' -f 4- | fzf-tmux -p 90% \
       --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
       --prompt "  " \
       --exit-0 \

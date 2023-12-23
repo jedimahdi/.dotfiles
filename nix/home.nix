@@ -18,6 +18,9 @@
     ./user/alacritty.nix
     ./user/imv.nix
     ./user/zathura.nix
+    ./user/langs/c.nix
+    ./user/langs/haskell.nix
+    ./user/langs/js.nix
   ];
 
   home.stateVersion = "23.05";
@@ -44,9 +47,6 @@
     v2raya
 
     zlib.dev
-    gcc
-    automake
-    cmake
     curlFull
     diffutils
     fd
@@ -54,10 +54,8 @@
     findutils
     gawk
     glib
-    gnumake
     gnupg
     less
-    libtool
     mailutils
     watch
     wget
@@ -78,22 +76,11 @@
     pcmanfm
     font-manager
 
-    nodejs-18_x
-    typescript
-    nodePackages.typescript-language-server
-    nodePackages.prettier
     nodePackages.bash-language-server
     shfmt
-    nodePackages.vscode-langservers-extracted
     nodePackages.yaml-language-server
     stylua
     lua-language-server
-    clang-tools
-
-    haskell.compiler.ghc948
-    haskellPackages.cabal-install
-    haskellPackages.haskell-language-server
-    haskellPackages.hoogle
 
     (callPackage ./ddper.nix { })
   ];

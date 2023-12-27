@@ -40,11 +40,11 @@ end
 local exec_project = function()
   local ft = vim.bo.ft
   if ft == "rust" then
-    send_tmux_cmd([[neww -n cargo bash -c "cargo run; sleep 2"]])
+    send_tmux_cmd([[neww -n cargo bash -c "cargo run -q; sleep 1"]])
   end
 
   if ft == "haskell" then
-    send_tmux_cmd([[neww -n cabal bash -c "cabal run lazysh; sleep 2"]])
+    send_tmux_cmd([[neww -n cabal bash -c "cabal run -v0; sleep 1"]])
   end
 end
 
@@ -87,7 +87,7 @@ vim.keymap.set("n", "<C-l>", function()
   move("l")
 end)
 
--- vim.keymap.set("n", "<leader>tt", exec_project)
+vim.keymap.set("n", "<leader>tr", exec_project)
 vim.keymap.set("n", "<leader>tt", test_project)
 -- u.nmap("<leader>te", ":lua require'config.tmux'.exec_project()<CR>")
 -- u.nmap("<leader>tt", ":lua require'config.tmux'.test_project()<CR>")

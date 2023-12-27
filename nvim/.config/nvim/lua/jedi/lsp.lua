@@ -282,7 +282,7 @@ vim.g.haskell_tools = {
     settings = {
       haskell = {
         cabalFormattingProvider = "cabalfmt",
-        formattingProvider = "stylish-haskell",
+        formattingProvider = "fourmolu",
       },
     },
   },

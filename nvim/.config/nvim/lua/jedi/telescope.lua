@@ -24,11 +24,13 @@ telescope.setup({
       "dist*",
       "node_modules",
       "output",
+      "target",
       ".git/",
       "dist/",
       [[elm.stuff]],
       "flake.lock",
       "package-lock.json",
+      "Cargo.lock",
     },
 
     mappings = {
@@ -58,7 +60,13 @@ vim.keymap.set("n", "<leader>/", function()
   }))
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
-vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "[S]earch [F]iles" })
+local function search_all_files()
+  require("telescope.builtin").find_files {
+    find_command = { "rg", "--no-ignore", "--files" },
+  }
+end
+
+vim.keymap.set("n", "<leader>f", search_all_files, { desc = "[S]earch [F]iles" })
 vim.keymap.set("n", "<leader>F", builtin.find_files, { desc = "Search Git Files" })
 vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })

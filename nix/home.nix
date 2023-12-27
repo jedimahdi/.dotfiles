@@ -21,6 +21,7 @@
     ./user/langs/c.nix
     ./user/langs/haskell.nix
     ./user/langs/js.nix
+    ./user/langs/rust.nix
   ];
 
   home.stateVersion = "23.05";
@@ -75,6 +76,7 @@
 
     pcmanfm
     font-manager
+    atlauncher
 
     nodePackages.bash-language-server
     shfmt

@@ -39,11 +39,15 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
   # Enable networking
   networking.networkmanager.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   services.xserver.displayManager = {
     defaultSession = "hyprland";
@@ -75,14 +79,13 @@
         fonts = [
           "VictorMono"
           "JetBrainsMono"
-          "CodeNewRoman"
         ];
       })
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
       sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-      monospace = [ "CodeNewRoman Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+      monospace = [ "JetBrainsMono NF" "Vazirmatn" "Noto Color Emoji" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };
@@ -97,7 +100,13 @@
   };
 
   hardware = {
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      extraPackages = with pkgs; [
+        amdvlk
+      ];
+    };
   };
 
   services.xserver.windowManager.xmonad = {
@@ -171,6 +180,9 @@
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

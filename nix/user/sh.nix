@@ -3,7 +3,7 @@
 let
   myAliases = {
     ls = "eza --group-directories-first";
-    l = "eza -la --icons --no-user --no-time --group-directories-first";
+    l = "eza -la --icons --no-user --no-permissions --no-filesize --no-time --group-directories-first";
     c = "clear";
     cat = "bat";
     tc = "tmux-sessionizer";
@@ -20,6 +20,8 @@ in
 
   programs.zsh = {
     enable = true;
+    autocd = true;
+    dotDir = ".config/zsh";
     enableAutosuggestions = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;

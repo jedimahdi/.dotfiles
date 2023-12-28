@@ -26,6 +26,7 @@
         overlays = [
           (final: _: { project.haskellPackages = final.haskell.packages.ghc948; })
           (import rust-overlay)
+          (_: final: { vaapiIntel = final.vaapiIntel.override { enableHybridCodec = true; }; })
         ];
       };
       browser = "firefox";

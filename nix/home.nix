@@ -14,7 +14,6 @@
     ./user/lf.nix
     ./user/hyprland.nix
     ./user/${browser}.nix
-    ./user/qutebrowser.nix
     ./user/alacritty.nix
     ./user/imv.nix
     ./user/zathura.nix
@@ -47,6 +46,7 @@
     dmenu
     v2raya
 
+    xdg-utils
     zlib.dev
     curlFull
     diffutils
@@ -61,6 +61,10 @@
     watch
     wget
     htop
+    ffmpeg
+    rar
+    unzip
+    zip
 
     tldr
     git
@@ -75,6 +79,7 @@
     pamixer
 
     pcmanfm
+    xarchiver
     font-manager
     atlauncher
 
@@ -85,6 +90,8 @@
     lua-language-server
 
     (callPackage ./ddper.nix { })
+    brave
+    osu-lazer-bin
   ];
 
   xdg.enable = true;
@@ -95,6 +102,13 @@
   };
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
+  xdg.mimeApps.defaultApplications = {
+    "inode/directory" = [ "pcmanfm.desktop" ];
+    "application/epub+zip" = [ "xarchiver.desktop" ];
+    "application/zip" = [ "xarchiver.desktop" ];
+    "application/gzip" = [ "xarchiver.desktop" ];
+    "application/x-rar" = [ "xarchiver.desktop" ];
+  };
 
   programs.aria2.enable = true;
 

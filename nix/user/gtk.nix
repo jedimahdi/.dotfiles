@@ -1,20 +1,27 @@
 { config, pkgs, ... }:
 
 {
+  home.pointerCursor = {
+    name = "phinger-cursors-light";
+    package = pkgs.phinger-cursors;
+    size = 32;
+    gtk.enable = true;
+  };
+
+  xdg.configFile = {
+    "gtk-3.0/gtk.css".source = ./gtk.css;
+    "gtk-4.0/gtk.css".source = ./gtk.css;
+  };
+
   gtk = {
     enable = true;
-    cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-      size = 16;
-    };
     theme = {
-      name = "Sweet-mars";
-      package = pkgs.sweet;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
     iconTheme = {
-      name = "WhiteSur-dark";
-      package = pkgs.whitesur-icon-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
     gtk3.extraConfig = {
       Settings = ''

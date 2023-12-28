@@ -5,6 +5,7 @@
     [
       ./hardware-configuration.nix
       ./system/locale.nix
+      ./system/nvidia-disable.nix
     ];
 
   nix = {
@@ -40,7 +41,8 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.thermald.enable = true;
+  boot.initrd.kernelModules = [ "amdgpu" "i915" ];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -66,6 +68,7 @@
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
+    VDPAU_DRIVER = "va_gl";
   };
 
   fonts = {
@@ -104,6 +107,10 @@
       enable = true;
       driSupport = true;
       extraPackages = with pkgs; [
+        intel-media-driver
+        libvdpau-va-gl
+        vaapiVdpau
+        vaapiIntel
         amdvlk
       ];
     };
@@ -171,15 +178,20 @@
     dunst
     libnotify
     rofi-wayland
+    pciutils
   ];
 
-  # I use zsh btw
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;

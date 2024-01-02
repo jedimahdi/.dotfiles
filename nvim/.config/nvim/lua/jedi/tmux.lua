@@ -40,11 +40,11 @@ end
 local exec_project = function()
   local ft = vim.bo.ft
   if ft == "rust" then
-    send_tmux_cmd([[neww -n cargo bash -c "cargo run -q; sleep 1"]])
+    send_tmux_cmd([[neww -n cargo bash -c "cargo run -q; sleep 2"]])
   end
 
   if ft == "haskell" then
-    send_tmux_cmd([[neww -n cabal bash -c "cabal run -v0; sleep 1"]])
+    send_tmux_cmd([[neww -n cabal bash -c "cabal run -v0; sleep 2"]])
   end
 end
 

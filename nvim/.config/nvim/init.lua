@@ -10,7 +10,7 @@ require("jedi.cmp")
 require("jedi.harpoon")
 require("jedi.tmux")
 require("jedi.dap")
-require("jedi.formatter")
+require("jedi.null")
 
 require("Comment").setup()
 require("nvim-autopairs").setup({})

@@ -39,7 +39,7 @@
 
       monitor=,preferred,auto,1
       input {
-          kb_layout = us
+          kb_layout = us,ir
           kb_options = caps:escape
           repeat_delay = 300
           repeat_rate = 50

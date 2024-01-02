@@ -25,6 +25,7 @@
   xdg.mimeApps.defaultApplications =
     {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      "application/epub+zip" = [ "org.pwmt.zathura.desktop" ];
     };
 
   xdg.configFile = {

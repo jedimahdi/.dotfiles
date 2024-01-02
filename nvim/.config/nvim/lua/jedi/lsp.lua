@@ -37,6 +37,7 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+capabilities.offsetEncoding = { "utf-16" }
 
 local servers = { "clangd", "pyright", "jsonls", "html", "bashls" }
 
@@ -62,9 +63,6 @@ lspconfig.nil_ls.setup({
     },
   },
 })
--- lspconfig.statix.setup({
---   single_file_support = true,
--- })
 
 lspconfig.yamlls.setup({
   on_attach = on_attach,

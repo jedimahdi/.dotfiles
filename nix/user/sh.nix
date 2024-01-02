@@ -17,26 +17,46 @@ let
 in
 {
   imports = [ ./starship.nix ];
+  programs = {
+    zsh = {
+      enable = true;
+      autocd = true;
+      dotDir = ".config/zsh";
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      syntaxHighlighting.enable = true;
+      defaultKeymap = "emacs";
+      shellAliases = myAliases;
+      initExtra = ''
+        export PATH="$HOME/.dotfiles/bin:$PATH"
+        export MANPAGER='nvim +Man!'
+      '';
+    };
 
-  programs.zsh = {
-    enable = true;
-    autocd = true;
-    dotDir = ".config/zsh";
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    defaultKeymap = "emacs";
-    shellAliases = myAliases;
-    initExtra = ''
-      export PATH="$HOME/.dotfiles/bin:$PATH"
-      export MANPAGER='nvim +Man!'
-    '';
-  };
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      shellAliases = myAliases;
+    };
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = myAliases;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    bat = {
+      enable = true;
+      config = {
+        theme = "ansi";
+        style = "header";
+      };
+    };
   };
 
   home.packages = with pkgs; [
@@ -56,23 +76,4 @@ in
     unzip
     neovim
   ];
-
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "ansi";
-      style = "header";
-    };
-  };
 }

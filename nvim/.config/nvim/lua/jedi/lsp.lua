@@ -1,5 +1,7 @@
 local lspconfig = require("lspconfig")
 
+vim.diagnostic.config({ underline = false })
+
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>a", vim.diagnostic.open_float)
@@ -56,8 +58,8 @@ lspconfig.nil_ls.setup({
       nix = {
         -- maxMemoryMB = 7680,
         flake = {
-          autoArchive = true,
-          -- autoEvalInputs = true,
+          autoArchive = false,
+          autoEvalInputs = false,
         },
       },
     },
@@ -277,6 +279,7 @@ vim.g.haskell_tools = {
       vim.keymap.set("n", "<space>hs", ht.hoogle.hoogle_signature, opts)
       -- vim.keymap.set("n", "<space>ea", ht.lsp.buf_eval_all, opts)
     end,
+    capabilities = capabilities,
     settings = {
       haskell = {
         cabalFormattingProvider = "cabalfmt",

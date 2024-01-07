@@ -15,6 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.o.termguicolors = true
 
 require("lazy").setup({
+  "rebelot/kanagawa.nvim",
   "nvimtools/none-ls.nvim",
   "tamago324/lir.nvim",
   "ThePrimeagen/harpoon",
@@ -32,7 +33,7 @@ require("lazy").setup({
   "purescript-contrib/purescript-vim",
   {
     "mrcjkb/haskell-tools.nvim",
-    branch = "2.x.x",
+    version = "^3",
   },
   {
     "pmizio/typescript-tools.nvim",

@@ -10,7 +10,8 @@
     ./user/lf.nix
     ./user/hyprland.nix
     ./user/${browser}.nix
-    ./user/alacritty.nix
+    ./user/terminal/alacritty.nix
+    ./user/terminal/foot.nix
     ./user/imv.nix
     ./user/zathura.nix
     ./user/langs/c.nix
@@ -21,7 +22,7 @@
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = "23.05";
+    stateVersion = "23.11";
     username = "mahdi";
     homeDirectory = "/home/mahdi";
 
@@ -47,6 +48,7 @@
       xdg-utils
       zlib.dev
       curlFull
+      binutils
       diffutils
       fd
       file
@@ -63,6 +65,7 @@
       rar
       unzip
       zip
+      ouch
 
       tldr
       git
@@ -75,6 +78,8 @@
       fzf
       jq
       pamixer
+      thefuck
+      ytfzf
 
       pcmanfm
       xarchiver
@@ -98,7 +103,7 @@
     };
   };
 
-  services.udiskie.enable = true;
+  # services.udiskie.enable = true;
 
   colorScheme = inputs.nix-colors.lib.schemeFromYAML "onedarker" (builtins.readFile ./onedarker.yaml);
 
@@ -120,5 +125,14 @@
     };
   };
 
-  programs.aria2.enable = true;
+  programs = {
+    aria2.enable = true;
+    thefuck.enable = true;
+  };
+
+  manual = {
+    html.enable = false;
+    json.enable = false;
+    manpages.enable = false;
+  };
 }

@@ -31,6 +31,7 @@
       };
       browser = "firefox";
       lib = nixpkgs.lib;
+      haskellPackages = pkgs.project.haskellPackages;
     in
     {
       homeConfigurations = {
@@ -50,6 +51,7 @@
           specialArgs = {
             inherit inputs;
             inherit browser;
+            inherit haskellPackages;
           };
         };
       };

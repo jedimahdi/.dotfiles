@@ -13,6 +13,13 @@
           mkdir $DIR
         }}
       '';
+      download = ''
+        ''${{
+          printf "URL: "
+          read URL
+          aria2c $URL
+        }}
+      '';
     };
     keybindings = {
       "\\\"" = "";
@@ -25,7 +32,10 @@
       "g~" = "cd";
       gh = "cd";
       "g/" = "/";
+      gd = "cd ~/Downloads";
+      gs = "cd ~/Downloads/series";
       d = "";
+      dw = "download";
       dd = "cut";
       D = "delete";
       C = "clear";

@@ -21,4 +21,4 @@ fi
 
 selected_name=$(basename "$selected" | tr . _)
 
-tconnect "$HOME/$selected" $selected_name
+tconnect "$HOME/$selected" "$selected_name"

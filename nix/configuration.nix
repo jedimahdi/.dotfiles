@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, haskellPackages, ... }:
 
 {
   imports =
@@ -6,28 +6,11 @@
       ./hardware-configuration.nix
       ./system/locale.nix
       ./system/nvidia-disable.nix
+      ./system/nix-daemon.nix
     ];
 
-  nix = {
-    package = pkgs.nixFlakes;
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    settings = {
-      experimental-features = "nix-command flakes";
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://cache.nixos.org/"
-      ];
-      trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-      keep-outputs = true;
-      keep-derivations = true;
-      trusted-users = [ "root" "mahdi" ];
-      allowed-users = [ "root" "mahdi" ];
-    };
-  };
 
-  programs.nix-ld.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -39,7 +22,6 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
 
   services.thermald.enable = true;
   boot.initrd.kernelModules = [ "amdgpu" "i915" ];
@@ -64,6 +46,7 @@
     enable = true;
     xwayland.enable = true;
   };
+  services.gnome.gnome-keyring.enable = true;
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
@@ -81,16 +64,25 @@
       (nerdfonts.override {
         fonts = [
           "VictorMono"
-          "JetBrainsMono"
+          "Hack"
         ];
       })
     ];
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
-      sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-      monospace = [ "JetBrainsMono NF" "Vazirmatn" "Noto Color Emoji" ];
-      emoji = [ "Noto Color Emoji" ];
+    fontconfig = {
+      subpixel.rgba = "rgb";
+      defaultFonts = {
+        serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
+        monospace = [ "Hack Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
     };
+  };
+
+  services.hoogle = {
+    enable = true;
+    packages = hp: with hp; [ lens ];
+    # haskellPackages = haskellPackages;
   };
 
   services.dbus = {
@@ -107,8 +99,9 @@
       enable = true;
       driSupport = true;
       extraPackages = with pkgs; [
-        intel-media-driver
+        libva
         libvdpau-va-gl
+        intel-media-driver
         vaapiVdpau
         vaapiIntel
         amdvlk
@@ -177,7 +170,6 @@
     home-manager
     dunst
     libnotify
-    rofi-wayland
     pciutils
   ];
 

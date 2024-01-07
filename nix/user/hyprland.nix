@@ -16,7 +16,6 @@
     pamixer
     fuzzel
     swww
-
     grim
     slurp
     swappy
@@ -84,7 +83,7 @@
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, pcmanfm
       bind = $mainMod, T, togglefloating,
-      bind = $mainMod, D, exec, rofi -show drun
+      bind = $mainMod, D, exec, fuzzel
       bind = $mainMod, I, exec, networkmanager_dmenu
 
       bind = $mainMod, J, layoutmsg, cyclenext
@@ -116,8 +115,8 @@
       bind = $mainMod SHIFT, 9, movetoworkspace, 9
       bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
-      bind = $mainMod, S, togglespecialworkspace, magic
-      bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+      bind = $mainMod, S, exec, screenshot
+      bind = $mainMod SHIFT, S, exec, screenshot-edit
 
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
@@ -129,7 +128,31 @@
       bind = , code:121, exec, pamixer -t
 
       windowrulev2 = opacity 0.80 0.80,class:^(Alacritty)$
+      windowrulev2 = opacity 0.80 0.80,class:^(foot)$
+      windowrulev2 = opacity 0.80 0.80,class:^(footclient)$
     '';
     xwayland = { enable = true; };
+  };
+
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      colors = with config.colorScheme.colors; {
+        background = base00 + "e6";
+        text = base07 + "ff";
+        match = base05 + "ff";
+        selection = base08 + "ff";
+        selection-text = base00 + "ff";
+        selection-match = base05 + "ff";
+        border = base08 + "ff";
+      };
+      main = {
+        width = 70;
+      };
+      border = {
+        width = 3;
+        radius = 7;
+      };
+    };
   };
 }

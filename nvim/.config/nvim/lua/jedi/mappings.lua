@@ -75,13 +75,11 @@ nnoremap("<leader>z", "<cmd>TSPlaygroundToggle<CR>")
 
 -- Format
 nnoremap("<leader>p", function()
-  local ft = vim.bo.ft
-
-  -- if ft == "haskell" or ft == "rust" or ft == "purescript" then
-  vim.lsp.buf.format()
-  -- else
-  --   vim.cmd("Format")
-  -- end
+  vim.lsp.buf.format({
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+  })
 end)
 
 nnoremap("<leader>n", "<cmd>nohls<CR>")

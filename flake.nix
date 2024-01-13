@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,14 +18,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, rust-overlay, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, rust-overlay, pre-commit-hooks, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
-          allowUnfreePredicate = (_: true);
+          allowUnfreePredicate = _: true;
         };
         overlays = [
           (final: _: { project.haskellPackages = final.haskell.packages.ghc948; })
@@ -30,8 +34,8 @@
         ];
       };
       browser = "firefox";
-      lib = nixpkgs.lib;
-      haskellPackages = pkgs.project.haskellPackages;
+      inherit (nixpkgs) lib;
+      inherit (pkgs.project) haskellPackages;
     in
     {
       homeConfigurations = {
@@ -55,11 +59,27 @@
           };
         };
       };
-
-      devShells.x86_64-linux.default = pkgs.mkShell
+      checks.${system} = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+            luacheck.enable = true;
+            stylua.enable = true;
+            shellcheck.enable = true;
+            shfmt.enable = true;
+          };
+        };
+      };
+      devShells.${system}.default = pkgs.mkShell
         {
           name = "dotfiles";
           buildInputs = with pkgs; [ zlib.dev ];
+          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          nativeBuildInputs = builtins.attrValues {
+            inherit (pre-commit-hooks.packages.${system})
+              nixpkgs-fmt luacheck stylua shellcheck shfmt;
+          };
         };
     };
 }

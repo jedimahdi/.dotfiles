@@ -3,14 +3,19 @@
 {
   programs.mpv = {
     enable = true;
-    config = {
-      autofit-larger = "100%x95%";
-      osc-visibility = "never";
-    };
+    # config = {
+    #   autofit-larger = "100%x95%";
+    #   osc-visibility = "never";
+    # };
     # scripts = with pkgs.mpvScripts; [
     #   uosc
     # ];
   };
+
+  xdg.configFile."mpv/mpv.conf".text = ''
+    autofit-larger=90%x90%
+    osc=no
+  '';
 
   xdg.mimeApps.defaultApplications =
     let

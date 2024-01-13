@@ -64,7 +64,8 @@
       (nerdfonts.override {
         fonts = [
           "VictorMono"
-          "Hack"
+          "DejaVuSansMono"
+          "RobotoMono"
         ];
       })
     ];
@@ -73,7 +74,7 @@
       defaultFonts = {
         serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
         sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-        monospace = [ "Hack Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+        monospace = [ "DejaVuSansM Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -181,6 +182,7 @@
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-wlr
       pkgs.xdg-desktop-portal-gtk
     ];
   };

@@ -72,3 +72,4 @@ xmonad/.config/xmonad/xmonad-contrib
 xmonad/.config/xmonad/dist-newstyle
 
 zsh/.config/zsh/.zhsitory
+.pre-commit-config.yaml

@@ -16,6 +16,13 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, rust-overlay, pre-commit-hooks, ... }@inputs:
@@ -64,7 +71,6 @@
           src = ./.;
           hooks = {
             nixpkgs-fmt.enable = true;
-            luacheck.enable = true;
             stylua.enable = true;
             shellcheck.enable = true;
             shfmt.enable = true;
@@ -78,7 +84,7 @@
           inherit (self.checks.${system}.pre-commit-check) shellHook;
           nativeBuildInputs = builtins.attrValues {
             inherit (pre-commit-hooks.packages.${system})
-              nixpkgs-fmt luacheck stylua shellcheck shfmt;
+              nixpkgs-fmt stylua shellcheck shfmt;
           };
         };
     };

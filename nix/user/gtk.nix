@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.pointerCursor = {
@@ -32,6 +32,14 @@
       Settings = ''
         gtk-application-prefer-dark-theme=1
       '';
+    };
+  };
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
     };
   };
 }

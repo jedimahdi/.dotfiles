@@ -2,10 +2,10 @@
 {
   nix = {
     package = pkgs.nixFlakes;
-    # pin the registry to avoid downloading and evaling a new nixpkgs version every time
-    registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
-    # set the path for channels compat
-    nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
+
+    # This will add each flake input as a registry
+    registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+
     settings = {
       experimental-features = "nix-command flakes";
       substituters = [
@@ -18,11 +18,23 @@
       keep-outputs = true;
       keep-derivations = true;
       warn-dirty = false;
+      # Deduplicate and optimize nix store
       auto-optimise-store = true;
       trusted-users = [ "root" "@wheel" ];
       allowed-users = [ "root" "@wheel" ];
     };
   };
+
+  # This will additionally add your inputs to the system's legacy channels
+  # Making legacy nix commands consistent as well, awesome!
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc =
+    lib.mapAttrs'
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
 
   programs.nix-ld = {
     enable = true;

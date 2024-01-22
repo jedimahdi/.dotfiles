@@ -6,7 +6,7 @@
     enable = true;
     userName = "Mahdi Seyedan";
     userEmail = "mahdi.se@yahoo.com";
-    ignores = [ "*~" "*.swp" "*result*" ".direnv" "node_modules" ];
+    ignores = [ "*~" "*.swp" "result" "result-*" ".direnv" "node_modules" ];
     aliases = {
       s = "status --short";
       ss = "status";

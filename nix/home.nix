@@ -3,6 +3,7 @@
 {
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
     ./user/sh.nix
     ./user/git.nix
     ./user/gtk.nix
@@ -20,6 +21,8 @@
     ./user/langs/rust.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   programs.home-manager.enable = true;
   home = {
     stateVersion = "23.11";
@@ -30,7 +33,6 @@
       cachix
       patchelf
       nix-prefetch-git
-      nix-index
       nil
       nixpkgs-fmt
       statix
@@ -44,6 +46,7 @@
       kitty
       dmenu
       v2raya
+      qv2ray
 
       xdg-utils
       zlib.dev
@@ -103,11 +106,8 @@
     };
   };
 
-  # services.udiskie.enable = true;
-
   colorScheme = inputs.nix-colors.lib.schemeFromYAML "onedarker" (builtins.readFile ./onedarker.yaml);
 
-  nixpkgs.config.allowUnfree = true;
   xdg = {
     enable = true;
     userDirs = {
@@ -128,11 +128,13 @@
   programs = {
     aria2.enable = true;
     thefuck.enable = true;
+    nix-index.enable = true;
+    nix-index-database.comma.enable = true;
   };
 
   manual = {
     html.enable = false;
     json.enable = false;
-    manpages.enable = false;
+    manpages.enable = true;
   };
 }

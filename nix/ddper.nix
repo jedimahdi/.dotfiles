@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     '';
 
   meta = with lib; {
-    homepage = https://code-industry.net/masterpdfeditor/;
+    homepage = "https://github.com/ddnet/ddnet";
     description = "DDPER Game";
     license = licenses.free;
     platforms = platforms.linux;

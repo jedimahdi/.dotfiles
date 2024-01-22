@@ -15,6 +15,10 @@
   xdg.configFile."mpv/mpv.conf".text = ''
     autofit-larger=90%x90%
     osc=no
+
+    sid=1
+    sub-auto=all
+    sub-file-paths=sub
   '';
 
   xdg.mimeApps.defaultApplications =

@@ -1,14 +1,20 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  home.packages = [pkgs.git pkgs.lazygit];
+{pkgs, ...}: {
+  home.packages = [pkgs.lazygit];
+
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
     userName = "Mahdi Seyedan";
     userEmail = "mahdi.se@yahoo.com";
     ignores = ["*~" "*.swp" "result" "result-*" ".direnv" "node_modules"];
+    delta = {
+      enable = true;
+      options = {
+        light = false;
+        navigate = true;
+        true-color = "always";
+      };
+    };
     aliases = {
       la = "!git config -l | grep alias | cut -c 7-";
       ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi";
@@ -26,6 +32,19 @@
 
     extraConfig = {
       init.defaultBranch = "main";
+      core.editor = "nvim";
     };
+  };
+
+  programs.gitui = {
+    enable = true;
+    keyConfig = ''
+      move_left: Some(( code: Char('h'), modifiers: ( bits: 0,),)),
+      move_right: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+      move_up: Some(( code: Char('k'), modifiers: ( bits: 0,),)),
+      move_down: Some(( code: Char('j'), modifiers: ( bits: 0,),)),
+      stash_open: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+      open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
+    '';
   };
 }

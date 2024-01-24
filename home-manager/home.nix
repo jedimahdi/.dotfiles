@@ -9,6 +9,7 @@
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
     ./sh.nix
+    ./tmux
     ./git.nix
     ./gtk.nix
     ./mpv.nix
@@ -47,7 +48,6 @@
       kitty
       dmenu
       v2raya
-      qv2ray
 
       xdg-utils
       curlFull
@@ -71,13 +71,11 @@
       ouch
 
       tldr
-      git
       ripgrep
       entr
       pkg-config
       eza
       zoxide
-      tmux
       fzf
       jq
       pamixer

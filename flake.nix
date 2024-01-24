@@ -86,8 +86,6 @@
         src = ./.;
         hooks = {
           alejandra.enable = true;
-          shellcheck.enable = true;
-          shfmt.enable = true;
         };
       };
     };
@@ -99,13 +97,8 @@
         buildInputs = with pkgs; [zlib.dev];
         inherit (self.checks.${system}.pre-commit-check) shellHook;
         nativeBuildInputs = builtins.attrValues {
-          inherit
-            (pre-commit-hooks.packages.${system})
-            alejandra
-            stylua
-            shellcheck
-            shfmt
-            ;
+          inherit (pkgs) shellcheck shfmt;
+          inherit (pre-commit-hooks.packages.${system}) alejandra;
         };
       };
   };

@@ -8,21 +8,21 @@
   imports = [
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
-    ./user/sh.nix
-    ./user/git.nix
-    ./user/gtk.nix
-    ./user/mpv.nix
-    ./user/lf.nix
-    ./user/hyprland.nix
-    ./user/${browser}.nix
-    ./user/terminal/alacritty.nix
-    ./user/terminal/foot.nix
-    ./user/imv.nix
-    ./user/zathura.nix
-    ./user/langs/c.nix
-    ./user/langs/haskell.nix
-    ./user/langs/js.nix
-    ./user/langs/rust.nix
+    ./sh.nix
+    ./git.nix
+    ./gtk.nix
+    ./mpv.nix
+    ./lf.nix
+    ./hyprland.nix
+    ./${browser}.nix
+    ./terminal/alacritty.nix
+    ./terminal/foot.nix
+    ./imv.nix
+    ./zathura.nix
+    ./langs/c.nix
+    ./langs/haskell.nix
+    ./langs/js.nix
+    ./langs/rust.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -94,7 +94,7 @@
       stylua
       lua-language-server
 
-      (callPackage ./ddper.nix {})
+      (callPackage ../pkgs/ddper {})
       brave
       osu-lazer-bin
     ];

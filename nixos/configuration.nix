@@ -1,12 +1,12 @@
 {pkgs, ...}: {
   imports = [
-    ./system/hardware.nix
-    ./system/locale.nix
-    ./system/nvidia-disable.nix
-    ./system/nix.nix
-    ./system/fonts.nix
-    ./system/sound.nix
-    ./system/wm/hyprland.nix
+    ./hardware.nix
+    ./locale.nix
+    ./nvidia-disable.nix
+    ./nix.nix
+    ./fonts.nix
+    ./sound.nix
+    ./wm/hyprland.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

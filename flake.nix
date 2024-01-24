@@ -63,7 +63,7 @@
     homeConfigurations = {
       user = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [./nix/home.nix];
+        modules = [./home-manager/home.nix];
         extraSpecialArgs = {
           inherit inputs;
           inherit browser;
@@ -73,7 +73,7 @@
     nixosConfigurations = {
       system = lib.nixosSystem {
         inherit system;
-        modules = [./nix/configuration.nix];
+        modules = [./nixos/configuration.nix];
         specialArgs = {
           inherit inputs;
           inherit browser;

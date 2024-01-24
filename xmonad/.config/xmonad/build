@@ -1,1 +1,0 @@
-~/.ghcup/bin/cabal install my-xmonad:exe:xmonad --overwrite-policy=always

@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-
 {
-  home.packages = [ pkgs.alacritty ];
+  config,
+  pkgs,
+  ...
+}: {
+  home.packages = [pkgs.alacritty];
   programs.alacritty = {
     enable = true;
     settings = {
@@ -42,7 +44,7 @@
           background = "0x1f2329";
           foreground = "0xabb2bf";
         };
-        bright_foreground = "0xe6efff";
+        # bright_foreground = "0xe6efff";
         normal = {
           black = "0x1e2127";
           red = "0xe06c75";

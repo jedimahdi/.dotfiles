@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     haskell.compiler.ghc948
     haskellPackages.cabal-install

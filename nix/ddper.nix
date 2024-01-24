@@ -1,20 +1,21 @@
-{ stdenv
-, lib
-, fetchzip
-, freetype
-, libpng
-, SDL2
-, ffmpeg_5
-, opusfile
-, vulkan-loader
-, libglvnd
-, libnotify
-, glib
-, curl
-, sqlite
-, unzip
-, patchelf
-, makeWrapper
+{
+  stdenv,
+  lib,
+  fetchzip,
+  freetype,
+  libpng,
+  SDL2,
+  ffmpeg_5,
+  opusfile,
+  vulkan-loader,
+  libglvnd,
+  libnotify,
+  glib,
+  curl,
+  sqlite,
+  unzip,
+  patchelf,
+  makeWrapper,
 }:
 stdenv.mkDerivation rec {
   name = "ddper";
@@ -47,30 +48,28 @@ stdenv.mkDerivation rec {
 
     runHook postInstall
   '';
-  preFixup =
-    let
-      # we prepare our library path in the let clause to avoid it become part of the input of mkDerivation
-      libPath = lib.makeLibraryPath [
-        stdenv.cc.cc
-        freetype
-        libpng
-        SDL2
-        ffmpeg_5
-        opusfile
-        vulkan-loader
-        libglvnd
-        libnotify
-        glib
-        curl
-        sqlite
-      ];
-    in
-    ''
-      patchelf \
-        --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-        --set-rpath "${libPath}" \
-        $out/source/DDPER
-    '';
+  preFixup = let
+    # we prepare our library path in the let clause to avoid it become part of the input of mkDerivation
+    libPath = lib.makeLibraryPath [
+      stdenv.cc.cc
+      freetype
+      libpng
+      SDL2
+      ffmpeg_5
+      opusfile
+      vulkan-loader
+      libglvnd
+      libnotify
+      glib
+      curl
+      sqlite
+    ];
+  in ''
+    patchelf \
+      --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+      --set-rpath "${libPath}" \
+      $out/source/DDPER
+  '';
 
   meta = with lib; {
     homepage = "https://github.com/ddnet/ddnet";

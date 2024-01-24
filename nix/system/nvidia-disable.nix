@@ -1,6 +1,4 @@
-_:
-
-{
+_: {
   # This runs only intel/amdgpu igpus and nvidia dgpus do not drain power.
 
   ##### disable nvidia, very nice battery life.
@@ -22,5 +20,5 @@ _:
     # Remove NVIDIA VGA/3D controller devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
   '';
-  boot.blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+  boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia_drm" "nvidia_modeset"];
 }

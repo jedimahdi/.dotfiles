@@ -1,5 +1,7 @@
-{ pkgs, name }:
-
+{
+  pkgs,
+  name,
+}:
 pkgs.stable.mkShell {
   inherit name;
 
@@ -22,7 +24,8 @@ pkgs.stable.mkShell {
 
     ###################################################
     # Command line tools:
-    { inherit (pkgs.stable) gitFull gitflow;
+    {
+      inherit (pkgs.stable) gitFull gitflow;
       inherit (pkgs.unstable.nodePackages) parcel-bundler;
     }
 
@@ -30,13 +33,15 @@ pkgs.stable.mkShell {
     # Language servers:
     {
       inherit (pkgs.stable) dhall-lsp-server;
-      inherit (pkgs.unstable.nodePackages)
+      inherit
+        (pkgs.unstable.nodePackages)
         bash-language-server
         typescript-language-server
         purescript-language-server
         vscode-json-languageserver-bin
         vscode-html-languageserver-bin
-        yaml-language-server;
+        yaml-language-server
+        ;
     }
 
     ###################################################

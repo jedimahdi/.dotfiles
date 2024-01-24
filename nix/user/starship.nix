@@ -1,15 +1,16 @@
-{ pkgs, lib, ... }:
-
+{
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with builtins;
-
-let
+with builtins; let
   isRustFile = path: type:
     hasSuffix ".rs" path && type == "regular" && path != "mod.rs";
   mergeAllAttrSets = attrsSets:
-    foldl' (recursiveUpdate) { } attrsSets;
+    foldl' recursiveUpdate {} attrsSets;
   disableModules = isDisabled: modules:
-    mergeAllAttrSets (map (mod: { "${mod}".disabled = isDisabled; }) modules);
+    mergeAllAttrSets (map (mod: {"${mod}".disabled = isDisabled;}) modules);
 
   starshipPackage = pkgs.starship;
   promptOrder = [
@@ -39,8 +40,7 @@ let
     (subtractLists promptOrder) # <== do not disable modules used in the prompt...
     (disableModules true) # <== and finally build the configuration
   ];
-in
-{
+in {
   programs.starship = {
     enable = true;
     package = starshipPackage;

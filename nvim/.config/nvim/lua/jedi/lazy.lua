@@ -21,7 +21,6 @@ require("lazy").setup({
   "ThePrimeagen/harpoon",
   "onsails/lspkind-nvim",
   "navarasu/onedark.nvim",
-  { "catppuccin/nvim", name = "catppuccin" },
   "numToStr/Comment.nvim",
   "windwp/nvim-autopairs",
   "windwp/nvim-ts-autotag",
@@ -30,7 +29,7 @@ require("lazy").setup({
   "kyazdani42/nvim-web-devicons",
   "tjdevries/ocaml.nvim",
   "simrat39/rust-tools.nvim",
-  "purescript-contrib/purescript-vim",
+  -- "purescript-contrib/purescript-vim",
   {
     "mrcjkb/haskell-tools.nvim",
     version = "^3",
@@ -58,34 +57,34 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip" },
   },
-  {
-    "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    lazy = false,
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("neorg").setup({
-        load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-          ["core.concealer"] = {}, -- Adds pretty icons to your documents
-          ["core.summary"] = {},
-          ["core.completion"] = {
-            config = {
-              engine = "nvim-cmp",
-            },
-          },
-          ["core.dirman"] = { -- Manages Neorg workspaces
-            config = {
-              workspaces = {
-                notes = "~/tmp/norg",
-              },
-            },
-          },
-          ["core.export"] = {},
-        },
-      })
-    end,
-  },
+  -- {
+  --   "nvim-neorg/neorg",
+  --   build = ":Neorg sync-parsers",
+  --   lazy = false,
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     require("neorg").setup({
+  --       load = {
+  --         ["core.defaults"] = {}, -- Loads default behaviour
+  --         ["core.concealer"] = {}, -- Adds pretty icons to your documents
+  --         ["core.summary"] = {},
+  --         ["core.completion"] = {
+  --           config = {
+  --             engine = "nvim-cmp",
+  --           },
+  --         },
+  --         ["core.dirman"] = { -- Manages Neorg workspaces
+  --           config = {
+  --             workspaces = {
+  --               notes = "~/tmp/norg",
+  --             },
+  --           },
+  --         },
+  --         ["core.export"] = {},
+  --       },
+  --     })
+  --   end,
+  -- },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
   "theHamsta/nvim-dap-virtual-text",
   -- { "norcalli/nvim-colorizer.lua" , config = function()

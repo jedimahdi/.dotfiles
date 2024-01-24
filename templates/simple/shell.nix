@@ -1,5 +1,7 @@
-{ pkgs, name }:
-
+{
+  pkgs,
+  name,
+}:
 pkgs.stable.mkShell {
   inherit name;
 
@@ -14,14 +16,16 @@ pkgs.stable.mkShell {
 
     ###################################################
     # Command line tools:
-    { inherit (pkgs.stable) gitFull git-lfs; }
+    {inherit (pkgs.stable) gitFull git-lfs;}
 
     ###################################################
     # Language servers:
     {
-      inherit (pkgs.stable.nodePackages)
+      inherit
+        (pkgs.stable.nodePackages)
         vscode-json-languageserver-bin
-        yaml-language-server;
+        yaml-language-server
+        ;
     }
   ];
 }

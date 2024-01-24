@@ -1,6 +1,10 @@
-{ config, pkgs, inputs, browser, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  browser,
+  ...
+}: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
@@ -35,11 +39,8 @@
       nix-prefetch-git
       nil
       nixpkgs-fmt
+      alejandra
       statix
-      manix
-      (writeShellScriptBin "fmanix" ''
-        manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf-tmux -p 80% --preview="manix '{}'" | xargs manix
-      '')
       deadnix
 
       alacritty
@@ -49,7 +50,6 @@
       qv2ray
 
       xdg-utils
-      zlib.dev
       curlFull
       binutils
       diffutils
@@ -86,7 +86,6 @@
 
       pcmanfm
       xarchiver
-      font-manager
 
       nodePackages.bash-language-server
       shellcheck
@@ -95,7 +94,7 @@
       stylua
       lua-language-server
 
-      (callPackage ./ddper.nix { })
+      (callPackage ./ddper.nix {})
       brave
       osu-lazer-bin
     ];
@@ -118,10 +117,10 @@
     mime.enable = true;
     mimeApps.enable = true;
     mimeApps.defaultApplications = {
-      "inode/directory" = [ "pcmanfm.desktop" ];
-      "application/zip" = [ "xarchiver.desktop" ];
-      "application/gzip" = [ "xarchiver.desktop" ];
-      "application/x-rar" = [ "xarchiver.desktop" ];
+      "inode/directory" = ["pcmanfm.desktop"];
+      "application/zip" = ["xarchiver.desktop"];
+      "application/gzip" = ["xarchiver.desktop"];
+      "application/x-rar" = ["xarchiver.desktop"];
     };
   };
 

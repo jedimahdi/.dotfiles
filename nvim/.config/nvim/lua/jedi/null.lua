@@ -1,7 +1,7 @@
 local null_ls = require("null-ls")
 
 local sources = {
-  null_ls.builtins.formatting.nixpkgs_fmt,
+  null_ls.builtins.formatting.alejandra,
   null_ls.builtins.diagnostics.statix.with({
     diagnostic_config = {
       virtual_text = false,

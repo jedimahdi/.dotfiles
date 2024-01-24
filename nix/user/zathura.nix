@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.zathura = {
     enable = true;
     options = {
@@ -22,11 +24,10 @@
     extraConfig = "include catppuccin-mocha";
   };
 
-  xdg.mimeApps.defaultApplications =
-    {
-      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-      "application/epub+zip" = [ "org.pwmt.zathura.desktop" ];
-    };
+  xdg.mimeApps.defaultApplications = {
+    "application/pdf" = ["org.pwmt.zathura.desktop"];
+    "application/epub+zip" = ["org.pwmt.zathura.desktop"];
+  };
 
   xdg.configFile = {
     "zathura/catppuccin-mocha".source = pkgs.fetchurl {

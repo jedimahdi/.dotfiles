@@ -1,5 +1,8 @@
-{ pkgs, inputs, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   services.xserver.displayManager = {
     defaultSession = "hyprland";
     lightdm.enable = false;

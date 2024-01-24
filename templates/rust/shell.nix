@@ -7,4 +7,5 @@
   )
   {
     src = ./.;
-  }).shellNix
+  })
+.shellNix

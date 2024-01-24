@@ -1,7 +1,4 @@
-{ config
-, ...
-}:
-let
+{config, ...}: let
   colors = {
     foreground = "abb2bf";
     background = "1f2329";
@@ -34,8 +31,7 @@ let
     "16" = "ffa066";
     "17" = "ff5d62";
   };
-in
-{
+in {
   programs.foot = {
     enable = true;
     # server.enable = true;

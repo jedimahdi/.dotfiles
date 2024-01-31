@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  browser,
-  ...
-}: {
+{ config, pkgs, inputs, browser, ... }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
@@ -92,7 +86,7 @@
       stylua
       lua-language-server
 
-      (callPackage ../pkgs/ddper {})
+      (callPackage ../pkgs/ddper { })
       brave
       osu-lazer-bin
     ];
@@ -115,10 +109,10 @@
     mime.enable = true;
     mimeApps.enable = true;
     mimeApps.defaultApplications = {
-      "inode/directory" = ["pcmanfm.desktop"];
-      "application/zip" = ["xarchiver.desktop"];
-      "application/gzip" = ["xarchiver.desktop"];
-      "application/x-rar" = ["xarchiver.desktop"];
+      "inode/directory" = [ "pcmanfm.desktop" ];
+      "application/zip" = [ "xarchiver.desktop" ];
+      "application/gzip" = [ "xarchiver.desktop" ];
+      "application/x-rar" = [ "xarchiver.desktop" ];
     };
   };
 

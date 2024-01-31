@@ -1,15 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  inputs,
-  ...
-}: {
+{ pkgs, config, lib, inputs, ... }: {
   nix = {
     package = pkgs.nixFlakes;
 
     # This will add each flake input as a registry
-    registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
     settings = {
       experimental-features = "nix-command flakes";
@@ -25,21 +19,21 @@
       warn-dirty = false;
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
-      trusted-users = ["root" "@wheel"];
-      allowed-users = ["root" "@wheel"];
+      trusted-users = [ "root" "@wheel" ];
+      allowed-users = [ "root" "@wheel" ];
     };
   };
 
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
+  nix.nixPath = [ "/etc/nix/path" ];
   environment.etc =
     lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
 
   programs.nix-ld = {
     enable = true;

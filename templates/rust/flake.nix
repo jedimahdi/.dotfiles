@@ -5,16 +5,18 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    nixpkgs,
-    utils,
-    naersk,
-    ...
-  }:
-    utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
-      naersk-lib = pkgs.callPackage naersk {};
-    in rec {
+  outputs =
+    { nixpkgs
+    , utils
+    , naersk
+    , ...
+    }:
+    utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+      naersk-lib = pkgs.callPackage naersk { };
+    in
+    rec {
       # `nix build`
       packages.hello_world = naersk-lib.buildPackage {
         pname = "hello_world";
@@ -31,7 +33,7 @@
       # `nix develop`
       devShell = with pkgs;
         mkShell {
-          buildInputs = [cargo rustc rustfmt pre-commit rustPackages.clippy rust-analyzer nix-linter nixpkgs-fmt yamllint python310Packages.pre-commit-hooks];
+          buildInputs = [ cargo rustc rustfmt pre-commit rustPackages.clippy rust-analyzer nix-linter nixpkgs-fmt yamllint python310Packages.pre-commit-hooks ];
           RUST_SRC_PATH = rustPlatform.rustLibSrc;
         };
     });

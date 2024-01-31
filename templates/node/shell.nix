@@ -1,6 +1,6 @@
-{
-  pkgs,
-  name,
+{ pkgs
+, name
+,
 }:
 pkgs.stable.mkShell {
   inherit name;
@@ -23,7 +23,7 @@ pkgs.stable.mkShell {
 
     ###################################################
     # Command line tools:
-    {inherit (pkgs.stable) gitFull;}
+    { inherit (pkgs.stable) gitFull; }
 
     ###################################################
     # Language servers:

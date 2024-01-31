@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./hardware.nix
     ./locale.nix
@@ -38,7 +38,7 @@
       firefox
     ];
 
-    shells = with pkgs; [zsh];
+    shells = with pkgs; [ zsh ];
   };
 
   hardware = {
@@ -59,7 +59,7 @@
   users.users.mahdi = {
     isNormalUser = true;
     description = "mahdi";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [ "networkmanager" "wheel" ];
   };
   users.defaultUserShell = pkgs.zsh;
 
@@ -68,7 +68,7 @@
     thermald.enable = true;
     xserver = {
       enable = true;
-      videoDrivers = ["amdgpu"];
+      videoDrivers = [ "amdgpu" ];
       autoRepeatDelay = 300;
       autoRepeatInterval = 50;
       layout = "us";
@@ -76,12 +76,12 @@
     };
     hoogle = {
       enable = true;
-      packages = hp: with hp; [lens];
+      packages = hp: with hp; [ lens ];
       # haskellPackages = haskellPackages;
     };
     dbus = {
       enable = true;
-      packages = [pkgs.dconf];
+      packages = [ pkgs.dconf ];
     };
     blueman.enable = true;
     openssh.enable = true;

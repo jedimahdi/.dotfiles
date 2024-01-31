@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ lib, pkgs, ... }:
+let
   myAliases = {
     ls = "eza --group-directories-first";
     l = "eza -la --icons --no-user --no-permissions --no-filesize --no-time --group-directories-first";
@@ -17,8 +13,9 @@
     fetch = "neofetch";
     lg = "lazygit";
   };
-in {
-  imports = [./starship.nix];
+in
+{
+  imports = [ ./starship.nix ];
   programs = {
     zsh = {
       enable = true;
@@ -87,24 +84,25 @@ in {
     neovim
   ];
 
-  xdg.mimeApps.defaultApplications = let
-    code = [
-      "text/english"
-      "text/plain"
-      "text/x-makefile"
-      "text/x-c++hdr"
-      "text/x-c++src"
-      "text/x-chdr"
-      "text/x-csrc"
-      "text/x-java"
-      "text/x-moc"
-      "text/x-pascal"
-      "text/x-tcl"
-      "text/x-tex"
-      "application/x-shellscript"
-      "text/x-c"
-      "text/x-c++"
-    ];
-  in
-    lib.genAttrs code (_: ["nvim.desktop"]);
+  xdg.mimeApps.defaultApplications =
+    let
+      code = [
+        "text/english"
+        "text/plain"
+        "text/x-makefile"
+        "text/x-c++hdr"
+        "text/x-c++src"
+        "text/x-chdr"
+        "text/x-csrc"
+        "text/x-java"
+        "text/x-moc"
+        "text/x-pascal"
+        "text/x-tcl"
+        "text/x-tex"
+        "application/x-shellscript"
+        "text/x-c"
+        "text/x-c++"
+      ];
+    in
+    lib.genAttrs code (_: [ "nvim.desktop" ]);
 }

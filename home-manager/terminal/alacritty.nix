@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  home.packages = [pkgs.alacritty];
+{ pkgs, ... }: {
+  home.packages = [ pkgs.alacritty ];
   programs.alacritty = {
     enable = true;
     settings = {

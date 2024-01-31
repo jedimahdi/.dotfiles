@@ -1,7 +1,9 @@
-_: let
+_:
+let
   locale = "en_US.UTF-8";
   timezone = "Asia/Tehran";
-in {
+in
+{
   # Timezone and locale
   time.timeZone = timezone;
   i18n.defaultLocale = locale;

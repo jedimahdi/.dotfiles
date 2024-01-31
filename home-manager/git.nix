@@ -1,18 +1,19 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.lazygit];
+{ pkgs, ... }: {
+  home.packages = [ pkgs.lazygit ];
 
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
     userName = "Mahdi Seyedan";
     userEmail = "mahdi.se@yahoo.com";
-    ignores = ["*~" "*.swp" "result" "result-*" ".direnv" "node_modules"];
+    ignores = [ "*~" "*.swp" "result" "result-*" ".direnv" "node_modules" ];
     delta = {
       enable = true;
       options = {
         light = false;
         navigate = true;
         true-color = "always";
+        side-by-side = true;
       };
     };
     aliases = {

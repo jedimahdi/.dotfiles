@@ -3,10 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,73 +29,61 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    rust-overlay,
-    pre-commit-hooks,
-    treefmt-nix,
-    ...
-  } @ inputs: let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree = true;
-        allowUnfreePredicate = _: true;
-      };
-      overlays = [
-        (final: _: {project.haskellPackages = final.haskell.packages.ghc948;})
-        (import rust-overlay)
-        (_: final: {vaapiIntel = final.vaapiIntel.override {enableHybridCodec = true;};})
-      ];
-    };
-    treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-    browser = "firefox";
-    inherit (nixpkgs) lib;
-    inherit (pkgs.project) haskellPackages;
-  in {
-    homeConfigurations = {
-      user = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [./home-manager/home.nix];
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit browser;
-        };
-      };
-    };
-    nixosConfigurations = {
-      system = lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, rust-overlay, treefmt-nix, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
         inherit system;
-        modules = [./nixos/configuration.nix];
-        specialArgs = {
-          inherit inputs;
-          inherit browser;
-          inherit haskellPackages;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = _: true;
+        };
+        overlays = [
+          (final: _: { project.haskellPackages = final.haskell.packages.ghc948; })
+          (import rust-overlay)
+          (_: final: { vaapiIntel = final.vaapiIntel.override { enableHybridCodec = true; }; })
+        ];
+      };
+      treefmtEval = treefmt-nix.lib.evalModule pkgs {
+        projectRootFile = "flake.nix";
+        programs = {
+          nixpkgs-fmt.enable = true;
+          shfmt.enable = true;
         };
       };
-    };
-    checks.${system} = {
-      pre-commit-check = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          alejandra.enable = true;
+      browser = "firefox";
+      inherit (nixpkgs) lib;
+      inherit (pkgs.project) haskellPackages;
+    in
+    {
+      homeConfigurations = {
+        user = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home-manager/home.nix ];
+          extraSpecialArgs = {
+            inherit inputs;
+            inherit browser;
+          };
         };
       };
-    };
-    formatter.${system} = treefmtEval.config.build.wrapper;
-    devShells.${system}.default =
-      pkgs.mkShell
-      {
+      nixosConfigurations = {
+        system = lib.nixosSystem {
+          inherit system;
+          modules = [ ./nixos/configuration.nix ];
+          specialArgs = {
+            inherit inputs;
+            inherit browser;
+            inherit haskellPackages;
+          };
+        };
+      };
+      formatter.${system} = treefmtEval.config.build.wrapper;
+      devShells.${system}.default = pkgs.mkShell {
         name = "dotfiles";
-        buildInputs = with pkgs; [zlib.dev];
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
         nativeBuildInputs = builtins.attrValues {
-          inherit (pkgs) shellcheck shfmt;
-          inherit (pre-commit-hooks.packages.${system}) alejandra;
+          treefmt = treefmtEval.config.build.wrapper;
+          inherit (pkgs) shellcheck shfmt nixpkgs-fmt;
         };
       };
-  };
+    };
 }

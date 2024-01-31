@@ -11,17 +11,19 @@
     };
   };
 
-  outputs = {
-    utils,
-    nixpkgs-stable,
-    nixpkgs-unstable,
-    easy-purescript-src,
-    ...
-  }: let
-    name = "purescript";
-  in
-    utils.lib.eachSystem ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"] (system: let
-      easy-purescript = import easy-purescript-src {pkgs = pkgs.stable;};
+  outputs =
+    { utils
+    , nixpkgs-stable
+    , nixpkgs-unstable
+    , easy-purescript-src
+    , ...
+    }:
+    let
+      name = "purescript";
+    in
+    utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ] (system:
+    let
+      easy-purescript = import easy-purescript-src { pkgs = pkgs.stable; };
       pkgs = {
         stable = import nixpkgs-stable {
           inherit system;
@@ -32,9 +34,10 @@
             })
           ];
         };
-        unstable = import nixpkgs-unstable {inherit system;};
+        unstable = import nixpkgs-unstable { inherit system; };
       };
-    in {
-      devShell = import ./shell.nix {inherit name pkgs;};
+    in
+    {
+      devShell = import ./shell.nix { inherit name pkgs; };
     });
 }

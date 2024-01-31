@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     lf
   ];
@@ -10,8 +6,8 @@
     enable = true;
     settings = {
       preview = false;
-      ratios = [1];
-      info = ["size"];
+      ratios = [ 1 ];
+      info = [ "size" ];
     };
     commands = {
       dragon-out = ''%${pkgs.xdragon}/bin/xdragon -a -x "$fx"'';

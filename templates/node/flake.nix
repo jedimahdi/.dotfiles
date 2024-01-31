@@ -7,20 +7,23 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    nixpkgs-stable,
-    nixpkgs-unstable,
-    utils,
-    ...
-  }: let
-    name = "node";
-  in
-    utils.lib.eachDefaultSystem (system: let
+  outputs =
+    { nixpkgs-stable
+    , nixpkgs-unstable
+    , utils
+    , ...
+    }:
+    let
+      name = "node";
+    in
+    utils.lib.eachDefaultSystem (system:
+    let
       pkgs = {
-        stable = import nixpkgs-stable {inherit system;};
-        unstable = import nixpkgs-unstable {inherit system;};
+        stable = import nixpkgs-stable { inherit system; };
+        unstable = import nixpkgs-unstable { inherit system; };
       };
-    in {
+    in
+    {
       devShell = import ./shell.nix {
         inherit name pkgs;
       };

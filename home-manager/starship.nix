@@ -1,16 +1,12 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 with lib;
 with builtins; let
   isRustFile = path: type:
     hasSuffix ".rs" path && type == "regular" && path != "mod.rs";
   mergeAllAttrSets = attrsSets:
-    foldl' recursiveUpdate {} attrsSets;
+    foldl' recursiveUpdate { } attrsSets;
   disableModules = isDisabled: modules:
-    mergeAllAttrSets (map (mod: {"${mod}".disabled = isDisabled;}) modules);
+    mergeAllAttrSets (map (mod: { "${mod}".disabled = isDisabled; }) modules);
 
   starshipPackage = pkgs.starship;
   promptOrder = [
@@ -28,7 +24,7 @@ with builtins; let
     "nodejs"
     "character"
   ];
-  promptFormat = concatStrings (map (s: "\$${s}") promptOrder);
+  # promptFormat = concatStrings (map (s: "\$${s}") promptOrder);
   modulesSources = readDir "${starshipPackage.src}/src/modules";
   enabledModules = disableModules false promptOrder; # <== enabled all modules used in the prompt are enabled
   disabledModules = pipe modulesSources [
@@ -40,7 +36,8 @@ with builtins; let
     (subtractLists promptOrder) # <== do not disable modules used in the prompt...
     (disableModules true) # <== and finally build the configuration
   ];
-in {
+in
+{
   programs.starship = {
     enable = true;
     package = starshipPackage;

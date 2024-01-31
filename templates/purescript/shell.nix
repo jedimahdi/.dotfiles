@@ -1,6 +1,6 @@
-{
-  pkgs,
-  name,
+{ pkgs
+, name
+,
 }:
 pkgs.stable.mkShell {
   inherit name;

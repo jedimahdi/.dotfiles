@@ -7,5 +7,4 @@
   )
   {
     src = ./.;
-  })
-.defaultNix
+  }).defaultNix

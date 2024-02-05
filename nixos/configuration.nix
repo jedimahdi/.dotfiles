@@ -1,8 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./hardware.nix
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
     ./locale.nix
-    ./nvidia-disable.nix
     ./nix.nix
     ./fonts.nix
     ./sound.nix
@@ -20,9 +23,9 @@
     networkmanager.enable = true;
   };
   environment = {
-    sessionVariables = {
-      VDPAU_DRIVER = "va_gl";
-    };
+    # sessionVariables = {
+    #   VDPAU_DRIVER = "va_gl";
+    # };
 
     systemPackages = with pkgs; [
       vim
@@ -30,12 +33,9 @@
       neovim
       zsh
       git
-      stow
       home-manager
-      dunst
       libnotify
       pciutils
-      firefox
     ];
 
     shells = with pkgs; [ zsh ];
@@ -45,14 +45,14 @@
     opengl = {
       enable = true;
       driSupport = true;
-      extraPackages = with pkgs; [
-        libva
-        libvdpau-va-gl
-        intel-media-driver
-        vaapiVdpau
-        vaapiIntel
-        amdvlk
-      ];
+      # extraPackages = with pkgs; [
+      #   libva
+      #   libvdpau-va-gl
+      #   intel-media-driver
+      #   vaapiVdpau
+      #   vaapiIntel
+      #   amdvlk
+      # ];
     };
   };
 
@@ -68,16 +68,11 @@
     thermald.enable = true;
     xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ];
+      # videoDrivers = [ "amdgpu" ];
       autoRepeatDelay = 300;
       autoRepeatInterval = 50;
       layout = "us";
       xkbVariant = "";
-    };
-    hoogle = {
-      enable = true;
-      packages = hp: with hp; [ lens ];
-      # haskellPackages = haskellPackages;
     };
     dbus = {
       enable = true;

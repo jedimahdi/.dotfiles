@@ -3,6 +3,7 @@ let
   myAliases = {
     ls = "eza --group-directories-first";
     l = "eza -la --icons --no-user --no-permissions --no-filesize --no-time --group-directories-first";
+    tree = "eza --tree --icons --group-directories-first";
     c = "clear";
     cat = "bat";
     tc = "tmux-sessionizer";
@@ -39,24 +40,27 @@ in
         bindkey "^X^E" edit-command-line
       '';
     };
-
     bash = {
       enable = true;
       enableCompletion = true;
       shellAliases = myAliases;
     };
-
+    nushell = {
+      enable = true;
+      shellAliases = myAliases;
+    };
     direnv = {
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-
     fzf = {
       enable = true;
       enableZshIntegration = true;
+      colors = {
+        "bg+" = "-1";
+      };
     };
-
     bat = {
       enable = true;
       config = {
@@ -64,6 +68,8 @@ in
         style = "header";
       };
     };
+    jq.enable = true;
+    htop.enable = true;
   };
 
   home.packages = with pkgs; [
@@ -82,6 +88,7 @@ in
     brightnessctl
     unzip
     neovim
+    glow
   ];
 
   xdg.mimeApps.defaultApplications =

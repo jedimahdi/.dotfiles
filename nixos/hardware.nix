@@ -13,7 +13,7 @@
     # Bootloader.
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.kernelModules = [ "amdgpu" "i915" ];
+    # initrd.kernelModules = [ "amdgpu" "i915" ];
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" "sr_mod" ];
   };
 

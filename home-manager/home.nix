@@ -1,7 +1,8 @@
 { config, pkgs, inputs, browser, ... }: {
   imports = [
-    inputs.nix-colors.homeManagerModules.default
+    inputs.stylix.homeManagerModules.stylix
     inputs.nix-index-database.hmModules.nix-index
+    ./stylix.nix
     ./sh.nix
     ./tmux
     ./git.nix
@@ -37,9 +38,8 @@
       alejandra
       statix
       deadnix
+      nix-tree
 
-      alacritty
-      kitty
       dmenu
       v2raya
 
@@ -47,7 +47,6 @@
       curlFull
       binutils
       diffutils
-      fd
       file
       findutils
       gawk
@@ -57,7 +56,6 @@
       mailutils
       watch
       wget
-      htop
       ffmpeg
       rar
       unzip
@@ -69,12 +67,9 @@
       entr
       pkg-config
       eza
-      zoxide
       fzf
-      jq
       pamixer
       thefuck
-      ytfzf
 
       pcmanfm
       xarchiver
@@ -82,13 +77,10 @@
       nodePackages.bash-language-server
       shellcheck
       shfmt
-      nodePackages.yaml-language-server
       stylua
       lua-language-server
 
       (callPackage ../pkgs/ddper { })
-      brave
-      osu-lazer-bin
     ];
 
     sessionVariables = {
@@ -97,7 +89,6 @@
     };
   };
 
-  colorScheme = inputs.nix-colors.lib.schemeFromYAML "onedarker" (builtins.readFile ./onedarker.yaml);
 
   xdg = {
     enable = true;
@@ -121,6 +112,11 @@
     thefuck.enable = true;
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
+  };
+
+  services = {
+    safeeyes.enable = true;
+
   };
 
   manual = {

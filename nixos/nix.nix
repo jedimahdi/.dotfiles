@@ -38,55 +38,55 @@
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
-      alsa-lib
-      at-spi2-atk
-      at-spi2-core
-      atk
+      # alsa-lib
+      # at-spi2-atk
+      # at-spi2-core
+      # atk
       cairo
-      cups
+      # cups
       curl
-      dbus
-      expat
-      fontconfig
+      # dbus
+      # expat
+      # fontconfig
       freetype
-      fuse3
-      gdk-pixbuf
-      glib
-      gtk3
-      icu
-      libGL
-      libappindicator-gtk3
-      libdrm
-      libglvnd
+      # fuse3
+      # gdk-pixbuf
+      # glib
+      # gtk3
+      # icu
+      # libGL
+      # libappindicator-gtk3
+      # libdrm
+      # libglvnd
       libnotify
-      libpulseaudio
-      libunwind
-      libusb1
-      libuuid
-      libxkbcommon
-      mesa
-      nspr
-      nss
+      # libpulseaudio
+      # libunwind
+      # libusb1
+      # libuuid
+      # libxkbcommon
+      # mesa
+      # nspr
+      # nss
       openssl
       pango
-      pipewire
+      # pipewire
       stdenv.cc.cc
-      systemd
+      # systemd
       vulkan-loader
       xorg.libX11
-      xorg.libXScrnSaver
-      xorg.libXcomposite
-      xorg.libXcursor
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXi
-      xorg.libXrandr
-      xorg.libXrender
-      xorg.libXtst
-      xorg.libxcb
-      xorg.libxkbfile
-      xorg.libxshmfence
+      # xorg.libXScrnSaver
+      # xorg.libXcomposite
+      # xorg.libXcursor
+      # xorg.libXdamage
+      # xorg.libXext
+      # xorg.libXfixes
+      # xorg.libXi
+      # xorg.libXrandr
+      # xorg.libXrender
+      # xorg.libXtst
+      # xorg.libxcb
+      # xorg.libxkbfile
+      # xorg.libxshmfence
       zlib
     ];
   };

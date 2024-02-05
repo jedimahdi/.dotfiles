@@ -40,10 +40,10 @@ in
 
     settings = {
       main = {
-        font = "VictorMono NF SemiBold:size=15";
-        line-height = "32px";
+        # font = "VictorMono NF SemiBold:size=15";
+        line-height = "38px";
         box-drawings-uses-font-glyphs = "yes";
-        pad = "0x0 center";
+        pad = "4x4 center";
         notify = "notify-send -a \${app-id} -i \${app-id} \${title} \${body}";
         selection-target = "clipboard";
       };
@@ -69,7 +69,7 @@ in
         # style = "beam";
         # beam-thickness = 1;
       };
-      inherit colors;
+      # inherit colors;
     };
   };
 }

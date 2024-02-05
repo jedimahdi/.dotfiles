@@ -1,22 +1,16 @@
 { pkgs, ... }: {
-  home.pointerCursor = {
-    name = "phinger-cursors-light";
-    package = pkgs.phinger-cursors;
-    size = 32;
-    gtk.enable = true;
-  };
 
-  xdg.configFile = {
-    "gtk-3.0/gtk.css".source = ./gtk.css;
-    "gtk-4.0/gtk.css".source = ./gtk.css;
-  };
+  # xdg.configFile = {
+  #   "gtk-3.0/gtk.css".source = ./gtk.css;
+  #   "gtk-4.0/gtk.css".source = ./gtk.css;
+  # };
 
   gtk = {
     enable = true;
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
+    # theme = {
+    #   name = "adw-gtk3-dark";
+    #   package = pkgs.adw-gtk3;
+    # };
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;

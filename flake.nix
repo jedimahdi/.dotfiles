@@ -3,14 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-colors.url = "github:misterio77/nix-colors";
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
+    stylix = {
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -19,17 +20,17 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    manix = {
-      url = "github:nix-community/manix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rycee-nurpkgs = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, rust-overlay, treefmt-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, treefmt-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -40,7 +41,6 @@
         };
         overlays = [
           (final: _: { project.haskellPackages = final.haskell.packages.ghc948; })
-          (import rust-overlay)
           (_: final: { vaapiIntel = final.vaapiIntel.override { enableHybridCodec = true; }; })
         ];
       };
@@ -52,8 +52,6 @@
         };
       };
       browser = "firefox";
-      inherit (nixpkgs) lib;
-      inherit (pkgs.project) haskellPackages;
     in
     {
       homeConfigurations = {
@@ -67,23 +65,24 @@
         };
       };
       nixosConfigurations = {
-        system = lib.nixosSystem {
+        system = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [ ./nixos/configuration.nix ];
           specialArgs = {
             inherit inputs;
             inherit browser;
-            inherit haskellPackages;
           };
         };
       };
       formatter.${system} = treefmtEval.config.build.wrapper;
       devShells.${system}.default = pkgs.mkShell {
         name = "dotfiles";
-        nativeBuildInputs = builtins.attrValues {
-          treefmt = treefmtEval.config.build.wrapper;
-          inherit (pkgs) shellcheck shfmt nixpkgs-fmt;
-        };
+        nativeBuildInputs = [
+          treefmtEval.config.build.wrapper
+          pkgs.nixpkgs-fmt
+          pkgs.shfmt
+          pkgs.shellcheck
+        ];
       };
     };
 }

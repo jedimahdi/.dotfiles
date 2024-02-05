@@ -54,8 +54,8 @@
           gaps_in = 3;
           gaps_out = 3;
           border_size = 1;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          # "col.inactive_border" = "rgba(595959aa)";
         };
         decoration = {
           rounding = 0;
@@ -84,10 +84,11 @@
         };
         "$mod" = "SUPER";
         bind = [
-          "$mod, Return, exec, alacritty"
+          "$mod, Return, exec, foot"
+          "$mod, E, exec, pcmanfm"
+          "$mod, Z, exec, firefox"
           "$mod, Q, killactive,"
           "$mod, M, exit,"
-          "$mod, E, exec, pcmanfm"
           "$mod, T, togglefloating,"
           "$mod, D, exec, fuzzel"
           "$mod, I, exec, networkmanager_dmenu"
@@ -142,15 +143,6 @@
   programs.fuzzel = {
     enable = true;
     settings = {
-      colors = with config.colorScheme.colors; {
-        background = base00 + "e6";
-        text = base07 + "ff";
-        match = base05 + "ff";
-        selection = base08 + "ff";
-        selection-text = base00 + "ff";
-        selection-match = base05 + "ff";
-        border = base08 + "ff";
-      };
       main = {
         width = 70;
       };
@@ -159,5 +151,10 @@
         radius = 7;
       };
     };
+  };
+  services.mako = {
+    enable = true;
+    defaultTimeout = 4 * 1000; # millis
+    maxVisible = 3;
   };
 }

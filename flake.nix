@@ -44,7 +44,7 @@
           (_: final: { vaapiIntel = final.vaapiIntel.override { enableHybridCodec = true; }; })
         ];
       };
-      treefmtEval = treefmt-nix.lib.evalModule pkgs {
+      treefmtWrapper = treefmt-nix.lib.mkWrapper pkgs {
         projectRootFile = "flake.nix";
         programs = {
           nixpkgs-fmt.enable = true;
@@ -74,11 +74,11 @@
           };
         };
       };
-      formatter.${system} = treefmtEval.config.build.wrapper;
+      formatter.${system} = treefmtWrapper;
       devShells.${system}.default = pkgs.mkShell {
         name = "dotfiles";
         nativeBuildInputs = [
-          treefmtEval.config.build.wrapper
+          treefmtWrapper
           pkgs.nixpkgs-fmt
           pkgs.shfmt
           pkgs.shellcheck

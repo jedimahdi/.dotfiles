@@ -1,6 +1,7 @@
 { pkgs, config, lib, inputs, ... }: {
   nix = {
     package = pkgs.nixFlakes;
+    channel.enable = false;
 
     # This will add each flake input as a registry
     registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);

@@ -40,6 +40,7 @@ in
 
     settings = {
       main = {
+        term = "xterm-256color";
         # font = "VictorMono NF SemiBold:size=15";
         line-height = "38px";
         box-drawings-uses-font-glyphs = "yes";
@@ -54,7 +55,7 @@ in
       };
 
       text-bindings = {
-        "\\x0d" = "Control+Return";
+        "\\x0d" = "Control+Return Shift+Return Control+Shift+Return";
       };
 
       url = {

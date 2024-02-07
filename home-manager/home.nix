@@ -52,7 +52,6 @@
       gawk
       glib
       gnupg
-      less
       mailutils
       watch
       wget
@@ -89,7 +88,6 @@
     };
   };
 
-
   xdg = {
     enable = true;
     userDirs = {
@@ -116,7 +114,6 @@
 
   services = {
     safeeyes.enable = true;
-
   };
 
   manual = {

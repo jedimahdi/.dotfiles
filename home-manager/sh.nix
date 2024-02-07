@@ -70,6 +70,7 @@ in
     };
     jq.enable = true;
     htop.enable = true;
+    less.enable = true;
   };
 
   home.packages = with pkgs; [

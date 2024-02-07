@@ -51,14 +51,15 @@
         };
         general = {
           layout = "master";
-          gaps_in = 3;
-          gaps_out = 3;
-          border_size = 1;
+          gaps_in = 2;
+          gaps_out = 0;
+          border_size = 0;
           # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
           # "col.inactive_border" = "rgba(595959aa)";
         };
         decoration = {
           rounding = 0;
+          drop_shadow = false;
           blur = {
             enabled = true;
             size = 5;
@@ -89,12 +90,18 @@
           "$mod, Z, exec, firefox"
           "$mod, Q, killactive,"
           "$mod, M, exit,"
-          "$mod, T, togglefloating,"
           "$mod, D, exec, fuzzel"
           "$mod, I, exec, networkmanager_dmenu"
+          "$mod, C, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
+          "$mod, S, exec, screenshot"
+          "$mod SHIFT, S, exec, screenshot-edit"
+          ", code:121, exec, pamixer -t"
+          "$mod, Tab, workspace, previous"
+          "$mod, T, togglefloating,"
           "$mod, J, layoutmsg, cyclenext"
           "$mod, K, layoutmsg, cycleprev"
-          "$mod, Tab, workspace, previous"
+          "$mod SHIFT, J, layoutmsg, swapnext"
+          "$mod SHIFT, K, layoutmsg, swapprev"
           "$mod, 1, workspace, 1"
           "$mod, 2, workspace, 2"
           "$mod, 3, workspace, 3"
@@ -115,9 +122,6 @@
           "$mod SHIFT, 8, movetoworkspace, 8"
           "$mod SHIFT, 9, movetoworkspace, 9"
           "$mod SHIFT, 0, movetoworkspace, 10"
-          "$mod, S, exec, screenshot"
-          "$mod SHIFT, S, exec, screenshot-edit"
-          ", code:121, exec, pamixer -t"
         ];
         bindm = [
           "$mod, mouse:272, movewindow"
@@ -130,6 +134,10 @@
           "$mod, code:123, exec, brightnessctl set +15"
           ", code:122, exec, pamixer -d 10"
           ", code:123, exec, pamixer -i 10"
+        ];
+        windowrule = [
+        "tile,^(firefox)$"
+
         ];
         windowrulev2 = [
           "opacity 0.80 0.80,class:^(Alacritty)$"
@@ -144,10 +152,10 @@
     enable = true;
     settings = {
       main = {
-        width = 70;
+        width = 60;
       };
       border = {
-        width = 3;
+        width = 2;
         radius = 7;
       };
     };
@@ -157,4 +165,5 @@
     defaultTimeout = 4 * 1000; # millis
     maxVisible = 3;
   };
+  services.cliphist.enable = true;
 }

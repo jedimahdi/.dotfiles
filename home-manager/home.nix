@@ -13,12 +13,14 @@
     ./${browser}.nix
     ./terminal/alacritty.nix
     ./terminal/foot.nix
+    ./terminal/kitty.nix
     ./imv.nix
     ./zathura.nix
     ./langs/c.nix
     ./langs/haskell.nix
     ./langs/js.nix
     ./langs/rust.nix
+    ./langs/go.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -39,6 +41,7 @@
       statix
       deadnix
       nix-tree
+      manix
 
       dmenu
       v2raya
@@ -52,7 +55,6 @@
       gawk
       glib
       gnupg
-      mailutils
       watch
       wget
       ffmpeg
@@ -61,7 +63,8 @@
       zip
       ouch
 
-      tldr
+      tealdeer # rust implementation of `tldr`
+      du-dust # fancy version of `du`
       ripgrep
       entr
       pkg-config
@@ -78,6 +81,9 @@
       shfmt
       stylua
       lua-language-server
+
+      aspell
+      aspellDicts.en
 
       (callPackage ../pkgs/ddper { })
     ];
@@ -110,10 +116,6 @@
     thefuck.enable = true;
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
-  };
-
-  services = {
-    safeeyes.enable = true;
   };
 
   manual = {

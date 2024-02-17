@@ -9,6 +9,7 @@
       (nerdfonts.override {
         fonts = [
           "VictorMono"
+          "DejaVuSansMono"
         ];
       })
     ];
@@ -17,7 +18,7 @@
       defaultFonts = {
         serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
         sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-        monospace = [ "VictorMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+        monospace = [ "DejaVuSansM Nerd Font" "VictorMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

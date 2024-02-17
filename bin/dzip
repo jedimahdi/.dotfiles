@@ -2,6 +2,6 @@
 
 TMPFILE=$(mktemp)
 PWD=$(pwd)
-wget "$1" -O "$TMPFILE"
+aria2c "$1" -o "$TMPFILE"
 unzip -d "$PWD" "$TMPFILE"
 rm "$TMPFILE"

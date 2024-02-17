@@ -30,7 +30,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, treefmt-nix, ... }@inputs:
+  outputs = { nixpkgs, home-manager, treefmt-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -84,5 +84,14 @@
           pkgs.shellcheck
         ];
       };
+
     };
+  nixConfig = {
+    extra-substituters = [
+      "https://hyprland.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
 }

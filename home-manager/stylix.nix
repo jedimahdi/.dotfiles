@@ -47,6 +47,7 @@
       fzf.enable = true;
       xresources.enable = true;
       firefox.enable = true;
+      tmux.enable = true;
     };
   };
 }

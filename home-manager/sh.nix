@@ -13,6 +13,7 @@ let
     "...." = "cd ../../..";
     fetch = "neofetch";
     lg = "lazygit";
+    xdg-open = "${pkgs.mimeo}/bin/mimeo";
   };
 in
 {
@@ -68,6 +69,12 @@ in
         style = "header";
       };
     };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      enableNushellIntegration = false;
+      options = [ "--cmd" "cd" ];
+    };
     jq.enable = true;
     htop.enable = true;
     less.enable = true;
@@ -89,7 +96,7 @@ in
     brightnessctl
     unzip
     neovim
-    glow
+    mdcat
   ];
 
   xdg.mimeApps.defaultApplications =

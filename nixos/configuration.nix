@@ -3,7 +3,7 @@
     ./hardware.nix
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-    inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-gpu-amd
     ./locale.nix
     ./nix.nix
@@ -71,8 +71,10 @@
       # videoDrivers = [ "amdgpu" ];
       autoRepeatDelay = 300;
       autoRepeatInterval = 50;
-      layout = "us";
-      xkbVariant = "";
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
     };
     dbus = {
       enable = true;

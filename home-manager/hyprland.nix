@@ -85,7 +85,7 @@
         };
         "$mod" = "SUPER";
         bind = [
-          "$mod, Return, exec, foot"
+          "$mod, Return, exec, alacritty"
           "$mod, E, exec, pcmanfm"
           "$mod, Z, exec, firefox"
           "$mod, Q, killactive,"
@@ -136,13 +136,14 @@
           ", code:123, exec, pamixer -i 10"
         ];
         windowrule = [
-        "tile,^(firefox)$"
+          "tile,^(firefox)$"
 
         ];
         windowrulev2 = [
           "opacity 0.80 0.80,class:^(Alacritty)$"
           "opacity 0.80 0.80,class:^(foot)$"
           "opacity 0.80 0.80,class:^(footclient)$"
+          "opacity 0.80 0.80,class:^(kitty)$"
         ];
       };
       xwayland = { enable = true; };

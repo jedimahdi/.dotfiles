@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, browser, ... }: {
+{ config, pkgs, inputs, browser, wm, ... }: {
   imports = [
     inputs.stylix.homeManagerModules.stylix
     inputs.nix-index-database.hmModules.nix-index
@@ -9,7 +9,7 @@
     ./gtk.nix
     ./mpv.nix
     ./lf.nix
-    ./hyprland.nix
+    ./${wm}.nix
     ./${browser}.nix
     ./terminal/alacritty.nix
     ./terminal/foot.nix
@@ -43,7 +43,6 @@
       nix-tree
       manix
 
-      dmenu
       v2raya
 
       xdg-utils
@@ -84,6 +83,8 @@
 
       aspell
       aspellDicts.en
+
+      brave
 
       (callPackage ../pkgs/ddper { })
     ];

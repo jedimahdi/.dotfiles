@@ -52,6 +52,7 @@
         };
       };
       browser = "firefox";
+      wm = "hyprland";
     in
     {
       homeConfigurations = {
@@ -61,6 +62,7 @@
           extraSpecialArgs = {
             inherit inputs;
             inherit browser;
+            inherit wm;
           };
         };
       };
@@ -71,6 +73,7 @@
           specialArgs = {
             inherit inputs;
             inherit browser;
+            inherit wm;
           };
         };
       };

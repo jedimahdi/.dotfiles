@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, wm, ... }:
 {
   stylix = {
     autoEnable = false;
@@ -26,12 +26,18 @@
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
-      sizes = {
-        desktop = 14;
-        terminal = 18;
-        applications = 14;
-        popups = 22;
-      };
+      sizes =
+        if wm == "hyprland" then {
+          desktop = 14;
+          terminal = 18;
+          applications = 14;
+          popups = 22;
+        } else {
+          desktop = 14;
+          terminal = 13;
+          applications = 14;
+          popups = 16;
+        };
     };
 
     targets = {

@@ -105,13 +105,13 @@ myKeys conf@XConfig { XMonad.modMask = myModMask } = Map.fromList $
      , ((0, xF86XK_AudioPrev)               , spawn "playerctl previous")
      , ((0, xF86XK_AudioNext)               , spawn "playerctl next")
      , ((0, xF86XK_AudioStop)               , spawn "playerctl stop")
-     , ((0, xF86XK_AudioRaiseVolume)        , spawn "pactl set-sink-volume 0 +5%")
-     , ((0, xF86XK_AudioLowerVolume)        , spawn "pactl set-sink-volume 0 -5%")
-     , ((0, xF86XK_AudioMute)               , spawn "pactl set-sink-mute 0 toggle")
+     , ((0, xF86XK_AudioRaiseVolume)        , spawn "pamixer -i 5")
+     , ((0, xF86XK_AudioLowerVolume)        , spawn "pamixer -d 5")
+     , ((0, xF86XK_AudioMute)               , spawn "pamixer -t")
 
      -- Brightness keys
-     , ((0, xF86XK_MonBrightnessUp)         , spawn "brightnessctl s +10%")
-     , ((0, xF86XK_MonBrightnessDown)       , spawn "brightnessctl s 10-%")
+     , ((0, xF86XK_MonBrightnessUp)         , spawn "brightnessctl s +5%")
+     , ((0, xF86XK_MonBrightnessDown)       , spawn "brightnessctl s 5-%")
 
      -- Screenshot
      , ((0,         xK_Print)              , maimsave)
@@ -258,10 +258,10 @@ myEventHook = mempty
 myLogHook = return ()
 
 myStartupHook = do
+  spawnOnce "start"
   return ()
   -- spawn "xsetroot -cursor_name left_ptr"
   -- spawnOnce "feh --bg-fill ~/Pictures/0872cfqsya1c1.webp"
-  -- spawnOnce "picom"
   -- spawnOnce "greenclip daemon"
   -- spawnOnce "dunst"
 

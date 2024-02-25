@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, wm, ... }: {
   imports = [
     ./hardware.nix
     inputs.nixos-hardware.nixosModules.common-pc-laptop
@@ -9,7 +9,7 @@
     ./nix.nix
     ./fonts.nix
     ./sound.nix
-    ./wm/hyprland.nix
+    ./wm/${wm}.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -66,20 +66,6 @@
   hardware.bluetooth.enable = true;
   services = {
     thermald.enable = true;
-    xserver = {
-      enable = true;
-      # videoDrivers = [ "amdgpu" ];
-      autoRepeatDelay = 300;
-      autoRepeatInterval = 50;
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
-    };
-    dbus = {
-      enable = true;
-      packages = [ pkgs.dconf ];
-    };
     blueman.enable = true;
     openssh.enable = true;
   };

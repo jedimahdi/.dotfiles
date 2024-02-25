@@ -1,12 +1,4 @@
 { pkgs, inputs, ... }: {
-  services.xserver.displayManager = {
-    defaultSession = "hyprland";
-    lightdm.enable = false;
-    gdm = {
-      enable = true;
-      wayland = true;
-    };
-  };
 
   programs.hyprland = {
     enable = true;
@@ -23,8 +15,32 @@
       # pkgs.xdg-desktop-portal-gtk
     ];
   };
+  services = {
+    xserver.displayManager = {
+      defaultSession = "hyprland";
+      lightdm.enable = true;
+      # gdm = {
+      #   enable = true;
+      #   wayland = true;
+      # };
+    };
 
-  services.gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = true;
+    xserver = {
+      enable = true;
+      # videoDrivers = [ "amdgpu" ];
+      autoRepeatDelay = 300;
+      autoRepeatInterval = 50;
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
+    dbus = {
+      enable = true;
+      packages = [ pkgs.dconf ];
+    };
+  };
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";

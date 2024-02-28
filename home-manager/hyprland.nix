@@ -13,7 +13,6 @@
     pavucontrol
     pamixer
     fuzzel
-    swww
     grim
     slurp
     swappy
@@ -26,14 +25,16 @@
     '')
   ];
 
+  home.file.".config/hypr/hyprpaper.conf".text = ''
+    preload = '' + config.stylix.image + ''
+
+    wallpaper = eDP-1,'' + config.stylix.image + ''
+  '';
+
   wayland.windowManager.hyprland =
     let
       startupScript = pkgs.writeShellScriptBin "start" ''
         hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
-
-        ${pkgs.swww}/bin/swww init &
-        sleep 1
-        ${pkgs.swww}/bin/swww img ${./wallpaper.png} &
       '';
     in
     {

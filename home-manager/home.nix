@@ -42,6 +42,8 @@
       deadnix
       nix-tree
       manix
+      nix-du
+      graphviz
 
       v2raya
 

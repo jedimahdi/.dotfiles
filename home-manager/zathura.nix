@@ -5,7 +5,7 @@
       # recolor-lightcolor = "rgba(0,0,0,0)";
       # default-bg = "rgba(0,0,0,0.7)";
 
-      font = "Noto Sans 12";
+      font = "Noto Sans 22";
       selection-notification = true;
 
       selection-clipboard = "clipboard";

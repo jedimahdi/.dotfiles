@@ -30,6 +30,17 @@
 
     wallpaper = eDP-1,'' + config.stylix.image + ''
   '';
+  systemd.user.services.hyprpaper = {
+    Unit = {
+      Description = "Hyprland wallpaper daemon";
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${lib.getExe pkgs.hyprpaper}";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   wayland.windowManager.hyprland =
     let
@@ -80,6 +91,7 @@
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
+          force_default_wallpaper = false;
         };
         animations = {
           enabled = "no";
@@ -123,6 +135,12 @@
           "$mod SHIFT, 8, movetoworkspace, 8"
           "$mod SHIFT, 9, movetoworkspace, 9"
           "$mod SHIFT, 0, movetoworkspace, 10"
+
+          ", XF86AudioNext , exec , ${pkgs.playerctl}/bin/playerctl next"
+          ", XF86AudioPrev , exec , ${pkgs.playerctl}/bin/playerctl previous"
+          ", XF86AudioPlay , exec , ${pkgs.playerctl}/bin/playerctl play-pause"
+          ", XF86AudioPause , exec , ${pkgs.playerctl}/bin/playerctl pause"
+          ", XF86AudioStop , exec , ${pkgs.playerctl}/bin/playerctl stop"
         ];
         bindm = [
           "$mod, mouse:272, movewindow"
@@ -131,10 +149,15 @@
         binde = [
           "$mod, L, resizeactive, 10 0"
           "$mod, H, resizeactive, -10 0"
-          "$mod, code:122, exec, brightnessctl set 15-"
-          "$mod, code:123, exec, brightnessctl set +15"
-          ", code:122, exec, pamixer -d 10"
-          ", code:123, exec, pamixer -i 10"
+          # "$mod, code:122, exec, brightnessctl set 15-"
+          # "$mod, code:123, exec, brightnessctl set +15"
+          # ", code:122, exec, pamixer -d 10"
+          # ", code:123, exec, pamixer -i 10"
+
+          ", XF86AudioRaiseVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%+"
+          ", XF86AudioLowerVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%-"
+          ", XF86MonBrightnessUp , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
+          ", XF86MonBrightnessDown , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
         ];
         windowrule = [
           "tile,^(firefox)$"

@@ -16,6 +16,9 @@
     ./terminal/kitty.nix
     ./imv.nix
     ./zathura.nix
+    ./core/pass.nix
+    ./core/gpg.nix
+    ./core/ssh.nix
     ./langs/c.nix
     ./langs/haskell.nix
     ./langs/js.nix
@@ -24,6 +27,8 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  systemd.user.startServices = "sd-switch";
 
   programs.home-manager.enable = true;
   home = {
@@ -73,6 +78,8 @@
       fzf
       pamixer
       thefuck
+      yazi
+      navi
 
       pcmanfm
       xarchiver
@@ -86,7 +93,7 @@
       aspell
       aspellDicts.en
 
-      brave
+      librewolf
 
       (callPackage ../pkgs/ddper { })
     ];

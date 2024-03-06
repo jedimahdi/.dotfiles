@@ -50,6 +50,7 @@
       };
       browser = "firefox";
       wm = "hyprland";
+      username = "mahdi";
     in
     {
       homeConfigurations = {
@@ -60,6 +61,7 @@
             inherit inputs;
             inherit browser;
             inherit wm;
+            inherit username;
           };
         };
       };

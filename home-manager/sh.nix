@@ -14,6 +14,7 @@ let
     fetch = "neofetch";
     lg = "lazygit";
     xdg-open = "${pkgs.mimeo}/bin/mimeo";
+    less = ''${pkgs.bat}/bin/bat --paging=always --pager "${pkgs.less}/bin/less -RF"'';
   };
 in
 {
@@ -86,6 +87,7 @@ in
     gnugrep
     gnused
     bat
+    bat-extras.batman
     eza
     bottom
     fd

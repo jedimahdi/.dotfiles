@@ -67,17 +67,17 @@
   services = {
     thermald.enable = true;
     blueman.enable = true;
-    openssh.enable = true;
+    # openssh.enable = true;
   };
   programs = {
     dconf = {
       enable = true;
     };
     zsh.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    # };
   };
 
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).

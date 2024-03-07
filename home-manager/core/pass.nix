@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 {
+  home.packages = [ pkgs.passff-host ];
   programs.password-store = {
     enable = true;
     package = pkgs.pass-wayland.withExtensions (exts: [

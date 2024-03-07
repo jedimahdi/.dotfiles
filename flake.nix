@@ -27,7 +27,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, treefmt-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, treefmt-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -62,6 +62,7 @@
             inherit browser;
             inherit wm;
             inherit username;
+            inherit self;
           };
         };
       };
@@ -75,6 +76,10 @@
             inherit wm;
           };
         };
+      };
+      packages.${system} = {
+        repl = pkgs.callPackage ./pkgs/repl { };
+        ddper = pkgs.callPackage ./pkgs/ddper { };
       };
       formatter.${system} = treefmtWrapper;
       devShells.${system}.default = pkgs.mkShell {

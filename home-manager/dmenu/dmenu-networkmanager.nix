@@ -1,11 +1,11 @@
-{ pkgs, dmenu_command ? "rofi -show dmenu", ... }: {
+{ pkgs, dmenu-command, ... }: {
   home.packages = with pkgs; [ networkmanager_dmenu networkmanagerapplet ];
 
   home.file.".config/networkmanager-dmenu/config.ini".text =
     ''
       [dmenu]
       dmenu_command = ''
-    + dmenu_command
+    + dmenu-command
     + ''
 
       compact = True

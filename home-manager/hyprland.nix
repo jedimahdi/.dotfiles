@@ -1,8 +1,12 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+let
+  dmenu-command = "fuzzel -d";
+  dmenu-run = "fuzzel";
+in
+{
   imports = [
-    (import ./dmenu.nix {
-      dmenu_command = "fuzzel -d";
-      inherit config lib pkgs;
+    (import ./dmenu {
+      inherit pkgs dmenu-command;
     })
   ];
 
@@ -98,14 +102,15 @@
         };
         "$mod" = "SUPER";
         bind = [
-          "$mod, Return, exec, alacritty"
+          "$mod, Return, exec, run-as-service alacritty"
           "$mod, E, exec, pcmanfm"
           "$mod, Z, exec, firefox"
+          "$mod, P, exec, dmenu-pass"
           "$mod, Q, killactive,"
           "$mod, M, exit,"
-          "$mod, D, exec, fuzzel"
+          "$mod, D, exec, ${dmenu-run}"
           "$mod, I, exec, networkmanager_dmenu"
-          "$mod, C, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
+          "$mod, C, exec, dmenu-clip"
           "$mod, S, exec, screenshot"
           "$mod SHIFT, S, exec, screenshot-edit"
           ", code:121, exec, pamixer -t"
@@ -149,10 +154,6 @@
         binde = [
           "$mod, L, resizeactive, 10 0"
           "$mod, H, resizeactive, -10 0"
-          # "$mod, code:122, exec, brightnessctl set 15-"
-          # "$mod, code:123, exec, brightnessctl set +15"
-          # ", code:122, exec, pamixer -d 10"
-          # ", code:123, exec, pamixer -i 10"
 
           ", XF86AudioRaiseVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%+"
           ", XF86AudioLowerVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%-"
@@ -161,13 +162,19 @@
         ];
         windowrule = [
           "tile,^(firefox)$"
-
         ];
         windowrulev2 = [
           "opacity 0.80 0.80,class:^(Alacritty)$"
           "opacity 0.80 0.80,class:^(foot)$"
           "opacity 0.80 0.80,class:^(footclient)$"
           "opacity 0.80 0.80,class:^(kitty)$"
+
+          "workspace 3, class:^(firefox)$"
+
+          "noblur, class:^(firefox)$"
+          "noblur, class:^(pcmanfm)$"
+          "noshadow, class:^(firefox)$"
+          "noshadow, class:^(pcmanfm)$"
         ];
       };
       xwayland = { enable = true; };
@@ -178,10 +185,21 @@
     settings = {
       main = {
         width = 60;
+        terminal = "alacritty -e";
+        icon-theme = "${config.gtk.iconTheme.name}";
+        line-height = 36;
       };
       border = {
-        width = 2;
-        radius = 7;
+        width = 0;
+        radius = 4;
+      };
+      key-bindings = {
+        next = "Down Control+n Control+j";
+        prev = "Up Control+p Control+k";
+        delete-line = "none";
+        delete-prev-word = "Mod1+BackSpace Control+BackSpace Control+w";
+        first = "Control+s";
+        last = "Control+z";
       };
     };
   };

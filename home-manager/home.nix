@@ -1,8 +1,9 @@
-{ config, pkgs, inputs, browser, wm, ... }: {
+{ self, config, pkgs, inputs, browser, wm, ... }: {
   imports = [
     inputs.stylix.homeManagerModules.stylix
     inputs.nix-index-database.hmModules.nix-index
     ./stylix.nix
+    ./shell/transient-services.nix
     ./sh.nix
     ./tmux
     ./git.nix
@@ -95,7 +96,8 @@
 
       librewolf
 
-      (callPackage ../pkgs/ddper { })
+      self.packages.${pkgs.system}.ddper
+      self.packages.${pkgs.system}.repl
     ];
 
     sessionVariables = {

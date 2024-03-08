@@ -11,7 +11,7 @@
     ./mpv.nix
     ./lf.nix
     ./${wm}.nix
-    ./${browser}.nix
+    ./browser/firefox
     ./terminal/alacritty.nix
     ./terminal/foot.nix
     ./terminal/kitty.nix

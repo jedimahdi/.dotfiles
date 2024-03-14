@@ -16,7 +16,7 @@ in
       DisableFirefoxStudies = true;
       DisablePocket = true;
       DisableTelemetry = true;
-      DisableFeedbackCommands =  true;
+      DisableFeedbackCommands = true;
       DisableSetDesktopBackground = true;
       DontCheckDefaultBrowser = true;
       # DisableFirefoxAccounts = true;

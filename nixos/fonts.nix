@@ -7,9 +7,11 @@
       noto-fonts-emoji
       vazir-fonts
       victor-mono
+      jetbrains-mono
       (nerdfonts.override {
         fonts = [
           "VictorMono"
+          "JetBrainsMono"
         ];
       })
     ];
@@ -18,7 +20,7 @@
       defaultFonts = {
         serif = [ "Noto Serif" "Vazirmatn" "Noto Color Emoji" ];
         sansSerif = [ "Noto Sans" "Vazirmatn" "Noto Color Emoji" ];
-        monospace = [ "Victor Mono SemiBold:style=SemiBold" "Victor Mono Medium" "Victor Mono" "VictorMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
+        monospace = [ "JetBrainsMono NF" "VictorMono Nerd Font" "Vazirmatn" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

@@ -5,28 +5,9 @@ let
 in
 {
   imports = [
-    (import ./dmenu {
+    (import ../dmenu {
       inherit pkgs dmenu-command;
     })
-  ];
-
-  home.packages = with pkgs; [
-    wl-clipboard
-    slurp
-    grim
-    pavucontrol
-    pamixer
-    fuzzel
-    grim
-    slurp
-    swappy
-    imagemagick
-    (writeShellScriptBin "screenshot" ''
-      grim -g "$(slurp)" - | convert - -shave 1x1 PNG:- | wl-copy
-    '')
-    (writeShellScriptBin "screenshot-edit" ''
-      wl-paste | swappy -f -
-    '')
   ];
 
   home.file.".config/hypr/hyprpaper.conf".text = ''

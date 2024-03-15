@@ -56,7 +56,7 @@
       homeConfigurations = {
         user = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home-manager/home.nix ];
+          modules = [ ./home/profiles/jedi.nix ];
           extraSpecialArgs = {
             inherit inputs;
             inherit browser;

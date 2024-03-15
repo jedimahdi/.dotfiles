@@ -54,6 +54,8 @@
       xresources.enable = true;
       firefox.enable = true;
       tmux.enable = true;
+      yazi.enable = true;
+      zellij.enable = true;
     };
   };
 }

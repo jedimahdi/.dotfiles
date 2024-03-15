@@ -20,6 +20,9 @@
     ./core/pass.nix
     ./core/gpg.nix
     ./core/ssh.nix
+    ./core/zoxide.nix
+    ./core/yazi.nix
+    ./core/zellij.nix
     ./langs/c.nix
     ./langs/haskell.nix
     ./langs/js.nix
@@ -79,7 +82,6 @@
       fzf
       pamixer
       thefuck
-      yazi
       navi
 
       pcmanfm

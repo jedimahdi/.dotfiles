@@ -1,5 +1,6 @@
 {
   imports = [
+    ./cli.nix
     ./lf.nix
     ./git.nix
     ./gpg.nix

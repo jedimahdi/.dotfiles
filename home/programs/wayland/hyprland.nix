@@ -10,23 +10,6 @@ in
     })
   ];
 
-  home.file.".config/hypr/hyprpaper.conf".text = ''
-    preload = '' + config.stylix.image + ''
-
-    wallpaper = eDP-1,'' + config.stylix.image + ''
-  '';
-  systemd.user.services.hyprpaper = {
-    Unit = {
-      Description = "Hyprland wallpaper daemon";
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${lib.getExe pkgs.hyprpaper}";
-      Restart = "on-failure";
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
   wayland.windowManager.hyprland =
     let
       startupScript = pkgs.writeShellScriptBin "start" ''
@@ -156,38 +139,12 @@ in
           "noblur, class:^(pcmanfm)$"
           "noshadow, class:^(firefox)$"
           "noshadow, class:^(pcmanfm)$"
+          # make Firefox PiP window floating and sticky
+          "float, title:^(Picture-in-Picture)$"
+          "pin, title:^(Picture-in-Picture)$"
         ];
       };
       xwayland = { enable = true; };
     };
 
-  programs.fuzzel = {
-    enable = true;
-    settings = {
-      main = {
-        width = 60;
-        terminal = "alacritty -e";
-        icon-theme = "${config.gtk.iconTheme.name}";
-        line-height = 36;
-      };
-      border = {
-        width = 0;
-        radius = 4;
-      };
-      key-bindings = {
-        next = "Down Control+n Control+j";
-        prev = "Up Control+p Control+k";
-        delete-line = "none";
-        delete-prev-word = "Mod1+BackSpace Control+BackSpace Control+w";
-        first = "Control+s";
-        last = "Control+z";
-      };
-    };
-  };
-  services.mako = {
-    enable = true;
-    defaultTimeout = 4 * 1000; # millis
-    maxVisible = 3;
-  };
-  services.cliphist.enable = true;
 }

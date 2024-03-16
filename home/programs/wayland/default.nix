@@ -2,7 +2,15 @@
 {
   imports = [
     ./hyprland.nix
+    ./fuzzel.nix
   ];
+
+  services.mako = {
+    enable = true;
+    defaultTimeout = 4 * 1000; # millis
+    maxVisible = 3;
+  };
+  services.cliphist.enable = true;
 
   home.packages = with pkgs; [
     # screenshot

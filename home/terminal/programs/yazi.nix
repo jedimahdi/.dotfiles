@@ -15,6 +15,12 @@ in
   programs.yazi = {
     enable = true;
     enableZshIntegration = false;
+    settings = {
+      manager = {
+        ratio = [ 0 5 3 ];
+        sort_dir_first = true;
+      };
+    };
   };
   programs.zsh.initExtra = bashIntegration;
 }

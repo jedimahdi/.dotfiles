@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = [ pkgs.lazygit ];
+  home.packages = [ pkgs.lazygit pkgs.zsh-forgit ];
 
   programs.git = {
     enable = true;
@@ -28,6 +28,7 @@
       count = "shortlog -sn";
       review = "!git log --no-merges --pretty=%an | head -n 100 | sort | uniq -c | sort -nr";
       day = "!sh -c 'git log --reverse --no-merges --branches=* --date=local --after=\"yesterday 11:59PM\" --author=\"`git config --get user.name`\"'";
+      af = "!git add $(git ls-files -m -o --exclude-standard | fzf -m)";
       update = "!git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`";
     };
 

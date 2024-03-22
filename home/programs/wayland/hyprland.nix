@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let
   dmenu-command = "fuzzel -d";
   dmenu-run = "fuzzel";
@@ -66,7 +66,7 @@ in
         };
         "$mod" = "SUPER";
         bind = [
-          "$mod, Return, exec, run-as-service alacritty"
+          "$mod, Return, exec, run-as-service kitty"
           "$mod, E, exec, pcmanfm"
           "$mod, Z, exec, firefox"
           "$mod, P, exec, dmenu-pass"
@@ -133,15 +133,31 @@ in
           "opacity 0.80 0.80,class:^(footclient)$"
           "opacity 0.80 0.80,class:^(kitty)$"
 
-          "workspace 3, class:^(firefox)$"
+          # telegram media viewer
+          "float, title:^(Media viewer)$"
 
-          "noblur, class:^(firefox)$"
+          "idleinhibit focus, class:^(mpv)$"
+
           "noblur, class:^(pcmanfm)$"
-          "noshadow, class:^(firefox)$"
           "noshadow, class:^(pcmanfm)$"
-          # make Firefox PiP window floating and sticky
+
+          # firefox
+          "idleinhibit fullscreen, class:^(firefox)$"
+          "float,title:^(Firefox — Sharing Indicator)$"
+          "move 0 0,title:^(Firefox — Sharing Indicator)$"
           "float, title:^(Picture-in-Picture)$"
           "pin, title:^(Picture-in-Picture)$"
+          "workspace 3, class:^(firefox)$"
+          "noblur, class:^(firefox)$"
+          "noshadow, class:^(firefox)$"
+
+          # pavucontrol
+          "float,class:pavucontrol"
+          "float,title:^(Volume Control)$"
+          "size 800 600,title:^(Volume Control)$"
+          "move 75 44%,title:^(Volume Control)$"
+          "float, class:^(imv)$"
+
         ];
       };
       xwayland = { enable = true; };

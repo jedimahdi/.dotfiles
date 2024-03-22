@@ -1,6 +1,10 @@
 {
   imports = [
     ./cli.nix
+    ./bat.nix
+    ./eza.nix
+    ./fastfetch.nix
+    ./bottom.nix
     ./lf.nix
     ./git.nix
     ./gpg.nix

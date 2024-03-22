@@ -2,9 +2,7 @@
   home.packages = with pkgs; [
     aspell
     aspellDicts.en
-    bat-extras.batman
     binutils
-    bottom
     brightnessctl
     curlFull
     diffutils
@@ -13,6 +11,7 @@
     entr
     fd
     ffmpeg
+    figlet
     file
     file
     findutils
@@ -27,7 +26,6 @@
     lolcat
     mdcat
     navi
-    neofetch
     neovim
     nix-du
     nix-tree
@@ -36,6 +34,7 @@
     pkg-config
     rar
     ripgrep
+    skim
     tealdeer # rust implementation of `tldr`
     ueberzugpp # Terminal image viewer integration
     unzip
@@ -46,7 +45,6 @@
   ];
 
   programs = {
-    eza.enable = true;
     aria2.enable = true;
     thefuck.enable = true;
     nix-index.enable = true;
@@ -65,13 +63,6 @@
       enableZshIntegration = true;
       colors = {
         "bg+" = "-1";
-      };
-    };
-    bat = {
-      enable = true;
-      config = {
-        theme = "ansi";
-        style = "header";
       };
     };
   };

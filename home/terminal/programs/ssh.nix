@@ -1,17 +1,19 @@
-{ username, ... }:
 {
   programs.ssh = {
     enable = true;
-
-    matchBlocks = {
-      github = {
-        hostname = "github.com";
-        identityFile = "/home/${username}/.ssh/id_ed25519";
+    matchBlocks =
+      let
+        commonIdFile = "~/.ssh/id_ed25519";
+      in
+      {
+        github = {
+          hostname = "github.com";
+          identityFile = commonIdFile;
+        };
+        gitlab = {
+          hostname = "gitlab.com";
+          identityFile = commonIdFile;
+        };
       };
-      gitlab = {
-        hostname = "gitlab.com";
-        identityFile = "/home/${username}/.ssh/id_ed25519";
-      };
-    };
   };
 }

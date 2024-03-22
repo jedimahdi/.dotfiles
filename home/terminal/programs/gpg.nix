@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   programs.gpg = {
     enable = true;
@@ -8,7 +8,7 @@
   # Fix pass
   services.gpg-agent = {
     enable = true;
-    # pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gnome3;
     extraConfig = ''
       allow-emacs-pinentry
       allow-loopback-pinentry

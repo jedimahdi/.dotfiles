@@ -29,7 +29,7 @@
       sizes =
         if wm == "hyprland" then {
           desktop = 14;
-          terminal = 18;
+          terminal = 21;
           applications = 14;
           popups = 22;
         } else {
@@ -45,7 +45,6 @@
       zathura.enable = true;
       hyprland.enable = true;
       gtk.enable = true;
-      bat.enable = true;
       foot.enable = true;
       alacritty.enable = true;
       kitty.enable = true;

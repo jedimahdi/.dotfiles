@@ -7,6 +7,7 @@
     ./bottom.nix
     ./lf.nix
     ./git.nix
+    ./jujutsu.nix
     ./gpg.nix
     ./ssh.nix
     ./xdg.nix

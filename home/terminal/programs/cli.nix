@@ -17,6 +17,7 @@
     findutils
     gawk
     glib
+    glow
     gnugrep
     gnused
     graphviz
@@ -27,6 +28,7 @@
     mdcat
     navi
     neovim
+    nh
     nix-du
     nix-tree
     ouch

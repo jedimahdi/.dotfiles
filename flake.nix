@@ -54,7 +54,7 @@
     in
     {
       homeConfigurations = {
-        user = home-manager.lib.homeManagerConfiguration {
+        mahdi = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home/profiles/jedi.nix ];
           extraSpecialArgs = {
@@ -67,7 +67,7 @@
         };
       };
       nixosConfigurations = {
-        system = nixpkgs.lib.nixosSystem {
+        nixos = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [ ./nixos/configuration.nix ];
           specialArgs = {

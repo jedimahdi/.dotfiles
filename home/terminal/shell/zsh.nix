@@ -1,16 +1,23 @@
-{ ... }:
+{ config, ... }:
 {
   programs.zsh = {
     enable = true;
     autocd = true;
     dotDir = ".config/zsh";
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    history = {
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
+      expireDuplicatesFirst = true;
+    };
     defaultKeymap = "emacs";
     initExtra = ''
       export PATH="$HOME/.dotfiles/bin:$PATH"
       export MANPAGER='nvim +Man!'
+
+      # Disable C-s freezing the terminal
+      stty -ixon
 
       # C-Backspace for word deletions
       bindkey "^H" backward-kill-word

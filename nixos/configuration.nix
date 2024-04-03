@@ -59,7 +59,7 @@
   users.users.mahdi = {
     isNormalUser = true;
     description = "mahdi";
-    extraGroups = [ "adbusers" "input" "libvirtd" "networkmanager" "plugdev" "transmission" "video" "wheel" ];
+    extraGroups = [ "adbusers" "input" "libvirtd" "networkmanager" "plugdev" "transmission" "video" "wheel" "kvm" ];
   };
   users.defaultUserShell = pkgs.zsh;
 

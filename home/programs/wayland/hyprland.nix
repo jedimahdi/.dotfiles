@@ -24,7 +24,7 @@ in
         monitor = ",preferred,auto,1";
         input = {
           kb_layout = "us,ir";
-          kb_options = "caps:escape";
+          kb_options = "caps:escape,grp:alt_shift_toggle";
           repeat_delay = 300;
           repeat_rate = 50;
           follow_mouse = 1;
@@ -79,6 +79,7 @@ in
           "$mod SHIFT, S, exec, screenshot-edit"
           ", code:121, exec, pamixer -t"
           "$mod, Tab, workspace, previous"
+          "$mod, F, fullscreen"
           "$mod, T, togglefloating,"
           "$mod, J, layoutmsg, cyclenext"
           "$mod, K, layoutmsg, cycleprev"
@@ -152,12 +153,14 @@ in
           "noshadow, class:^(firefox)$"
 
           # pavucontrol
-          "float,class:pavucontrol"
+          "float,class:^(pavucontrol)$"
+          "size 70% 70%,class:^(pavucontrol)$"
+          "center,,class:^(pavucontrol)$"
+          "opacity 0.80,class:^(pavucontrol)$"
           "float,title:^(Volume Control)$"
-          "size 800 600,title:^(Volume Control)$"
-          "move 75 44%,title:^(Volume Control)$"
+          "size 70% 70%,title:^(Volume Control)$"
+          "center,title:^(Volume Control)$"
           "float, class:^(imv)$"
-
         ];
       };
       xwayland = { enable = true; };

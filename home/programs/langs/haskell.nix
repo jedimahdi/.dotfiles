@@ -18,9 +18,9 @@ in
     haskellPackages.cabal-fmt
   ];
 
-  home.file.".ghc/ghci.conf".text = ''
-    :set -interactive-print=Text.Pretty.Simple.pPrint
-  '';
+  # home.file.".ghc/ghci.conf".text = ''
+  #   :set -interactive-print=Text.Pretty.Simple.pPrint
+  # '';
 
   programs.zsh.shellAliases = aliases;
   programs.bash.shellAliases = aliases;

@@ -7,6 +7,14 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    zsh-abbr = {
+      enable = true;
+      abbreviations = {
+        g = "git";
+        n = "npm";
+        j = "just";
+      };
+    };
     history = {
       path = "${config.xdg.dataHome}/zsh/zsh_history";
       expireDuplicatesFirst = true;

@@ -1,11 +1,11 @@
 { lib, pkgs, inputs, ... }:
 let
-  extensions = with inputs.rycee-nurpkgs.packages.${pkgs.system}; [
-    darkreader
-    ublock-origin
-    vimium
-    passff
-  ];
+  # extensions = with inputs.rycee-nurpkgs.packages.${pkgs.system}; [
+  #   darkreader
+  #   ublock-origin
+  #   vimium
+  #   passff
+  # ];
 in
 {
   home.sessionVariables.BROWSER = "firefox";
@@ -30,7 +30,7 @@ in
         id = 0;
         isDefault = true;
         settings = import ./settings.nix;
-        inherit extensions;
+        # inherit extensions;
         extraConfig = ''
           ${builtins.readFile ./user.js}
         '';

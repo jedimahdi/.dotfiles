@@ -44,7 +44,7 @@
   "middlemouse.paste" = false;
 
   # # Extra
-  "identity.fxaccounts.enabled" = false;
+  "identity.fxaccounts.enabled" = true;
   "browser.download.useDownloadDir" = false;
   "browser.search.suggest.enabled" = false;
   "browser.urlbar.shortcuts.bookmarks" = false;

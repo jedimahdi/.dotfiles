@@ -6,6 +6,7 @@
     ./go.nix
     ./js.nix
     ./rust.nix
+    ./ocaml.nix
   ];
   home.packages = with pkgs; [
     nodePackages.bash-language-server

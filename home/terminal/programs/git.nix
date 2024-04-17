@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = [ pkgs.lazygit pkgs.zsh-forgit ];
+  home.packages = [ pkgs.zsh-forgit ];
 
   programs.git = {
     enable = true;
@@ -35,6 +35,23 @@
     extraConfig = {
       init.defaultBranch = "main";
       core.editor = "nvim";
+    };
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        nerdFontsVersion = 3;
+        showRandomTip = false;
+        showCommandLog = false;
+        theme = {
+          selectedLineBgColor = [ "default" ];
+        };
+      };
+      update = {
+        method = "never";
+      };
     };
   };
 

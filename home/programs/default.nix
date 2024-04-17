@@ -17,6 +17,7 @@
     pcmanfm
     xarchiver
     telegram-desktop
+    foliate
 
     self.packages.${pkgs.system}.ddper
     self.packages.${pkgs.system}.repl

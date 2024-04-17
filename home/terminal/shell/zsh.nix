@@ -42,6 +42,8 @@
       zstyle ':completion:*' menu select
       zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
       zstyle ':completion:*' verbose true
+
+      [[ ! -r /home/mahdi/.opam/opam-init/init.zsh ]] || source /home/mahdi/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
     '';
   };
 }

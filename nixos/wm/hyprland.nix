@@ -14,8 +14,9 @@
     ];
   };
   services = {
+    displayManager.defaultSession = "hyprland";
+
     xserver.displayManager = {
-      defaultSession = "hyprland";
       lightdm.enable = true;
       # gdm = {
       #   enable = true;

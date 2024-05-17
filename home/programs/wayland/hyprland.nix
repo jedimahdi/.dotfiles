@@ -22,6 +22,17 @@ in
       settings = {
         exec-once = ''${startupScript}/bin/start'';
         monitor = ",preferred,auto,1";
+        env = [
+          "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
+          "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
+          "MOZ_WEBRENDER,1"
+          # misc
+          "_JAVA_AWT_WM_NONREPARENTING,1"
+          "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+          "QT_QPA_PLATFORM,wayland"
+          "SDL_VIDEODRIVER,wayland"
+          "GDK_BACKEND,wayland"
+        ];
         input = {
           kb_layout = "us,ir";
           kb_options = "caps:escape,grp:alt_shift_toggle";
@@ -77,6 +88,8 @@ in
           "$mod, C, exec, dmenu-clip"
           "$mod, S, exec, screenshot"
           "$mod SHIFT, S, exec, screenshot-edit"
+          "$mod, R, exec, screenrec"
+          "$mod SHIFT, R, exec, screenrec-stop"
           ", code:121, exec, pamixer -t"
           "$mod, Tab, workspace, previous"
           "$mod, F, fullscreen"

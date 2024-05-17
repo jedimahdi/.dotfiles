@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+RESULT=$(
+	git branch --all |
+		fzf-tmux -p 90% \
+			--color 'pointer:10,spinner:92,marker:46,bg+:-1' \
+			--prompt " " \
+			--exit-0
+)
+
+if [[ -z $RESULT ]]; then
+	exit 0
+fi
+
+git checkout "$(echo "$RESULT" | sed "s/.* //" | sed "s#remotes/[^/]*/##")"

@@ -7,5 +7,7 @@
     automake
     libtool
     clang-tools
+    gdb
+    valgrind
   ];
 }

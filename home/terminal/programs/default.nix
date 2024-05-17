@@ -3,6 +3,7 @@
     ./cli.nix
     ./bat.nix
     ./eza.nix
+    ./fzf.nix
     ./fastfetch.nix
     ./bottom.nix
     ./lf.nix

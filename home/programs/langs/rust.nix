@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     cargo
+    cargo-watch
     rustfmt
     rust-analyzer
     rustc

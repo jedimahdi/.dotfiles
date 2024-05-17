@@ -18,6 +18,11 @@
     xarchiver
     telegram-desktop
     foliate
+    vscode
+    peek
+    just
+
+    glib
 
     self.packages.${pkgs.system}.ddper
     self.packages.${pkgs.system}.repl

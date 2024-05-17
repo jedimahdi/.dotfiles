@@ -42,7 +42,11 @@
   };
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    GDK_BACKEND = "wayland,x11";
+    ANKI_WAYLAND = "1";
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
   };
 }

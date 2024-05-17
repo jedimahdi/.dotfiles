@@ -7,6 +7,7 @@
     ./js.nix
     ./rust.nix
     ./ocaml.nix
+    ./zig.nix
   ];
   home.packages = with pkgs; [
     nodePackages.bash-language-server

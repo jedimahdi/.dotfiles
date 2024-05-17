@@ -14,6 +14,12 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  documentation = {
+    enable = true;
+    man.enable = true;
+    dev.enable = true;
+  };
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -36,6 +42,7 @@
       home-manager
       libnotify
       pciutils
+      man-pages
     ];
 
     shells = with pkgs; [ zsh ];

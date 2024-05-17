@@ -46,7 +46,7 @@
         showRandomTip = false;
         showCommandLog = false;
         theme = {
-          selectedLineBgColor = [ "default" ];
+          selectedLineBgColor = [ "#424a57" ];
         };
       };
       update = {

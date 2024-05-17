@@ -24,6 +24,12 @@
     (writeShellScriptBin "screenshot-edit" ''
       wl-paste | swappy -f -
     '')
+    (writeShellScriptBin "screenrec" ''
+      wl-screenrec -g "$(slurp)" -f ~/recording_$(date +"%Y-%m-%d_%H:%M:%S.mp4")
+    '')
+    (writeShellScriptBin "screenrec-stop" ''
+      killall -s SIGINT wl-screenrec
+    '')
 
     # utils
     wl-clipboard

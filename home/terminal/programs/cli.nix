@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   home.packages = with pkgs; [
     aspell
     aspellDicts.en
@@ -25,12 +25,15 @@
     killall
     libnotify
     lolcat
+    lux
     mdcat
     navi
     neovim
     nh
     nix-du
+    nix-output-monitor
     nix-tree
+    nvd
     ouch
     pamixer
     pkg-config
@@ -48,7 +51,7 @@
 
   programs = {
     aria2.enable = true;
-    thefuck.enable = true;
+    # thefuck.enable = true;
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
     jq.enable = true;
@@ -59,13 +62,6 @@
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
-    };
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-      colors = {
-        "bg+" = "-1";
-      };
     };
   };
 }

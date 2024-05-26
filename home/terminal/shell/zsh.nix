@@ -29,6 +29,9 @@
       # C-Backspace for word deletions
       bindkey "^H" backward-kill-word
 
+      bindkey '^p' history-search-backward
+      bindkey '^n' history-search-forward
+
       # open commands in $EDITOR with C-x C-e
       autoload -z edit-command-line
       zle -N edit-command-line

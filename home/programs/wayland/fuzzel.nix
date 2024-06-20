@@ -3,7 +3,8 @@
     enable = true;
     settings = {
       main = {
-        width = 60;
+        width = 70;
+        lines = 10;
         terminal = "alacritty -e";
         icon-theme = "${config.gtk.iconTheme.name}";
         line-height = 36;
@@ -15,12 +16,12 @@
       key-bindings = {
         next = "Down Control+n Control+j";
         prev = "Up Control+p Control+k";
-        delete-line = "none";
+        delete-line-forward = "none";
+        # delete-line = "none";
         delete-prev-word = "Mod1+BackSpace Control+BackSpace Control+w";
         first = "Control+s";
         last = "Control+z";
       };
     };
   };
-
 }

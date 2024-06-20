@@ -31,7 +31,7 @@
           desktop = 14;
           terminal = 21;
           applications = 14;
-          popups = 22;
+          popups = 20;
         } else {
           desktop = 14;
           terminal = 13;
@@ -46,7 +46,7 @@
       hyprland.enable = true;
       gtk.enable = true;
       foot.enable = true;
-      alacritty.enable = true;
+      # alacritty.enable = true;
       kitty.enable = true;
       mako.enable = true;
       # fzf.enable = true;

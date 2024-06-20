@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     aspell
     aspellDicts.en
@@ -21,6 +21,7 @@
     gnugrep
     gnused
     graphviz
+    jq
     jaq
     killall
     libnotify
@@ -54,7 +55,7 @@
     # thefuck.enable = true;
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
-    jq.enable = true;
+    # jq.enable = true;
     htop.enable = true;
     less.enable = true;
     zk.enable = true;
@@ -62,6 +63,9 @@
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
+      config.global = {
+        hide_env_diff = true;
+      };
     };
   };
 }

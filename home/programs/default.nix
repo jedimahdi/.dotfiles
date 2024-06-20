@@ -19,8 +19,13 @@
     telegram-desktop
     foliate
     vscode
+    zed-editor
     peek
     just
+    zulip
+    nekoray
+    brave
+    alacritty
 
     glib
 

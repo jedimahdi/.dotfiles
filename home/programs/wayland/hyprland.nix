@@ -18,9 +18,9 @@ in
     in
     {
       enable = true;
-      plugins = [ ];
+      # plugins = [ ];
       settings = {
-        exec-once = ''${startupScript}/bin/start'';
+        # exec-once = ''${startupScript}/bin/start'';
         monitor = ",preferred,auto,1";
         env = [
           "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
@@ -77,7 +77,7 @@ in
         };
         "$mod" = "SUPER";
         bind = [
-          "$mod, Return, exec, run-as-service kitty"
+          "$mod, Return, exec, run-as-service alacritty"
           "$mod, E, exec, pcmanfm"
           "$mod, Z, exec, firefox"
           "$mod, P, exec, dmenu-pass"
@@ -176,7 +176,5 @@ in
           "float, class:^(imv)$"
         ];
       };
-      xwayland = { enable = true; };
     };
-
 }

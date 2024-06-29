@@ -42,7 +42,7 @@
 
     targets = {
       fuzzel.enable = true;
-      zathura.enable = true;
+      # zathura.enable = true;
       hyprland.enable = true;
       gtk.enable = true;
       foot.enable = true;

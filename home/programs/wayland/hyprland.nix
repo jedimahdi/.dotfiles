@@ -61,7 +61,7 @@ in
           };
         };
         master = {
-          new_is_master = true;
+          new_status = "master";
           no_gaps_when_only = 1;
         };
         binds = {

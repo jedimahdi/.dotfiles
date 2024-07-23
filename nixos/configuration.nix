@@ -43,15 +43,15 @@
       libnotify
       pciutils
       man-pages
+      qt5.qtwayland
     ];
 
     shells = with pkgs; [ zsh ];
   };
 
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
       # extraPackages = with pkgs; [
       #   libva
       #   libvdpau-va-gl

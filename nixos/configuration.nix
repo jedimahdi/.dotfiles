@@ -63,6 +63,10 @@
     };
   };
 
+  hardware.uinput.enable = true;
+  users.groups.uinput.members = [ "mahdi" ];
+  users.groups.input.members = [ "mahdi" ];
+
   users.users.mahdi = {
     isNormalUser = true;
     description = "mahdi";

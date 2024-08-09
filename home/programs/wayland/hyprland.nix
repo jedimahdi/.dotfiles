@@ -135,8 +135,8 @@ in
 
           ", XF86AudioRaiseVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%+"
           ", XF86AudioLowerVolume , exec , ${pkgs.alsa-utils}/bin/amixer -q set Master 5%-"
-          ", XF86MonBrightnessUp , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
-          ", XF86MonBrightnessDown , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+          ", XF86MonBrightnessUp , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 2%+"
+          ", XF86MonBrightnessDown , exec , ${pkgs.brightnessctl}/bin/brightnessctl set 2%-"
         ];
         windowrule = [
           "tile,^(firefox)$"

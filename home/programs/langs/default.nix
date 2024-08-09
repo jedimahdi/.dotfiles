@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./haskell.nix
+    # ./haskell.nix
     ./c.nix
     ./go.nix
     ./js.nix

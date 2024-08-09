@@ -13,13 +13,18 @@
     nodePackages.bash-language-server
     shellcheck
     shfmt
-    stylua
-    lua-language-server
     nil
     nixpkgs-fmt
     alejandra
     statix
     deadnix
     manix
+
+    python3
+
+    lua5_1
+    lua51Packages.luarocks
+    stylua
+    lua-language-server
   ];
 }

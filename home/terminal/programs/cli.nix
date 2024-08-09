@@ -48,6 +48,7 @@
     wget
     xdg-utils
     zip
+    tree-sitter
   ];
 
   programs = {

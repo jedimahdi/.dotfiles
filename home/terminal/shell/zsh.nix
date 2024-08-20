@@ -48,7 +48,7 @@
       autoload -U select-word-style
       select-word-style bash
 
-      [[ ! -r /home/mahdi/.opam/opam-init/init.zsh ]] || source /home/mahdi/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+      # [[ ! -r /home/mahdi/.opam/opam-init/init.zsh ]] || source /home/mahdi/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
     '';
   };
 }

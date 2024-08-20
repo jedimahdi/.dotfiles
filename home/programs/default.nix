@@ -8,23 +8,15 @@
   ];
 
   home.packages = with pkgs; [
-    cachix
-    patchelf
-    nix-prefetch-git
-
     v2raya
 
     pcmanfm
     xarchiver
     telegram-desktop
-    foliate
     vscode
-    zed-editor
     peek
     just
-    zulip
     nekoray
-    brave
     alacritty
 
     glib

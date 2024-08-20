@@ -13,15 +13,14 @@ with builtins; let
     "directory"
     "git_branch"
     "git_commit"
-    "git_state"
-    "git_metrics"
+    # "git_metrics"
     "git_status"
     "line_break"
     "nix_shell"
-    "rust"
-    "purescript"
-    "haskell"
-    "nodejs"
+    # "rust"
+    # "purescript"
+    # "haskell"
+    # "nodejs"
     "character"
   ];
   # promptFormat = concatStrings (map (s: "\$${s}") promptOrder);
@@ -45,6 +44,10 @@ in
     settings = mergeAllAttrSets [
       enabledModules
       disabledModules
-    ];
+    ] // {
+      nix_shell = {
+        symbol = "";
+      };
+    };
   };
 }

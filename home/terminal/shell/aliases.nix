@@ -15,6 +15,12 @@ let
     xdg-open = "${pkgs.mimeo}/bin/mimeo";
     # less = ''${pkgs.bat}/bin/bat --paging=always --pager "${pkgs.less}/bin/less -RF"'';
     dadjoke = ''${pkgs.curlMinimal}/bin/curl --header "Accept: text/plain" https://icanhazdadjoke.com/ && echo'';
+    cp = "cp -iv";
+    mv = "mv -iv";
+    rm = "rm -vI";
+    grep = "grep --color=auto";
+    egrep = "egrep --color=auto";
+    fgrep = "fgrep --color=auto";
   };
 in
 {

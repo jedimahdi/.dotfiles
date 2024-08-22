@@ -1,9 +1,9 @@
 { pkgs, lib, config, ... }: {
-  home.file.".config/hypr/hyprpaper.conf".text = ''
-    preload = '' + config.stylix.image + ''
-
-    wallpaper = eDP-1,'' + config.stylix.image + ''
-  '';
+  # home.file.".config/hypr/hyprpaper.conf".text = ''
+  #   preload = '' + config.stylix.image + ''
+  #
+  #   wallpaper = eDP-1,'' + config.stylix.image + ''
+  # '';
   systemd.user.services.hyprpaper = {
     Unit = {
       Description = "Hyprland wallpaper daemon";

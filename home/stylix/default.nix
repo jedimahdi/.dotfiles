@@ -1,6 +1,7 @@
 { pkgs, wm, ... }:
 {
   stylix = {
+    enable = true;
     autoEnable = false;
     base16Scheme = ./onedarker.yaml;
     image = ./wallpaper.png;

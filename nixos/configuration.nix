@@ -10,7 +10,29 @@
     ./fonts.nix
     ./sound.nix
     ./wm/${wm}.nix
+    ./wm/dwm.nix
   ];
+
+  services = {
+    xserver.displayManager = {
+      lightdm.enable = true;
+    };
+
+    gnome.gnome-keyring.enable = true;
+    xserver = {
+      enable = true;
+      autoRepeatDelay = 300;
+      autoRepeatInterval = 50;
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
+    dbus = {
+      enable = true;
+      packages = [ pkgs.dconf ];
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -43,7 +65,6 @@
       libnotify
       pciutils
       man-pages
-      qt5.qtwayland
     ];
 
     shells = with pkgs; [ zsh ];

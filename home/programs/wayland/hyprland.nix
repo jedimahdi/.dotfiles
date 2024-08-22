@@ -18,7 +18,7 @@ in
     in
     {
       enable = true;
-      # plugins = [ ];
+      systemd.variables = [ "--all" ];
       settings = {
         # exec-once = ''${startupScript}/bin/start'';
         monitor = ",preferred,auto,1";
@@ -32,6 +32,7 @@ in
           "QT_QPA_PLATFORM,wayland"
           "SDL_VIDEODRIVER,wayland"
           "GDK_BACKEND,wayland"
+          "CLUTTER_BACKEND,wayland"
         ];
         input = {
           kb_layout = "us,ir";

@@ -4,7 +4,7 @@
 , freetype
 , libpng
 , SDL2
-, ffmpeg_5
+, ffmpeg_4
 , opusfile
 , vulkan-loader
 , libglvnd
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
         freetype
         libpng
         SDL2
-        ffmpeg_5
+        ffmpeg_4
         opusfile
         vulkan-loader
         libglvnd

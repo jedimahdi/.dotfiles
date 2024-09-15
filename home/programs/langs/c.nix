@@ -9,5 +9,6 @@
     clang-tools
     gdb
     valgrind
+    gf
   ];
 }

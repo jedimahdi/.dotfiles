@@ -21,7 +21,7 @@
 
     initExtra = ''
       export PATH="$HOME/.dotfiles/bin:$PATH"
-      # export MANPAGER='nvim +Man!'
+      export MANPAGER='nvim +Man!'
 
       # Disable C-s freezing the terminal
       stty -ixon

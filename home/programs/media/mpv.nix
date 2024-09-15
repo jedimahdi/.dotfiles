@@ -1,9 +1,13 @@
-{ lib
-, ...
-}: {
+{ lib, pkgs, ... }: {
   programs.mpv = {
     enable = true;
-    # config = {
+    package = pkgs.mpv-unwrapped.wrapper {
+      mpv = pkgs.mpv-unwrapped;
+      youtubeSupport = true;
+    };
+    config = {
+      ytdl-format = "bestvideo[height<=?720]+bestaudio/best";
+    };
     #   autofit-larger = "100%x95%";
     #   osc-visibility = "never";
     # };

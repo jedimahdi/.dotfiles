@@ -65,6 +65,7 @@
       libnotify
       pciutils
       man-pages
+      linuxKernel.packages.linux_6_6.perf
     ];
 
     shells = with pkgs; [ zsh ];

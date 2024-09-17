@@ -1,0 +1,34 @@
+[alias]
+	af = "!git add $(git ls-files -m -o --exclude-standard | fzf -m)"
+	amend = "commit -a --amend"
+	count = "shortlog -sn"
+	day = "!sh -c 'git log --reverse --no-merges --branches=* --date=local --after=\"yesterday 11:59PM\" --author=\"`git config --get user.name`\"'"
+	graph = "log --all --decorate --graph --oneline"
+	ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
+	l = "log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+	la = "!git config -l | grep alias | cut -c 7-"
+	review = "!git log --no-merges --pretty=%an | head -n 100 | sort | uniq -c | sort -nr"
+	s = "status --short"
+	ss = "status"
+	undo = "reset --soft HEAD~1"
+	update = "!git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`"
+
+[core]
+	editor = "nvim"
+	pager = "/nix/store/10wid9ncsv6n31nzxi4zzh78vh3bkxfi-delta-0.18.2/bin/delta"
+
+[delta]
+	light = false
+	navigate = true
+	side-by-side = true
+	true-color = "always"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	diffFilter = "/nix/store/10wid9ncsv6n31nzxi4zzh78vh3bkxfi-delta-0.18.2/bin/delta --color-only"
+
+[user]
+	email = "mahdi.se@yahoo.com"
+	name = "Mahdi Seyedan"

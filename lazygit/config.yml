@@ -1,0 +1,9 @@
+gui:
+  nerdFontsVersion: 3
+  showCommandLog: false
+  showRandomTip: false
+  theme:
+    selectedLineBgColor:
+    - '#424a57'
+update:
+  method: never

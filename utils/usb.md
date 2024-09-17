@@ -6,6 +6,7 @@ sudo fdisk -l
 lsblk
 sudo wipefs --all /dev/sdb
 sudo mkfs.vfat /dev/sdb
+
 sudo dd if=~/Downloads/name.iso of=/dev/sdb bs=4M status=progress
 sync
 ```

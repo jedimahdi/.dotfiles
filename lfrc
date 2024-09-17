@@ -1,0 +1,48 @@
+set info "size"
+set nopreview
+set ratios "1"
+
+cmd download ${{
+  printf "URL: "
+  read URL
+  aria2c $URL
+}}
+
+cmd dragon-out %/nix/store/r8wy9j13hj23av0na15mhj9n1y4mc0sg-xdragon-1.2.0/bin/xdragon -a -x "$fx"
+cmd editor-open $$EDITOR $f
+cmd mkdir ${{
+  printf "Directory Name: "
+  read DIR
+  mkdir $DIR
+}}
+
+
+map . set hidden!
+map <enter> open
+map C clear
+map D delete
+map U unselect
+map \"
+map \' mark-load
+map ` mark-load
+map a rename
+map c mkdir
+map d
+map dd cut
+map do dragon-out
+map dw download
+map ee editor-open
+map g/ /
+map gd cd ~/Downloads
+map gh cd
+map gs cd ~/Downloads/series
+map g~ cd
+map p paste
+map r reload
+map y copy
+
+
+
+
+
+

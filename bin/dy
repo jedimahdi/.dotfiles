@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-export http_proxy='http://localhost:20171' && export https_proxy='http://localhost:20171'
+# export http_proxy='http://localhost:20171' && export https_proxy='http://localhost:20171'
 read -rp "Enter video id: " URL
-nix run nixpkgs#yt-dlp -- -f '((bv*[fps>30]/bv*)[height<=720]/(wv*[fps>30]/wv*)) + ba / (b[fps>30]/b)[height<=720]/(w[fps>30]/w)' "https://www.youtube.com/watch?v=$URL"
+yt-dlp -f '((bv*[fps>30]/bv*)[height<=720]/(wv*[fps>30]/wv*)) + ba / (b[fps>30]/b)[height<=720]/(w[fps>30]/w)' "https://www.youtube.com/watch?v=$URL"

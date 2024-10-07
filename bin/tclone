@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+url=$1
+name=$(basename $url | sed 's/.git//')
+cd /home/mahdi/code
+git clone $url $name
+
+spath="/home/mahdi/code/$name"
+sname=$(echo "$name" | tr . _)
+
+tconnect $spath $sname

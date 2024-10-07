@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+module=$1
+name=$2
+
+if [[ $module == "package" ]]; then
+	hoogle search --info --color "$name"
+elif [[ $module == "module" ]]; then
+	hoogle search --info --color "$name"
+else
+	hoogle search --info --color "$module.$name"
+fi

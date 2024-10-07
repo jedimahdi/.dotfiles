@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+  selected=$1
+else
+  code=$(find ~/code -mindepth 1 -maxdepth 1 -type d)
+  apps=$(find ~/apps -mindepth 2 -maxdepth 2 -type d)
+  selected=$(
+    echo -e "$apps\n$code\n$HOME/.config/nvim\n$HOME/.dotfiles" | cut -d '/' -f 4- | fzf-tmux -p 90% \
+      --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
+      --prompt "  " \
+      --exit-0 \
+      --preview 'eza $HOME/{} --color always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
+  )
+fi
+
+if [[ -z $selected ]]; then
+  exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+
+tconnect "$HOME/$selected" "$selected_name"

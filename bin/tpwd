@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+spath=$PWD
+sname=$(basename "$PWD" | tr . _)
+
+tconnect $spath $sname

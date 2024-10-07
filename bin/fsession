@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+CURRENT="$(tmux display-message -p '#S')"
+
+tmux_option_or_fallback() {
+	local option_value
+	option_value="$(tmux show-option -gqv "$1")"
+	if [ -z "$option_value" ]; then
+		option_value="$2"
+	fi
+	echo "$option_value"
+}
+
+input() {
+	# default_window_mode=$(tmux_option_or_fallback "@sessionx-window-mode" "off")
+	# if [[ "$default_window_mode" == "on" ]]; then
+	# (tmux list-windows -a -F '#{session_name}:#{window_index}')
+	# else
+	#   filter_current_session=$(tmux_option_or_fallback "@sessionx-filter-current" "true")
+	#   if [[ "$filter_current_session" == "true" ]]; then
+	(tmux list-sessions | sed -E 's/:.*$//' | grep -v "$CURRENT$") || echo "$CURRENT"
+	#   else
+	# (tmux list-sessions | sed -E 's/:.*$//') || echo "$CURRENT"
+	#   fi
+	# fi
+}
+handle_output() {
+	target=$(echo "$1" | tr -d '\n')
+	if [[ -z "$target" ]]; then
+		exit 0
+	fi
+
+	if ! tmux has-session -t="$target" 2>/dev/null; then
+		if test -d "$target"; then
+			tmux new-session -ds "${target##*/}" -c "$target"
+			target="${target##*/}"
+		else
+			if [[ "$Z_MODE" == "on" ]]; then
+				z_target=$(zoxide query "$target")
+				tmux new-session -ds "$target" -c "$z_target" -n "$z_target"
+			else
+				tmux new-session -ds "$target"
+			fi
+		fi
+	fi
+	tmux switch-client -t "$target"
+}
+
+BIND_ALT_BSPACE="alt-bspace:execute(tmux kill-session -t {})+reload(tmux list-sessions | sed -E 's/:.*$//' | grep -v $(tmux display-message -p '#S'))"
+BIND_CTRL_E="ctrl-e:reload(find $PWD -mindepth 1 -maxdepth 1 -type d)+change-preview(ls {})"
+# shellcheck disable=2016
+BIND_CTRL_R='ctrl-r:execute(printf >&2 "New name: ";read name; tmux rename-session -t {} ${name};)+reload(tmux list-sessions | sed -E "s/:.*$//")'
+HEADER="enter=󰿄  M-BS=Delete  C-R=rename  C-E=expand"
+INPUT=$(input)
+
+RESULT=$(echo -e "${INPUT// /}" | fzf-tmux -p 90% \
+	--scrollbar '▌▐' \
+	--prompt "  " \
+	--header "$HEADER" \
+	--color 'pointer:10,spinner:92,marker:46,bg+:-1' \
+	--bind 'change:first' \
+	--bind '?:toggle-preview' \
+	--bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
+	--exit-0 \
+	--bind "$BIND_ALT_BSPACE" \
+	--bind "$BIND_CTRL_E" \
+	--bind "$BIND_CTRL_R" \
+	--preview "$HOME/.dotfiles/bin/fsession-preview {}")
+
+handle_output "$RESULT"

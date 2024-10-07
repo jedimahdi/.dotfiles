@@ -19,9 +19,9 @@ read -r -p "Enter Query: " query
 if [[ ${languages[*]} =~ $selected ]]; then
   query=$(echo "$query" | tr ' ' '+')
   # tmux neww bash -c "echo \"curl cht.sh/$selected/$query/\" & curl cht.sh/$selected/$query & while [ : ]; do sleep 1; done"
-  tmux neww bash -c "curl -s cht.sh/$selected/$query | bat --paging always --pager less"
+  tmux neww bash -c "curl -s cht.sh/$selected/$query | less -R"
 else
   echo "$selected"
   echo "$query"
-  tmux neww bash -c "curl -s cht.sh/$selected~$query | bat --paging always --pager less"
+  tmux neww bash -c "curl -s cht.sh/$selected~$query | less -R"
 fi

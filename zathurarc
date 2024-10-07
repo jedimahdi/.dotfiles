@@ -1,5 +1,5 @@
 set adjust-open	"best-fit"
-set font	"Noto Sans 22"
+set font	"DejaVu Sans 22"
 set pages-per-row	"1"
 set scroll-full-overlap	"0.01"
 set scroll-page-aware	"true"

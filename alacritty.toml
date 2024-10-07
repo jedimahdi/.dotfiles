@@ -8,6 +8,14 @@ size = 21
 family = "VictorMono Nerd Font"
 style = "SemiBold"
 
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
 [font.offset]
 x = 0
 y = 5

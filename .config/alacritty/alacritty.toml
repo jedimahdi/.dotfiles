@@ -1,0 +1,65 @@
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 21
+
+[font.normal]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.offset]
+x = 0
+y = 5
+
+[mouse]
+hide_when_typing = true
+
+[window]
+dynamic_padding = true
+
+[window.padding]
+x = 4
+y = 4
+
+[colors.primary]
+background = "0x1f2329"
+foreground = "0xabb2bf"
+
+[colors.normal]
+black = "0x1e2127"
+red = "0xe06c75"
+green = "0x98c379"
+yellow = "0xd19a66"
+blue = "0x61afef"
+magenta = "0xc678dd"
+cyan = "0x56b6c2"
+white = "0x828791"
+
+[colors.bright]
+black = "0x5c6370"
+red = "0xe06c75"
+green = "0x98c379"
+yellow = "0xd19a66"
+blue = "0x61afef"
+magenta = "0xc678dd"
+cyan = "0x56b6c2"
+white = "0xe6efff"
+
+[colors.dim]
+black = "0x1e2127"
+red = "0xe06c75"
+green = "0x98c379"
+yellow = "0xd19a66"
+blue = "0x61afef"
+magenta = "0xc678dd"
+cyan = "0x56b6c2"
+white = "0x828791"

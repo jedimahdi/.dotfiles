@@ -1,5 +1,6 @@
 export ZCONFIG="$HOME/.config/zsh"
 export ZSHARE="$HOME/.local/share/zsh"
+export EDITOR="nvim"
 
 bindkey -e
 
@@ -33,6 +34,17 @@ alias pacman='sudo pacman --color auto'
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export MANPAGER='nvim +Man!'
+
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# Disable C-s freezing the terminal
+stty -ixon
+
+# open commands in $EDITOR with C-x C-e
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
 source <(fzf --zsh)
 eval "$(starship init zsh)"

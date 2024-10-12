@@ -2,3 +2,4 @@
 --ignore extra
 --ignore bin
 --ignore .stowrc
+--verbose

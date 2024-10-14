@@ -31,6 +31,7 @@ alias ta='tmux attach'
 alias tc='tmux-sessionizer'
 alias l='eza -la --icons --no-user --no-time --group-directories-first'
 alias pacman='sudo pacman --color auto'
+alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export MANPAGER='nvim +Man!'

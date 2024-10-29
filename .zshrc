@@ -32,9 +32,12 @@ alias tc='tmux-sessionizer'
 alias l='eza -la --icons --no-user --no-time --group-directories-first'
 alias pacman='sudo pacman --color auto'
 alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
+alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
+alias gdb="gdb --silent"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export MANPAGER='nvim +Man!'
+export MANWIDTH=999
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward

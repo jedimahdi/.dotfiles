@@ -36,6 +36,8 @@ alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layo
 alias gdb="gdb --silent"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 

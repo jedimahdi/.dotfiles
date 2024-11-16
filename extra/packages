@@ -23,3 +23,9 @@ valgrind
 rar
 unrar
 stow
+shfmt
+feh
+prettier
+gopls
+strace
+npm

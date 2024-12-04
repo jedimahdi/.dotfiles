@@ -1,3 +1,12 @@
+[git_state]
+disabled = true
+
+[git_commit]
+disabled = true
+
+[git_status]
+disabled = true
+
 [battery]
 disabled = true
 

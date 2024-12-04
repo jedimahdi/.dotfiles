@@ -3,9 +3,9 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  apps=$(find ~/apps -mindepth 2 -maxdepth 2 -type d)
+  apps=$(fd . --base-directory ~ apps --max-depth=2 --min-depth=2 --type directory)
   selected=$(
-    echo -e "$apps\n$$HOME/.config/nvim\n$HOME/.dotfiles" | cut -d '/' -f 4- | fzf-tmux -p 90% \
+    echo -e "$apps\n.config/nvim\n.dotfiles" | fzf-tmux -p 90% \
       --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
       --prompt "  " \
       --exit-0 \
@@ -19,4 +19,4 @@ fi
 
 selected_name=$(basename "$selected" | tr . _)
 
-tconnect "$HOME/$selected" "$selected_name"
+tconnect $(realpath "$HOME/$selected") "$selected_name"

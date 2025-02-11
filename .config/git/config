@@ -19,3 +19,5 @@
 [user]
 	email = "mahdi.se@yahoo.com"
 	name = "Mahdi Seyedan"
+[http]
+	postBuffer = 524288000

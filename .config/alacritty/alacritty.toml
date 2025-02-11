@@ -5,20 +5,20 @@ TERM = "xterm-256color"
 size = 18
 
 [font.normal]
-family = "VictorMono Nerd Font"
-style = "SemiBold"
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
 
 [font.italic]
-family = "VictorMono Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "SemiBold"
 
 [font.bold]
-family = "VictorMono Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "SemiBold"
 
 [font.offset]
-x = 0
-y = 4
+x = -1
+y = 3
 
 [mouse]
 hide_when_typing = true
@@ -28,8 +28,8 @@ dynamic_padding = true
 decorations = "none"
 
 [window.padding]
-x = 4
-y = 4
+x = 5
+y = 5
 
 [colors.primary]
 background = "0x1f2329"

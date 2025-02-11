@@ -1,0 +1,3 @@
+#!/bin/sh
+
+killall -s SIGINT wl-screenrec

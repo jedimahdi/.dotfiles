@@ -30,3 +30,4 @@ gopls
 strace
 npm
 net-tools
+nwg-look

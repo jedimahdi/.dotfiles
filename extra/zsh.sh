@@ -1,3 +1,4 @@
+chsh -s /bin/zsh
 
 mkdir -p ~/.local/share/zsh/plugins
 

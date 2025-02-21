@@ -1,2 +1,9 @@
+---
 Diagnostics:
   UnusedIncludes: None
+---
+If:
+  PathMatch: .*\.h
+CompileFlags:
+  Add:
+    - -xc-header

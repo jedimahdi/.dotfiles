@@ -83,3 +83,81 @@ sudo -i -u postgres
 ALTER USER mahdi with encrypted password '1234';
 # or \password
 ```
+
+## Nginx and ssl
+
+sudo apt install nginx
+sudo nvim /etc/nginx/sites-available/yourdomain
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+To enable:
+
+sudo ln -s /etc/nginx/sites-available/yourdomain /etc/nginx/sites-enabled/
+
+Test and reload:
+
+sudo nginx -t
+sudo systemctl reload nginx
+
+Add ssl with certbot:
+
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+
+Firewall:
+
+sudo ufw allow 443
+sudo ufw status
+
+Certificate Renewal:
+
+sudo certbot renew --dry-run
+
+## Auto start
+
+### Nodejs
+
+npm install -g pm2
+pm2 start npm --name "app-name" -- start
+pm2 save
+pm2 startup
+
+### Binary
+
+sudo nvim /etc/systemd/system/shop-backend.service
+
+```
+[Unit]
+Description=Shop Backend
+After=network.target
+
+[Service]
+Type=simple
+User=mahdi
+ExecStart=/home/mahdi/shop-backend/bin/api
+WorkingDirectory=/home/mahdi/shop-backend
+Restart=on-failure
+Environment="ENV_VAR=value" # Optional, add environment variables if needed
+
+[Install]
+WantedBy=multi-user.target
+```
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now shop-backend.service
+systemctl status shop-backend.service

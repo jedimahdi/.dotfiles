@@ -32,3 +32,7 @@ Host hostname
     User mahdi
     Port 22
     ForwardAgent yes
+
+## Qt theme
+
+https://wiki.archlinux.org/title/Qt#Configuration_of_Qt_5/6_applications_under_environments_other_than_KDE_Plasma

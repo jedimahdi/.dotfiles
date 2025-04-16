@@ -36,3 +36,8 @@ Host hostname
 ## Qt theme
 
 https://wiki.archlinux.org/title/Qt#Configuration_of_Qt_5/6_applications_under_environments_other_than_KDE_Plasma
+
+qt6ct
+qt5ct
+adwaita-qt5 (aur)
+adwaita-qt6 (aur)

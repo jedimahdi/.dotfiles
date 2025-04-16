@@ -1,0 +1,6 @@
+#!/bin/bash
+
+FILENAME=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf)
+
+nvim $FILENAME
+

@@ -1,3 +1,66 @@
+[init]
+	defaultBranch = "main"
+
+[user]
+	email = "mahdi.se@yahoo.com"
+	name = "Mahdi Seyedan"
+
+[core]
+  whitespace = error
+
+[http]
+	postBuffer = 524288000
+
+[advice]
+  addEmptyPathspec = false
+  ; pushNonFastForward = false
+  statusHints = false
+
+[url "git@github.com:"]
+  insteadOf = "gh:"
+
+[status]
+  branch = true
+  showStash = true
+  showUntrackedFiles = all
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[pager]
+  diff = diff-so-fancy | less
+
+[diff-so-fancy]
+  markEmptyLines = false
+
+[color "diff"]
+  ; meta = black bold
+  ; frag = magenta
+  context = white
+  ; whitespace = yellow reverse
+  ; old = red
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+  singlekey = true
+
+[push]
+  autoSetupRemove = true
+  default = current
+  followTags = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autoStash = true
+
+[log]
+  abbrevCommit = true  # short commits
+  graphColors = blue,yellow,cyan,magenta,green,red
+
 [alias]
 	af = "!git add $(git ls-files -m -o --exclude-standard | fzf -m)"
 	amend = "commit -a --amend"
@@ -12,12 +75,3 @@
 	ss = "status"
 	undo = "reset --soft HEAD~1"
 	update = "!git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`"
-
-[init]
-	defaultBranch = "main"
-
-[user]
-	email = "mahdi.se@yahoo.com"
-	name = "Mahdi Seyedan"
-[http]
-	postBuffer = 524288000

@@ -26,14 +26,34 @@ alias cp='cp -iv'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
-alias lg='lazygit'
+
+# Aliases: tmux
 alias ta='tmux attach'
+alias tl='tmux list-sessions'
+alias tn='tmux new-session -s'
 alias tc='tmux-sessionizer'
+
 alias l='eza -la --icons --no-user --no-time --group-directories-first'
-alias pacman='sudo pacman --color auto'
-# alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
+
+# Aliases: package managers
+alias pi='sudo pacman -S --needed'
+alias pu='sudo pacman -Syu'
+alias pf='pacman -Ss'
+alias pr='sudo pacman -Rs'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
+
+# Aliases: git
 alias gdb="gdb --silent"
+alias gs="git status --short"
+alias gc="git commit"
+alias ga="git add"
+alias gap="git add --patch"
+alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
+alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
+alias gds="gd --staged"
+alias lg='lazygit'
+
+# alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"

@@ -18,8 +18,15 @@ source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
 alias c='clear'
-alias ls='eza --icons --group-directories-first'
+
+# alias ls='eza --icons --group-directories-first'
+# alias l='eza -la --icons --no-user --no-time --group-directories-first'
+alias l='eza -1A --group-directories-first --color=always --git-ignore --icons'
+alias ls='l'
+alias la='l -l --time-style="+%Y-%m-%d %H:%M" --no-permissions --octal-permissions'
+
 alias mv='mv -iv'
 alias rm='rm -vI'
 alias cp='cp -iv'
@@ -33,7 +40,6 @@ alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
 alias tc='tmux-sessionizer'
 
-alias l='eza -la --icons --no-user --no-time --group-directories-first'
 
 # Aliases: package managers
 alias pi='sudo pacman -S --needed'

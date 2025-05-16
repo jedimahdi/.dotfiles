@@ -1,6 +1,4 @@
-export ZCONFIG="$HOME/.config/zsh"
-export ZSHARE="$HOME/.local/share/zsh"
-export EDITOR="nvim"
+export ZSHARE="$XDG_DATA_HOME/zsh"
 
 bindkey -e
 
@@ -23,7 +21,7 @@ alias c='clear'
 
 # alias ls='eza --icons --group-directories-first'
 # alias l='eza -la --icons --no-user --no-time --group-directories-first'
-alias l='eza -1A --group-directories-first --color=always --git-ignore --icons'
+alias l='eza -1A --group-directories-first --color=always --icons'
 alias ls='l'
 alias la='l -l --time-style="+%Y-%m-%d %H:%M" --no-permissions --octal-permissions'
 
@@ -39,7 +37,6 @@ alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
 alias tc='tmux-sessionizer'
-
 
 # Aliases: package managers
 alias pi='sudo pacman -S --needed'
@@ -61,14 +58,6 @@ alias lg='lazygit'
 
 # alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
 
-export PATH="$HOME/.dotfiles/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.npm-global/bin:$PATH"
-export PATH="$HOME/.nvim/bin:$PATH"
-export MANPAGER='nvim +Man!'
-export MANWIDTH=999
-
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
@@ -79,10 +68,6 @@ stty -ixon
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
-
-source <(fzf --zsh)
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh --cmd cd)"
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -96,3 +81,7 @@ function y() {
 if [[ -z "${SSH_CONNECTION}" ]]; then
     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
+
+source <(fzf --zsh)
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh --cmd cd)"

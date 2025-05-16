@@ -71,6 +71,6 @@ xmonad/.config/xmonad/xmonad-extras
 xmonad/.config/xmonad/xmonad-contrib
 xmonad/.config/xmonad/dist-newstyle
 
-zsh/.config/zsh/.zhsitory
+.config/zsh/.zcompdump
 .pre-commit-config.yaml
 .direnv

@@ -2,5 +2,8 @@
 
 FILENAME=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf)
 
-nvim $FILENAME
+if [[ -z $FILENAME ]]; then
+	exit 0
+fi
 
+nvim $FILENAME

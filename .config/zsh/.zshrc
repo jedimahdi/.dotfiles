@@ -19,11 +19,10 @@ alias ....='cd ../../..'
 
 alias c='clear'
 
-# alias ls='eza --icons --group-directories-first'
-# alias l='eza -la --icons --no-user --no-time --group-directories-first'
+alias ls='eza --icons --group-directories-first'
 alias l='eza -1A --group-directories-first --color=always --icons'
-alias ls='l'
 alias la='l -l --time-style="+%Y-%m-%d %H:%M" --no-permissions --octal-permissions'
+# alias l='eza -la --icons --no-user --no-time --group-directories-first'
 
 alias mv='mv -iv'
 alias rm='rm -vI'
@@ -31,6 +30,7 @@ alias cp='cp -iv'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
+alias bc="bc -ql"
 
 # Aliases: tmux
 alias ta='tmux attach'

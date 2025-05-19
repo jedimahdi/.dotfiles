@@ -1,6 +1,7 @@
 export BROWSER="firefox"
 export PAGER="less"
 export EDITOR="nvim"
+export TERMINAL="alacritty"
 export VISUAL="${EDITOR}"
 
 # follow XDG base dir specification

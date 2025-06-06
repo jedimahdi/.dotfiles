@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
 RESULT=$(
-	hoogle search --count 20 -q |
-		fzf-tmux -p 90% \
-			--preview 'fhoogle-preview {1} {2}' \
-			--disabled \
-			--color 'pointer:10,spinner:92,marker:46,bg+:-1' \
-			--prompt "  " \
-			--exit-0 \
-			--bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
-			--bind 'change:reload:hoogle search --count 20 -q {q}'
+  hoogle search --count 20 -q |
+    fzf-tmux -p 90% \
+      --preview 'fhoogle-preview {1} {2}' \
+      --disabled \
+      --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
+      --prompt "  " \
+      --exit-0 \
+      --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down' \
+      --bind 'change:reload:hoogle search --count 20 -q {q}'
 )
 
 if [[ -z $RESULT ]]; then
-	exit 0
+  exit 0
 fi
 
 module=$(echo "$RESULT" | cut -d ' ' -f 1)
 name=$(echo "$RESULT" | cut -d ' ' -f 2)
 
 if [[ $module == "package" ]]; then
-	link=$(hoogle search "+$name" --link --count 1 -q | awk '{ print $NF }')
-	$BROWSER "$link"
+  link=$(hoogle search "+$name" --link --count 1 -q | awk '{ print $NF }')
+  $BROWSER "$link"
 elif [[ $module == "module" ]]; then
-	link=$(hoogle search "$name" --link --count 1 -q | awk '{ print $NF }')
-	$BROWSER "$link"
+  link=$(hoogle search "$name" --link --count 1 -q | awk '{ print $NF }')
+  $BROWSER "$link"
 else
-	link=$(hoogle search "$module.$name" --link --count 1 -q | awk '{ print $NF }')
-	$BROWSER "$link"
+  link=$(hoogle search "$module.$name" --link --count 1 -q | awk '{ print $NF }')
+  $BROWSER "$link"
 fi

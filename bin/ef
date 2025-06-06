@@ -1,9 +1,4 @@
 #!/bin/bash
 
-FILENAME=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf)
-
-if [[ -z $FILENAME ]]; then
-	exit 0
-fi
-
-nvim $FILENAME
+file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || exit 0
+nvim $file

@@ -29,7 +29,7 @@ export PATH="$GOBIN:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.nvim/bin:$PATH"
 
-export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 30%"
+export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 80%"
 export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-preview"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999

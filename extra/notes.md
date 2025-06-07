@@ -41,3 +41,12 @@ qt6ct
 qt5ct
 adwaita-qt5 (aur)
 adwaita-qt6 (aur)
+
+## Core
+
+ulimit -c unlimited
+
+sudo su
+echo "./core" > /proc/sys/kernel/core_pattern
+
+cat /proc/sys/kernel/core_pattern

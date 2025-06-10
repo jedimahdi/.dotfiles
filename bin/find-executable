@@ -1,0 +1,6 @@
+#!/bin/bash
+
+name=${2:-main}
+
+fd . ${1:-'.'} --type executable --no-ignore | grep "${name%.*}" | head -n1
+

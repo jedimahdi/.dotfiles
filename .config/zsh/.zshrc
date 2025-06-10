@@ -55,6 +55,7 @@ alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %a
 alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
 alias gds="gd --staged"
 alias lg='lazygit'
+alias gcl="git clone --depth 1"
 
 # alias ef="rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf | xargs nvim"
 

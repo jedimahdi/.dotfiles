@@ -22,6 +22,7 @@ export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0" # gtk 3 & 4 are XDG compliant
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$CARGO_HOME/bin:$PATH"

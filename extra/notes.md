@@ -1,3 +1,10 @@
+## New User
+
+useradd -m -G wheel -s /bin/zsh user
+passwd user
+
+EDITOR=nvim visudo
+%wheel ALL=(ALL:ALL) ALL
 
 ## Pipewire
 

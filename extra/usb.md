@@ -15,4 +15,17 @@ sync
 sha512sum -c Endeavouros-Galileo-11-2023.iso.sha512sum
 gpg --recv CDF595A1
 gpg --verify Endeavouros-Galileo-11-2023.iso.sig
+
+
+# or make a partition
+sudo fdisk /dev/sdb # n to create partition
+sudo mkfs.ext4 /dev/sdb1
+
 ```
+
+## Another tool
+
+https://github.com/ifd3f/caligula
+
+sudo pacman -S caligula
+caligula burn some-image-file.iso.gz

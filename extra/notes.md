@@ -40,6 +40,21 @@ Host hostname
     Port 22
     ForwardAgent yes
 
+## GnuPG
+
+gpg --gen-key
+gpg --list-keys
+
+gpg --export-secret-keys --armor {fingerprint} > privkey.asc
+gpg --export --armor {fingerprint} > pubkey.asc
+
+gpg --import pubkey.asc
+gpg --allow-secret-key-import --import privkey.asc
+
+gpg --edit-key {fingerprint}
+trust
+save
+
 ## Qt theme
 
 https://wiki.archlinux.org/title/Qt#Configuration_of_Qt_5/6_applications_under_environments_other_than_KDE_Plasma
@@ -57,3 +72,8 @@ sudo su
 echo "./core" > /proc/sys/kernel/core_pattern
 
 cat /proc/sys/kernel/core_pattern
+
+## Colors
+
+https://github.com/sharkdp/pastel
+sudo pacman -S pastel

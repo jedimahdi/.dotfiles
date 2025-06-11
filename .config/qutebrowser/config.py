@@ -17,7 +17,7 @@ c.scrolling.smooth = False
 
 config.load_autoconfig(False) # load settings done via the gui
 
-c.auto_save.session = True # save tabs on quit/restart
+c.auto_save.session = False # save tabs on quit/restart
 
 # dark mode setup
 c.colors.webpage.darkmode.enabled = True
@@ -27,10 +27,11 @@ config.set('colors.webpage.darkmode.enabled', False, 'file://*')
 
 # styles, cosmetics
 # c.content.user_stylesheets = ["~/.config/qutebrowser/styles/youtube-tweaks.css"]
-c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
+# c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 9, 'right': 9}
 c.tabs.indicator.width = 0 # no tab indicators
 # c.window.transparent = True # apparently not needed
 c.tabs.width = '7%'
+c.tabs.show = "multiple"
 
 # fonts
 c.fonts.default_family = []
@@ -41,6 +42,7 @@ c.fonts.web.family.serif = 'JetBrains Mono'
 c.fonts.web.family.standard = 'JetBrains Mono'
 
 config.bind('<Ctrl-v>', 'hint links spawn mpv {hint-url}')
+config.bind('<Ctrl-o>', 'spawn --userscript qute-pass')
 
 c.content.geolocation = False
 c.content.default_encoding = 'utf-8'

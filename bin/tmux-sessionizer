@@ -5,9 +5,7 @@ if [[ $# -eq 1 ]]; then
 else
   apps=$(fd . --base-directory ~ apps --max-depth=2 --min-depth=2 --type directory)
   selected=$(
-    echo -e "$apps\n.config/nvim\n.dotfiles" | fzf-tmux -p 90% \
-      --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
-      --prompt "  " \
+    echo -e "$apps\n.config/nvim\n.dotfiles" | fzf \
       --exit-0 \
       --preview 'eza $HOME/{} --color always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
   )

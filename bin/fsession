@@ -53,9 +53,8 @@ BIND_CTRL_R='ctrl-r:execute(printf >&2 "New name: ";read name; tmux rename-sessi
 HEADER="enter=󰿄  M-BS=Delete  C-R=rename  C-E=expand"
 INPUT=$(input)
 
-RESULT=$(echo -e "${INPUT// /}" | fzf-tmux -p 90% \
+RESULT=$(echo -e "${INPUT// /}" | fzf \
 	--scrollbar '▌▐' \
-	--prompt "  " \
 	--header "$HEADER" \
 	--color 'pointer:10,spinner:92,marker:46,bg+:-1' \
 	--bind 'change:first' \

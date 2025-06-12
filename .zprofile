@@ -31,10 +31,9 @@ export PATH="$GOBIN:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.nvim/bin:$PATH"
 
-export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 80%"
-export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-preview"
+export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,gutter:-1,pointer:4,border:8' --border rounded --layout=reverse --height 80% --tmux 90%"
+export FZF_CTRL_R_OPTS="--no-preview"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 
-# Settings: less
 export LESS='-cigRS -j4 -x4 -#5 -z-10 -Ps'

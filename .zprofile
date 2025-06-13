@@ -24,6 +24,7 @@ export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0" # gtk 3 & 4 are XDG compliant
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$CARGO_HOME/bin:$PATH"

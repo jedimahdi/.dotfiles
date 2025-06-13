@@ -36,7 +36,7 @@ alias bc="bc -ql"
 alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
-alias tc='tmux-sessionizer'
+alias tc='tsession'
 
 # Aliases: package managers
 alias pi='sudo pacman -S --needed'

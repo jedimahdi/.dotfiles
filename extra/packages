@@ -17,7 +17,6 @@ zathura-pdf-mupdf
 entr
 bat
 picom
-tldr
 gdb
 valgrind
 rar
@@ -44,3 +43,4 @@ imagemagick
 gnupg
 pass
 pass-otp
+tealdeer

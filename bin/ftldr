@@ -1,0 +1,4 @@
+#!/bin/bash
+
+name=$(tldr --list | fzf) || exit 0
+tldr --pager $name

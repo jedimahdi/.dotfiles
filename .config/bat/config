@@ -1,0 +1,4 @@
+# Run `bat --list-themes` for a list of all available themes
+--theme="TwoDark"
+--plain
+--map-syntax ".ignore:Git Ignore"

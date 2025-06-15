@@ -37,6 +37,7 @@ alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
 alias tc='tsession'
+alias ts='tconnect $HOME scratch'
 
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Syu'

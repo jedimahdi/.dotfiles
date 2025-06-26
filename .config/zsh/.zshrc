@@ -4,11 +4,12 @@ export ZSHARE="$XDG_DATA_HOME/zsh"
 bindkey -e
 
 autoload -Uz compinit
-compinit -C
+compinit
 
 HISTFILE="$ZSHARE/zsh_history"
 HISTSIZE="10000"
 SAVEHIST="10000"
+
 setopt SHARE_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 
@@ -37,7 +38,7 @@ alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
 alias tc='tsession'
-alias ts='tconnect $HOME scratch'
+alias ts='tconnect $PWD scratch'
 
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Syu'
@@ -63,9 +64,26 @@ bindkey '^n' history-search-forward
 stty -ixon
 
 # open commands in $EDITOR with C-x C-e
-autoload -z edit-command-line
+autoload -U edit-command-line
 zle -N edit-command-line
-bindkey "^X^E" edit-command-line
+bindkey "^x^e" edit-command-line
+
+edit-last-command-output() {
+  if [[ "$TERM" =~ "tmux" ]]; then
+    tmux capture-pane -p -S - -E - -J | tac | awk '
+      found && !/❯/ { print }
+      /❯/ && !found { found=1; next }
+      /❯/ && found {exit}
+    ' | tac | nvim -
+  else
+    echo
+    print -Pn "%F{red}error: can't capture last command output outside of tmux%f"
+    zle accept-line
+  fi
+}
+
+zle -N edit-last-command-output
+bindkey '^x^o' edit-last-command-output
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

@@ -57,6 +57,9 @@
 [rebase]
   autoStash = true
 
+[commit]
+  verbose = true
+
 [log]
   abbrevCommit = true  # short commits
   graphColors = blue,yellow,cyan,magenta,green,red

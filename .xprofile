@@ -1,0 +1,6 @@
+#!/bin/sh
+
+picom -b
+$HOME/.dotfiles/bin/remaps
+clipmenud &
+feh --bg-fill $HOME/Pictures/od_trail.jpg &

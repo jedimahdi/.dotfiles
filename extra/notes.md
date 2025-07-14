@@ -11,7 +11,6 @@ EDITOR=nvim visudo
 packages: pipewire, pipewire-audio, pipewire-alsa, pipewire-pulse, wireplumber
 services: pipewire-pulse.service
 
-
 ## Hyprland
 
 packages: hyprland wl-clipboard hyprpaper fuzzel xdg-desktop-portal-hyprland cliphist swappy grim slurp
@@ -35,10 +34,10 @@ systemctl --user enable --now ssh-agent.service
 ### Add host to .ssh/config
 
 Host hostname
-    HostName host
-    User mahdi
-    Port 22
-    ForwardAgent yes
+HostName host
+User mahdi
+Port 22
+ForwardAgent yes
 
 ## GnuPG
 
@@ -66,12 +65,24 @@ adwaita-qt6 (aur)
 
 ## Core
 
+ulimit -c
 ulimit -c unlimited
 
-sudo su
-echo "./core" > /proc/sys/kernel/core_pattern
-
+sudo sysctl -w kernel.core_pattern=core.%p
 cat /proc/sys/kernel/core_pattern
+sudo nvim /etc/sysctl.d/99-core-pattern.conf
+kernel.core_pattern=core.%p
+
+### systemd-coredump
+
+|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h %d %F
+coredumpctl list
+coredumpctl dump 12345 > core.12345
+coredumpctl gdb 12345
+
+remove old journals which also removes systemc
+sudo journalctl --vacuum-size=100M
+sudo journalctl --vacuum-time=7d
 
 ## Colors
 

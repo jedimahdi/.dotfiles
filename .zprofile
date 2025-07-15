@@ -39,8 +39,6 @@ export MANWIDTH=999
 export LESS='-cigRS -j4 -x4 -#5 -z-10'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
-if [[ -z $DISPLAY && -z $WAYLAND_DISPLAY && $(tty) = /dev/tty1 ]]; then
-  if uwsm check may-start; then
-    exec uwsm start hyprland-uwsm.desktop
-  fi
+if uwsm check may-start; then
+  exec uwsm start hyprland-uwsm.desktop
 fi

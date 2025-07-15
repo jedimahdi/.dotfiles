@@ -1,20 +1,49 @@
 # zmodload zsh/zprof
 export ZSHARE="$XDG_DATA_HOME/zsh"
+export ZSHRC="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
+export HISTFILE="$ZSHARE/zsh_history"
+export HISTSIZE="10000"
+export SAVEHIST="10000"
 
-bindkey -e
-
-autoload -Uz compinit
-compinit
-
-HISTFILE="$ZSHARE/zsh_history"
-HISTSIZE="10000"
-SAVEHIST="10000"
+if [[ -z "${SSH_CONNECTION}" ]]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
 
 setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
 
-source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# Disable Ctrl+S freeze
+stty -ixon
+
+if [[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git/zinit.zsh" ]]; then
+  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
+  git clone https://github.com/zdharma-continuum/zinit "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+fi
+
+source "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git/zinit.zsh"
+
+zcompdump="$ZSHARE/.zcompdump"
+autoload -Uz compinit
+autoload -Uz zrecompile
+if [[ ! -s $zcompdump ]]; then
+  compinit -i -d "$zcompdump"
+  [[ -f "$zcompdump" ]] && zrecompile -p "$zcompdump"
+else
+  compinit -C -d "$zcompdump"
+fi
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
+# zinit light zsh-users/zsh-syntax-highlighting
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -57,12 +86,6 @@ alias gds="gd --staged"
 alias lg='lazygit'
 alias gcl="git clone --depth 1"
 
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-
-# Disable C-s freezing the terminal
-stty -ixon
-
 # open commands in $EDITOR with C-x C-e
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -86,19 +109,15 @@ zle -N edit-last-command-output
 bindkey '^x^o' edit-last-command-output
 
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
-if [[ -z "${SSH_CONNECTION}" ]]; then
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-fi
-
-source <(fzf --zsh)
 eval "$(starship init zsh)"
+source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
 # zprof

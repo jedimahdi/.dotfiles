@@ -88,3 +88,7 @@ sudo journalctl --vacuum-time=7d
 
 https://github.com/sharkdp/pastel
 sudo pacman -S pastel
+
+## Xdg Autostart
+
+watch out for /etc/xdg/autostart

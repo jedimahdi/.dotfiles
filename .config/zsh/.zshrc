@@ -1,9 +1,8 @@
 # zmodload zsh/zprof
 export ZSHARE="$XDG_DATA_HOME/zsh"
-export ZSHRC="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
 export HISTFILE="$ZSHARE/zsh_history"
 export HISTSIZE="1000"
-export SAVEHIST="1000"
+export SAVEHIST=$HISTSIZE
 
 if [[ -z "${SSH_CONNECTION}" ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -24,23 +23,9 @@ bindkey '^n' history-search-forward
 # Disable Ctrl+S freeze
 stty -ixon
 
-zcompdump="$ZSHARE/.zcompdump"
-autoload -Uz compinit
-autoload -Uz zrecompile
-if [[ ! -s $zcompdump ]]; then
-  compinit -i -d "$zcompdump"
-  [[ -f "$zcompdump" ]] && zrecompile -p "$zcompdump"
-else
-  compinit -C -d "$zcompdump"
-fi
-
-if [[ -f "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
-  source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-
-if [[ -f "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-  source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
+autoload -Uz compinit colors vcs_info edit-command-line
+compinit -C -d "$ZSHARE/.zcompdump"
+colors
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -84,7 +69,6 @@ alias lg='lazygit'
 alias gcl="git clone --depth 1"
 
 # open commands in $EDITOR with C-x C-e
-autoload -U edit-command-line
 zle -N edit-command-line
 bindkey "^x^e" edit-command-line
 
@@ -114,7 +98,41 @@ function y() {
   rm -f -- "$tmp"
 }
 
-eval "$(starship init zsh)"
+# Make completion:
+# - Try exact (case-sensitive) match first.
+# - Then fall back to case-insensitive.
+# - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
+# - Substring complete (ie. bar -> foobar).
+zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Colorize completions using default `ls` colors.
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"  # colored files and directories, blue selection box
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats 'on %F{magenta} %b%f'
+zstyle ':vcs_info:git:*' actionformats 'on %F{magenta} %b|%a%f'
+zstyle ':vcs_info:*:*' check-for-changes false
+
+precmd_functions+=(vcs_info)
+
+prompt_dir() {
+  if [[ -n $vcs_info_msg_0_ ]]; then
+    print -Pn "%1~"
+  else
+    print -Pn "%2~"
+  fi
+}
+
+setopt prompt_subst
+
+PROMPT='
+%F{cyan}$(prompt_dir)%f ${vcs_info_msg_0_}
+%(?.%F{green}❯.%F{red}❯)%f '
+
 source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
+
+source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # zprof

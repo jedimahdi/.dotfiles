@@ -2,7 +2,6 @@ ripgrep
 fd
 zoxide
 fzf
-starship
 tmux
 jq
 lua-language-server

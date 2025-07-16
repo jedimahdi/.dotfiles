@@ -39,6 +39,26 @@ export MANWIDTH=999
 export LESS='-cigRS -j4 -x4 -#5 -z-10'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
+# Settings: LS_COLORS
+LS_COLORS='no=0:fi=0:di=34'
+
+# Hidden files
+# LS_COLORS+=":.*=90"
+
+# Programming (purple)
+LS_COLORS+=":*.py=36:*.sh=36:*.c=36:*.h=36"
+LS_COLORS+=":*Dockerfile=36:*Makefile=36"
+
+# Text files (green)
+# LS_COLORS+=":*.md=32:*.txt=32:*.html=32"
+LS_COLORS+=":ex=32"
+
+# Config files (yellow)
+LS_COLORS+=":*.json=33:*.toml=33:*.yml=33"
+LS_COLORS+=":*.in=33:*.conf=33:*.example=33"
+LS_COLORS+=":.zshrc=33:.zprofile=33"
+export LS_COLORS
+
 if uwsm check may-start; then
   exec uwsm start hyprland-uwsm.desktop
 fi

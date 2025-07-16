@@ -2,8 +2,8 @@
 export ZSHARE="$XDG_DATA_HOME/zsh"
 export ZSHRC="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
 export HISTFILE="$ZSHARE/zsh_history"
-export HISTSIZE="10000"
-export SAVEHIST="10000"
+export HISTSIZE="1000"
+export SAVEHIST="1000"
 
 if [[ -z "${SSH_CONNECTION}" ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -24,13 +24,6 @@ bindkey '^n' history-search-forward
 # Disable Ctrl+S freeze
 stty -ixon
 
-if [[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git/zinit.zsh" ]]; then
-  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
-  git clone https://github.com/zdharma-continuum/zinit "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
-fi
-
-source "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git/zinit.zsh"
-
 zcompdump="$ZSHARE/.zcompdump"
 autoload -Uz compinit
 autoload -Uz zrecompile
@@ -41,8 +34,13 @@ else
   compinit -C -d "$zcompdump"
 fi
 
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
+if [[ -f "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+if [[ -f "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 alias ..='cd ..'
 alias ...='cd ../..'

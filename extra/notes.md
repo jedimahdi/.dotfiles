@@ -1,7 +1,7 @@
 ## New User
 
-useradd -m -G wheel -s /bin/zsh user
-passwd user
+useradd -m -G wheel,admin -s /usr/bin/zsh mahdi
+passwd mahdi
 
 EDITOR=nvim visudo
 %wheel ALL=(ALL:ALL) ALL

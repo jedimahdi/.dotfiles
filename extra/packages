@@ -16,7 +16,6 @@ zathura
 zathura-pdf-mupdf
 entr
 bat
-picom
 gcc
 make
 gdb
@@ -25,7 +24,6 @@ rar
 unrar
 stow
 shfmt
-feh
 prettier
 gopls
 strace
@@ -35,9 +33,6 @@ nwg-look
 diff-so-fancy
 xh
 xdg-user-dirs
-mako
-foot
-foot-terminfo
 ffmpeg
 7zip
 poppler
@@ -46,4 +41,6 @@ gnupg
 pass
 pass-otp
 tealdeer
-uwsm
+ninja
+pkgconf
+cmake

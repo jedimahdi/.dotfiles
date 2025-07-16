@@ -9,13 +9,13 @@ if [[ -z "${SSH_CONNECTION}" ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
-setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_FIND_NO_DUPS
-setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY          # Share history across sessions
+setopt INC_APPEND_HISTORY     # Immediately append to history file
+setopt EXTENDED_HISTORY       # Record timestamp in history
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first
+setopt HIST_IGNORE_ALL_DUPS   # Remove older duplicate entries
+setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching
+setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks
 
 bindkey -e
 bindkey '^p' history-search-backward
@@ -42,8 +42,7 @@ else
 fi
 
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma-continuum/fast-syntax-highlighting
-# zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -52,8 +51,8 @@ alias ....='cd ../../..'
 alias c='clear'
 
 alias ls='eza --all --icons --group-directories-first'
-alias l='eza --all --long --group-directories-first --color=always --icons --octal-permissions --no-time --no-user --no-permissions'
-alias la='eza --all --long --group-directories-first --color=always --icons --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
+alias l='ls --long --octal-permissions --no-time --no-user --no-permissions'
+alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
 
 alias mv='mv -iv'
 alias rm='rm -vI'

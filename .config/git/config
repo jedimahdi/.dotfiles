@@ -20,7 +20,7 @@
   insteadOf = "gh:"
 
 [status]
-  branch = true
+  branch = false
   showStash = true
   showUntrackedFiles = all
 

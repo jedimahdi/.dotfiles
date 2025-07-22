@@ -3,6 +3,7 @@ export ZSHARE="$XDG_DATA_HOME/zsh"
 export HISTFILE="$ZSHARE/zsh_history"
 export HISTSIZE="1000"
 export SAVEHIST=$HISTSIZE
+export LS_COLORS='no=0:fi=0:di=34:ex=32'
 
 if [[ -z "${SSH_CONNECTION}" ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -23,9 +24,10 @@ bindkey '^n' history-search-forward
 # Disable Ctrl+S freeze
 stty -ixon
 
-autoload -Uz compinit colors vcs_info edit-command-line
+autoload -Uz compinit colors vcs_info edit-command-line select-word-style
 compinit -C -d "$ZSHARE/.zcompdump"
 colors
+select-word-style bash # only alphanumeric chars are considered WORDCHARS
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -44,6 +46,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 alias bc="bc -ql"
+alias gdb="gdb --silent"
 
 alias ta='tmux attach'
 alias tl='tmux list-sessions'
@@ -57,12 +60,11 @@ alias pf='pacman -Ss'
 alias pr='sudo pacman -Rs'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
 
-alias gdb="gdb --silent"
-alias gs="git status --short"
+# alias gs="git status --short"
 alias gc="git commit"
 alias ga="git add"
 alias gap="git add --patch"
-alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
+# alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
 alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
 alias gds="gd --staged"
 alias lg='lazygit'

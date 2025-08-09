@@ -1,3 +1,6 @@
 BasedOnStyle: Chromium
 IndentWidth: 2
-ColumnLimit: 120
+ColumnLimit: 0
+BreakArrays: true
+AllowShortBlocksOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true

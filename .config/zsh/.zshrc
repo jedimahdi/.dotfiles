@@ -1,7 +1,7 @@
 # zmodload zsh/zprof
 export ZSHARE="$XDG_DATA_HOME/zsh"
 export HISTFILE="$ZSHARE/zsh_history"
-export HISTSIZE="1000"
+export HISTSIZE="5000"
 export SAVEHIST=$HISTSIZE
 export LS_COLORS='no=0:fi=0:di=34:ex=32'
 

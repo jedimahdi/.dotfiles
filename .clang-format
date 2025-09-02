@@ -1,6 +1,27 @@
-BasedOnStyle: Chromium
+BasedOnStyle: LLVM
 IndentWidth: 2
-ColumnLimit: 0
-BreakArrays: true
-AllowShortBlocksOnASingleLine: true
+TabWidth: 2
+UseTab: Never
+
 AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortCaseLabelsOnASingleLine: false
+
+AlignOperands: false
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignTrailingComments: false
+
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpacesInAngles: false
+
+ColumnLimit: 0
+ReflowComments: false
+SortIncludes: false
+
+BinPackArguments: true
+BinPackParameters: true

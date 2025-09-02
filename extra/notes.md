@@ -92,3 +92,7 @@ sudo pacman -S pastel
 ## Xdg Autostart
 
 watch out for /etc/xdg/autostart
+
+## Intel Graphics
+
+sudo pacman -S vdpauinfo intel-media-driver ffmpeg libva libva-utils

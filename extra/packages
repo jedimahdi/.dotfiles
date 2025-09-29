@@ -11,6 +11,7 @@ zip
 unzip
 yazi
 mpv
+imv
 zathura
 zathura-pdf-mupdf
 entr
@@ -43,3 +44,4 @@ tealdeer
 ninja
 pkgconf
 cmake
+meson

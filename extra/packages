@@ -20,8 +20,6 @@ gcc
 make
 gdb
 valgrind
-rar
-unrar
 stow
 shfmt
 prettier
@@ -32,9 +30,13 @@ net-tools
 nwg-look
 diff-so-fancy
 xh
+xdg-utils
+xdg-desktop-portal
 xdg-user-dirs
+xdg-desktop-portal-gtk
 ffmpeg
 7zip
+libarchive
 poppler
 imagemagick
 gnupg
@@ -45,3 +47,11 @@ ninja
 pkgconf
 cmake
 meson
+bear
+brightnessctl
+playerctl
+polkit-gnome
+noto-fonts noto-fonts-cjk
+noto-fonts-emoji
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd

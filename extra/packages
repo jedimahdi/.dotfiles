@@ -25,10 +25,14 @@ shfmt
 prettier
 gopls
 strace
+dust
 npm
 net-tools
 nwg-look
+pavucontrol
 diff-so-fancy
+lazygit
+less
 xh
 xdg-utils
 xdg-desktop-portal

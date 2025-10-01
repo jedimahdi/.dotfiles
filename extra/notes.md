@@ -1,6 +1,6 @@
 ## New User
 
-useradd -m -G wheel,audio,video,input,kvm -s /usr/bin/zsh mahdi
+useradd -m -G wheel,audio,video,input,kvm -k /dev/null -s /usr/bin/zsh mahdi
 passwd mahdi
 
 EDITOR=nvim visudo

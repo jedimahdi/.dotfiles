@@ -60,11 +60,11 @@ alias pf='pacman -Ss'
 alias pr='sudo pacman -Rs'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
 
-# alias gs="git status --short"
+alias gs="gitar status --fzf"
 alias gc="git commit"
 alias ga="git add"
 alias gap="git add --patch"
-# alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
+alias gl='gitar log --fzf'
 alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
 alias gds="gd --staged"
 alias lg='lazygit'

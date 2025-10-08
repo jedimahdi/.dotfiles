@@ -8,7 +8,7 @@ EDITOR=nvim visudo
 
 ## Pipewire
 
-packages: pipewire, pipewire-audio, pipewire-alsa, pipewire-pulse, wireplumber
+packages: pipewire, pipewire-audio, pipewire-alsa, pipewire-pulse, wireplumber, wiremix
 services: pipewire-pulse.service
 
 ## Hyprland

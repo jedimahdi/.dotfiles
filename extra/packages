@@ -27,9 +27,6 @@ gopls
 strace
 dust
 npm
-net-tools
-nwg-look
-pavucontrol
 diff-so-fancy
 lazygit
 less
@@ -64,6 +61,7 @@ fastfetch
 ffmpegthumbnailer
 fontconfig
 iwd
+net-tools
 inetutils
 github-cli
 wiremix

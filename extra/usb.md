@@ -6,21 +6,25 @@ sudo fdisk -l
 lsblk
 sudo wipefs --all /dev/sdb
 sudo mkfs.vfat /dev/sdb
-
-sudo dd if=~/Downloads/name.iso of=/dev/sdb bs=4M status=progress
-sync
 ```
 
-```bash
-sha512sum -c Endeavouros-Galileo-11-2023.iso.sha512sum
-gpg --recv CDF595A1
-gpg --verify Endeavouros-Galileo-11-2023.iso.sig
 
+
+
+```bash
 
 # or make a partition
 sudo fdisk /dev/sdb # n to create partition
 sudo mkfs.ext4 /dev/sdb1
 
+```
+
+
+## Make Bootable usb
+
+```bash
+sudo wipefs --all /dev/sdb
+sudo dd if=archlinux.iso of=/dev/sdX bs=4M status=progress oflag=sync
 ```
 
 ## Another tool

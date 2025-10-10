@@ -1,3 +1,4 @@
+aria2
 ripgrep
 fd
 zoxide
@@ -66,3 +67,4 @@ inetutils
 github-cli
 wiremix
 impala
+yt-dlp

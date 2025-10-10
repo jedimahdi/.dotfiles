@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Ensure zsh is installed
 if ! command -v zsh >/dev/null; then
-  sudo pacman -S --needed zsh
+  sudo pacman -S --needed zsh fzf tmux
 fi
 
 # Change default shell

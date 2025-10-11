@@ -19,6 +19,7 @@ ILoveCandy
 ParallelDownloads = 1
 SigLevel    = Required DatabaseOptional
 LocalFileSigLevel = Optional
+DownloadUser = alpm
 
 [core]
 Include = /etc/pacman.d/mirrorlist
@@ -27,10 +28,12 @@ Include = /etc/pacman.d/mirrorlist
 Include = /etc/pacman.d/mirrorlist
 EOF
 
-# 4. Refresh mirrorlist (you can later replace with reflector or a curated list)
-sudo pacman -Sy --noconfirm
+# 5. Ensure pacman-contrib is installed (for paccache)
+if ! command -v paccache >/dev/null 2>&1; then
+  sudo pacman -S --noconfirm pacman-contrib
+fi
 
-# 5. Clean old packages (keep only 2 versions)
+# 6. Clean old packages (keep only 2 versions)
 sudo paccache -rk2 || true
 
 echo "==> pacman configured:"

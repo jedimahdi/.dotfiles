@@ -10,6 +10,7 @@ stylua
 clang
 zip
 unzip
+wget
 yazi
 mpv
 imv
@@ -69,3 +70,9 @@ github-cli
 wiremix
 impala
 yt-dlp
+man-db
+man-pages
+openssh
+htop
+eza
+alacritty

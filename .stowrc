@@ -1,4 +1,4 @@
---ignore .git
+--ignore /.git
 --ignore extra
 --ignore bin
 --ignore .stowrc

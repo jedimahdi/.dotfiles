@@ -11,7 +11,7 @@ fi
 # 3. Write minimal reproducible pacman.conf
 sudo tee /etc/pacman.conf >/dev/null <<'EOF'
 [options]
-HoldPkg     = pacman glibc manjaro-system
+HoldPkg     = pacman glibc
 Architecture = auto
 CheckSpace
 Color

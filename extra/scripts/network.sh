@@ -65,7 +65,6 @@ UseDNS=no
 UseDNS=no
 EOF
 
-
 # 6. Ensure resolv.conf points to stub resolver
 if [ ! -L /etc/resolv.conf ] || [ "$(readlink -f /etc/resolv.conf)" != "/run/systemd/resolve/stub-resolv.conf" ]; then
   sudo mv /etc/resolv.conf /etc/resolv.conf.backup.$(date +%s) || true
@@ -75,6 +74,18 @@ fi
 # 7. Restart services to apply changes
 sudo systemctl restart systemd-networkd
 sudo systemctl restart systemd-resolved
+
+# 8. Print info
+if command -v iwctl >/dev/null; then
+  echo
+  echo "-- iwctl devices --"
+  iwctl device list || true
+fi
+
+# 4. Show DNS configuration
+echo
+echo "-- resolvectl status --"
+resolvectl status
 
 echo "==> Network stack configured:"
 echo "    - Wi-Fi: iwd (replaces wpa_supplicant)"

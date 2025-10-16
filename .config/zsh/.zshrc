@@ -27,7 +27,7 @@ stty -ixon
 autoload -Uz compinit colors vcs_info edit-command-line select-word-style
 compinit -C -d "$ZSHARE/.zcompdump"
 colors
-select-word-style bash # only alphanumeric chars are considered WORDCHARS
+select-word-style shell
 
 alias ..='cd ..'
 alias ...='cd ../..'

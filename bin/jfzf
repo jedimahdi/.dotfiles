@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# jfzf: fuzzy-pick a systemd unit and view its logs
+# Usage:
+#   jfzf [--user] [--follow] [--enabled|--all]
+
+set -euo pipefail
+
+mode="system"
+follow="no"
+scope="active"   # active | enabled | all
+
+# Parse args
+for arg in "$@"; do
+  case "$arg" in
+    --user) mode="user" ;;
+    --follow) follow="yes" ;;
+    --enabled) scope="enabled" ;;
+    --all) scope="all" ;;
+    *) echo "Usage: jfzf [--user] [--follow] [--enabled|--all]"; exit 1 ;;
+  esac
+done
+
+# Build unit list command
+if [[ "$mode" == "user" ]]; then
+  case "$scope" in
+    active)   list_cmd="systemctl --user list-units --type=service,scope --no-legend --no-pager" ;;
+    enabled)  list_cmd="systemctl --user list-unit-files --state=enabled --type=service --no-legend --no-pager" ;;
+    all)      list_cmd="systemctl --user list-unit-files --type=service --no-legend --no-pager" ;;
+  esac
+  unit=$($list_cmd | awk '{print $1}' | sort -u \
+    | fzf --prompt="User unit> " \
+          --preview 'SYSTEMD_COLORS=1 systemctl --user status {} --no-pager --full' \
+          --preview-window=right:70% \
+          --bind 'ctrl-e:execute(systemctl --user cat {} | less -R)')
+  [[ -z "$unit" ]] && exit 0
+  if [[ "$follow" == "yes" ]]; then
+    journalctl --user -fu "$unit"
+  else
+    journalctl --user -b -u "$unit"
+  fi
+else
+  case "$scope" in
+    active)   list_cmd="systemctl list-units --type=service,scope --no-legend --no-pager" ;;
+    enabled)  list_cmd="systemctl list-unit-files --state=enabled --type=service --no-legend --no-pager" ;;
+    all)      list_cmd="systemctl list-unit-files --type=service --no-legend --no-pager" ;;
+  esac
+  unit=$($list_cmd | awk '{print $1}' | sort -u \
+    | fzf --prompt="System unit> " \
+          --preview 'SYSTEMD_COLORS=1 systemctl status {} --no-pager --full' \
+          --preview-window=right:70% \
+          --bind 'ctrl-e:execute(systemctl cat {} | less -R)')
+  [[ -z "$unit" ]] && exit 0
+  if [[ "$follow" == "yes" ]]; then
+    sudo journalctl -fu "$unit"
+  else
+    sudo journalctl -b -u "$unit"
+  fi
+fi

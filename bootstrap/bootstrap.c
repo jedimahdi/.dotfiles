@@ -170,5 +170,6 @@ char *expand_path(const char *path) {
 }
 
 int main(void) {
+  ensure_dir(expand_path("$HOME/tmp"));
   return 0;
 }

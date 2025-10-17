@@ -74,3 +74,5 @@ xmonad/.config/xmonad/dist-newstyle
 .config/zsh/.zcompdump
 .pre-commit-config.yaml
 .direnv
+bootstrap/main
+/main

@@ -10,25 +10,29 @@
 #endif
 
 typedef enum {
-  LX_FD_INHERIT,
+  LX_FD_INHERIT = 0,
   LX_FD_NULL,
   LX_FD_USE,
   LX_FD_PIPE,
   LX_FD_FILE,
+  LX_FD_FILE_APPEND,
 } lx_fd_mode;
 
-typedef struct {
-  lx_fd_mode mode;
+typedef union {
   int fd;
   const char *path;
-  bool append;
-} lx_fd_spec;
+} lx_fd_payload;
 
 typedef struct {
-  lx_fd_spec stdin_spec;
-  lx_fd_spec stdout_spec;
-  lx_fd_spec stderr_spec;
-} lx_spawn_config;
+  lx_fd_mode stdin_mode;
+  lx_fd_payload stdin_payload;
+
+  lx_fd_mode stdout_mode;
+  lx_fd_payload stdout_payload;
+
+  lx_fd_mode stderr_mode;
+  lx_fd_payload stderr_payload;
+} lx_run_opts;
 
 typedef struct {
   pid_t pid;
@@ -41,12 +45,12 @@ typedef struct {
 
 int lx_child_wait(lx_child *child);
 
-lx_child lx_spawn_argv(const lx_spawn_config *cfg, const char **argv);
-lx_child lx_spawn_shell(const lx_spawn_config *cfg, const char *shell);
-int lx_spawn_argv_and_wait(const lx_spawn_config *cfg, const char **argv);
-int lx_spawn_shell_and_wait(const lx_spawn_config *cfg, const char *shell);
+bool lx_run_async_argv(const lx_run_opts *opts, lx_child *child, const char **argv);
+bool lx_run_async_shell(const lx_run_opts *opts, lx_child *child, const char *shell);
+int lx_run_sync_argv(const lx_run_opts *opts, const char **argv);
+int lx_run_sync_shell(const lx_run_opts *opts, const char *shell);
 
-#define lx_spawn(cfg, command, ...) lx_spawn_argv((cfg), (const char *[]){command, ##__VA_ARGS__, NULL})
-#define lx_spawn_and_wait(cfg, command, ...) lx_spawn_argv_and_wait((cfg), (const char *[]){command, ##__VA_ARGS__, NULL})
+#define lx_run_async(opts, child, program, ...) lx_run_async_argv((opts), (child), (const char *[]){program, ##__VA_ARGS__, NULL})
+#define lx_run_sync(opts, program, ...) lx_run_sync_argv((opts), (const char *[]){program, ##__VA_ARGS__, NULL})
 
 #endif

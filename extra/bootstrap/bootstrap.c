@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "lx_process.h"
 
 // ANSI color codes
 #define COLOR_RED "\x1b[31m"
@@ -35,13 +36,8 @@
 // }
 
 int main(void) {
-  mkdir(HOME "/tmp2", 0755);
-  if (errno == EEXIST) {
-    printf("tes\n");
-  }
-  LOG_FATAL("mkdir:");
-
-  LOG_INFO("Hello World!");
+  lx_run_opts default_opts = {0};
+  lx_run_sync(&default_opts, "ls", "-la");
 
   return 0;
 }

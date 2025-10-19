@@ -21,7 +21,11 @@ void configure_notification(void) {
   ensure_user_service_enabled("mako.service");
 
   ensure_directory_exists("$XDG_CONFIG_HOME/mako");
-  ensure_symlink_exists("$DOTFILES/configs/mako/config", "$XDG_CONFIG_HOME/mako/config");
+  bool changed = ensure_symlink_exists("$DOTFILES/configs/mako/config", "$XDG_CONFIG_HOME/mako/config");
+
+  if (changed) {
+    user_service_restart("mako.service");
+  }
 }
 
 void configure_audio(void) {
@@ -63,34 +67,23 @@ void configure_network(void) {
   ensure_system_service_enabled("systemd-resolved.service");
 
   ensure_system_directory_exists("/etc/systemd/network");
+  ensure_system_directory_exists("/etc/iwd");
 
-  system_copy_file_to("$DOTFILES/configs/systemd/resolved.conf", "/etc/systemd/resolved.conf");
-  system_copy_file_to("$DOTFILES/configs/systemd/20-wired.network", "/etc/systemd/network/20-wired.network");
-
-  char ifname[IFNAME_MAX];
-  char pred[IFNAME_MAX];
+  bool changed = false;
   char mac[MAC_MAX];
-  if (get_first_wireless_ifname(ifname, sizeof(ifname)) == 0) {
-    printf("First wireless: %s\n", ifname);
+  get_mac_address(mac, sizeof(mac));
 
-    if (get_predictable_ifname(ifname, pred, sizeof(pred)) == 0) {
-      printf("Predictable name: %s\n", pred);
-    }
+  changed |= ensure_system_template_sync_to("$DOTFILES/configs/systemd/25-wireless.network", "/etc/systemd/network/25-wireless.network", (kv_pair[]){{"MAC", mac}}, 1);
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/resolved.conf", "/etc/systemd/resolved.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/20-wired.network", "/etc/systemd/network/20-wired.network");
+  changed |= ensure_system_symlink_exists("/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/iwd/main.conf", "/etc/iwd/main.conf");
 
-    if (get_mac_address(ifname, mac, sizeof(mac)) == 0) {
-      printf("MAC: %s\n", mac);
-    }
+  if (changed) {
+    system_service_restart("systemd-resolved.service");
+    system_service_restart("systemd-networkd.service");
+    system_service_restart("iwd.service");
   }
-
-  struct kv_pair vars[] = {
-      {"MAC", mac},
-  };
-  system_template_to("$DOTFILES/configs/systemd/20-wlan.network", "/etc/systemd/network/20-wlan.network", vars, 1);
-
-  ensure_system_symlink_exists("/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf");
-
-  system_service_restart("systemd-resolved.service");
-  system_service_restart("systemd-networkd.service");
 }
 
 int main(void) {

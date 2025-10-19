@@ -210,6 +210,15 @@ void system_service_restart(const char *service) {
   log_success("Restarted system service '%s'", service);
 }
 
+void user_service_restart(const char *service) {
+  lx_run_opts opts = {0};
+  int status = lx_run_sync(&opts, "systemctl", "--user", "restart", service);
+  if (status != 0) {
+    log_fatal("Failed to restart user service '%s'", service);
+  }
+  log_success("Restarted user service '%s'", service);
+}
+
 void ensure_user_service_enabled(const char *service) {
   lx_run_opts opts = {0};
   int status = lx_run_sync(&opts, "systemctl", "--user", "--quiet", "is-enabled", service);
@@ -290,7 +299,7 @@ void ensure_system_directory_exists(const char *path) {
   log_success("Created system directory '%s'", path);
 }
 
-void ensure_symlink_exists(const char *target, const char *linkpath) {
+bool ensure_symlink_exists(const char *target, const char *linkpath) {
   char target_buf[PATH_MAX];
   char link_buf[PATH_MAX];
 
@@ -311,7 +320,7 @@ void ensure_symlink_exists(const char *target, const char *linkpath) {
 
       if (strcmp(buf, target_buf) == 0) {
         log_info("Symlink '%s' already points to '%s'", link_buf, target_buf);
-        return;
+        return false;
       } else {
         // Wrong symlink → back it up
         backup_path(link_buf);
@@ -329,9 +338,10 @@ void ensure_symlink_exists(const char *target, const char *linkpath) {
     log_fatal("Failed to create symlink '%s' -> '%s'", link_buf, target_buf);
   }
   log_success("Created symlink '%s' -> '%s'", link_buf, target_buf);
+  return true;
 }
 
-void ensure_system_symlink_exists(const char *target, const char *linkpath) {
+bool ensure_system_symlink_exists(const char *target, const char *linkpath) {
   char target_buf[PATH_MAX];
   char link_buf[PATH_MAX];
 
@@ -353,7 +363,7 @@ void ensure_system_symlink_exists(const char *target, const char *linkpath) {
       if (strcmp(buf, target_buf) == 0) {
         log_info("System symlink '%s' already points to '%s'",
                  link_buf, target_buf);
-        return;
+        return false;
       } else {
         backup_system_path(link_buf);
       }
@@ -373,6 +383,7 @@ void ensure_system_symlink_exists(const char *target, const char *linkpath) {
   }
 
   log_success("Created system symlink '%s' -> '%s'", link_buf, target_buf);
+  return true;
 }
 
 static bool is_package_installed(const char *pkg) {
@@ -455,7 +466,7 @@ static int files_are_identical(const char *a, const char *b) {
   return result;
 }
 
-void system_copy_file_to(const char *src, const char *dest) {
+bool ensure_system_file_sync_to(const char *src, const char *dest) {
   char src_buf[PATH_MAX];
   char dest_buf[PATH_MAX];
 
@@ -473,7 +484,7 @@ void system_copy_file_to(const char *src, const char *dest) {
     // Compare contents
     if (files_are_identical(src_buf, dest_buf)) {
       log_info("Destination '%s' already identical to '%s'", dest_buf, src_buf);
-      return; // ✅ nothing to do
+      return false; // ✅ nothing to do
     }
 
     // Backup existing file
@@ -490,6 +501,7 @@ void system_copy_file_to(const char *src, const char *dest) {
   }
 
   log_success("Copied '%s' -> '%s'", src_buf, dest_buf);
+  return true;
 }
 
 // Safe replace: replaces all {{KEY}} with VALUE in a line buffer
@@ -515,10 +527,10 @@ static void apply_substitutions(char *line, size_t buflen,
   }
 }
 
-void system_template_to(const char *template_path,
-                        const char *dest_path,
-                        const struct kv_pair *vars,
-                        size_t var_count) {
+bool ensure_system_template_sync_to(const char *template_path,
+                                    const char *dest_path,
+                                    const struct kv_pair *vars,
+                                    size_t var_count) {
   char src_buf[PATH_MAX], dest_buf[PATH_MAX];
   if (!expand_path_buf(src_buf, sizeof(src_buf), template_path) ||
       !expand_path_buf(dest_buf, sizeof(dest_buf), dest_path)) {
@@ -542,15 +554,22 @@ void system_template_to(const char *template_path,
   fclose(in);
   fclose(out);
 
-  // Install with backup semantics
-  system_copy_file_to(tmpfile, dest_buf);
-
-  unlink(tmpfile);
-  log_success("Rendered template '%s' -> '%s'", src_buf, dest_buf);
+  if (ensure_system_file_sync_to(tmpfile, dest_buf)) {
+    unlink(tmpfile);
+    log_success("Rendered template '%s' -> '%s'", src_buf, dest_buf);
+    return true;
+  } else {
+    unlink(tmpfile);
+    return false;
+  }
 }
 
 // Return first wireless interface (wl*) seen by ip link
 int get_first_wireless_ifname(char *buf, size_t buflen) {
+  // lx_child child;
+  // lx_run_opts opts = {.stdout_mode = LX_FD_PIPE};
+  // if (!lx_run_async_shell(&opts, &child, "ip -o link show | awk -F': ' '/wl/ {print $2; exit}'")) return -1;
+
   FILE *fp = popen("ip -o link show | awk -F': ' '/wl/ {print $2; exit}'", "r");
   if (!fp) return -1;
   if (!fgets(buf, buflen, fp)) {
@@ -579,17 +598,18 @@ int get_predictable_ifname(const char *ifname, char *buf, size_t buflen) {
   return 0;
 }
 
-// Return MAC address for a given ifname
-int get_mac_address(const char *ifname, char *buf, size_t buflen) {
+void get_mac_address(char *buf, size_t buflen) {
+  char ifname[IFNAME_MAX];
+  get_first_wireless_ifname(ifname, sizeof(ifname));
+
   char path[128];
   snprintf(path, sizeof(path), "/sys/class/net/%s/address", ifname);
   FILE *fp = fopen(path, "r");
-  if (!fp) return -1;
+  if (!fp) log_fatal("Failed to open path '%s' to get mac address", path);
   if (!fgets(buf, buflen, fp)) {
     fclose(fp);
-    return -1;
+    log_fatal("Cannot read '%s' to get mac address", path);
   }
   buf[strcspn(buf, "\n")] = 0;
   fclose(fp);
-  return 0;
 }

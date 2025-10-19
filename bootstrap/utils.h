@@ -2,6 +2,7 @@
 #define UTILS_H_
 
 #include <stddef.h>
+#include <stdbool.h>
 
 #define ANSI_RESET "\033[0m"
 #define ANSI_BOLD "\033[1m"
@@ -14,10 +15,10 @@
 #define IFNAME_MAX 64
 #define MAC_MAX 32
 
-struct kv_pair {
+typedef struct kv_pair {
   const char *key;
   const char *value;
-};
+} kv_pair;
 
 void log_title(const char *title);
 void log_info(const char *fmt, ...);
@@ -33,19 +34,21 @@ void backup_system_path(const char *path);
 void ensure_system_service_enabled(const char *service);
 void system_service_restart(const char *service);
 void ensure_user_service_enabled(const char *service);
+void user_service_restart(const char *service);
 
 void ensure_directory_exists(const char *path);
 void ensure_system_directory_exists(const char *path);
-void ensure_symlink_exists(const char *target, const char *linkpath);
-void ensure_system_symlink_exists(const char *target, const char *linkpath);
-void system_copy_file_to(const char *src, const char *dest);
-void system_template_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
+
+bool ensure_symlink_exists(const char *target, const char *linkpath);
+bool ensure_system_symlink_exists(const char *target, const char *linkpath);
+bool ensure_system_file_sync_to(const char *src, const char *dest);
+bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
 
 void ensure_package_installed(const char *pkg);
 void ensure_package_removed(const char *pkg);
 
 int get_first_wireless_ifname(char *buf, size_t buflen);
 int get_predictable_ifname(const char *ifname, char *buf, size_t buflen);
-int get_mac_address(const char *ifname, char *buf, size_t buflen);
+void get_mac_address(char *buf, size_t buflen);
 
 #endif

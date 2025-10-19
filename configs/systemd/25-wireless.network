@@ -1,5 +1,5 @@
 [Match]
-Name=en*
+MACAddress={{MAC}}
 
 [Link]
 RequiredForOnline=routable
@@ -9,11 +9,11 @@ DHCP=yes
 
 [DHCPv4]
 UseDNS=no
-RouteMetric=100
+RouteMetric=600
 
 [DHCPv6]
 UseDNS=no
-RouteMetric=100
+RouteMetric=600
 
 [IPv6AcceptRA]
-RouteMetric=100
+RouteMetric=600

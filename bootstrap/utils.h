@@ -26,8 +26,25 @@ void log_success(const char *fmt, ...);
 void log_warn(const char *fmt, ...);
 void log_fatal(const char *fmt, ...);
 
+typedef enum {
+  CMD_NO_DISCARD = 0,
+  CMD_DISCARD_STDOUT = 1 << 0,
+  CMD_DISCARD_STDERR = 1 << 1,
+} cmd_flags;
+
+int cmd_run(const char *cmd, cmd_flags flags);
+void cmd_run_or_die(const char *cmd, cmd_flags flags);
+char *cmd_getline(const char *cmd, char *buf, size_t buflen);
+char *cmd_getline_quiet(const char *cmd, char *buf, size_t buflen);
+char *cmd_capture(const char *cmd);
+char *cmd_capture_quiet(const char *cmd);
+
+int cmd_run_argv(const char *const argv[], cmd_flags flags);
+void cmd_run_or_die_argv(const char *const argv[], cmd_flags flags);
+
 char *expand_path_buf(char *out, size_t outsz, const char *path);
 const char *expand_path(const char *path);
+char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen);
 void backup_path(const char *path);
 void backup_system_path(const char *path);
 

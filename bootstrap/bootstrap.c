@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "lx_process.h"
 #include "utils.h"
 
@@ -10,6 +11,7 @@ void prepare_bootstrap(void) {
   ensure_directory_exists("$XDG_CACHE_HOME/bootstrap_backups");
 
   ensure_package_installed("systemd");
+  ensure_system_directory_exists("/etc/systemd");
 }
 
 void configure_notification(void) {
@@ -86,10 +88,44 @@ void configure_network(void) {
   }
 }
 
-int main(void) {
-  prepare_bootstrap();
-  configure_network();
+void configure_time(void) {
+  log_title("Configuring Time Sync (systemd-timesyncd)");
 
+  ensure_system_service_enabled("systemd-timesyncd.service");
+
+  bool changed = false;
+  changed |= ensure_system_file_sync_to(
+      "$DOTFILES/configs/systemd/timesyncd.conf",
+      "/etc/systemd/timesyncd.conf");
+
+  if (changed) {
+    system_service_restart("systemd-timesyncd.service");
+  }
+
+  if (lx_run_sync(&(lx_run_opts){0}, "sudo", "timedatectl", "set-ntp", "true") != 0) {
+    log_fatal("Failed to run: sudo timedatectl set-ntp true");
+  }
+  if (lx_run_sync(&(lx_run_opts){0}, "sudo", "timedatectl", "set-timezone", "Asia/Tehran") != 0) {
+    log_fatal("Failed to run: sudo timedatectl set-ntp true");
+  }
+}
+
+int main(void) {
+  // char buf[128];
+  // get_line_from_shell_command(buf, sizeof(buf), "timedatectl show -p NTP");
+  // printf("'%s'\n", buf);
+
+  char buf[] = "test\nskdljas";
+  char *p = memchr(buf, '\n', 5);
+  if (!p) {
+    printf("p is null\n");
+  } else {
+    printf("p = '%s'\n", p);
+  }
+
+  // prepare_bootstrap();
+  // configure_time();
+  // configure_network();
   // configure_notification();
   // configure_audio();
   return 0;

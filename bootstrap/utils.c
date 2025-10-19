@@ -57,6 +57,146 @@ void log_fatal(const char *fmt, ...) {
   exit(1);
 }
 
+int cmd_run(const char *cmd, cmd_flags flags) {
+  lx_fd_mode stdout_mode = (flags & CMD_DISCARD_STDOUT) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_fd_mode stderr_mode = (flags & CMD_DISCARD_STDERR) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_run_opts opts = {.stdout_mode = stdout_mode, .stderr_mode = stderr_mode};
+  int status = lx_run_sync_shell(&opts, cmd);
+  if (status < 0) {
+    log_fatal("Failed to run cmd '%s':", cmd);
+  }
+  return status;
+}
+
+int cmd_run_argv(const char *const argv[], cmd_flags flags) {
+  if (!argv || !argv[0]) {
+    log_fatal("cmd_run_argv called with empty argv");
+  }
+
+  lx_fd_mode stdout_mode = (flags & CMD_DISCARD_STDOUT) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_fd_mode stderr_mode = (flags & CMD_DISCARD_STDERR) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_run_opts opts = {.stdout_mode = stdout_mode, .stderr_mode = stderr_mode};
+
+  int status = lx_run_sync_argv(&opts, (const char **)argv);
+  if (status < 0) {
+    log_fatal("Failed to run argv[0]='%s'", argv[0]);
+  }
+  return status;
+}
+
+void cmd_run_or_die_argv(const char *const argv[], cmd_flags flags) {
+  int status = cmd_run_argv(argv, flags);
+  if (status != 0) {
+    log_fatal("Command '%s' failed with exit code %d", argv[0], status);
+  }
+}
+
+static char *cmd_getline_flags(const char *cmd, char *buf, size_t buflen, cmd_flags flags) {
+  lx_child child;
+  lx_fd_mode stderr_mode = (flags & CMD_DISCARD_STDERR) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_run_opts opts = {.stdout_mode = LX_FD_PIPE, .stderr_mode = stderr_mode};
+
+  if (!lx_run_async_shell(&opts, &child, cmd)) {
+    log_fatal("Failed to run cmd '%s':", cmd);
+  }
+
+  size_t len = 0;
+  buf[0] = '\0';
+  while (len < buflen - 1) {
+    ssize_t nread = read(child.stdout_fd, buf + len, buflen - len - 1);
+    if (nread < 0) {
+      log_fatal("Failed to read from cmd '%s':", cmd);
+    }
+    if (nread == 0) break;
+
+    char *p = memchr(buf + len, '\n', buflen - len);
+    if (p) {
+      *p = '\0';
+      break;
+    }
+    len += nread;
+  }
+
+  buf[buflen - 1] = '\0';
+  close(child.stdout_fd);
+  lx_child_wait(&child);
+
+  if (buf[0] == '\0') {
+    log_fatal("Command '%s' produced no output", cmd);
+  }
+
+  return buf;
+}
+
+char *cmd_getline(const char *cmd, char *buf, size_t buflen) {
+  return cmd_getline_flags(cmd, buf, buflen, 0);
+}
+
+char *cmd_getline_quiet(const char *cmd, char *buf, size_t buflen) {
+  return cmd_getline_flags(cmd, buf, buflen, CMD_DISCARD_STDERR);
+}
+
+static char *cmd_capture_flags(const char *cmd, cmd_flags flags) {
+  lx_child child;
+  lx_fd_mode stderr_mode = (flags & CMD_DISCARD_STDERR) ? LX_FD_NULL : LX_FD_INHERIT;
+  lx_run_opts opts = {.stdout_mode = LX_FD_PIPE, .stderr_mode = stderr_mode};
+
+  if (!lx_run_async_shell(&opts, &child, cmd)) {
+    log_fatal("Failed to run cmd '%s':", cmd);
+  }
+
+  size_t cap = 4096;
+  size_t len = 0;
+  char *buf = malloc(cap);
+  if (!buf) {
+    close(child.stdout_fd);
+    log_fatal("Failed to malloc in running cmd %s", cmd);
+  }
+
+  for (;;) {
+    if (len + 1 >= cap) { // leave space for '\0'
+      cap *= 2;
+      char *tmp = realloc(buf, cap);
+      if (!tmp) {
+        free(buf);
+        close(child.stdout_fd);
+        log_fatal("Failed to realloc in running cmd %s", cmd);
+      }
+      buf = tmp;
+    }
+
+    ssize_t nread = read(child.stdout_fd, buf + len, cap - len - 1);
+    if (nread < 0) {
+      free(buf);
+      close(child.stdout_fd);
+      log_fatal("Failed to read from cmd '%s'", cmd);
+    }
+    if (nread == 0) break; // EOF
+
+    len += nread;
+  }
+
+  buf[len] = '\0';
+  close(child.stdout_fd);
+  lx_child_wait(&child);
+  return buf;
+}
+
+char *cmd_capture(const char *cmd) {
+  return cmd_capture_flags(cmd, 0);
+}
+
+char *cmd_capture_quiet(const char *cmd) {
+  return cmd_capture_flags(cmd, CMD_DISCARD_STDERR);
+}
+
+void cmd_run_or_die(const char *cmd, cmd_flags flags) {
+  int status = cmd_run(cmd, flags);
+  if (status != 0) {
+    log_fatal("Command '%s' failed with exit code %d", cmd, status);
+  }
+}
+
 char *expand_path_buf(char *out, size_t outsz, const char *path) {
   if (!out || !path) return NULL;
 
@@ -130,27 +270,39 @@ const char *expand_path(const char *path) {
   return g_pathbuf;
 }
 
+char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen) {
+  if (!dst || dstlen == 0 || !path) {
+    log_fatal("sanitize_path_for_filename called with invalid args");
+  }
+
+  size_t len = strlen(path);
+  if (len >= dstlen) {
+    log_fatal("Path too long to sanitize: %s", path);
+  }
+
+  for (size_t i = 0; i < len; i++) {
+    dst[i] = (path[i] == '/') ? '_' : path[i];
+  }
+  dst[len] = '\0';
+
+  return dst;
+}
+
 void backup_system_path(const char *path) {
   char cache_buf[PATH_MAX];
-  if (!expand_path_buf(cache_buf, sizeof(cache_buf),
-                       "$XDG_CACHE_HOME/bootstrap_backups")) {
+  if (!expand_path_buf(cache_buf, sizeof(cache_buf), "$XDG_CACHE_HOME/bootstrap_backups")) {
     log_fatal("Failed to expand XDG_CACHE_HOME for backups");
   }
 
-  // sanitize linkpath into a filename (replace '/' with '_')
   char sanitized[PATH_MAX];
-  snprintf(sanitized, sizeof(sanitized), "%s", path);
-  for (char *p = sanitized; *p; p++) {
-    if (*p == '/') *p = '_';
-  }
+  sanitize_path_for_filename(path, sanitized, sizeof(sanitized));
 
   char backup[PATH_MAX * 2 + 128];
-  snprintf(backup, sizeof(backup), "%s/%s.%ld",
-           cache_buf, sanitized, time(NULL));
+  snprintf(backup, sizeof(backup), "%s/%s.%ld", cache_buf, sanitized, time(NULL));
 
-  lx_run_opts opts = {0};
-  int mv_status = lx_run_sync(&opts, "sudo", "mv", path, backup);
-  if (mv_status != 0) {
+  const char *argv[] = {"sudo", "mv", path, backup, NULL};
+  int status = cmd_run_argv(argv, 0);
+  if (status != 0) {
     log_fatal("Failed to back up '%s' to '%s'", path, backup);
   }
   log_warn("Backed up existing '%s' -> '%s'", path, backup);
@@ -158,21 +310,15 @@ void backup_system_path(const char *path) {
 
 void backup_path(const char *path) {
   char cache_buf[PATH_MAX];
-  if (!expand_path_buf(cache_buf, sizeof(cache_buf),
-                       "$XDG_CACHE_HOME/bootstrap_backups")) {
+  if (!expand_path_buf(cache_buf, sizeof(cache_buf), "$XDG_CACHE_HOME/bootstrap_backups")) {
     log_fatal("Failed to expand XDG_CACHE_HOME for backups");
   }
 
-  // sanitize path into a filename
   char sanitized[PATH_MAX];
-  snprintf(sanitized, sizeof(sanitized), "%s", path);
-  for (char *p = sanitized; *p; p++) {
-    if (*p == '/') *p = '_';
-  }
+  sanitize_path_for_filename(path, sanitized, sizeof(sanitized));
 
   char backup[PATH_MAX * 2 + 128];
-  snprintf(backup, sizeof(backup), "%s/%s.%ld",
-           cache_buf, sanitized, time(NULL));
+  snprintf(backup, sizeof(backup), "%s/%s.%ld", cache_buf, sanitized, time(NULL));
 
   if (rename(path, backup) != 0) {
     log_fatal("Failed to back up '%s' to '%s'", path, backup);
@@ -181,7 +327,9 @@ void backup_path(const char *path) {
 }
 
 void ensure_system_service_enabled(const char *service) {
+  // cmd_run_argv((const char *[]){"sudo", "systemctl", "--quiet", "is-enabled", service, NULL});
   lx_run_opts opts = {0};
+
   int status = lx_run_sync(&opts, "sudo", "systemctl", "--quiet", "is-enabled", service);
   if (status < 0) {
     log_fatal("Failed to check %s is enabled:", service);

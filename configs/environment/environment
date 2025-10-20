@@ -1,0 +1,9 @@
+LANG=en_US.UTF-8
+EDITOR=nvim
+VISUAL=nvim
+PAGER=less
+BROWSER=firefox
+TERMINAL=alacritty
+
+LESS=FRX
+LESSCHARSET=utf-8

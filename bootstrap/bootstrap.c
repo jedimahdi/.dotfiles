@@ -77,6 +77,7 @@ void configure_network(void) {
 
   changed |= ensure_system_template_sync_to("$DOTFILES/configs/systemd/25-wireless.network", "/etc/systemd/network/25-wireless.network", (kv_pair[]){{"MAC", mac}}, 1);
   changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/resolved.conf", "/etc/systemd/resolved.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/networkd.conf", "/etc/systemd/networkd.conf");
   changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/20-wired.network", "/etc/systemd/network/20-wired.network");
   changed |= ensure_system_symlink_exists("/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf");
   changed |= ensure_system_file_sync_to("$DOTFILES/configs/iwd/main.conf", "/etc/iwd/main.conf");
@@ -105,26 +106,124 @@ void configure_time(void) {
   if (lx_run_sync(&(lx_run_opts){0}, "sudo", "timedatectl", "set-ntp", "true") != 0) {
     log_fatal("Failed to run: sudo timedatectl set-ntp true");
   }
-  if (lx_run_sync(&(lx_run_opts){0}, "sudo", "timedatectl", "set-timezone", "Asia/Tehran") != 0) {
-    log_fatal("Failed to run: sudo timedatectl set-ntp true");
+
+  char ntp[128];
+  cmd_getline("timedatectl show -p NTP", ntp, sizeof(ntp));
+  if (strcmp("NTP=yes", ntp) == 0) {
+    log_info("NTP is already enabled");
+  } else {
+    if (cmd_run("sudo timedatectl set-ntp true", 0) == 0) {
+      log_success("Set NTP to true");
+    } else {
+      log_fatal("Failed to set NTP to true");
+    }
+  }
+
+  char timezone[128];
+  cmd_getline("timedatectl show -p Timezone", timezone, sizeof(timezone));
+  if (strcmp("Timezone=Asia/Tehran", timezone) == 0) {
+    log_info("Timezone is already Asia/Tehran");
+  } else {
+    if (cmd_run("sudo timedatectl set-timezone Asia/Tehran", 0) == 0) {
+      log_success("Set timezone to Asia/Tehran");
+    } else {
+      log_fatal("Failed to set timezone to Asia/Tehran");
+    }
   }
 }
 
-int main(void) {
-  // char buf[128];
-  // get_line_from_shell_command(buf, sizeof(buf), "timedatectl show -p NTP");
-  // printf("'%s'\n", buf);
+void configure_journal(void) {
+  log_title("Configuring systemd-journald (persistent logging + limits)");
 
-  char buf[] = "test\nskdljas";
-  char *p = memchr(buf, '\n', 5);
-  if (!p) {
-    printf("p is null\n");
-  } else {
-    printf("p = '%s'\n", p);
+  ensure_package_removed("rsyslog");
+  ensure_package_removed("syslog-ng");
+  ensure_package_removed("metalog");
+  ensure_package_removed("sysklogd");
+
+  ensure_system_service_enabled("systemd-journald.service");
+
+  ensure_system_directory_exists("/var/log/journal");
+
+  bool changed = false;
+
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/journald.conf", "/etc/systemd/journald.conf");
+
+  if (changed) {
+    system_service_restart("systemd-journald.service");
   }
+}
 
+void configure_pacman(void) {
+  log_title("Configuring pacman");
+  bool changed = false;
+
+  changed |= ensure_system_file_sync_to(
+      "$DOTFILES/configs/pacman/pacman.conf",
+      "/etc/pacman.conf");
+
+  if (changed) {
+    cmd_run_or_die("sudo pacman -Sy --noconfirm", 0); // refresh DB
+  }
+}
+
+void configure_console(void) {
+  log_title("Configuring Linux console (vconsole)");
+
+  ensure_package_installed("terminus-font");
+
+  bool changed = false;
+  changed |= ensure_system_file_sync_to(
+      "$DOTFILES/configs/console/vconsole.conf",
+      "/etc/vconsole.conf");
+
+  if (changed) {
+    system_service_restart("systemd-vconsole-setup.service");
+  }
+}
+
+void configure_hostname(void) {
+  log_title("Configuring hostname");
+
+  bool changed = false;
+
+  changed |= ensure_system_file_sync_to(
+      "$DOTFILES/configs/hostname/hostname",
+      "/etc/hostname");
+
+  changed |= ensure_system_file_sync_to(
+      "$DOTFILES/configs/hostname/hosts",
+      "/etc/hosts");
+
+  if (changed) {
+    cmd_run("hostnamectl set-hostname $(cat /etc/hostname)", 0);
+  }
+}
+
+void configure_environment_defaults(void) {
+  log_title("Configuring system-wide environment defaults");
+
+  ensure_system_file_sync_to("$DOTFILES/configs/environment/environment", "/etc/environment");
+  ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
+}
+
+void configure_zsh(void) {
+  log_title("Configuring ZSH");
+
+  ensure_package_installed("zsh");
+
+  ensure_symlink_exists("$DOTFILES/configs/zsh", "$XDG_CONFIG_HOME/zsh");
+  ensure_symlink_exists("$DOTFILES/configs/zsh/.zprofile", "$HOME/.zprofile");
+}
+
+int main(void) {
+  configure_hostname();
+  configure_environment_defaults();
+  configure_zsh();
+  // configure_console();
   // prepare_bootstrap();
+  // configure_pacman();
   // configure_time();
+  // configure_journal();
   // configure_network();
   // configure_notification();
   // configure_audio();

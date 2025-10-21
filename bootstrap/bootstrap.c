@@ -3,6 +3,7 @@
 #include <string.h>
 #include "lx_process.h"
 #include "utils.h"
+#include "action.h"
 
 void prepare_bootstrap(void) {
   log_title("Prepare Bootstrap");
@@ -14,7 +15,7 @@ void prepare_bootstrap(void) {
   ensure_system_directory_exists("/etc/systemd");
 }
 
-void configure_notification(void) {
+void configure_notification2(void) {
   log_title("Configuring Notification");
 
   ensure_package_installed("mako");
@@ -186,13 +187,8 @@ void configure_hostname(void) {
 
   bool changed = false;
 
-  changed |= ensure_system_file_sync_to(
-      "$DOTFILES/configs/hostname/hostname",
-      "/etc/hostname");
-
-  changed |= ensure_system_file_sync_to(
-      "$DOTFILES/configs/hostname/hosts",
-      "/etc/hosts");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/hostname/hostname", "/etc/hostname");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/hostname/hosts", "/etc/hosts");
 
   if (changed) {
     cmd_run("hostnamectl set-hostname $(cat /etc/hostname)", 0);
@@ -203,7 +199,7 @@ void configure_environment_defaults(void) {
   log_title("Configuring system-wide environment defaults");
 
   ensure_system_file_sync_to("$DOTFILES/configs/environment/environment", "/etc/environment");
-  ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
+  // ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
 }
 
 void configure_zsh(void) {
@@ -215,10 +211,44 @@ void configure_zsh(void) {
   ensure_symlink_exists("$DOTFILES/configs/zsh/.zprofile", "$HOME/.zprofile");
 }
 
+void configure_neovim(void) {
+  log_title("Configuring Neovim");
+
+  ensure_package_installed("neovim");
+
+  if (!directory_exists("$XDG_CONFIG_HOME/nvim")) {
+
+  } else {
+  }
+}
+
+void configure_notification(void) {
+  set_current_action_group(ACTION_GROUP_NOTIFICATION);
+
+  ensure_package_installed("mako");
+  ensure_package_installed("libnotify");
+
+  ensure_user_service_enabled("mako.service");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/mako");
+
+  bool changed = ensure_symlink_exists("$DOTFILES/configs/mako/config", "$XDG_CONFIG_HOME/mako/config");
+
+  if (changed) {
+    user_service_restart("mako.service");
+  }
+}
+
 int main(void) {
-  configure_hostname();
-  configure_environment_defaults();
-  configure_zsh();
+  init_action_groups();
+
+  configure_notification();
+
+  print_action_groups();
+
+  // configure_hostname();
+  // configure_environment_defaults();
+  // configure_zsh();
   // configure_console();
   // prepare_bootstrap();
   // configure_pacman();

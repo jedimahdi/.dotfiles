@@ -57,6 +57,113 @@ void log_fatal(const char *fmt, ...) {
   exit(1);
 }
 
+void *xmalloc(size_t size) {
+  void *p = malloc(size);
+  if (!p) log_fatal("malloc failed:");
+  return p;
+}
+
+void xmkdir(const char *path, mode_t mode) {
+  if (mkdir(path, mode) != 0 && errno != EEXIST) {
+    log_fatal("mkdir failed on %s:", path);
+  }
+}
+
+FILE *xfopen(const char *path, const char *mode) {
+  FILE *f = fopen(path, mode);
+  if (!f) log_fatal("fopen failed on %s:", path);
+  return f;
+}
+
+bool xstat(const char *path, struct stat *st) {
+  if (stat(path, st) == 0) {
+    return true;
+  }
+  if (errno == ENOENT) {
+    return false;
+  }
+  log_fatal("stat failed on %s:", path);
+  return false; // unreachable
+}
+
+bool xlstat(const char *path, struct stat *st) {
+  if (lstat(path, st) == 0) {
+    return true;
+  }
+  if (errno == ENOENT) {
+    return false;
+  }
+  log_fatal("lstat failed on %s:", path);
+  return false; // unreachable
+}
+
+ssize_t xreadlink(const char *path, char *buf, size_t buflen) {
+  ssize_t len = readlink(path, buf, buflen - 1);
+  if (len < 0) {
+    log_fatal("readlink failed on %s:", path);
+  }
+  buf[len] = '\0';
+  return len;
+}
+
+char *expand_path(const char *path, char *buf, size_t buflen) {
+  if (!path || !buf) {
+    log_fatal("expand_path: invalid arguments");
+  }
+
+  const char *home = getenv("HOME");
+  if (!home) {
+    log_fatal("$HOME not set");
+  }
+
+  const char *prefix = NULL;
+  const char *suffix = NULL;
+
+  if (strncmp(path, "$HOME", 5) == 0) {
+    prefix = home;
+    suffix = path + 5;
+  } else if (strncmp(path, "$XDG_CONFIG_HOME", 16) == 0) {
+    prefix = getenv("XDG_CONFIG_HOME");
+    if (!prefix) {
+      snprintf(buf, buflen, "%s/.config%s", home, path + 16);
+      return buf;
+    }
+    suffix = path + 16;
+  } else if (strncmp(path, "$XDG_CACHE_HOME", 15) == 0) {
+    prefix = getenv("XDG_CACHE_HOME");
+    if (!prefix) {
+      snprintf(buf, buflen, "%s/.cache%s", home, path + 15);
+      return buf;
+    }
+    suffix = path + 15;
+  } else if (strncmp(path, "$XDG_STATE_HOME", 15) == 0) {
+    prefix = getenv("XDG_STATE_HOME");
+    if (!prefix) {
+      snprintf(buf, buflen, "%s/.local/state%s", home, path + 15);
+      return buf;
+    }
+    suffix = path + 15;
+  } else if (strncmp(path, "$DOTFILES", 9) == 0) {
+    prefix = getenv("DOTFILES");
+    if (!prefix) {
+      snprintf(buf, buflen, "%s/.dotfiles%s", home, path + 9);
+      return buf;
+    }
+    suffix = path + 9;
+  } else {
+    // No expansion → copy as is
+    snprintf(buf, buflen, "%s", path);
+    return buf;
+  }
+
+  if (!prefix) {
+    log_fatal("expand_path: missing prefix for %s", path);
+  }
+
+  snprintf(buf, buflen, "%s%s", prefix, suffix);
+  return buf;
+}
+
 int cmd_run(const char *cmd, cmd_flags flags) {
   lx_fd_mode stdout_mode = (flags & CMD_DISCARD_STDOUT) ? LX_FD_NULL : LX_FD_INHERIT;
   lx_fd_mode stderr_mode = (flags & CMD_DISCARD_STDERR) ? LX_FD_NULL : LX_FD_INHERIT;
@@ -66,6 +173,34 @@ int cmd_run(const char *cmd, cmd_flags flags) {
     log_fatal("Failed to run cmd '%s':", cmd);
   }
   return status;
+}
+
+int cmd_runf(const char *fmt, ...) {
+  char buf[PATH_MAX];
+  va_list ap;
+  va_start(ap, fmt);
+  int n = vsnprintf(buf, sizeof(buf), fmt, ap);
+  va_end(ap);
+
+  if (n < 0 || (size_t)n >= sizeof(buf)) {
+    log_fatal("cmd_runf: command string truncated");
+  }
+
+  return cmd_run(buf, CMD_NO_DISCARD);
+}
+
+int cmd_runf_quiet(const char *fmt, ...) {
+  char buf[PATH_MAX];
+  va_list ap;
+  va_start(ap, fmt);
+  int n = vsnprintf(buf, sizeof(buf), fmt, ap);
+  va_end(ap);
+
+  if (n < 0 || (size_t)n >= sizeof(buf)) {
+    log_fatal("cmd_runf: command string truncated");
+  }
+
+  return cmd_run(buf, CMD_DISCARD_STDERR | CMD_DISCARD_STDOUT);
 }
 
 int cmd_run_argv(const char *const argv[], cmd_flags flags) {
@@ -263,13 +398,6 @@ char *expand_path_buf(char *out, size_t outsz, const char *path) {
   return out;
 }
 
-static char g_pathbuf[PATH_MAX];
-const char *expand_path(const char *path) {
-  if (!path) return NULL;
-  expand_path_buf(g_pathbuf, sizeof(g_pathbuf), path);
-  return g_pathbuf;
-}
-
 char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen) {
   if (!dst || dstlen == 0 || !path) {
     log_fatal("sanitize_path_for_filename called with invalid args");
@@ -358,7 +486,7 @@ void system_service_restart(const char *service) {
   log_success("Restarted system service '%s'", service);
 }
 
-void user_service_restart(const char *service) {
+static void user_service_restart(const char *service) {
   lx_run_opts opts = {0};
   int status = lx_run_sync(&opts, "systemctl", "--user", "restart", service);
   if (status != 0) {
@@ -367,7 +495,7 @@ void user_service_restart(const char *service) {
   log_success("Restarted user service '%s'", service);
 }
 
-void ensure_user_service_enabled(const char *service) {
+static void ensure_user_service_enabled(const char *service) {
   lx_run_opts opts = {0};
   int status = lx_run_sync(&opts, "systemctl", "--user", "--quiet", "is-enabled", service);
   if (status < 0) {
@@ -387,7 +515,7 @@ void ensure_user_service_enabled(const char *service) {
   log_success("Enabled systemd user service '%s'", service);
 }
 
-void ensure_directory_exists(const char *path) {
+static void ensure_directory_exists(const char *path) {
   char buf[PATH_MAX];
   if (!expand_path_buf(buf, sizeof(buf), path)) {
     log_fatal("Failed to expand path '%s'", path);
@@ -447,7 +575,7 @@ void ensure_system_directory_exists(const char *path) {
   log_success("Created system directory '%s'", path);
 }
 
-bool ensure_symlink_exists(const char *target, const char *linkpath) {
+static bool ensure_symlink_exists(const char *target, const char *linkpath) {
   char target_buf[PATH_MAX];
   char link_buf[PATH_MAX];
 
@@ -534,7 +662,7 @@ bool ensure_system_symlink_exists(const char *target, const char *linkpath) {
   return true;
 }
 
-static bool is_package_installed(const char *pkg) {
+bool is_package_installed(const char *pkg) {
   lx_run_opts opts = {
       .stdout_mode = LX_FD_NULL,
       .stderr_mode = LX_FD_NULL,
@@ -546,7 +674,7 @@ static bool is_package_installed(const char *pkg) {
   return status == 0;
 }
 
-void ensure_package_installed(const char *pkg) {
+static void ensure_package_installed(const char *pkg) {
   if (is_package_installed(pkg)) {
     log_info("Package '%s' already installed", pkg);
     return;
@@ -760,4 +888,34 @@ void get_mac_address(char *buf, size_t buflen) {
   }
   buf[strcspn(buf, "\n")] = 0;
   fclose(fp);
+}
+
+bool directory_exists(const char *path) {
+  char expanded_path[PATH_MAX];
+  expand_path(path, expanded_path, sizeof(expanded_path));
+
+  struct stat st;
+  xstat(path, &st);
+  return S_ISDIR(st.st_mode);
+}
+
+bool symlink_points_to(const char *link_path, const char *target_path) {
+  char link_path_expanded[PATH_MAX];
+  char target_path_expanded[PATH_MAX];
+  expand_path(link_path, link_path_expanded, sizeof(link_path_expanded));
+  expand_path(target_path, target_path_expanded, sizeof(target_path_expanded));
+
+  struct stat st;
+  if (!xlstat(link_path_expanded, &st)) {
+    return false; // dst does not exist
+  }
+
+  if (!S_ISLNK(st.st_mode)) {
+    return false; // exists but not a symlink
+  }
+
+  char target[PATH_MAX];
+  xreadlink(link_path_expanded, target, sizeof(target));
+
+  return strcmp(target, target_path_expanded) == 0;
 }

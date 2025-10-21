@@ -3,6 +3,9 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #define ANSI_RESET "\033[0m"
 #define ANSI_BOLD "\033[1m"
@@ -39,33 +42,49 @@ char *cmd_getline_quiet(const char *cmd, char *buf, size_t buflen);
 char *cmd_capture(const char *cmd);
 char *cmd_capture_quiet(const char *cmd);
 
+int cmd_runf(const char *fmt, ...);
+int cmd_runf_quiet(const char *fmt, ...);
+
 int cmd_run_argv(const char *const argv[], cmd_flags flags);
 void cmd_run_or_die_argv(const char *const argv[], cmd_flags flags);
 
+void *xmalloc(size_t size);
+void xmkdir(const char *path, mode_t mode);
+FILE *xfopen(const char *path, const char *mode);
+bool xstat(const char *path, struct stat *st);
+bool xlstat(const char *path, struct stat *st);
+ssize_t xreadlink(const char *path, char *buf, size_t buflen);
+
 char *expand_path_buf(char *out, size_t outsz, const char *path);
-const char *expand_path(const char *path);
+
+char *expand_path(const char *path, char *buf, size_t buflen);
 char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen);
 void backup_path(const char *path);
 void backup_system_path(const char *path);
 
 void ensure_system_service_enabled(const char *service);
 void system_service_restart(const char *service);
-void ensure_user_service_enabled(const char *service);
-void user_service_restart(const char *service);
+// void ensure_user_service_enabled(const char *service);
+// void user_service_restart(const char *service);
 
-void ensure_directory_exists(const char *path);
+// void ensure_directory_exists(const char *path);
 void ensure_system_directory_exists(const char *path);
 
-bool ensure_symlink_exists(const char *target, const char *linkpath);
+bool directory_exists(const char *path);
+
+// bool ensure_symlink_exists(const char *target, const char *linkpath);
 bool ensure_system_symlink_exists(const char *target, const char *linkpath);
 bool ensure_system_file_sync_to(const char *src, const char *dest);
 bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
 
-void ensure_package_installed(const char *pkg);
+bool is_package_installed(const char *pkg);
+// void ensure_package_installed(const char *pkg);
 void ensure_package_removed(const char *pkg);
 
 int get_first_wireless_ifname(char *buf, size_t buflen);
 int get_predictable_ifname(const char *ifname, char *buf, size_t buflen);
 void get_mac_address(char *buf, size_t buflen);
+
+bool symlink_points_to(const char *link_path, const char *target_path);
 
 #endif

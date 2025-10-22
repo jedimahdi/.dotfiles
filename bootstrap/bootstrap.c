@@ -15,22 +15,6 @@ void prepare_bootstrap(void) {
   ensure_system_directory_exists("/etc/systemd");
 }
 
-void configure_notification2(void) {
-  log_title("Configuring Notification");
-
-  ensure_package_installed("mako");
-  ensure_package_installed("libnotify");
-
-  ensure_user_service_enabled("mako.service");
-
-  ensure_directory_exists("$XDG_CONFIG_HOME/mako");
-  bool changed = ensure_symlink_exists("$DOTFILES/configs/mako/config", "$XDG_CONFIG_HOME/mako/config");
-
-  if (changed) {
-    user_service_restart("mako.service");
-  }
-}
-
 void configure_audio(void) {
   log_title("Configuring Audio (PipeWire + WirePlumber)");
 
@@ -87,49 +71,6 @@ void configure_network(void) {
     system_service_restart("systemd-resolved.service");
     system_service_restart("systemd-networkd.service");
     system_service_restart("iwd.service");
-  }
-}
-
-void configure_time(void) {
-  log_title("Configuring Time Sync (systemd-timesyncd)");
-
-  ensure_system_service_enabled("systemd-timesyncd.service");
-
-  bool changed = false;
-  changed |= ensure_system_file_sync_to(
-      "$DOTFILES/configs/systemd/timesyncd.conf",
-      "/etc/systemd/timesyncd.conf");
-
-  if (changed) {
-    system_service_restart("systemd-timesyncd.service");
-  }
-
-  if (lx_run_sync(&(lx_run_opts){0}, "sudo", "timedatectl", "set-ntp", "true") != 0) {
-    log_fatal("Failed to run: sudo timedatectl set-ntp true");
-  }
-
-  char ntp[128];
-  cmd_getline("timedatectl show -p NTP", ntp, sizeof(ntp));
-  if (strcmp("NTP=yes", ntp) == 0) {
-    log_info("NTP is already enabled");
-  } else {
-    if (cmd_run("sudo timedatectl set-ntp true", 0) == 0) {
-      log_success("Set NTP to true");
-    } else {
-      log_fatal("Failed to set NTP to true");
-    }
-  }
-
-  char timezone[128];
-  cmd_getline("timedatectl show -p Timezone", timezone, sizeof(timezone));
-  if (strcmp("Timezone=Asia/Tehran", timezone) == 0) {
-    log_info("Timezone is already Asia/Tehran");
-  } else {
-    if (cmd_run("sudo timedatectl set-timezone Asia/Tehran", 0) == 0) {
-      log_success("Set timezone to Asia/Tehran");
-    } else {
-      log_fatal("Failed to set timezone to Asia/Tehran");
-    }
   }
 }
 
@@ -239,10 +180,26 @@ void configure_notification(void) {
   }
 }
 
+void configure_time(void) {
+  set_current_action_group(ACTION_GROUP_TIME);
+
+  ensure_system_service_enabled("systemd-timesyncd.service");
+
+  bool changed = false;
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/timesyncd.conf", "/etc/systemd/timesyncd.conf");
+  if (changed) {
+    system_service_restart("systemd-timesyncd.service");
+  }
+
+  ensure_ntp_enabled();
+  ensure_timezone_tehran();
+}
+
 int main(void) {
   init_action_groups();
 
   configure_notification();
+  configure_time();
 
   print_action_groups();
 
@@ -252,7 +209,6 @@ int main(void) {
   // configure_console();
   // prepare_bootstrap();
   // configure_pacman();
-  // configure_time();
   // configure_journal();
   // configure_network();
   // configure_notification();

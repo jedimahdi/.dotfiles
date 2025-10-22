@@ -1,0 +1,78 @@
+[
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused",
+      "-I./bootstrap",
+      "-g",
+      "-std=c99",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/action.o",
+      "bootstrap/action.c"
+    ],
+    "directory": "/home/mahdi/.dotfiles",
+    "file": "/home/mahdi/.dotfiles/bootstrap/action.c",
+    "output": "/home/mahdi/.dotfiles/build/action.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused",
+      "-I./bootstrap",
+      "-g",
+      "-std=c99",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/bootstrap.o",
+      "bootstrap/bootstrap.c"
+    ],
+    "directory": "/home/mahdi/.dotfiles",
+    "file": "/home/mahdi/.dotfiles/bootstrap/bootstrap.c",
+    "output": "/home/mahdi/.dotfiles/build/bootstrap.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused",
+      "-I./bootstrap",
+      "-g",
+      "-std=c99",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/lx_process.o",
+      "bootstrap/lx_process.c"
+    ],
+    "directory": "/home/mahdi/.dotfiles",
+    "file": "/home/mahdi/.dotfiles/bootstrap/lx_process.c",
+    "output": "/home/mahdi/.dotfiles/build/lx_process.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused",
+      "-I./bootstrap",
+      "-g",
+      "-std=c99",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/utils.o",
+      "bootstrap/utils.c"
+    ],
+    "directory": "/home/mahdi/.dotfiles",
+    "file": "/home/mahdi/.dotfiles/bootstrap/utils.c",
+    "output": "/home/mahdi/.dotfiles/build/utils.o"
+  }
+]

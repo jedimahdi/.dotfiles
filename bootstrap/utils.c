@@ -454,7 +454,7 @@ void backup_path(const char *path) {
   log_warn("Backed up existing '%s' -> '%s'", path, backup);
 }
 
-void ensure_system_service_enabled(const char *service) {
+static void ensure_system_service_enabled(const char *service) {
   // cmd_run_argv((const char *[]){"sudo", "systemctl", "--quiet", "is-enabled", service, NULL});
   lx_run_opts opts = {0};
 
@@ -476,7 +476,7 @@ void ensure_system_service_enabled(const char *service) {
   log_success("Enabled systemd service '%s'", service);
 }
 
-void system_service_restart(const char *service) {
+static void system_service_restart(const char *service) {
   lx_run_opts opts = {0};
   int status = lx_run_sync(&opts, "sudo", "systemctl", "restart", service);
   if (status != 0) {
@@ -708,7 +708,7 @@ void ensure_package_removed(const char *pkg) {
   log_success("Removed package '%s'", pkg);
 }
 
-static int files_are_identical(const char *a, const char *b) {
+int files_are_identical(const char *a, const char *b) {
   struct stat sa, sb;
   if (stat(a, &sa) != 0 || stat(b, &sb) != 0) {
     return 0;
@@ -742,7 +742,7 @@ static int files_are_identical(const char *a, const char *b) {
   return result;
 }
 
-bool ensure_system_file_sync_to(const char *src, const char *dest) {
+static bool ensure_system_file_sync_to(const char *src, const char *dest) {
   char src_buf[PATH_MAX];
   char dest_buf[PATH_MAX];
 

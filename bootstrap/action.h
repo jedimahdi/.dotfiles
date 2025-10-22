@@ -14,6 +14,7 @@ typedef enum {
   ACTION_BACKUP,
   ACTION_CREATE_DIR,
   ACTION_CREATE_SYMLINK,
+  ACTION_CREATE_SYNC,
   ACTION_RUN_CMD,
 } ActionType;
 
@@ -38,6 +39,7 @@ typedef struct {
 typedef enum {
   ACTION_GROUP_DEFAULT = 0,
   ACTION_GROUP_NOTIFICATION,
+  ACTION_GROUP_TIME,
   ACTION_GROUP_AUDIO,
   ACTION_GROUP_NETWORK,
   ACTION_GROUP_COUNT,
@@ -60,8 +62,13 @@ void ensure_package_action(ActionGroup *g, const char *pkg);
 
 void ensure_package_installed(const char *pkg);
 void ensure_user_service_enabled(const char *service);
+void ensure_system_service_enabled(const char *service);
 void ensure_directory_exists(const char *path);
 bool ensure_symlink_exists(const char *target_path, const char *link_path);
 void user_service_restart(const char *service);
+void system_service_restart(const char *service);
+void ensure_ntp_enabled(void);
+void ensure_timezone_tehran(void);
+bool ensure_system_file_sync_to(const char *target_path, const char *link_path);
 
 #endif

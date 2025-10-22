@@ -28,6 +28,8 @@ const char *group_name(ActionGroupKind kind) {
     return "Audio";
   case ACTION_GROUP_NETWORK:
     return "Network";
+  case ACTION_GROUP_TIME:
+    return "Time";
   default:
     return "Unknown";
   }
@@ -45,6 +47,8 @@ const char *action_name(ActionType type) {
     return "Create directory";
   case ACTION_CREATE_SYMLINK:
     return "Create symlink";
+  case ACTION_CREATE_SYNC:
+    return "Create sync";
   case ACTION_BACKUP:
     return "Create Backup";
   case ACTION_RUN_CMD:
@@ -67,12 +71,14 @@ void print_action_groups(void) {
     for (size_t i = 0; i < g->count; i++) {
       Action *act = &g->actions[i];
       const char *mark = (act->status == ACT_DONE) ? "[✓]" : "[ ]";
+      const char *scope = (act->scope == ACTION_SCOPE_SYSTEM) ? "[SYSTEM]" : "[USER]";
       switch (act->type) {
+      case ACTION_CREATE_SYNC:
       case ACTION_CREATE_SYMLINK:
-        printf("  %s %s: %s -> %s\n", mark, action_name(act->type), act->arg1, act->arg2);
+        printf("  %s %s %s: %s -> %s\n", mark, scope, action_name(act->type), act->arg1, act->arg2);
         break;
       default:
-        printf("  %s %s: %s\n", mark, action_name(act->type), act->arg1);
+        printf("  %s %s %s: %s\n", mark, scope, action_name(act->type), act->arg1);
         break;
       }
     }
@@ -102,17 +108,31 @@ void ensure_package_installed(const char *pkg) {
   add_action(ACTION_INSTALL_PACKAGE, ACTION_SCOPE_SYSTEM, pkg, NULL, action_status);
 }
 
-void ensure_user_service_enabled(const char *service) {
+static void ensure_service_enabled(const char *service, ActionScope scope) {
   ActionStatus action_status = ACT_PENDING;
-  int status = cmd_runf_quiet("systemctl --user --quiet is-enabled %s", service);
+  int status;
+  if (scope == ACTION_SCOPE_SYSTEM) {
+    status = cmd_runf_quiet("systemctl --quiet is-enabled %s", service);
+  } else {
+    status = cmd_runf_quiet("systemctl --user --quiet is-enabled %s", service);
+  }
   if (status == 0) {
     action_status = ACT_DONE;
   }
-  add_action(ACTION_ENABLE_SERVICE, ACTION_SCOPE_USER, service, NULL, action_status);
+  add_action(ACTION_ENABLE_SERVICE, scope, service, NULL, action_status);
+}
+void ensure_user_service_enabled(const char *service) {
+  ensure_service_enabled(service, ACTION_SCOPE_USER);
+}
+void ensure_system_service_enabled(const char *service) {
+  ensure_service_enabled(service, ACTION_SCOPE_SYSTEM);
 }
 
 void user_service_restart(const char *service) {
   add_action(ACTION_RESTART_SERVICE, ACTION_SCOPE_USER, service, NULL, ACT_PENDING);
+}
+void system_service_restart(const char *service) {
+  add_action(ACTION_RESTART_SERVICE, ACTION_SCOPE_SYSTEM, service, NULL, ACT_PENDING);
 }
 
 void ensure_directory_exists(const char *path) {
@@ -154,5 +174,51 @@ bool ensure_symlink_exists(const char *target_path, const char *link_path) {
     }
   }
   add_action(ACTION_CREATE_SYMLINK, ACTION_SCOPE_USER, target_path, link_path, action_status);
+  return changed;
+}
+
+void ensure_ntp_enabled(void) {
+  ActionStatus action_status = ACT_PENDING;
+  char ntp[128];
+  cmd_getline("timedatectl show -p NTP", ntp, sizeof(ntp));
+  if (strcmp("NTP=yes", ntp) == 0) {
+    action_status = ACT_DONE;
+  }
+  add_action(ACTION_RUN_CMD, ACTION_SCOPE_SYSTEM, "sudo timedatectl set-ntp true", NULL, action_status);
+}
+
+void ensure_timezone_tehran(void) {
+  ActionStatus action_status = ACT_PENDING;
+  char timezone[128];
+  cmd_getline("timedatectl show -p Timezone", timezone, sizeof(timezone));
+  if (strcmp("Timezone=Asia/Tehran", timezone) == 0) {
+    action_status = ACT_DONE;
+  }
+  add_action(ACTION_RUN_CMD, ACTION_SCOPE_SYSTEM, "sudo timedatectl set-timezone Asia/Tehran", NULL, action_status);
+}
+
+bool ensure_system_file_sync_to(const char *target_path, const char *link_path) {
+  ActionStatus action_status = ACT_PENDING;
+  bool changed = true;
+  char target_path_expanded[PATH_MAX];
+  char link_path_expanded[PATH_MAX];
+  expand_path(target_path, target_path_expanded, sizeof(target_path_expanded));
+  expand_path(link_path, link_path_expanded, sizeof(link_path_expanded));
+
+  struct stat st;
+  if (xstat(link_path_expanded, &st)) {
+    if (S_ISREG(st.st_mode)) {
+      if (files_are_identical(link_path_expanded, target_path_expanded)) {
+        changed = false;
+        action_status = ACT_DONE;
+      } else {
+        add_action(ACTION_BACKUP, ACTION_SCOPE_SYSTEM, link_path, NULL, action_status);
+      }
+    } else {
+      add_action(ACTION_BACKUP, ACTION_SCOPE_SYSTEM, link_path, NULL, action_status);
+    }
+  }
+
+  add_action(ACTION_CREATE_SYNC, ACTION_SCOPE_SYSTEM, target_path, link_path, action_status);
   return changed;
 }

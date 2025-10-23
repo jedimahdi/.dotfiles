@@ -553,28 +553,6 @@ static void ensure_directory_exists(const char *path) {
   }
 }
 
-void ensure_system_directory_exists(const char *path) {
-  struct stat st;
-  if (stat(path, &st) == 0) {
-    if (S_ISDIR(st.st_mode)) {
-      log_info("System directory '%s' already exists", path);
-      return;
-    } else {
-      log_fatal("Path '%s' exists but is not a directory", path);
-    }
-  } else if (errno != ENOENT) {
-    log_fatal("Failed to stat '%s':", path);
-  }
-
-  lx_run_opts opts = {0};
-  int status = lx_run_sync(&opts, "sudo", "mkdir", "-p", path);
-  if (status != 0) {
-    log_fatal("Failed to create system directory '%s'", path);
-  }
-
-  log_success("Created system directory '%s'", path);
-}
-
 static bool ensure_symlink_exists(const char *target, const char *linkpath) {
   char target_buf[PATH_MAX];
   char link_buf[PATH_MAX];
@@ -617,7 +595,7 @@ static bool ensure_symlink_exists(const char *target, const char *linkpath) {
   return true;
 }
 
-bool ensure_system_symlink_exists(const char *target, const char *linkpath) {
+static bool ensure_system_symlink_exists(const char *target, const char *linkpath) {
   char target_buf[PATH_MAX];
   char link_buf[PATH_MAX];
 
@@ -660,52 +638,6 @@ bool ensure_system_symlink_exists(const char *target, const char *linkpath) {
 
   log_success("Created system symlink '%s' -> '%s'", link_buf, target_buf);
   return true;
-}
-
-bool is_package_installed(const char *pkg) {
-  lx_run_opts opts = {
-      .stdout_mode = LX_FD_NULL,
-      .stderr_mode = LX_FD_NULL,
-  };
-  int status = lx_run_sync(&opts, "pacman", "-Q", "--quiet", pkg);
-  if (status < 0) {
-    log_fatal("Failed to check if package '%s' is installed:", pkg);
-  }
-  return status == 0;
-}
-
-static void ensure_package_installed(const char *pkg) {
-  if (is_package_installed(pkg)) {
-    log_info("Package '%s' already installed", pkg);
-    return;
-  }
-
-  lx_run_opts opts = {0};
-  int status = lx_run_sync(&opts, "sudo", "pacman", "-S", "--quiet", "--needed", "--noconfirm", pkg);
-  if (status < 0) {
-    log_fatal("Failed to install package '%s':", pkg);
-  } else if (status > 0) {
-    log_fatal("pacman failed to install package '%s'", pkg);
-  }
-
-  log_success("Installed package '%s'", pkg);
-}
-
-void ensure_package_removed(const char *pkg) {
-  if (!is_package_installed(pkg)) {
-    log_info("Package '%s' already removed", pkg);
-    return;
-  }
-
-  lx_run_opts opts = {0};
-  int status = lx_run_sync(&opts, "sudo", "pacman", "-Rns", "--noconfirm", pkg);
-  if (status < 0) {
-    log_fatal("Failed to remove package '%s':", pkg);
-  } else if (status > 0) {
-    log_fatal("pacman failed to remove package '%s'", pkg);
-  }
-
-  log_success("Removed package '%s'", pkg);
 }
 
 int files_are_identical(const char *a, const char *b) {
@@ -803,10 +735,7 @@ static void apply_substitutions(char *line, size_t buflen,
   }
 }
 
-bool ensure_system_template_sync_to(const char *template_path,
-                                    const char *dest_path,
-                                    const struct kv_pair *vars,
-                                    size_t var_count) {
+static bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count) {
   char src_buf[PATH_MAX], dest_buf[PATH_MAX];
   if (!expand_path_buf(src_buf, sizeof(src_buf), template_path) ||
       !expand_path_buf(dest_buf, sizeof(dest_buf), dest_path)) {
@@ -918,4 +847,61 @@ bool symlink_points_to(const char *link_path, const char *target_path) {
   xreadlink(link_path_expanded, target, sizeof(target));
 
   return strcmp(target, target_path_expanded) == 0;
+}
+
+void template_render_to_file(const char *template_path, const char *output_path, const kv_pair *pairs, size_t pairs_count) {
+  FILE *in = fopen(template_path, "r");
+  if (!in) {
+    log_fatal("cannot open template %s: %s", template_path, strerror(errno));
+  }
+
+  FILE *out = fopen(output_path, "w");
+  if (!out) {
+    fclose(in);
+    log_fatal("cannot open output %s: %s", output_path, strerror(errno));
+  }
+
+  char line[4096];
+  while (fgets(line, sizeof(line), in)) {
+    for (size_t i = 0; i < pairs_count; i++) {
+      char token[128];
+      snprintf(token, sizeof(token), "{{%s}}", pairs[i].key);
+
+      const char *pos;
+      while ((pos = strstr(line, token))) {
+        char buf[sizeof(line)];
+        size_t prefix_len = pos - line;
+        int n = snprintf(buf, sizeof(buf), "%.*s%s%s",
+                         (int)prefix_len, line,
+                         pairs[i].value,
+                         pos + strlen(token));
+        if (n < 0 || (size_t)n >= sizeof(buf)) {
+          fclose(in);
+          fclose(out);
+          log_fatal("substitution overflow for key %s", pairs[i].key);
+        }
+        memcpy(line, buf, n + 1); // copy including '\0'
+      }
+    }
+
+    if (fputs(line, out) == EOF) {
+      fclose(in);
+      fclose(out);
+      log_fatal("write failed to %s: %s", output_path, strerror(errno));
+    }
+  }
+
+  if (ferror(in)) {
+    fclose(in);
+    fclose(out);
+    log_fatal("read failed from %s: %s", template_path, strerror(errno));
+  }
+
+  if (fclose(in) != 0) {
+    fclose(out);
+    log_fatal("close failed on %s: %s", template_path, strerror(errno));
+  }
+  if (fclose(out) != 0) {
+    log_fatal("close failed on %s: %s", output_path, strerror(errno));
+  }
 }

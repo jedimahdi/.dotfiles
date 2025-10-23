@@ -62,24 +62,9 @@ char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen);
 void backup_path(const char *path);
 void backup_system_path(const char *path);
 
-// void ensure_system_service_enabled(const char *service);
-// void system_service_restart(const char *service);
-// void ensure_user_service_enabled(const char *service);
-// void user_service_restart(const char *service);
-
-// void ensure_directory_exists(const char *path);
-void ensure_system_directory_exists(const char *path);
-
 bool directory_exists(const char *path);
 
-// bool ensure_symlink_exists(const char *target, const char *linkpath);
-bool ensure_system_symlink_exists(const char *target, const char *linkpath);
-// bool ensure_system_file_sync_to(const char *src, const char *dest);
-bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
-
-bool is_package_installed(const char *pkg);
-// void ensure_package_installed(const char *pkg);
-void ensure_package_removed(const char *pkg);
+// bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
 
 int get_first_wireless_ifname(char *buf, size_t buflen);
 int get_predictable_ifname(const char *ifname, char *buf, size_t buflen);
@@ -87,5 +72,6 @@ void get_mac_address(char *buf, size_t buflen);
 
 bool symlink_points_to(const char *link_path, const char *target_path);
 int files_are_identical(const char *a, const char *b);
+void template_render_to_file(const char *template_path, const char *output_path, const kv_pair *pairs, size_t pairs_count);
 
 #endif

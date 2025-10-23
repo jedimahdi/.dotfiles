@@ -2,6 +2,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <string.h>
+#include <libgen.h>
 
 static ActionGroup groups[ACTION_GROUP_COUNT];
 static ActionGroupKind curr_group = ACTION_GROUP_DEFAULT;
@@ -39,6 +40,8 @@ const char *action_name(ActionType type) {
   switch (type) {
   case ACTION_INSTALL_PACKAGE:
     return "Install package";
+  case ACTION_REMOVE_PACKAGE:
+    return "Remove package";
   case ACTION_ENABLE_SERVICE:
     return "Enable service";
   case ACTION_RESTART_SERVICE:
@@ -108,7 +111,16 @@ void ensure_package_installed(const char *pkg) {
   add_action(ACTION_INSTALL_PACKAGE, ACTION_SCOPE_SYSTEM, pkg, NULL, action_status);
 }
 
-static void ensure_service_enabled(const char *service, ActionScope scope) {
+void ensure_package_removed(const char *pkg) {
+  ActionStatus action_status = ACT_PENDING;
+  int status = cmd_runf_quiet("pacman -Q --quiet %s", pkg);
+  if (status != 0) {
+    action_status = ACT_DONE;
+  }
+  add_action(ACTION_REMOVE_PACKAGE, ACTION_SCOPE_SYSTEM, pkg, NULL, action_status);
+}
+
+static void ensure_service_enabled_scoped(const char *service, ActionScope scope) {
   ActionStatus action_status = ACT_PENDING;
   int status;
   if (scope == ACTION_SCOPE_SYSTEM) {
@@ -122,10 +134,10 @@ static void ensure_service_enabled(const char *service, ActionScope scope) {
   add_action(ACTION_ENABLE_SERVICE, scope, service, NULL, action_status);
 }
 void ensure_user_service_enabled(const char *service) {
-  ensure_service_enabled(service, ACTION_SCOPE_USER);
+  ensure_service_enabled_scoped(service, ACTION_SCOPE_USER);
 }
 void ensure_system_service_enabled(const char *service) {
-  ensure_service_enabled(service, ACTION_SCOPE_SYSTEM);
+  ensure_service_enabled_scoped(service, ACTION_SCOPE_SYSTEM);
 }
 
 void user_service_restart(const char *service) {
@@ -135,7 +147,7 @@ void system_service_restart(const char *service) {
   add_action(ACTION_RESTART_SERVICE, ACTION_SCOPE_SYSTEM, service, NULL, ACT_PENDING);
 }
 
-void ensure_directory_exists(const char *path) {
+static void ensure_directory_exists_scoped(const char *path, ActionScope scope) {
   ActionStatus action_status = ACT_PENDING;
   char path_expanded[PATH_MAX];
   expand_path(path, path_expanded, sizeof(path_expanded));
@@ -144,13 +156,19 @@ void ensure_directory_exists(const char *path) {
     if (S_ISDIR(st.st_mode)) {
       action_status = ACT_DONE;
     } else {
-      add_action(ACTION_BACKUP, ACTION_SCOPE_USER, path, NULL, action_status);
+      add_action(ACTION_BACKUP, scope, path, NULL, action_status);
     }
   }
-  add_action(ACTION_CREATE_DIR, ACTION_SCOPE_USER, path, NULL, action_status);
+  add_action(ACTION_CREATE_DIR, scope, path, NULL, action_status);
+}
+void ensure_directory_exists(const char *path) {
+  ensure_directory_exists_scoped(path, ACTION_SCOPE_USER);
+}
+void ensure_system_directory_exists(const char *path) {
+  ensure_directory_exists_scoped(path, ACTION_SCOPE_SYSTEM);
 }
 
-bool ensure_symlink_exists(const char *target_path, const char *link_path) {
+static bool ensure_symlink_exists_scoped(const char *target_path, const char *link_path, ActionScope scope) {
   ActionStatus action_status = ACT_PENDING;
   bool changed = true;
   char target_path_expanded[PATH_MAX];
@@ -167,14 +185,20 @@ bool ensure_symlink_exists(const char *target_path, const char *link_path) {
         changed = false;
         action_status = ACT_DONE;
       } else {
-        add_action(ACTION_BACKUP, ACTION_SCOPE_USER, link_path, NULL, action_status);
+        add_action(ACTION_BACKUP, scope, link_path, NULL, action_status);
       }
     } else {
-      add_action(ACTION_BACKUP, ACTION_SCOPE_USER, link_path, NULL, action_status);
+      add_action(ACTION_BACKUP, scope, link_path, NULL, action_status);
     }
   }
-  add_action(ACTION_CREATE_SYMLINK, ACTION_SCOPE_USER, target_path, link_path, action_status);
+  add_action(ACTION_CREATE_SYMLINK, scope, target_path, link_path, action_status);
   return changed;
+}
+bool ensure_symlink_exists(const char *target_path, const char *link_path) {
+  return ensure_symlink_exists_scoped(target_path, link_path, ACTION_SCOPE_USER);
+}
+bool ensure_system_symlink_exists(const char *target_path, const char *link_path) {
+  return ensure_symlink_exists_scoped(target_path, link_path, ACTION_SCOPE_SYSTEM);
 }
 
 void ensure_ntp_enabled(void) {
@@ -220,5 +244,41 @@ bool ensure_system_file_sync_to(const char *target_path, const char *link_path) 
   }
 
   add_action(ACTION_CREATE_SYNC, ACTION_SCOPE_SYSTEM, target_path, link_path, action_status);
+  return changed;
+}
+
+bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const kv_pair *pairs, size_t pairs_count) {
+  ActionStatus action_status = ACT_PENDING;
+  bool changed = true;
+
+  char template_expanded[PATH_MAX];
+  expand_path(template_path, template_expanded, sizeof(template_expanded));
+
+  char dest_expanded[PATH_MAX];
+  expand_path(dest_path, dest_expanded, sizeof(dest_expanded));
+
+  char build_dir[PATH_MAX];
+  expand_path("$DOTFILES/build", build_dir, sizeof(build_dir));
+
+  char rendered_path[PATH_MAX + 1];
+  snprintf(rendered_path, sizeof(rendered_path), "%s/%s", build_dir, basename(dest_expanded));
+
+  template_render_to_file(template_expanded, rendered_path, pairs, pairs_count);
+
+  struct stat st;
+  if (xstat(dest_expanded, &st)) {
+    if (S_ISREG(st.st_mode)) {
+      if (files_are_identical(dest_expanded, rendered_path)) {
+        changed = false;
+        action_status = ACT_DONE;
+      } else {
+        add_action(ACTION_BACKUP, ACTION_SCOPE_SYSTEM, dest_path, NULL, action_status);
+      }
+    } else {
+      add_action(ACTION_BACKUP, ACTION_SCOPE_SYSTEM, dest_path, NULL, action_status);
+    }
+  }
+
+  add_action(ACTION_CREATE_SYNC, ACTION_SCOPE_SYSTEM, rendered_path, dest_path, action_status);
   return changed;
 }

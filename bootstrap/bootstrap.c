@@ -15,65 +15,6 @@ void prepare_bootstrap(void) {
   ensure_system_directory_exists("/etc/systemd");
 }
 
-void configure_audio(void) {
-  log_title("Configuring Audio (PipeWire + WirePlumber)");
-
-  ensure_package_removed("pulseaudio");
-  ensure_package_removed("pulseaudio-alsa");
-  ensure_package_removed("pulseaudio-bluetooth");
-  ensure_package_removed("pulseaudio-jack");
-  ensure_package_removed("jack2");
-  ensure_package_removed("pipewire-media-session");
-
-  ensure_package_installed("pipewire");
-  ensure_package_installed("pipewire-alsa");
-  ensure_package_installed("pipewire-jack");
-  ensure_package_installed("pipewire-pulse");
-  ensure_package_installed("wireplumber");
-  ensure_package_installed("alsa-utils");
-
-  ensure_user_service_enabled("pipewire.service");
-  ensure_user_service_enabled("pipewire-pulse.service");
-  ensure_user_service_enabled("wireplumber.service");
-}
-
-void configure_network(void) {
-  log_title("Configuring Network (iwd + systemd-networkd + systemd-resolved)");
-
-  ensure_package_removed("dhcpcd");
-  ensure_package_removed("netctl");
-  ensure_package_removed("network-manager-applet");
-  ensure_package_removed("networkmanager");
-  ensure_package_removed("connman");
-  ensure_package_removed("wpa_supplicant");
-
-  ensure_package_installed("iwd");
-
-  ensure_system_service_enabled("iwd.service");
-  ensure_system_service_enabled("systemd-networkd.service");
-  ensure_system_service_enabled("systemd-resolved.service");
-
-  ensure_system_directory_exists("/etc/systemd/network");
-  ensure_system_directory_exists("/etc/iwd");
-
-  bool changed = false;
-  char mac[MAC_MAX];
-  get_mac_address(mac, sizeof(mac));
-
-  changed |= ensure_system_template_sync_to("$DOTFILES/configs/systemd/25-wireless.network", "/etc/systemd/network/25-wireless.network", (kv_pair[]){{"MAC", mac}}, 1);
-  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/resolved.conf", "/etc/systemd/resolved.conf");
-  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/networkd.conf", "/etc/systemd/networkd.conf");
-  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/20-wired.network", "/etc/systemd/network/20-wired.network");
-  changed |= ensure_system_symlink_exists("/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf");
-  changed |= ensure_system_file_sync_to("$DOTFILES/configs/iwd/main.conf", "/etc/iwd/main.conf");
-
-  if (changed) {
-    system_service_restart("systemd-resolved.service");
-    system_service_restart("systemd-networkd.service");
-    system_service_restart("iwd.service");
-  }
-}
-
 void configure_journal(void) {
   log_title("Configuring systemd-journald (persistent logging + limits)");
 
@@ -99,9 +40,7 @@ void configure_pacman(void) {
   log_title("Configuring pacman");
   bool changed = false;
 
-  changed |= ensure_system_file_sync_to(
-      "$DOTFILES/configs/pacman/pacman.conf",
-      "/etc/pacman.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/pacman/pacman.conf", "/etc/pacman.conf");
 
   if (changed) {
     cmd_run_or_die("sudo pacman -Sy --noconfirm", 0); // refresh DB
@@ -114,9 +53,7 @@ void configure_console(void) {
   ensure_package_installed("terminus-font");
 
   bool changed = false;
-  changed |= ensure_system_file_sync_to(
-      "$DOTFILES/configs/console/vconsole.conf",
-      "/etc/vconsole.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/console/vconsole.conf", "/etc/vconsole.conf");
 
   if (changed) {
     system_service_restart("systemd-vconsole-setup.service");
@@ -195,11 +132,72 @@ void configure_time(void) {
   ensure_timezone_tehran();
 }
 
+void configure_audio(void) {
+  set_current_action_group(ACTION_GROUP_AUDIO);
+
+  ensure_package_removed("pulseaudio");
+  ensure_package_removed("pulseaudio-alsa");
+  ensure_package_removed("pulseaudio-bluetooth");
+  ensure_package_removed("pulseaudio-jack");
+  ensure_package_removed("jack2");
+  ensure_package_removed("pipewire-media-session");
+
+  ensure_package_installed("pipewire");
+  ensure_package_installed("pipewire-alsa");
+  ensure_package_installed("pipewire-jack");
+  ensure_package_installed("pipewire-pulse");
+  ensure_package_installed("wireplumber");
+  ensure_package_installed("alsa-utils");
+
+  ensure_user_service_enabled("pipewire.service");
+  ensure_user_service_enabled("pipewire-pulse.service");
+  ensure_user_service_enabled("wireplumber.service");
+}
+
+void configure_network(void) {
+  set_current_action_group(ACTION_GROUP_NETWORK);
+
+  ensure_package_removed("dhcpcd");
+  ensure_package_removed("netctl");
+  ensure_package_removed("network-manager-applet");
+  ensure_package_removed("networkmanager");
+  ensure_package_removed("connman");
+  ensure_package_removed("wpa_supplicant");
+
+  ensure_package_installed("iwd");
+
+  ensure_system_service_enabled("iwd.service");
+  ensure_system_service_enabled("systemd-networkd.service");
+  ensure_system_service_enabled("systemd-resolved.service");
+
+  ensure_system_directory_exists("/etc/systemd/network");
+  ensure_system_directory_exists("/etc/iwd");
+
+  bool changed = false;
+  char mac[MAC_MAX];
+  get_mac_address(mac, sizeof(mac));
+
+  changed |= ensure_system_template_sync_to("$DOTFILES/configs/systemd/25-wireless.network", "/etc/systemd/network/25-wireless.network", (kv_pair[]){{"MAC", mac}}, 1);
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/resolved.conf", "/etc/systemd/resolved.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/networkd.conf", "/etc/systemd/networkd.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/systemd/20-wired.network", "/etc/systemd/network/20-wired.network");
+  changed |= ensure_system_symlink_exists("/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf");
+  changed |= ensure_system_file_sync_to("$DOTFILES/configs/iwd/main.conf", "/etc/iwd/main.conf");
+
+  if (changed) {
+    system_service_restart("systemd-resolved.service");
+    system_service_restart("systemd-networkd.service");
+    system_service_restart("iwd.service");
+  }
+}
+
 int main(void) {
   init_action_groups();
 
   configure_notification();
+  configure_network();
   configure_time();
+  configure_audio();
 
   print_action_groups();
 

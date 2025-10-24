@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
-
-has_session() {
-  tmux list-sessions | grep -q "^$1:"
-}
-
-switch_to() {
-  if [[ -z $TMUX ]]; then
-    tmux attach-session -t "$1"
-  else
-    tmux switch-client -t "$1"
-  fi
-}
+set -euo pipefail
 
 session_path=$1
 session_name=$2
 
-tmux_running=$(pgrep tmux)
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -ds "$session_name" -c "$session_path"
-elif ! has_session "$session_name"; then
+has_session() {
+  tmux has-session -t "=${1}" 2>/dev/null
+}
+
+switch_to() {
+  if [[ -n ${TMUX:-} ]]; then
+    tmux switch-client -t "=${1}"
+  else
+    tmux attach-session -t "=${1}"
+  fi
+}
+
+if ! has_session "$session_name"; then
   tmux new-session -ds "$session_name" -c "$session_path"
 fi
 

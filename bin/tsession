@@ -1,20 +1,52 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
+APPS_DIR="$HOME/apps"
+EXTRA_DIRS=(
+  "$HOME/.config/nvim"
+  "$HOME/.dotfiles"
+)
+
+pick_session() {
+  local apps extra all
+  apps=$(fd . "$APPS_DIR" --max-depth=2 --min-depth=2 --type d || true)
+  extra=$(printf "%s\n" "${EXTRA_DIRS[@]}")
+  all=$(printf "%s\n%s\n" "$apps" "$extra")
+
+  echo "$all" | fzf \
+    --exit-0 \
+    --preview 'eza {} --color=always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
+}
+
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  apps=$(fd . --base-directory ~ apps --max-depth=2 --min-depth=2 --type directory)
-  selected=$(
-    echo -e "$apps\n.config/nvim\n.dotfiles" | fzf \
-      --exit-0 \
-      --preview 'eza $HOME/{} --color always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
-  )
+  selected=$(pick_session || true)
 fi
 
-if [[ -z $selected ]]; then
-  exit 0
-fi
+[[ -z ${selected:-} ]] && exit 0
 
-selected_name=$(basename "$selected" | tr . _)
+selected_path=$(realpath "$selected")
+selected_name=$(basename "$selected_path" | tr . _)
 
-tconnect $(realpath "$HOME/$selected") "$selected_name"
+exec tconnect "$selected_path" "$selected_name"
+
+# if [[ $# -eq 1 ]]; then
+#   selected=$1
+# else
+#   apps=$(fd . --base-directory ~ apps --max-depth=2 --min-depth=2 --type directory)
+#   selected=$(
+#     echo -e "$apps\n.config/nvim\n.dotfiles" | fzf \
+#       --exit-0 \
+#       --preview 'eza $HOME/{} --color always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
+#   )
+# fi
+#
+# if [[ -z $selected ]]; then
+#   exit 0
+# fi
+#
+# selected_name=$(basename "$selected" | tr . _)
+#
+# tconnect $(realpath "$HOME/$selected") "$selected_name"

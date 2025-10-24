@@ -96,6 +96,50 @@ void print_action_groups(void) {
   }
 }
 
+void run_sync_action(Action *a) {
+  if (a->scope == ACTION_SCOPE_USER) {
+    log_fatal("Not implemented yet!");
+  }
+  char src_expanded[PATH_MAX];
+  char dest_expanded[PATH_MAX];
+  expand_path(a->arg1, src_expanded, sizeof(src_expanded));
+  expand_path(a->arg2, dest_expanded, sizeof(dest_expanded));
+  printf("sudo cp %s %s\n", src_expanded, dest_expanded);
+}
+
+void run_enable_service(Action *a) {
+  char *service = a->arg1;
+  if (a->scope == ACTION_SCOPE_USER) {
+    printf("systemctl --user enable --now %s\n", service);
+  } else {
+    printf("sudo systemctl enable --now %s\n", service);
+  }
+}
+
+void run_action_groups(void) {
+  for (int gi = 0; gi < ACTION_GROUP_COUNT; gi++) {
+    ActionGroup *g = &groups[gi];
+    if (g->count == 0) continue;
+
+    for (size_t i = 0; i < g->count; i++) {
+      Action *act = &g->actions[i];
+      if (act->status == ACT_DONE) continue;
+      printf("  %s: %s\n", action_name(act->type), act->arg1);
+
+      switch (act->type) {
+      case ACTION_ENABLE_SERVICE:
+        run_enable_service(act);
+      case ACTION_CREATE_SYNC:
+        break;
+      case ACTION_CREATE_SYMLINK:
+        break;
+      default:
+        break;
+      }
+    }
+  }
+}
+
 void add_action(ActionType type, ActionScope scope, const char *a1, const char *a2, ActionStatus status) {
   ActionGroup *g = &groups[curr_group];
   if (g->count >= MAX_ACTIONS_PER_GROUP) {

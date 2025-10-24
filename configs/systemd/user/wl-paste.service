@@ -1,0 +1,13 @@
+[Unit]
+Description=Clipboard Watcher (wl-paste + cliphist)
+PartOf=graphical-session.target
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+ExecStart=/usr/bin/wl-paste --type text --watch cliphist store
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=graphical-session.target

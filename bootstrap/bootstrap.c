@@ -6,13 +6,24 @@
 #include "action.h"
 
 void prepare_bootstrap(void) {
-  log_title("Prepare Bootstrap");
+  set_current_action_group(ACTION_GROUP_DEFAULT);
+
   ensure_directory_exists("$XDG_CACHE_HOME");
   ensure_directory_exists("$XDG_CONFIG_HOME");
   ensure_directory_exists("$XDG_CACHE_HOME/bootstrap_backups");
 
   ensure_package_installed("systemd");
   ensure_system_directory_exists("/etc/systemd");
+
+  ensure_symlink_exists("$DOTFILES/configs/autostart", "$XDG_CONFIG_HOME/autostart");
+
+  bool changed = false;
+  changed |= ensure_symlink_exists("$DOTFILES/configs/systemd/user/wl-paste.service", "$XDG_CONFIG_HOME/systemd/user/wl-paste.service");
+  if (changed) {
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "systemctl --user daemon-reload");
+  }
+
+  ensure_user_service_enabled("wl-paste2.service");
 }
 
 void configure_journal(void) {
@@ -223,16 +234,18 @@ int main(void) {
   // configure_network();
   // configure_time();
   // configure_audio();
-  configure_zsh();
-  configure_neovim();
-  configure_tmux();
+  prepare_bootstrap();
+  // configure_zsh();
+  // configure_neovim();
+  // configure_tmux();
 
   print_action_groups();
+
+  run_action_groups();
 
   // configure_hostname();
   // configure_environment_defaults();
   // configure_console();
-  // prepare_bootstrap();
   // configure_pacman();
   // configure_journal();
   return 0;

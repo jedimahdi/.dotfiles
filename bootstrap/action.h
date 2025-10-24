@@ -62,6 +62,7 @@ typedef struct {
 void init_action_groups(void);
 void set_current_action_group(ActionGroupKind kind);
 void print_action_groups(void);
+void run_action_groups(void);
 
 void add_action(ActionType type, ActionScope scope, const char *a1, const char *a2, ActionStatus status);
 void add_actionf(ActionType type, ActionScope scope, ActionStatus status, const char *fmt, ...) __attribute__((format(printf, 4, 5)));

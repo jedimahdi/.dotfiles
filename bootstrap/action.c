@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <libgen.h>
+#include <stdarg.h>
 
 static ActionGroup groups[ACTION_GROUP_COUNT];
 static ActionGroupKind curr_group = ACTION_GROUP_DEFAULT;
@@ -31,6 +32,12 @@ const char *group_name(ActionGroupKind kind) {
     return "Network";
   case ACTION_GROUP_TIME:
     return "Time";
+  case ACTION_GROUP_ZSH:
+    return "ZSH";
+  case ACTION_GROUP_TMUX:
+    return "Tmux";
+  case ACTION_GROUP_NEOVIM:
+    return "Neovim";
   default:
     return "Unknown";
   }
@@ -102,6 +109,27 @@ void add_action(ActionType type, ActionScope scope, const char *a1, const char *
   snprintf(act->arg2, sizeof(act->arg2), "%s", a2 ? a2 : "");
 }
 
+void add_actionf(ActionType type, ActionScope scope, ActionStatus status, const char *fmt, ...) {
+  ActionGroup *g = &groups[curr_group];
+  if (g->count >= MAX_ACTIONS_PER_GROUP) {
+    log_fatal("too many actions in group %d", curr_group);
+  }
+  Action *act = &g->actions[g->count++];
+  act->type = type;
+  act->status = status;
+  act->scope = scope;
+  act->arg2[0] = '\0';
+
+  va_list ap;
+  va_start(ap, fmt);
+  int n = vsnprintf(act->arg1, sizeof(act->arg1), fmt, ap);
+  va_end(ap);
+
+  if (n < 0 || (size_t)n >= sizeof(act->arg1)) {
+    log_fatal("add_actionf: arg1 string truncated");
+  }
+}
+
 void ensure_package_installed(const char *pkg) {
   ActionStatus action_status = ACT_PENDING;
   int status = cmd_runf_quiet("pacman -Q --quiet %s", pkg);
@@ -152,7 +180,7 @@ static void ensure_directory_exists_scoped(const char *path, ActionScope scope) 
   char path_expanded[PATH_MAX];
   expand_path(path, path_expanded, sizeof(path_expanded));
   struct stat st;
-  if (xstat(path_expanded, &st)) {
+  if (xlstat(path_expanded, &st)) {
     if (S_ISDIR(st.st_mode)) {
       action_status = ACT_DONE;
     } else {
@@ -281,4 +309,86 @@ bool ensure_system_template_sync_to(const char *template_path, const char *dest_
 
   add_action(ACTION_CREATE_SYNC, ACTION_SCOPE_SYSTEM, rendered_path, dest_path, action_status);
   return changed;
+}
+
+void ensure_git_repo_cloned(const char *url, const char *dest_path) {
+  ActionStatus action_status = ACT_PENDING;
+
+  char dest_expanded[PATH_MAX];
+  expand_path(dest_path, dest_expanded, sizeof(dest_expanded));
+
+  struct stat st;
+  if (xstat(dest_expanded, &st) && S_ISDIR(st.st_mode)) {
+    int status = cmd_runf_quiet("git -C %s rev-parse --is-inside-work-tree", dest_expanded);
+    if (status == 0) {
+      char remote[1024];
+      cmd_getlinef(remote, sizeof(remote), "git -C %s config --get remote.origin.url", dest_expanded);
+      if (strcmp(remote, url) == 0) {
+        action_status = ACT_DONE;
+      } else {
+        add_action(ACTION_BACKUP, ACTION_SCOPE_USER, dest_path, NULL, ACT_PENDING);
+      }
+    }
+  }
+
+  char cmd[PATH_MAX * 2];
+  snprintf(cmd, sizeof(cmd), "git clone %s %s", url, dest_expanded);
+  add_action(ACTION_RUN_CMD, ACTION_SCOPE_USER, cmd, NULL, action_status);
+}
+
+void ensure_git_remote(const char *repo_path, const char *remote_name, const char *desired_url) {
+  ActionStatus action_status = ACT_PENDING;
+
+  if (cmd_runf_quiet("git -C %s rev-parse --is-inside-work-tree", repo_path) != 0) {
+    log_fatal("ensure_git_remote: not a git repo");
+  }
+
+  char current[1024];
+  if (cmd_getlinef(current, sizeof(current), "git -C %s config --get remote.%s.url", repo_path, remote_name) == 0) {
+    if (strcmp(current, desired_url) == 0) {
+      action_status = ACT_DONE;
+    } else {
+      char cmd[PATH_MAX * 2];
+      snprintf(cmd, sizeof(cmd), "git -C %s remote set-url %s %s", repo_path, remote_name, desired_url);
+      add_action(ACTION_RUN_CMD, ACTION_SCOPE_USER, cmd, NULL, action_status);
+    }
+  } else {
+    char cmd[PATH_MAX * 2];
+    snprintf(cmd, sizeof(cmd), "git -C %s remote add %s %s", repo_path, remote_name, desired_url);
+    add_action(ACTION_RUN_CMD, ACTION_SCOPE_USER, cmd, NULL, action_status);
+  }
+}
+
+void ensure_git_repo_with_ssh_remote(const char *https_url, const char *ssh_url, const char *dest_path) {
+  char dest_expanded[PATH_MAX];
+  expand_path(dest_path, dest_expanded, sizeof(dest_expanded));
+
+  struct stat st;
+  bool exists = xstat(dest_expanded, &st);
+
+  if (!exists) {
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git clone %s %s", https_url, dest_expanded);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git -C %s remote set-url origin %s", dest_expanded, ssh_url);
+    return;
+  }
+
+  if (!S_ISDIR(st.st_mode) || cmd_runf_quiet("git -C %s rev-parse --is-inside-work-tree", dest_expanded) != 0) {
+    add_action(ACTION_BACKUP, ACTION_SCOPE_USER, dest_path, NULL, ACT_PENDING);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git clone %s %s", https_url, dest_expanded);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git -C %s remote set-url origin %s", dest_expanded, ssh_url);
+    return;
+  }
+
+  char remote[1024];
+  cmd_getlinef(remote, sizeof(remote), "git -C %s config --get remote.origin.url", dest_expanded);
+
+  if (strcmp(remote, ssh_url) == 0) {
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_DONE, "git -C %s remote set-url origin %s", dest_expanded, ssh_url);
+  } else if (strcmp(remote, https_url) == 0) {
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git -C %s remote set-url origin %s", dest_expanded, ssh_url);
+  } else {
+    add_action(ACTION_BACKUP, ACTION_SCOPE_USER, dest_path, NULL, ACT_PENDING);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git clone %s %s", https_url, dest_expanded);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "git -C %s remote set-url origin %s", dest_expanded, ssh_url);
+  }
 }

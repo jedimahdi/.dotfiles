@@ -47,6 +47,9 @@ typedef enum {
   ACTION_GROUP_TIME,
   ACTION_GROUP_AUDIO,
   ACTION_GROUP_NETWORK,
+  ACTION_GROUP_ZSH,
+  ACTION_GROUP_NEOVIM,
+  ACTION_GROUP_TMUX,
   ACTION_GROUP_COUNT,
 } ActionGroupKind;
 
@@ -61,6 +64,7 @@ void set_current_action_group(ActionGroupKind kind);
 void print_action_groups(void);
 
 void add_action(ActionType type, ActionScope scope, const char *a1, const char *a2, ActionStatus status);
+void add_actionf(ActionType type, ActionScope scope, ActionStatus status, const char *fmt, ...) __attribute__((format(printf, 4, 5)));
 
 void ensure_package_installed(const char *pkg);
 void ensure_package_removed(const char *pkg);
@@ -75,9 +79,12 @@ void ensure_system_directory_exists(const char *path);
 bool ensure_symlink_exists(const char *target_path, const char *link_path);
 bool ensure_system_symlink_exists(const char *target_path, const char *link_path);
 bool ensure_system_file_sync_to(const char *target_path, const char *link_path);
+bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const kv_pair *pairs, size_t pairs_count);
 
 void ensure_ntp_enabled(void);
 void ensure_timezone_tehran(void);
-bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const kv_pair *pairs, size_t pairs_count);
+
+void ensure_git_repo_cloned(const char *url, const char *dest_path);
+void ensure_git_repo_with_ssh_remote(const char *https_url, const char *ssh_url, const char *dest_path);
 
 #endif

@@ -80,26 +80,6 @@ void configure_environment_defaults(void) {
   // ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
 }
 
-void configure_zsh(void) {
-  log_title("Configuring ZSH");
-
-  ensure_package_installed("zsh");
-
-  ensure_symlink_exists("$DOTFILES/configs/zsh", "$XDG_CONFIG_HOME/zsh");
-  ensure_symlink_exists("$DOTFILES/configs/zsh/.zprofile", "$HOME/.zprofile");
-}
-
-void configure_neovim(void) {
-  log_title("Configuring Neovim");
-
-  ensure_package_installed("neovim");
-
-  if (!directory_exists("$XDG_CONFIG_HOME/nvim")) {
-
-  } else {
-  }
-}
-
 void configure_notification(void) {
   set_current_action_group(ACTION_GROUP_NOTIFICATION);
 
@@ -191,25 +171,69 @@ void configure_network(void) {
   }
 }
 
+void configure_zsh(void) {
+  set_current_action_group(ACTION_GROUP_ZSH);
+
+  ensure_package_installed("zsh");
+  ensure_package_installed("fzf");
+  ensure_package_installed("zoxide");
+  ensure_package_installed("eza");
+  ensure_package_installed("less");
+  ensure_package_installed("lazygit");
+  ensure_package_installed("man-db");
+  ensure_package_installed("man-pages");
+
+  ensure_symlink_exists("$DOTFILES/configs/zsh/.zshrc", "$HOME/.zshrc");
+  ensure_symlink_exists("$DOTFILES/configs/zsh/.zprofile", "$HOME/.zprofile");
+
+  ensure_directory_exists("$XDG_DATA_HOME/zsh");
+  ensure_directory_exists("$XDG_DATA_HOME/zsh/plugins");
+
+  ensure_git_repo_cloned("https://github.com/zsh-users/zsh-autosuggestions.git", "$XDG_DATA_HOME/zsh/plugins/zsh-autosuggestions");
+  ensure_git_repo_cloned("https://github.com/zsh-users/zsh-syntax-highlighting.git", "$XDG_DATA_HOME/zsh/plugins/zsh-syntax-highlighting");
+}
+
+void configure_neovim(void) {
+  set_current_action_group(ACTION_GROUP_NEOVIM);
+
+  ensure_package_installed("neovim");
+  ensure_package_installed("lua-language-server");
+  ensure_package_installed("stylua");
+  ensure_package_installed("shfmt");
+  ensure_package_installed("clang");
+  ensure_package_installed("jq");
+
+  ensure_git_repo_with_ssh_remote("https://github.com/jedimahdi/nvim.git", "git@github.com:jedimahdi/nvim.git", "$XDG_CONFIG_HOME/nvim");
+}
+
+void configure_tmux(void) {
+  set_current_action_group(ACTION_GROUP_TMUX);
+
+  ensure_package_installed("tmux");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/tmux");
+
+  ensure_symlink_exists("$DOTFILES/configs/tmux/tmux.conf", "$XDG_CONFIG_HOME/tmux/tmux.conf");
+}
+
 int main(void) {
   init_action_groups();
 
-  configure_notification();
-  configure_network();
-  configure_time();
-  configure_audio();
+  // configure_notification();
+  // configure_network();
+  // configure_time();
+  // configure_audio();
+  configure_zsh();
+  configure_neovim();
+  configure_tmux();
 
   print_action_groups();
 
   // configure_hostname();
   // configure_environment_defaults();
-  // configure_zsh();
   // configure_console();
   // prepare_bootstrap();
   // configure_pacman();
   // configure_journal();
-  // configure_network();
-  // configure_notification();
-  // configure_audio();
   return 0;
 }

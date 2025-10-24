@@ -143,6 +143,13 @@ char *expand_path(const char *path, char *buf, size_t buflen) {
       return buf;
     }
     suffix = path + 15;
+  } else if (strncmp(path, "$XDG_DATA_HOME", 14) == 0) {
+    prefix = getenv("XDG_DATA_HOME");
+    if (!prefix) {
+      snprintf(buf, buflen, "%s/.local/share%s", home, path + 14);
+      return buf;
+    }
+    suffix = path + 14;
   } else if (strncmp(path, "$DOTFILES", 9) == 0) {
     prefix = getenv("DOTFILES");
     if (!prefix) {
@@ -261,6 +268,20 @@ static char *cmd_getline_flags(const char *cmd, char *buf, size_t buflen, cmd_fl
   }
 
   return buf;
+}
+
+char *cmd_getlinef(char *buf, size_t buflen, const char *fmt, ...) {
+  char cmd[PATH_MAX];
+  va_list ap;
+  va_start(ap, fmt);
+  int n = vsnprintf(cmd, sizeof(cmd), fmt, ap);
+  va_end(ap);
+
+  if (n < 0 || (size_t)n >= sizeof(cmd)) {
+    log_fatal("cmd_runf: command string truncated");
+  }
+
+  return cmd_getline_quiet(cmd, buf, buflen);
 }
 
 char *cmd_getline(const char *cmd, char *buf, size_t buflen) {

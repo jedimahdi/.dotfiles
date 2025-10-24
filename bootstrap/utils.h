@@ -42,8 +42,9 @@ char *cmd_getline_quiet(const char *cmd, char *buf, size_t buflen);
 char *cmd_capture(const char *cmd);
 char *cmd_capture_quiet(const char *cmd);
 
-int cmd_runf(const char *fmt, ...);
-int cmd_runf_quiet(const char *fmt, ...);
+int cmd_runf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+int cmd_runf_quiet(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+char *cmd_getlinef(char *buf, size_t buflen, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 int cmd_run_argv(const char *const argv[], cmd_flags flags);
 void cmd_run_or_die_argv(const char *const argv[], cmd_flags flags);

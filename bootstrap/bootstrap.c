@@ -23,11 +23,11 @@ void prepare_bootstrap(void) {
     add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_USER, ACT_PENDING, "systemctl --user daemon-reload");
   }
 
-  ensure_user_service_enabled("wl-paste2.service");
+  ensure_user_service_enabled("wl-paste.service");
 }
 
 void configure_journal(void) {
-  log_title("Configuring systemd-journald (persistent logging + limits)");
+  set_current_action_group(ACTION_GROUP_JOURNAL);
 
   ensure_package_removed("rsyslog");
   ensure_package_removed("syslog-ng");
@@ -48,18 +48,19 @@ void configure_journal(void) {
 }
 
 void configure_pacman(void) {
-  log_title("Configuring pacman");
+  set_current_action_group(ACTION_GROUP_PACMAN);
+
   bool changed = false;
 
   changed |= ensure_system_file_sync_to("$DOTFILES/configs/pacman/pacman.conf", "/etc/pacman.conf");
 
   if (changed) {
-    cmd_run_or_die("sudo pacman -Sy --noconfirm", 0); // refresh DB
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_SYSTEM, ACT_PENDING, "sudo pacman -Sy --noconfirm");
   }
 }
 
 void configure_console(void) {
-  log_title("Configuring Linux console (vconsole)");
+  set_current_action_group(ACTION_GROUP_CONSOLE);
 
   ensure_package_installed("terminus-font");
 
@@ -72,7 +73,7 @@ void configure_console(void) {
 }
 
 void configure_hostname(void) {
-  log_title("Configuring hostname");
+  set_current_action_group(ACTION_GROUP_HOSTNAME);
 
   bool changed = false;
 
@@ -80,12 +81,12 @@ void configure_hostname(void) {
   changed |= ensure_system_file_sync_to("$DOTFILES/configs/hostname/hosts", "/etc/hosts");
 
   if (changed) {
-    cmd_run("hostnamectl set-hostname $(cat /etc/hostname)", 0);
+    add_actionf(ACTION_RUN_CMD, ACTION_SCOPE_SYSTEM, ACT_PENDING, "hostnamectl set-hostname $(cat /etc/hostname)");
   }
 }
 
 void configure_environment_defaults(void) {
-  log_title("Configuring system-wide environment defaults");
+  set_current_action_group(ACTION_GROUP_ENV);
 
   ensure_system_file_sync_to("$DOTFILES/configs/environment/environment", "/etc/environment");
   // ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
@@ -230,23 +231,23 @@ void configure_tmux(void) {
 int main(void) {
   init_action_groups();
 
-  // configure_notification();
-  // configure_network();
-  // configure_time();
-  // configure_audio();
   prepare_bootstrap();
-  // configure_zsh();
-  // configure_neovim();
-  // configure_tmux();
+  configure_hostname();
+  configure_environment_defaults();
+  configure_console();
+  configure_pacman();
+  configure_journal();
+  configure_notification();
+  configure_network();
+  configure_time();
+  configure_audio();
+  configure_zsh();
+  configure_neovim();
+  configure_tmux();
 
   print_action_groups();
 
-  run_action_groups();
+  // run_action_groups();
 
-  // configure_hostname();
-  // configure_environment_defaults();
-  // configure_console();
-  // configure_pacman();
-  // configure_journal();
   return 0;
 }

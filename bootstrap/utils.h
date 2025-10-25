@@ -60,12 +60,6 @@ char *expand_path_buf(char *out, size_t outsz, const char *path);
 
 char *expand_path(const char *path, char *buf, size_t buflen);
 char *sanitize_path_for_filename(const char *path, char *dst, size_t dstlen);
-void backup_path(const char *path);
-void backup_system_path(const char *path);
-
-bool directory_exists(const char *path);
-
-// bool ensure_system_template_sync_to(const char *template_path, const char *dest_path, const struct kv_pair *vars, size_t var_count);
 
 int get_first_wireless_ifname(char *buf, size_t buflen);
 int get_predictable_ifname(const char *ifname, char *buf, size_t buflen);

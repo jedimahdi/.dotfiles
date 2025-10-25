@@ -10,9 +10,9 @@ has_session() {
 
 switch_to() {
   if [[ -n ${TMUX:-} ]]; then
-    tmux switch-client -t "=${1}"
+    exec tmux switch-client -t "=${1}"
   else
-    tmux attach-session -t "=${1}"
+    exec tmux attach-session -t "=${1}"
   fi
 }
 

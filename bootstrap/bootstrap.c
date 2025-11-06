@@ -89,7 +89,6 @@ void configure_environment_defaults(void) {
   set_current_action_group(ACTION_GROUP_ENV);
 
   ensure_system_file_sync_to("$DOTFILES/configs/environment/environment", "/etc/environment");
-  // ensure_symlink_exists("$DOTFILES/configs/environment.d", "$XDG_CONFIG_HOME/environment.d");
 }
 
 void configure_notification(void) {
@@ -220,12 +219,46 @@ void configure_neovim(void) {
 
 void configure_tmux(void) {
   set_current_action_group(ACTION_GROUP_TMUX);
-
   ensure_package_installed("tmux");
-
   ensure_directory_exists("$XDG_CONFIG_HOME/tmux");
-
   ensure_symlink_exists("$DOTFILES/configs/tmux/tmux.conf", "$XDG_CONFIG_HOME/tmux/tmux.conf");
+}
+
+void configure_foot(void) {
+  set_current_action_group(ACTION_GROUP_FOOT);
+  ensure_package_installed("foot");
+  ensure_directory_exists("$XDG_CONFIG_HOME/foot");
+  ensure_symlink_exists("$DOTFILES/configs/foot/foot.ini", "$XDG_CONFIG_HOME/foot/foot.ini");
+  ensure_user_service_enabled("foot-server.service");
+}
+
+void configure_uwsm(void) {
+  set_current_action_group(ACTION_GROUP_UWSM);
+  ensure_package_installed("uwsm");
+  ensure_directory_exists("$XDG_CONFIG_HOME/uwsm");
+  ensure_symlink_exists("$DOTFILES/configs/uwsm/env", "$XDG_CONFIG_HOME/uwsm/env");
+}
+
+void configure_hyprland(void) {
+  set_current_action_group(ACTION_GROUP_HYPRLAND);
+
+  ensure_package_installed("hyprland");
+  ensure_package_installed("hyprpaper");
+  ensure_package_installed("fuzzel");
+  ensure_package_installed("xdg-desktop-portal");
+  ensure_package_installed("xdg-desktop-portal-hyprland");
+  ensure_package_installed("wl-clipboard");
+  ensure_package_installed("cliphist");
+  ensure_package_installed("swappy");
+  ensure_package_installed("grim");
+  ensure_package_installed("slurp");
+  ensure_package_installed("brightnessctl");
+  ensure_package_installed("playerctl");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/hypr");
+  ensure_symlink_exists("$DOTFILES/configs/hypr/hyprland.conf", "$XDG_CONFIG_HOME/hypr/hyprland.conf");
+  ensure_symlink_exists("$DOTFILES/configs/hypr/hyprpaper.conf", "$XDG_CONFIG_HOME/hypr/hyprpaper.conf");
+  ensure_user_service_enabled("hyprpaper.service");
 }
 
 int main(void) {
@@ -244,6 +277,9 @@ int main(void) {
   configure_zsh();
   configure_neovim();
   configure_tmux();
+  configure_foot();
+  configure_uwsm();
+  configure_hyprland();
 
   print_action_groups();
 

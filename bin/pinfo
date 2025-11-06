@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# pinfo: fuzzy-search processes and show detailed info
+
+# 1. Build a process list: PID, CMD
+#    Use ps with wide columns so fzf can match on PID or command.
+proc=$(ps --user $USER -o pid,cmd --no-headers | grep -v 'firefox' \
+        | fzf --ansi --header="Select a process (search by PID or CMD)" \
+              --preview 'echo PID: {1}; echo CMD: {6..}; \
+                         echo; echo "Cgroup:"; cat /proc/{1}/cgroup 2>/dev/null; \
+                         echo; echo "Limits:"; cat /proc/{1}/limits 2>/dev/null; \
+                         echo; echo "Status:"; cat /proc/{1}/status 2>/dev/null' \
+              --preview-window=up:70%:wrap)
+
+# Exit if nothing selected
+[ -z "$proc" ] && exit 0
+
+pid=$(awk '{print $1}' <<<"$proc")
+
+echo "=== ps info ==="
+ps -p "$pid" -o pid,ppid,sid,pgid,user,stat,etime,%cpu,%mem,cmd
+
+echo
+echo "=== cgroup ==="
+cat /proc/$pid/cgroup 2>/dev/null || echo "n/a"
+
+echo
+echo "=== limits ==="
+cat /proc/$pid/limits 2>/dev/null || echo "n/a"
+
+echo
+echo "=== status ==="
+cat /proc/$pid/status 2>/dev/null || echo "n/a"
+
+echo
+echo "=== open files (lsof) ==="
+lsof -p $pid 2>/dev/null | head -n 30

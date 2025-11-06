@@ -9,8 +9,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
 # history files
 export LESSHISTFILE="$XDG_CACHE_HOME/less_history"
 export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
@@ -34,7 +32,6 @@ export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,fg+
 export FZF_CTRL_R_OPTS="--no-preview"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
-
 export ESCDELAY=25
 export LESS='-cigRS -j4 -x4 -#5 -z-10'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'

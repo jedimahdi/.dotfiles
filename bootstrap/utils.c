@@ -459,9 +459,7 @@ void backup_system_path(const char *path) {
 
 void backup_path(const char *path) {
   char cache_buf[PATH_MAX];
-  if (!expand_path_buf(cache_buf, sizeof(cache_buf), "$XDG_CACHE_HOME/bootstrap_backups")) {
-    log_fatal("Failed to expand XDG_CACHE_HOME for backups");
-  }
+  expand_path("$XDG_CACHE_HOME/bootstrap_backups", cache_buf, sizeof(cache_buf));
 
   char sanitized[PATH_MAX];
   sanitize_path_for_filename(path, sanitized, sizeof(sanitized));

@@ -69,4 +69,6 @@ bool symlink_points_to(const char *link_path, const char *target_path);
 int files_are_identical(const char *a, const char *b);
 void template_render_to_file(const char *template_path, const char *output_path, const kv_pair *pairs, size_t pairs_count);
 
+void backup_path(const char *path);
+
 #endif

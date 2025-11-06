@@ -11,7 +11,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # bootstrap .zshrc to ~/.config/zsh/.zshrc, any other zsh config files can also reside here
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # history files
 export LESSHISTFILE="$XDG_CACHE_HOME/less_history"

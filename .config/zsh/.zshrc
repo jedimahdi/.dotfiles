@@ -57,7 +57,7 @@ alias ts='tconnect $PWD scratch'
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Syu'
 alias pf='pacman -Ss'
-alias pr='sudo pacman -Rs'
+alias pr='sudo pacman -Rns'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
 
 alias gs="gitar status --fzf"
@@ -69,6 +69,8 @@ alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
 alias gds="gd --staged"
 alias lg='lazygit'
 alias gcl="git clone --depth 1"
+
+alias px="ps --user \"$USER\" -o pid,cmd --no-headers --forest | grep -v firefox | sed -e 's/\_/├─/g' -e 's/|/│/g' | less -R"
 
 # open commands in $EDITOR with C-x C-e
 zle -N edit-command-line
@@ -108,7 +110,6 @@ function y() {
 zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Colorize completions using default `ls` colors.
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"  # colored files and directories, blue selection box
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 zstyle ':vcs_info:*' enable git
@@ -138,3 +139,6 @@ eval "$(zoxide init zsh --cmd cd)"
 source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # zprof
+
+export ANTHROPIC_BASE_URL=https://agentrouter.org/
+export ANTHROPIC_API_KEY=sk-KnR1qZftrRAnSwKW8ZaDN1wqpnTyOrdBC3Neby2QXfHwelqJ

@@ -1,9 +1,11 @@
+#define _XOPEN_SOURCE 700
 #include "action.h"
 #include "utils.h"
 #include <stdio.h>
 #include <string.h>
 #include <libgen.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 static ActionGroup groups[ACTION_GROUP_COUNT];
 static ActionGroupKind curr_group = ACTION_GROUP_DEFAULT;
@@ -116,6 +118,60 @@ void run_enable_service(Action *a) {
   }
 }
 
+void run_install_package_action(Action *a) {
+  char *pkg = a->arg1;
+  printf("sudo pacman -S %s\n", pkg);
+}
+
+void run_remove_package_action(Action *a) {
+  char *pkg = a->arg1;
+  printf("sudo pacman -S %s\n", pkg);
+}
+
+void run_symlink_action(Action *a) {
+  char *target_path = a->arg1;
+  char *link_path = a->arg2;
+  char target_path_expanded[PATH_MAX];
+  char link_path_expanded[PATH_MAX];
+  expand_path(target_path, target_path_expanded, sizeof(target_path_expanded));
+  expand_path(link_path, link_path_expanded, sizeof(link_path_expanded));
+
+  if (a->scope == ACTION_SCOPE_USER) {
+    printf("ln -s %s %s\n", target_path, link_path);
+    symlink(target_path_expanded, link_path_expanded);
+
+  } else {
+    printf("sudo ln -s %s %s\n", target_path, link_path);
+  }
+}
+
+void run_backup_action(Action *a) {
+  char *path = a->arg1;
+  char path_expanded[PATH_MAX];
+  expand_path(path, path_expanded, sizeof(path_expanded));
+
+  if (a->scope == ACTION_SCOPE_USER) {
+    backup_path(path_expanded);
+  } else {
+    printf("sudo backup %s\n", path);
+  }
+}
+
+void run_cmd_action(Action *a) {
+}
+
+void run_create_dir_action(Action *a) {
+  char *path = a->arg1;
+  if (a->scope == ACTION_SCOPE_USER) {
+    cmd_runf("mkdir -p %s", path);
+  } else {
+    printf("sudo mkdir -p %s\n", path);
+  }
+}
+
+void run_restart_service(Action *a) {
+}
+
 void run_action_groups(void) {
   for (int gi = 0; gi < ACTION_GROUP_COUNT; gi++) {
     ActionGroup *g = &groups[gi];
@@ -127,13 +183,40 @@ void run_action_groups(void) {
       printf("  %s: %s\n", action_name(act->type), act->arg1);
 
       switch (act->type) {
+
+      case ACTION_INSTALL_PACKAGE:
+        run_install_package_action(act);
+        break;
+      case ACTION_REMOVE_PACKAGE:
+        run_remove_package_action(act);
+        break;
+
       case ACTION_ENABLE_SERVICE:
         run_enable_service(act);
-      case ACTION_CREATE_SYNC:
+        break;
+      case ACTION_RESTART_SERVICE:
+        run_restart_service(act);
+        break;
+
+      case ACTION_BACKUP:
+        run_backup_action(act);
+        break;
+      case ACTION_CREATE_DIR:
+        run_create_dir_action(act);
         break;
       case ACTION_CREATE_SYMLINK:
+        run_symlink_action(act);
         break;
+      case ACTION_CREATE_SYNC:
+        run_sync_action(act);
+        break;
+
+      case ACTION_RUN_CMD:
+        run_cmd_action(act);
+        break;
+
       default:
+        printf("sheeesh!\n");
         break;
       }
     }

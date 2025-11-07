@@ -3,4 +3,4 @@
 spath=$PWD
 sname=$(basename "$PWD" | tr . _)
 
-tconnect $spath $sname
+exec tconnect $spath $sname

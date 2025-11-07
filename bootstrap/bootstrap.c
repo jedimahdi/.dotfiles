@@ -261,25 +261,77 @@ void configure_hyprland(void) {
   ensure_user_service_enabled("hyprpaper.service");
 }
 
+void configure_tools(void) {
+  ensure_directory_exists("$XDG_CONFIG_HOME/alacritty");
+  ensure_symlink_exists("$DOTFILES/configs/alacritty/alacritty.toml", "$XDG_CONFIG_HOME/alacritty/alacritty.toml");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/aria2");
+  ensure_symlink_exists("$DOTFILES/configs/aria2/aria2.conf", "$XDG_CONFIG_HOME/aria2/aria2.conf");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/clangd");
+  ensure_symlink_exists("$DOTFILES/configs/clangd/config.yaml", "$XDG_CONFIG_HOME/clangd/config.yaml");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/bat");
+  ensure_symlink_exists("$DOTFILES/configs/bat/config", "$XDG_CONFIG_HOME/bat/config");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/fd");
+  ensure_symlink_exists("$DOTFILES/configs/fd/ignore", "$XDG_CONFIG_HOME/fd/ignore");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/lazygit");
+  ensure_symlink_exists("$DOTFILES/configs/lazygit/config.yml", "$XDG_CONFIG_HOME/lazygit/config.yml");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/mpv");
+  ensure_symlink_exists("$DOTFILES/configs/mpv/mpv.conf", "$XDG_CONFIG_HOME/mpv/mpv.conf");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/gdb");
+  ensure_symlink_exists("$DOTFILES/configs/gdb/gdbinit", "$XDG_CONFIG_HOME/gdb/gdbinit");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/git");
+  ensure_symlink_exists("$DOTFILES/configs/git/config", "$XDG_CONFIG_HOME/git/config");
+  ensure_symlink_exists("$DOTFILES/configs/git/ignore", "$XDG_CONFIG_HOME/git/ignore");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/zathura");
+  ensure_symlink_exists("$DOTFILES/configs/zathura/zathurarc", "$XDG_CONFIG_HOME/zathura/zathurarc");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/fontconfig");
+  ensure_symlink_exists("$DOTFILES/configs/fontconfig/fonts.conf", "$XDG_CONFIG_HOME/fontconfig/fonts.conf");
+  ensure_symlink_exists("$DOTFILES/configs/fontconfig/conf.d", "$XDG_CONFIG_HOME/fontconfig/conf.d");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/fuzzel");
+  ensure_symlink_exists("$DOTFILES/configs/fuzzel/fuzzel.ini", "$XDG_CONFIG_HOME/fuzzel/fuzzel.ini");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/gtk-2.0");
+  ensure_directory_exists("$XDG_CONFIG_HOME/gtk-3.0");
+  ensure_directory_exists("$XDG_CONFIG_HOME/gtk-4.0");
+  ensure_symlink_exists("$DOTFILES/configs/gtk-2.0/gtkrc-2.0", "$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0");
+  ensure_symlink_exists("$DOTFILES/configs/gtk-3.0/settings.ini", "$XDG_CONFIG_HOME/gtk-3.0/settings.ini");
+  ensure_symlink_exists("$DOTFILES/configs/gtk-4.0/settings.ini", "$XDG_CONFIG_HOME/gtk-4.0/settings.ini");
+
+  ensure_directory_exists("$XDG_CONFIG_HOME/kitty");
+  ensure_symlink_exists("$DOTFILES/configs/kitty/kitty.ini", "$XDG_CONFIG_HOME/kitty/kitty.ini");
+}
+
 int main(void) {
   init_action_groups();
 
-  prepare_bootstrap();
-  configure_hostname();
-  configure_environment_defaults();
-  configure_console();
-  configure_pacman();
-  configure_journal();
-  configure_notification();
-  configure_network();
-  configure_time();
-  configure_audio();
-  configure_zsh();
-  configure_neovim();
-  configure_tmux();
-  configure_foot();
-  configure_uwsm();
-  configure_hyprland();
+  configure_tools();
+
+  // prepare_bootstrap();
+  // configure_hostname();
+  // configure_environment_defaults();
+  // configure_console();
+  // configure_pacman();
+  // configure_journal();
+  // configure_notification();
+  // configure_network();
+  // configure_time();
+  // configure_audio();
+  // configure_zsh();
+  // configure_neovim();
+  // configure_tmux();
+  // configure_foot();
+  // configure_uwsm();
+  // configure_hyprland();
 
   print_action_groups();
 

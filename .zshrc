@@ -75,6 +75,8 @@ alias ptree="ps --user \"$USER\" -o pid,cmd --no-headers --forest | grep -v fire
 alias ctree="systemd-cgls --user"
 alias sc='systemctl --user'
 
+alias dx='date +"%Y-%m-%d %H:%M:%S %A"; LC_TIME=fa_IR.UTF-8 date +"%Y-%m-%d"'
+
 # open commands in $EDITOR with C-x C-e
 zle -N edit-command-line
 bindkey "^x^e" edit-command-line

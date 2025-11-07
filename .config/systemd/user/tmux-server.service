@@ -1,0 +1,14 @@
+[Unit]
+Description=Persistent Tmux Server
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Slice=app-tmux.slice
+Type=forking
+ExecStart=/usr/bin/tmux new-session -d -s default
+ExecStop=/usr/bin/tmux kill-server
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

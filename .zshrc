@@ -38,6 +38,7 @@ alias c='clear'
 alias ls='eza --all --icons --group-directories-first'
 alias l='ls --long --octal-permissions --no-time --no-user --no-permissions'
 alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
+alias lt='eza --icons=auto --tree'
 
 alias mv='mv -iv'
 alias rm='rm -vI'
@@ -69,6 +70,10 @@ alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
 alias gds="gd --staged"
 alias lg='lazygit'
 alias gcl="git clone --depth 1"
+
+alias ptree="ps --user \"$USER\" -o pid,cmd --no-headers --forest | grep -v firefox | sed -e 's/\\\\_/├─/g' -e 's/|/│/g' | less -R"
+alias ctree="systemd-cgls --user"
+alias sc='systemctl --user'
 
 # open commands in $EDITOR with C-x C-e
 zle -N edit-command-line
@@ -108,7 +113,6 @@ function y() {
 zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Colorize completions using default `ls` colors.
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"  # colored files and directories, blue selection box
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 zstyle ':vcs_info:*' enable git

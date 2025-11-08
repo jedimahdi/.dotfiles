@@ -56,7 +56,7 @@ alias tc='tsession'
 alias ts='tconnect $PWD scratch'
 
 alias pi='sudo pacman -S --needed'
-alias pu='sudo pacman -Syu'
+alias pu='sudo pacman -Sy --needed archlinux-keyring && sudo pacman -Su'
 alias pf='pacman -Ss'
 alias pr='sudo pacman -Rs'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
@@ -112,10 +112,19 @@ function y() {
 # - Then fall back to case-insensitive.
 # - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
 # - Substring complete (ie. bar -> foobar).
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# Colorize completions using default `ls` colors.
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' completer _complete
+
+zstyle ':completion:*' file-sort modification  # show recently used files first
+zstyle ':completion:*' list-dirs-first yes
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' ignored-patterns '.git'
+
+zstyle ':completion:*' rehash false  # improves performance
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' cache-path "$ZSHARE/.zcompcache"
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats 'on %F{magenta} %b%f'
@@ -138,9 +147,18 @@ PROMPT='
 %F{cyan}$(prompt_dir)%f ${vcs_info_msg_0_}
 %(?.%F{green}❯.%F{red}❯)%f '
 
-source <(fzf --zsh)
-eval "$(zoxide init zsh --cmd cd)"
+autoload -Uz add-zsh-hook
+load_plugins() {
+  {
+    source <(fzf --zsh)
+    eval "$(zoxide init zsh --cmd cd)"
+  } &!
 
-source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+  source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+  add-zsh-hook -d precmd load_plugins
+}
+add-zsh-hook precmd load_plugins
+
 # zprof

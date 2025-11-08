@@ -2,16 +2,15 @@
 
 ZSHARE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 PLUGINS_DIR="$ZSHARE/plugins"
+CACHE_DIR="$ZSHARE/.zcompcache"
 
-# List of plugins: name and git URL
 typeset -A plugins
 plugins=(
   zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git
   zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting.git
 )
 
-# Ensure plugins directory exists
-mkdir -p "$PLUGINS_DIR"
+mkdir -p "$PLUGINS_DIR" "$CACHE_DIR"
 
 echo "==> Checking plugins..."
 for name url in ${(kv)plugins}; do
@@ -33,6 +32,14 @@ for name url in ${(kv)plugins}; do
     fi
   done
 done
+
+# Refresh command table
+echo "==> Rehashing executables..."
+rehash
+
+# Clear completion cache
+echo "==> Clearing completion cache at $CACHE_DIR..."
+rm -rf "$CACHE_DIR"/*
 
 # Regenerate .zcompdump
 ZCOMP_DUMP="$ZSHARE/.zcompdump"

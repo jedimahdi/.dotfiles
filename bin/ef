@@ -1,4 +1,4 @@
 #!/bin/bash
 
 file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || exit 0
-exec nvim $file
+exec nvim "$file"

@@ -1,3 +1,5 @@
+[[ $- != *i* ]] && return
+
 # zmodload zsh/zprof
 export ZSHARE="$XDG_DATA_HOME/zsh"
 export HISTFILE="$ZSHARE/zsh_history"
@@ -24,7 +26,7 @@ bindkey '^n' history-search-forward
 # Disable Ctrl+S freeze
 stty -ixon
 
-autoload -Uz compinit colors vcs_info edit-command-line select-word-style
+autoload -Uz compinit colors edit-command-line select-word-style
 compinit -C -d "$ZSHARE/.zcompdump"
 colors
 select-word-style shell
@@ -107,6 +109,18 @@ function y() {
   rm -f -- "$tmp"
 }
 
+fzf-history-widget() {
+  local selected
+  selected=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' |
+    fzf --tiebreak=index --query="$LBUFFER")
+  if [[ -n $selected ]]; then
+    LBUFFER=$selected
+  fi
+  zle reset-prompt
+}
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
+
 # Make completion:
 # - Try exact (case-sensitive) match first.
 # - Then fall back to case-insensitive.
@@ -114,7 +128,7 @@ function y() {
 # - Substring complete (ie. bar -> foobar).
 # zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' completer _complete
 
 zstyle ':completion:*' file-sort modification  # show recently used files first
@@ -126,33 +140,14 @@ zstyle ':completion:*' rehash false  # improves performance
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' cache-path "$ZSHARE/.zcompcache"
 
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats 'on %F{magenta} %b%f'
-zstyle ':vcs_info:git:*' actionformats 'on %F{magenta} %b|%a%f'
-zstyle ':vcs_info:*:*' check-for-changes false
-
-precmd_functions+=(vcs_info)
-
-prompt_dir() {
-  if [[ -n $vcs_info_msg_0_ ]]; then
-    print -Pn "%1~"
-  else
-    print -Pn "%2~"
-  fi
-}
-
-setopt prompt_subst
-
 PROMPT='
-%F{cyan}$(prompt_dir)%f ${vcs_info_msg_0_}
+%F{cyan}%2~%f
 %(?.%F{green}❯.%F{red}❯)%f '
 
 autoload -Uz add-zsh-hook
 load_plugins() {
-  {
-    source <(fzf --zsh)
-    eval "$(zoxide init zsh --cmd cd)"
-  } &!
+  # source <(fzf --zsh)
+  eval "$(zoxide init zsh --cmd cd)"
 
   source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
   source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -160,5 +155,4 @@ load_plugins() {
   add-zsh-hook -d precmd load_plugins
 }
 add-zsh-hook precmd load_plugins
-
 # zprof

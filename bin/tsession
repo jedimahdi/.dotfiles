@@ -15,6 +15,8 @@ pick_session() {
   all=$(printf "%s\n%s\n" "$apps" "$extra")
 
   echo "$all" | fzf \
+    --border rounded \
+    --height 100% \
     --exit-0 \
     --preview 'eza {} --color=always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions'
 }

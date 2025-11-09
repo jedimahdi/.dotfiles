@@ -24,11 +24,8 @@ gdb
 valgrind
 stow
 shfmt
-prettier
-gopls
 strace
 dust
-npm
 diff-so-fancy
 lazygit
 less
@@ -37,7 +34,6 @@ xdg-utils
 xdg-desktop-portal
 xdg-user-dirs
 ffmpeg
-7zip
 libarchive
 poppler
 imagemagick

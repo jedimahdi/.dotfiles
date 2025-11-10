@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 session_name="$1"
 session_id=$(tmux ls -F '#{session_id}' -f "#{==:#{session_name},${session_name}}")

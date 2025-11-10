@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 CURRENT="$(tmux display-message -p '#S')"
 

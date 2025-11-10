@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 session_path=$1
 session_name=$2
@@ -8,16 +8,15 @@ has_session() {
   tmux has-session -t "=${1}" 2>/dev/null
 }
 
-switch_to() {
-  if [[ -n ${TMUX:-} ]]; then
-    exec tmux switch-client -t "=${1}"
-  else
-    exec tmux attach-session -t "=${1}"
-  fi
-}
-
-if ! has_session "$session_name"; then
-  tmux new-session -ds "$session_name" -c "$session_path"
+if ! tmux has-session -t "=$session_name" 2>/dev/null; then
+  tmux new-session -ds "$session_name" -c "$session_path" || {
+    echo "error: failed to create session $session_name at $session_path" >&2
+    exit 1
+  }
 fi
 
-switch_to "$session_name"
+if [ -n "${TMUX:-}" ]; then
+  exec tmux switch-client -t "=$session_name"
+else
+  exec tmux attach-session -t "=$session_name"
+fi

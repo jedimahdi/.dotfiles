@@ -79,6 +79,13 @@ alias sc='systemctl --user'
 
 alias dx='date +"%Y-%m-%d %H:%M:%S %A"; LC_TIME=fa_IR.UTF-8 date +"%Y-%m-%d"'
 
+e() { nvim "${1:-.}" }
+ef() {
+  local file
+  file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
+  nvim "$file"
+}
+
 # open commands in $EDITOR with C-x C-e
 zle -N edit-command-line
 bindkey "^x^e" edit-command-line

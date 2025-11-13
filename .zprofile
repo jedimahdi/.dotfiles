@@ -23,6 +23,7 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$CARGO_HOME/bin:$PATH"
 export PATH="$GOBIN:$PATH"
@@ -34,5 +35,5 @@ export ESCDELAY=25
 export LESS='-cigRS -j4 -x4 -#5 -z-10'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
-export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' --layout=reverse --height 80% --prompt '❯ ' --gutter ' '"
+export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' --layout=reverse --height 40% --prompt '❯ ' --gutter ' '"
 # export FZF_CTRL_R_OPTS="--no-preview"

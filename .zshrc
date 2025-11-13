@@ -11,17 +11,23 @@ if [[ -z "${SSH_CONNECTION}" ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-setopt SHARE_HISTORY          # Share history across sessions
-setopt INC_APPEND_HISTORY     # Immediately append to history file
-setopt EXTENDED_HISTORY       # Record timestamp in history
+# setopt SHARE_HISTORY          # Share history across sessions
+# setopt INC_APPEND_HISTORY     # Immediately append to history file
+# setopt EXTENDED_HISTORY       # Record timestamp in history
+setopt HIST_IGNORE_DUPS      # ignore consecutive duplicates
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first
 setopt HIST_IGNORE_ALL_DUPS   # Remove older duplicate entries
 setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching
 setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks
 
 bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^p' up-line-or-beginning-search
+bindkey '^n' down-line-or-beginning-search
 
 # Disable Ctrl+S freeze
 stty -ixon
@@ -37,6 +43,10 @@ alias ....='cd ../../..'
 
 alias c='clear'
 
+
+# alias ls="ls -hNA --color=auto --group-directories-first"
+# alias l="ls -l"
+
 alias ls='eza --all --icons --group-directories-first'
 alias l='ls --long --octal-permissions --no-time --no-user --no-permissions'
 alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
@@ -45,11 +55,11 @@ alias lt='eza --icons=auto --tree'
 alias mv='mv -iv'
 alias rm='rm -vI'
 alias cp='cp -iv'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias grep='grep --color=auto'
 alias bc="bc -ql"
 alias gdb="gdb --silent"
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip -color=auto'
 
 alias ta='tmux attach'
 alias tl='tmux list-sessions'
@@ -79,7 +89,7 @@ alias sc='systemctl --user'
 
 alias dx='date +"%Y-%m-%d %H:%M:%S %A"; LC_TIME=fa_IR.UTF-8 date +"%Y-%m-%d"'
 
-e() { nvim "${1:-.}" }
+e() { nvim "${1:-.}"; }
 ef() {
   local file
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
@@ -147,19 +157,24 @@ zstyle ':completion:*' rehash false  # improves performance
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' cache-path "$ZSHARE/.zcompcache"
 
-PROMPT='
-%F{cyan}%2~%f
-%(?.%F{green}❯.%F{red}❯)%f '
+# PROMPT='
+# %F{cyan}%2~%f
+# %(?.%F{green}❯.%F{red}❯)%f '
 
-autoload -Uz add-zsh-hook
-load_plugins() {
-  # source <(fzf --zsh)
-  eval "$(zoxide init zsh --cmd cd)"
+PROMPT='%(?.%F{green}➜.%F{red}➜)%f %B%F{cyan}%1~%f%b '
 
-  source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# eval "$(zoxide init zsh --cmd cd)"
+# source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-  add-zsh-hook -d precmd load_plugins
-}
-add-zsh-hook precmd load_plugins
+# autoload -Uz add-zsh-hook
+# load_plugins() {
+#   # source <(fzf --zsh)
+#   eval "$(zoxide init zsh --cmd cd)"
+#
+#   # source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+#   source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+#
+#   add-zsh-hook -d precmd load_plugins
+# }
+# add-zsh-hook precmd load_plugins
 # zprof

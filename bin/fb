@@ -2,7 +2,7 @@
 
 RESULT=$(
   git branch --all |
-    fzf-tmux -p 90% \
+    fzf \
       --color 'pointer:10,spinner:92,marker:46,bg+:-1' \
       --prompt " " \
       --exit-0

@@ -3,9 +3,6 @@ user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.enable", false);
 user_pref("extensions.ml.enabled", false);
 
-user_pref("toolkit.cosmeticAnimations.enabled", false);
-user_pref("layout.css.backdrop-filter.enabled", false);
-
 user_pref("dom.push.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 
@@ -19,13 +16,32 @@ user_pref("browser.tabs.cardPreview.enabled", false);
 user_pref("dom.battery.enabled", false); // disable battery API
 user_pref("dom.gamepad.enabled", false); // disable gamepad API
 user_pref("geo.enabled", false); // disable geolocation API
-user_pref("gfx.webrender.all", true); // force GPU rendering
 user_pref("browser.sessionstore.interval", 60000); // save session every 60s instead of 15s
 user_pref("browser.sessionstore.resume_from_crash", false); // skip crash restore
 user_pref("media.autoplay.default", 1); //  1 = block autoplay with sound, 5 = block all autoplay
 user_pref("media.autoplay.blocking_policy", 0);
-user_pref("browser.safebrowsing.malware.enabled", false);
-user_pref("browser.safebrowsing.phishing.enabled", false);
+
+user_pref("gfx.webrender.all", true); // force GPU rendering
+user_pref("gfx.webrender.precache-shaders", true);
+user_pref("media.ffmpeg.vaapi.enabled", true);
+
+user_pref("browser.safebrowsing.malware.enabled", true);
+user_pref("browser.safebrowsing.phishing.enabled", true);
+
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
+user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+
+user_pref("accessibility.force_disabled", 1);
+user_pref("browser.tabs.animate", false);
+user_pref("browser.download.animateNotifications", false);
+user_pref("toolkit.cosmeticAnimations.enabled", false);
+user_pref("layout.css.backdrop-filter.enabled", false);
+
+user_pref("reader.parse-on-load.enabled", false);
+user_pref("extensions.screenshots.disabled", true);
+user_pref("extensions.formautofill.creditCards.enabled", false);
+user_pref("extensions.formautofill.addresses.enabled", false);
 
 // === Keep Sync intact ===
 // DO NOT disable identity.fxaccounts.* prefs

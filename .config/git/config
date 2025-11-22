@@ -42,6 +42,12 @@
   ; whitespace = yellow reverse
   ; old = red
 
+[color "diff-highlight"]
+	oldNormal = red
+	oldHighlight = red
+	newNormal = green
+	newHighlight = green
+
 [interactive]
   diffFilter = diff-so-fancy --patch
   singlekey = true

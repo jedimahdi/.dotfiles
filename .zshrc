@@ -1,6 +1,8 @@
-[[ $- != *i* ]] && return
-
 # zmodload zsh/zprof
+
+autoload -Uz colors && colors
+PROMPT='%F{cyan}%1~%f %(?.%F{blue}❯.%F{red}❯)%f '
+
 export ZSHARE="$XDG_DATA_HOME/zsh"
 export HISTFILE="$ZSHARE/zsh_history"
 export HISTSIZE="5000"
@@ -32,9 +34,10 @@ bindkey '^n' down-line-or-beginning-search
 # Disable Ctrl+S freeze
 stty -ixon
 
-autoload -Uz compinit colors edit-command-line select-word-style
+autoload -Uz compinit
 compinit -C -d "$ZSHARE/.zcompdump"
-colors
+
+autoload -Uz  select-word-style
 select-word-style shell
 
 alias ..='cd ..'
@@ -43,10 +46,8 @@ alias ....='cd ../../..'
 
 alias c='clear'
 
-
 # alias ls="ls -hNA --color=auto --group-directories-first"
 # alias l="ls -l"
-
 alias ls='eza --all --icons --group-directories-first'
 alias l='ls --long --octal-permissions --no-time --no-user --no-permissions'
 alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
@@ -70,7 +71,7 @@ alias ts='tconnect $PWD scratch'
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Sy --needed archlinux-keyring && sudo pacman -Su'
 alias pf='pacman -Ss'
-alias pr='sudo pacman -Rs'
+alias pr='sudo pacman -Rns'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
 
 alias gs="gitar status --fzf"
@@ -78,7 +79,7 @@ alias gc="git commit"
 alias ga="git add"
 alias gap="git add --patch"
 alias gl='gitar log --fzf'
-alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
+alias gd="git diff"
 alias gds="gd --staged"
 alias lg='lazygit'
 alias gcl="git clone --depth 1"
@@ -87,36 +88,14 @@ alias ptree="ps --user \"$USER\" -o pid,cmd --no-headers --forest | grep -v fire
 alias ctree="systemd-cgls --user"
 alias sc='systemctl --user'
 
-alias dx='date +"%Y-%m-%d %H:%M:%S %A"; LC_TIME=fa_IR.UTF-8 date +"%Y-%m-%d"'
+alias d='date +"%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date +"%Y-%m-%d"; date +"%H:%M:%S"'
 
-e() { nvim "${1:-.}"; }
-ef() {
+function e() { nvim "${1:-.}"; }
+function ef() {
   local file
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
   nvim "$file"
 }
-
-# open commands in $EDITOR with C-x C-e
-zle -N edit-command-line
-bindkey "^x^e" edit-command-line
-
-edit-last-command-output() {
-  if [[ "$TERM" =~ "tmux" ]]; then
-    tmux capture-pane -p -S - -E - -J | tac | awk '
-      found && !/❯/ { print }
-      /❯/ && !found { found=1; next }
-      /❯/ && found {exit}
-    ' | tac | nvim -
-  else
-    echo
-    print -Pn "%F{red}error: can't capture last command output outside of tmux%f"
-    zle accept-line
-  fi
-}
-
-zle -N edit-last-command-output
-bindkey '^x^o' edit-last-command-output
-
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
   yazi "$@" --cwd-file="$tmp"
@@ -125,6 +104,10 @@ function y() {
   fi
   rm -f -- "$tmp"
 }
+
+# open commands in $EDITOR with C-x C-e
+zle -N edit-command-line
+bindkey "^x^e" edit-command-line
 
 fzf-history-widget() {
   local selected
@@ -157,24 +140,9 @@ zstyle ':completion:*' rehash false  # improves performance
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' cache-path "$ZSHARE/.zcompcache"
 
-# PROMPT='
-# %F{cyan}%2~%f
-# %(?.%F{green}❯.%F{red}❯)%f '
-
-PROMPT='%(?.%F{green}➜.%F{red}➜)%f %B%F{cyan}%1~%f%b '
-
+# source <(fzf --zsh)
 # eval "$(zoxide init zsh --cmd cd)"
 # source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-# autoload -Uz add-zsh-hook
-# load_plugins() {
-#   # source <(fzf --zsh)
-#   eval "$(zoxide init zsh --cmd cd)"
-#
-#   # source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-#   source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-#
-#   add-zsh-hook -d precmd load_plugins
-# }
-# add-zsh-hook precmd load_plugins
 # zprof

@@ -1,7 +1,7 @@
 # zmodload zsh/zprof
 
 autoload -Uz colors && colors
-PROMPT='%F{cyan}%1~%f %(?.%F{blue}❯.%F{red}❯)%f '
+PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 
 export ZSHARE="$XDG_DATA_HOME/zsh"
 export HISTFILE="$ZSHARE/zsh_history"
@@ -37,7 +37,7 @@ stty -ixon
 autoload -Uz compinit
 compinit -C -d "$ZSHARE/.zcompdump"
 
-autoload -Uz  select-word-style
+autoload -Uz select-word-style
 select-word-style shell
 
 alias ..='cd ..'
@@ -49,7 +49,7 @@ alias c='clear'
 # alias ls="ls -hNA --color=auto --group-directories-first"
 # alias l="ls -l"
 alias ls='eza --all --icons --group-directories-first'
-alias l='ls --long --octal-permissions --no-time --no-user --no-permissions'
+alias l='ls --long --no-time --no-user --no-permissions'
 alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
 alias lt='eza --icons=auto --tree'
 
@@ -106,6 +106,7 @@ function y() {
 }
 
 # open commands in $EDITOR with C-x C-e
+autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^x^e" edit-command-line
 

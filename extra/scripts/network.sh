@@ -26,9 +26,9 @@ sudo systemctl enable --now systemd-resolved.service
 sudo mkdir -p /etc/systemd
 sudo tee /etc/systemd/resolved.conf >/dev/null <<'EOF'
 [Resolve]
-DNS=8.8.8.8
-FallbackDNS=9.9.9.9 1.1.1.1
-DNSStubListener=yes
+DNS=9.9.9.9
+FallbackDNS=208.67.220.220
+DNSStubListener=no
 LLMNR=no
 MulticastDNS=no
 EOF
@@ -42,22 +42,8 @@ sudo tee /etc/systemd/network/20-wired.network >/dev/null <<'EOF'
 [Match]
 Name=en*
 
-[Link]
-RequiredForOnline=routable
-
 [Network]
 DHCP=yes
-
-[DHCPv4]
-UseDNS=no
-RouteMetric=100
-
-[DHCPv6]
-UseDNS=no
-RouteMetric=100
-
-[IPv6AcceptRA]
-RouteMetric=100
 EOF
 
 # Wireless (match wlan*)
@@ -65,22 +51,14 @@ sudo tee /etc/systemd/network/25-wireless.network >/dev/null <<'EOF'
 [Match]
 Name=wlan*
 
-[Link]
-RequiredForOnline=routable
-
 [Network]
 DHCP=yes
 
 [DHCPv4]
 UseDNS=no
-RouteMetric=600
 
 [DHCPv6]
 UseDNS=no
-RouteMetric=600
-
-[IPv6AcceptRA]
-RouteMetric=600
 EOF
 
 sudo mkdir -p /etc/iwd

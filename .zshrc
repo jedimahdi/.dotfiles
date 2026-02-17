@@ -14,8 +14,8 @@ if [[ -z "${SSH_CONNECTION}" ]]; then
 fi
 
 # setopt SHARE_HISTORY          # Share history across sessions
-# setopt INC_APPEND_HISTORY     # Immediately append to history file
 # setopt EXTENDED_HISTORY       # Record timestamp in history
+setopt INC_APPEND_HISTORY     # Immediately append to history file
 setopt HIST_IGNORE_DUPS      # ignore consecutive duplicates
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first
 setopt HIST_IGNORE_ALL_DUPS   # Remove older duplicate entries
@@ -74,7 +74,8 @@ alias pf='pacman -Ss'
 alias pr='sudo pacman -Rns'
 alias fpac="/usr/bin/pacman -Slq | fzf --preview '/usr/bin/pacman -Si {}' --layout=reverse"
 
-alias gs="gitar status --fzf"
+alias gs="git status"
+alias gss="gitar status --fzf"
 alias gc="git commit"
 alias ga="git add"
 alias gap="git add --patch"
@@ -105,8 +106,7 @@ function y() {
   rm -f -- "$tmp"
 }
 
-# open commands in $EDITOR with C-x C-e
-autoload -Uz edit-command-line
+autoload -U edit-command-line
 zle -N edit-command-line
 bindkey "^x^e" edit-command-line
 
@@ -135,15 +135,8 @@ zstyle ':completion:*' completer _complete
 zstyle ':completion:*' file-sort modification  # show recently used files first
 zstyle ':completion:*' list-dirs-first yes
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' ignored-patterns '.git'
-
-zstyle ':completion:*' rehash false  # improves performance
-zstyle ':completion:*' use-cache true
-zstyle ':completion:*' cache-path "$ZSHARE/.zcompcache"
 
 # source <(fzf --zsh)
 # eval "$(zoxide init zsh --cmd cd)"
-# source "$ZSHARE/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# source "$ZSHARE/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # zprof

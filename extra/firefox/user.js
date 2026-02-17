@@ -1,3 +1,34 @@
+// Cache
+user_pref("browser.cache.disk.enable", false);
+user_pref("browser.cache.memory.enable", true);
+user_pref("browser.cache.memory.capacity", 131072);
+user_pref("browser.cache.memory.max_entry_size", 20480);
+user_pref("media.memory_cache_max_size", 262144);
+user_pref("media.memory_caches_combined_limit_kb", 1048576);
+user_pref("image.cache.size", 10485760);
+user_pref("image.mem.decode_bytes_at_a_time", 32768);
+user_pref("gfx.canvas.accelerated.cache-items", 32768);
+user_pref("gfx.canvas.accelerated.cache-size", 4096);
+user_pref("gfx.content.skia-font-cache-size", 32);
+user_pref("media.cache_readahead_limit", 300); // Limit media read-ahead to 600s (less preloading of unneeded content).
+user_pref("media.cache_resume_threshold", 150); // Set resume threshold to 300s (optimizes when to fetch more media).
+user_pref("network.ssl_tokens_cache_capacity", 10240); // Boost SSL token cache for quicker secure reconnects.
+
+user_pref("network.dnsCacheEntries", 10000); // Expand DNS cache to 10k entries for faster resolutions.
+user_pref("network.dnsCacheExpiration", 1800); // Set DNS cache to expire after 1 hour (balances freshness and speed).
+user_pref("network.dns.disableIPv6", true);
+
+user_pref("dom.security.https_only_mode", true); // Force HTTPS everywhere (reduces insecure requests; FF147 optimizes this).
+user_pref("dom.security.https_only_mode_send_http_background_request", false); // Block background HTTP requests in HTTPS mode.
+user_pref("beacon.enabled", false); // Disable navigator.sendBeacon (prevents analytics pings on page close).
+user_pref("network.trr.mode", 5); // Disable DNS-over-HTTPS if you don't need it (avoids extra resolver requests; set to 2/3 if using a trusted provider like NextDNS for privacy).
+user_pref("security.OCSP.require", true); // Enforce OCSP for cert checks but cache results (balances security and fewer requests; default is softer).
+user_pref("network.http.max-persistent-connections-per-server", 6);
+user_pref("network.http.max-connections", 900);
+user_pref("network.http.max-urgent-start-excessive-connections-per-host", 3);
+user_pref("network.http.request.max-start-delay", 10);
+user_pref("network.http.pacing.requests.enabled", false);
+
 user_pref("browser.tabs.groups.smart.enabled", false);
 user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.enable", false);
@@ -22,8 +53,13 @@ user_pref("media.autoplay.default", 1); //  1 = block autoplay with sound, 5 = b
 user_pref("media.autoplay.blocking_policy", 0);
 
 user_pref("gfx.webrender.all", true); // force GPU rendering
+user_pref("gfx.webrender.compositor", true);
+user_pref("gfx.webrender.force-disabled", false);
 user_pref("gfx.webrender.precache-shaders", true);
 user_pref("media.ffmpeg.vaapi.enabled", true);
+user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
+user_pref("webgl.max-size", 16384); // Raise max WebGL texture size for better performance in graphics-heavy sites (FF147 enables WebGPU on more hardware).
+user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
 
 user_pref("browser.safebrowsing.malware.enabled", true);
 user_pref("browser.safebrowsing.phishing.enabled", true);
@@ -60,6 +96,7 @@ user_pref("browser.startup.page", 3);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // [FF58+] Sponsored stories
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // [FF83+] Sponsored shortcuts
 user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false); // [FF140+] Support Firefox
+user_pref("browser.newtabpage.activity-stream.default.sites", "");
 
 /* 0202: disable using the OS's geolocation service ***/
 user_pref("geo.provider.ms-windows-location", false); // [WINDOWS]

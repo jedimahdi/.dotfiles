@@ -1,6 +1,6 @@
 ## New User
 
-useradd -m -G wheel,audio,video,input,kvm -k /dev/null -s /usr/bin/zsh mahdi
+useradd -m -G wheel,audio,video,input,kvm,docker -k /dev/null -s /usr/bin/zsh mahdi
 passwd mahdi
 
 EDITOR=nvim visudo
@@ -14,6 +14,13 @@ services: pipewire-pulse.service
 ## Hyprland
 
 packages: hyprland wl-clipboard hyprpaper fuzzel xdg-desktop-portal-hyprland cliphist swappy grim slurp
+
+## Rust
+
+rustup default stable
+rustup component add rust-analyzer
+rustup component add rust-src   # gives rust-analyzer better stdlib support
+rustup update
 
 ## SSH
 

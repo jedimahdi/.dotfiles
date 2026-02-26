@@ -31,6 +31,7 @@ if [[ "$mode" == "user" ]]; then
     | fzf --prompt="User unit> " \
           --preview 'SYSTEMD_COLORS=1 systemctl --user status {} --no-pager --full' \
           --preview-window=right:70% \
+          --height=100% \
           --bind 'ctrl-e:execute(systemctl --user cat {} | less -R)')
   [[ -z "$unit" ]] && exit 0
   if [[ "$follow" == "yes" ]]; then
@@ -48,6 +49,7 @@ else
     | fzf --prompt="System unit> " \
           --preview 'SYSTEMD_COLORS=1 systemctl status {} --no-pager --full' \
           --preview-window=right:70% \
+          --height=100% \
           --bind 'ctrl-e:execute(systemctl cat {} | less -R)')
   [[ -z "$unit" ]] && exit 0
   if [[ "$follow" == "yes" ]]; then

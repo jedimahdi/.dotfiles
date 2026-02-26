@@ -52,7 +52,7 @@ c.content.blocking.method = 'both'
 
 config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 
-c.content.proxy = 'socks5://127.0.0.1:10808'
+# c.content.proxy = 'socks5://127.0.0.1:10808'
 
 
 

@@ -23,8 +23,9 @@ user_pref("dom.security.https_only_mode_send_http_background_request", false); /
 user_pref("beacon.enabled", false); // Disable navigator.sendBeacon (prevents analytics pings on page close).
 user_pref("network.trr.mode", 5); // Disable DNS-over-HTTPS if you don't need it (avoids extra resolver requests; set to 2/3 if using a trusted provider like NextDNS for privacy).
 user_pref("security.OCSP.require", true); // Enforce OCSP for cert checks but cache results (balances security and fewer requests; default is softer).
+user_pref("network.proxy.socks_remote_dns", true);
 user_pref("network.http.max-persistent-connections-per-server", 6);
-user_pref("network.http.max-connections", 900);
+user_pref("network.http.max-connections", 512);
 user_pref("network.http.max-urgent-start-excessive-connections-per-host", 3);
 user_pref("network.http.request.max-start-delay", 10);
 user_pref("network.http.pacing.requests.enabled", false);

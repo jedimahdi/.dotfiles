@@ -31,10 +31,9 @@ export PATH="$GOBIN:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 export MANPAGER='nvim +Man!'
-export MANWIDTH=999
+# export MANWIDTH=999
 export ESCDELAY=25
-export LESS='-cigRS -j4 -x4 -#5 -z-10'
-export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
+export LESS='-FRQKcig -j.5 --incsearch --no-vbell -x4 --use-color -DPw'
 
 export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' --layout=reverse --height 50% --prompt '❯ ' --gutter ' '"
 # export FZF_CTRL_R_OPTS="--no-preview"

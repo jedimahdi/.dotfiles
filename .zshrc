@@ -97,6 +97,9 @@ function ef() {
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
   nvim "$file"
 }
+function help() {
+  "$@" --help 2>&1 | bat --language=help
+}
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
   yazi "$@" --cwd-file="$tmp"

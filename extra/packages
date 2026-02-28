@@ -18,6 +18,7 @@ zathura
 zathura-pdf-mupdf
 entr
 bat
+bat-extras
 gcc
 make
 gdb

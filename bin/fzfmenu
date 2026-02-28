@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if hyprctl clients -j | jq -e '.[] | select(.class == "fzfmenu")' >/dev/null; then
+    hyprctl dispatch closewindow "class:fzfmenu"
+fi
+
+exec footclient --app-id fzfmenu --title fzfmenu "$@"

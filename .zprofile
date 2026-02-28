@@ -24,6 +24,7 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/neovim/bin:$PATH"
 export PATH="$HOME/.dotfiles/bin:$PATH"
 export PATH="$CARGO_HOME/bin:$PATH"
 export PATH="$GOBIN:$PATH"

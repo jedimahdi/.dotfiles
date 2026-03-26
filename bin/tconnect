@@ -4,15 +4,8 @@ set -eu
 session_path=$1
 session_name=$2
 
-has_session() {
-  tmux has-session -t "=${1}" 2>/dev/null
-}
-
 if ! tmux has-session -t "=$session_name" 2>/dev/null; then
-  tmux new-session -ds "$session_name" -c "$session_path" || {
-    echo "error: failed to create session $session_name at $session_path" >&2
-    exit 1
-  }
+  tmux new-session -ds "$session_name" -c "$session_path"
 fi
 
 if [ -n "${TMUX:-}" ]; then

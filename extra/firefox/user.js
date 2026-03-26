@@ -22,7 +22,8 @@ user_pref("dom.security.https_only_mode", true); // Force HTTPS everywhere (redu
 user_pref("dom.security.https_only_mode_send_http_background_request", false); // Block background HTTP requests in HTTPS mode.
 user_pref("beacon.enabled", false); // Disable navigator.sendBeacon (prevents analytics pings on page close).
 user_pref("network.trr.mode", 5); // Disable DNS-over-HTTPS if you don't need it (avoids extra resolver requests; set to 2/3 if using a trusted provider like NextDNS for privacy).
-user_pref("security.OCSP.require", true); // Enforce OCSP for cert checks but cache results (balances security and fewer requests; default is softer).
+// user_pref("security.OCSP.enabled", 1); // [DEFAULT: 1]
+// user_pref("security.OCSP.require", true); // Enforce OCSP for cert checks but cache results (balances security and fewer requests; default is softer).
 user_pref("network.proxy.socks_remote_dns", true);
 user_pref("network.http.max-persistent-connections-per-server", 6);
 user_pref("network.http.max-connections", 512);
@@ -38,6 +39,9 @@ user_pref("extensions.ml.enabled", false);
 user_pref("dom.push.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 
+user_pref("browser.theme.content-theme", 0);
+user_pref("browser.theme.toolbar-theme", 0);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.uidensity", 1);
 
@@ -240,3 +244,26 @@ user_pref("toolkit.telemetry.firstShutdownPing.enabled", false); // [FF57+]
 user_pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
 user_pref("toolkit.coverage.opt-out", true); // [FF64+] [HIDDEN PREF]
 user_pref("toolkit.coverage.endpoint.base", "");
+
+user_pref("browser.ping-centre.telemetry", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
+user_pref("browser.display.use_system_colors", false); // [DEFAULT: false NON-WINDOWS]
+user_pref("widget.non-native-theme.use-theme-accent", false); // [DEFAULT: false WINDOWS]
+user_pref("browser.uitour.enabled", false);
+user_pref("browser.shopping.experience2023.enabled", false); // [DEFAULT: false]
+user_pref("security.family_safety.mode", 0);
+user_pref("network.dns.skipTRR-when-parental-control-enabled", false);
+user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
+user_pref("browser.contentanalysis.default_allow", false);
+
+user_pref("privacy.userContext.enabled", true);
+user_pref("privacy.userContext.ui.enabled", true);
+
+// user_pref("security.ssl.require_safe_negotiation", true);
+// user_pref("security.tls.enable_0rtt_data", false);
+// user_pref("security.cert_pinning.enforcement_level", 2);
+// user_pref("security.remote_settings.crlite_filters.enabled", true);
+// user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
+// user_pref("browser.xul.error_pages.expert_bad_cert", true);

@@ -1,7 +1,6 @@
 # zmodload zsh/zprof
 
 export ZSHARE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-mkdir -p "$ZSHARE"
 
 export HISTFILE="$ZSHARE/zsh_history"
 export HISTSIZE=10000
@@ -16,6 +15,7 @@ export PATH="/home/mahdi/.gapcode/bin:$PATH"
 typeset -U path PATH
 
 [[ ! -o interactive ]] && return
+[[ -d $ZSHARE ]] || mkdir -p "$ZSHARE"
 
 autoload -Uz colors && colors
 PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
@@ -148,8 +148,5 @@ zstyle ':completion:*' completer _complete
 zstyle ':completion:*' file-sort modification
 zstyle ':completion:*' list-dirs-first yes
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# source <(fzf --zsh)
-# eval "$(zoxide init zsh --cmd cd)"
 
 # zprof

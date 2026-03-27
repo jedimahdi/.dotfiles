@@ -9,8 +9,6 @@ export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 export SDL_VIDEODRIVER=wayland
 export CLUTTER_BACKEND=wayland
 
-export WLR_NO_HARDWARE_CURSORS=1  # workaround for some GPU cursor bugs
-
 export GTK_THEME=Adwaita:dark
 
 export HYPRCURSOR_THEME=capitaine-cursors

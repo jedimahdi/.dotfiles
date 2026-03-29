@@ -65,6 +65,8 @@ user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
 user_pref("webgl.max-size", 16384); // Raise max WebGL texture size for better performance in graphics-heavy sites (FF147 enables WebGPU on more hardware).
 user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
+user_perf("gfx.font_rendering.fontconfig.fontlist.enabled", true)
+user_perf("layout.css.font-visibility.level", 3)
 
 user_pref("browser.safebrowsing.malware.enabled", true);
 user_pref("browser.safebrowsing.phishing.enabled", true);

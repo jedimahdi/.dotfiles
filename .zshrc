@@ -11,7 +11,7 @@ if [[ -z ${SSH_CONNECTION:-} ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-export PATH="/home/mahdi/.gapcode/bin:$PATH"
+export PATH="$HOME/.gapcode/bin:$PATH"
 typeset -U path PATH
 
 [[ ! -o interactive ]] && return
@@ -25,7 +25,11 @@ setopt HIST_IGNORE_DUPS        # Ignore consecutive duplicates
 setopt HIST_EXPIRE_DUPS_FIRST  # Expire duplicate entries first
 setopt HIST_IGNORE_ALL_DUPS    # Remove older duplicate entries
 setopt HIST_FIND_NO_DUPS       # Don't show duplicates when searching
+setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS      # Remove superfluous blanks
+
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
 
 bindkey -e
 
@@ -50,7 +54,7 @@ alias ....='cd ../../..'
 alias c='clear'
 
 if (( $+commands[eza] )); then
-  alias ls='eza --all --group-directories-first'
+  alias ls='eza --icons --all --group-directories-first'
   alias l='eza --long --no-time --no-user --no-permissions --group-directories-first'
   alias la='eza --long --octal-permissions --time-style="+%Y-%m-%d %H:%M" --group-directories-first'
   alias lt='eza --tree'
@@ -62,7 +66,7 @@ alias cp='cp -iv'
 alias bc='bc -ql'
 alias gdb='gdb --silent'
 alias grep='grep --color=auto'
-alias diff='diff --color=auto'
+alias diff='diff --color=auto -u'
 alias ip='ip -color=auto'
 alias df='df -h'
 
@@ -76,7 +80,7 @@ alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Sy --needed archlinux-keyring && sudo pacman -Su'
 alias pf='pacman -Ss'
 alias pr='sudo pacman -Rns'
-(( $+commands[fzf] )) && alias fpac='/usr/bin/pacman -Slq | fzf --preview "/usr/bin/pacman -Si {}" --layout=reverse'
+alias fpac='/usr/bin/pacman -Slq | fzf --preview "/usr/bin/pacman -Si {}" --layout=reverse'
 
 alias gs='git status'
 alias gss='gitar status --fzf'
@@ -100,7 +104,6 @@ function e() {
 }
 
 function ef() {
-  (( $+commands[rg] && $+commands[fzf] && $+commands[nvim] )) || return
   local file
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
   command nvim "$file"
@@ -117,7 +120,6 @@ function help() {
 compdef _command help
 
 function y() {
-  (( $+commands[yazi] )) || return
   local tmp cwd
   tmp="$(mktemp -t yazi-cwd.XXXXXX)" || return
   yazi "$@" --cwd-file="$tmp"

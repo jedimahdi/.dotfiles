@@ -29,7 +29,7 @@ user_pref("network.http.max-persistent-connections-per-server", 6);
 user_pref("network.http.max-connections", 512);
 user_pref("network.http.max-urgent-start-excessive-connections-per-host", 3);
 user_pref("network.http.request.max-start-delay", 10);
-user_pref("network.http.pacing.requests.enabled", false);
+// user_pref("network.http.pacing.requests.enabled", false);
 
 user_pref("browser.tabs.groups.smart.enabled", false);
 user_pref("browser.ml.chat.enabled", false);

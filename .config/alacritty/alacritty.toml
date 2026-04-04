@@ -5,7 +5,7 @@
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 bold = { family = "JetBrainsMono Nerd Font", style = "SemiBold" }
 italic = { family = "JetBrainsMono Nerd Font", style = "Medium" }
-size = 15.5
+size = 12
 offset = { x = -1, y = 3 }
 
 [mouse]
@@ -14,7 +14,7 @@ hide_when_typing = true
 [window]
 dynamic_padding = true
 decorations = "none"
-padding = { x = 5, y = 5 }
+padding = { x = 16, y = 12 }
 
 [colors.primary]
 background = "0x1f2329"

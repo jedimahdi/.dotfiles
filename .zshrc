@@ -11,9 +11,6 @@ if [[ -z ${SSH_CONNECTION:-} ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-export PATH="$HOME/.gapcode/bin:$PATH"
-typeset -U path PATH
-
 [[ ! -o interactive ]] && return
 [[ -d $ZSHARE ]] || mkdir -p "$ZSHARE"
 

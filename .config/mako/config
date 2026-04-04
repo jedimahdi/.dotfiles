@@ -10,7 +10,7 @@ padding=15
 background-color=#282c34
 text-color=#abb2bf
 border-color=#61afef
-border-size=2
+border-size=0
 border-radius=6
 
 [urgency=low]

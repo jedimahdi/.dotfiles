@@ -1,4 +1,4 @@
 #!/bin/bash
 
-name=$(tldr --list | fzf) || exit 0
+name=$(tldr --list | fzf --height 100% --border rounded) || exit 0
 tldr --pager $name

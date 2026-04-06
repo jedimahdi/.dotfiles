@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-spath=$PWD
-sname=$(basename "$PWD" | tr . _)
+name=$(basename "$PWD" | tr . _)
 
-exec tconnect $spath $sname
+exec tconnect "$PWD" $name

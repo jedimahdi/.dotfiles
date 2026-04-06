@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/bin/sh
+set -eu
 
-if [[ -x "./.ready-tmux" ]]; then
+if [ -x "./.ready-tmux" ]; then
   ./.ready-tmux
-elif [[ -x "~/.ready-tmux" ]]; then
-  ~/.ready-tmux
+elif [ -x "$HOME/.ready-tmux" ]; then
+  "$HOME/.ready-tmux"
 fi
 
 clear

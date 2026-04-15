@@ -3,7 +3,7 @@ set -eu
 
 pick_session() {
   {
-    printf "%s\n" ".config/nvim" ".dotfiles"
+    printf "%s\n" ".dotfiles" ".config/nvim"
     fd . apps --base-directory="$HOME" --exact-depth=2 --type d --color=never --format '{}' --no-ignore 2>/dev/null
   } | fzf \
     --border rounded \

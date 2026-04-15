@@ -52,8 +52,8 @@ alias c='clear'
 
 if (( $+commands[eza] )); then
   alias ls='eza --icons --all --group-directories-first'
-  alias l='eza --long --no-time --no-user --no-permissions --group-directories-first'
-  alias la='eza --long --octal-permissions --time-style="+%Y-%m-%d %H:%M" --group-directories-first'
+  alias l='ls --long --no-time --no-user --no-permissions'
+  alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
   alias lt='eza --tree'
 fi
 

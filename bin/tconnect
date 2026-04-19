@@ -6,7 +6,6 @@ session_name=$2
 
 if ! tmux has-session -t "=$session_name" 2>/dev/null; then
   tmux new-session -ds "$session_name" -c "$session_path"
-  tmux send-keys -t "$session_name" "ready-tmux" Enter
 fi
 
 if [ -n "${TMUX:-}" ]; then

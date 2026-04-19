@@ -3,6 +3,8 @@ IndentWidth: 2
 TabWidth: 2
 UseTab: Never
 
+IndentCaseLabels: true
+
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
 AllowShortBlocksOnASingleLine: Empty

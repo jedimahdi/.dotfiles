@@ -22,17 +22,20 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
-addpath() {
-  [[ -n $1 && -d $1 ]] && path=("$1" $path)
-}
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.dotfiles/bin"
 
-addpath "$HOME/.local/bin"
-addpath "$HOME/.dotfiles/bin"
-addpath "$CARGO_HOME/bin"
-addpath "$GOBIN"
-addpath "$HOME/.npm-global/bin"
-
-typeset -U path PATH
+# addpath() {
+#   [[ -n $1 && -d $1 ]] && path=("$1" $path)
+# }
+#
+# addpath "$HOME/.local/bin"
+# addpath "$HOME/.dotfiles/bin"
+# addpath "$CARGO_HOME/bin"
+# addpath "$GOBIN"
+# addpath "$HOME/.npm-global/bin"
+#
+# typeset -U path PATH
 
 export MANPAGER='nvim +Man!'
 export ESCDELAY=25

@@ -7,6 +7,7 @@ pick_session() {
     fd . apps --base-directory="$HOME" --exact-depth=2 --type d --color=never --format '{}' --no-ignore 2>/dev/null
   } | fzf \
     --border rounded \
+    --scheme path \
     --height 100% \
     --preview 'eza $HOME/{} --color=always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions' \
     --preview-window=right:50%

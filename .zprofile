@@ -40,4 +40,7 @@ export PATH="$PATH:$HOME/.dotfiles/bin"
 export MANPAGER='nvim +Man!'
 export ESCDELAY=25
 export LESS='-RQKcig -j.5 --incsearch --no-vbell -x4 --use-color -DPw -DEw'
-export FZF_DEFAULT_OPTS="--style minimal --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' --layout=reverse --height 50% --prompt '❯ ' --gutter ' '"
+export FZF_DEFAULT_OPTS="--style minimal \
+  --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' \
+  --layout=reverse --height 50% --prompt '❯ ' --gutter ' ' \
+  --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,ctrl-e:preview-down'"

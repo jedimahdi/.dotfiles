@@ -102,7 +102,7 @@ function e() {
 
 function ef() {
   local file
-  file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf) || return
+  file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf --scheme="path") || return
   command nvim "$file"
 }
 
@@ -123,7 +123,7 @@ function y() {
   if cwd="$(cat -- "$tmp")" && [[ -n $cwd && $cwd != $PWD ]]; then
     builtin cd -- "$cwd"
   fi
-  rm -f -- "$tmp"
+  command rm -f -- "$tmp"
 }
 
 autoload -U edit-command-line
@@ -131,9 +131,8 @@ zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 fzf-history-widget() {
-  (( $+commands[fzf] )) || return
   local selected
-  selected=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' | fzf --tiebreak=index --query="$LBUFFER")
+  selected=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' | fzf --scheme="history" --query="$LBUFFER")
   if [[ -n $selected ]]; then
     LBUFFER=$selected
   fi

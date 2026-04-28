@@ -1,40 +1,36 @@
 # zmodload zsh/zprof
 
-ZSHARE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-HISTFILE="$ZSHARE/zsh_history"
-HISTSIZE=2000
-SAVEHIST=$HISTSIZE
-
-export HISTFILE
-export LS_COLORS='no=0:fi=0:di=34:ex=32'
-
-if [[ -z ${SSH_CONNECTION:-} ]]; then
-  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-fi
+ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+mkdir -p -- "$ZSH_DATA_DIR"
 
 PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_DUPS
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
+setopt NO_FLOW_CONTROL
+setopt NO_CLOBBER
+
+HISTFILE="$ZSH_DATA_DIR/zsh_history"
+HISTSIZE=2000
+SAVEHIST=$HISTSIZE
+
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_REDUCE_BLANKS
-setopt INTERACTIVE_COMMENTS
-setopt NO_BEEP
+# setopt HIST_IGNORE_DUPS
+# setopt APPEND_HISTORY
+# setopt INC_APPEND_HISTORY
 
-bindkey -e
-[[ -o interactive ]] && stty -ixon
+zshaddhistory() { (( ${#1} <= 2000 )) }
 
 autoload -Uz compinit
-compinit -C -d "$ZSHARE/.zcompdump"
+compinit -C -d "$ZSH_DATA_DIR/.zcompdump"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' completer _complete
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' list-dirs-first yes
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+bindkey -e
 
 autoload -Uz select-word-style
 select-word-style shell
@@ -65,7 +61,6 @@ alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias tn='tmux new-session -s'
 alias tc='tsession'
-alias ts='tconnect "$PWD" scratch'
 
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Sy --needed archlinux-keyring && sudo pacman -Su'
@@ -150,9 +145,8 @@ fzf-history-widget() {
 zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-zshaddhistory() {
-  [[ ${#1} -gt 2000 ]] && return 1
-  return 0
-}
+# if [[ -z ${SSH_CONNECTION:-} ]]; then
+#   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+# fi
 
 # zprof

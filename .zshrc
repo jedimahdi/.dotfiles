@@ -1,46 +1,40 @@
 # zmodload zsh/zprof
 
-export ZSHARE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+ZSHARE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+HISTFILE="$ZSHARE/zsh_history"
+HISTSIZE=2000
+SAVEHIST=$HISTSIZE
 
-export HISTFILE="$ZSHARE/zsh_history"
-export HISTSIZE=10000
-export SAVEHIST=$HISTSIZE
+export HISTFILE
 export LS_COLORS='no=0:fi=0:di=34:ex=32'
 
 if [[ -z ${SSH_CONNECTION:-} ]]; then
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-[[ ! -o interactive ]] && return
-[[ -d $ZSHARE ]] || mkdir -p "$ZSHARE"
-
-autoload -Uz colors && colors
 PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 
-setopt INC_APPEND_HISTORY      # Immediately append to history file
-setopt HIST_IGNORE_DUPS        # Ignore consecutive duplicates
-setopt HIST_EXPIRE_DUPS_FIRST  # Expire duplicate entries first
-setopt HIST_IGNORE_ALL_DUPS    # Remove older duplicate entries
-setopt HIST_FIND_NO_DUPS       # Don't show duplicates when searching
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
-setopt HIST_REDUCE_BLANKS      # Remove superfluous blanks
-
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_REDUCE_BLANKS
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
 
 bindkey -e
-
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey '^p' up-line-or-beginning-search
-bindkey '^n' down-line-or-beginning-search
-
-[[ -t 0 ]] && stty -ixon
+[[ -o interactive ]] && stty -ixon
 
 autoload -Uz compinit
 compinit -C -d "$ZSHARE/.zcompdump"
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*' list-dirs-first yes
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 autoload -Uz select-word-style
 select-word-style shell
@@ -90,7 +84,7 @@ alias gds='gd --staged'
 alias lg='lazygit'
 alias gcl='git clone --depth 1'
 
-alias ptree='ps --user "$USER" -o pid,cmd --no-headers --forest | grep -v firefox | sed -e "s/\\_/├─/g" -e "s/|/│/g" | less -R'
+alias ptree='ps --user "$USER" -o pid,cmd --no-headers --forest | grep -v firefox | sed -e "s/\\\_/├─/g" -e "s/|/│/g" | less -R'
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
 
@@ -106,7 +100,7 @@ function ef() {
   command nvim "$file"
 }
 
-function help() {
+function h() {
   (( $# )) || return
   if (( $+commands[bat] )); then
     command "$@" --help 2>&1 | bat --language=help
@@ -114,7 +108,7 @@ function help() {
     command "$@" --help
   fi
 }
-compdef _command help
+compdef _command h
 
 function y() {
   local tmp cwd
@@ -126,25 +120,39 @@ function y() {
   command rm -f -- "$tmp"
 }
 
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^p' up-line-or-beginning-search
+bindkey '^n' down-line-or-beginning-search
+
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 fzf-history-widget() {
   local selected
-  selected=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' | fzf --scheme="history" --query="$LBUFFER")
-  if [[ -n $selected ]]; then
+  selected=$(
+    fc -rl 1 |
+      sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//' |
+      awk '!seen[$0]++' |
+      fzf --scheme=history --query="$LBUFFER"
+  )
+  local ret=$?
+
+  if (( ret == 0 )) && [[ -n $selected ]]; then
     LBUFFER=$selected
   fi
+
   zle reset-prompt
 }
 zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' completer _complete
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' list-dirs-first yes
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zshaddhistory() {
+  [[ ${#1} -gt 2000 ]] && return 1
+  return 0
+}
 
 # zprof

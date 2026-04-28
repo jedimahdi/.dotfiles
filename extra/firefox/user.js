@@ -45,6 +45,14 @@ user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.uidensity", 1);
 
+// Disable Picture-in-Picture feature
+user_pref("media.videocontrols.picture-in-picture.enabled", false);
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+
+// Disable fullscreen warning/prompt
+user_pref("full-screen-api.warning.timeout", 0);
+user_pref("full-screen-api.warning.delay", -1);
+
 // Disable tab hover previews (thumbnails on hover)
 user_pref("browser.tabs.hoverPreview.enabled", false);
 user_pref("browser.tabs.cardPreview.enabled", false);
@@ -86,6 +94,27 @@ user_pref("extensions.screenshots.disabled", true);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 user_pref("extensions.formautofill.addresses.enabled", false);
 
+user_pref("browser.search.serpEventTelemetryCategorization.enabled", false)
+user_pref("browser.search.serpEventTelemetryCategorization.regionEnabled", false)
+user_pref("identity.fxaccounts.telemetry.clientAssociationPing.enabled", false)
+user_pref("nimbus.telemetry.targetingContextEnabled", false)
+// user_pref("permissions.desktop-notification.telemetry.siteCategories", false);
+user_pref("browser.urlbar.eventTelemetry.enabled", false); // [FF93+]
+user_pref("browser.tabs.firefox-view-next", false); // Firefox View telemetry
+user_pref("browser.tabs.firefox-view", false);
+user_pref("browser.vpn_promo.enabled", false); // VPN promo telemetry
+user_pref("browser.promo.focus.enabled", false); // Focus app promo
+user_pref("browser.promo.pin.enabled", false); // Pin promo
+user_pref("browser.translations.enable", false); // Translation feature (has telemetry)
+user_pref("browser.translations.automaticallyPopup", false);
+user_pref("datareporting.usage.uploadEnabled", false)
+
+// user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Trim cross-origin referers
+// user_pref("network.http.referer.XOriginPolicy", 2); // Send referer only to same eTLD+1
+// user_pref("privacy.partition.network_state", true); // Network state partitioning
+// user_pref("privacy.partition.serviceWorkers", true); // Service worker partitioning
+user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
+
 // === Keep Sync intact ===
 // DO NOT disable identity.fxaccounts.* prefs
 
@@ -125,6 +154,9 @@ user_pref("browser.discovery.enabled", false);
 /* 0335: disable Firefox Home (Activity Stream) telemetry ***/
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
+user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.enabled", false);
+user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.inferredInterests.enabled", false);
+user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.redactNewtabPing.enabled", false);
 
 /** STUDIES ***/
 /* 0340: disable Studies

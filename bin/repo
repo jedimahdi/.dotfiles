@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url="$(git remote get-url origin 2>/dev/null)" || {
+  echo "not a git repo or no origin remote" >&2
+  exit 1
+}
+
+case "$url" in
+  git@github.com:*)
+    url="https://github.com/${url#git@github.com:}"
+    ;;
+  git@gitlab.com:*)
+    url="https://gitlab.com/${url#git@gitlab.com:}"
+    ;;
+  git@bitbucket.org:*)
+    url="https://bitbucket.org/${url#git@bitbucket.org:}"
+    ;;
+  ssh://git@github.com/*)
+    url="https://github.com/${url#ssh://git@github.com/}"
+    ;;
+  ssh://git@gitlab.com/*)
+    url="https://gitlab.com/${url#ssh://git@gitlab.com/}"
+    ;;
+  ssh://git@bitbucket.org/*)
+    url="https://bitbucket.org/${url#ssh://git@bitbucket.org/}"
+    ;;
+  https://*|http://*)
+    ;;
+  *)
+    echo "unsupported remote format: $url" >&2
+    exit 1
+    ;;
+esac
+
+url="${url%.git}"
+
+if command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$url" >/dev/null 2>&1 &
+elif command -v open >/dev/null 2>&1; then
+  open "$url" >/dev/null 2>&1 &
+else
+  printf '%s\n' "$url"
+fi

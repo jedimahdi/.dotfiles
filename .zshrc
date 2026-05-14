@@ -8,7 +8,6 @@ PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
 setopt NO_FLOW_CONTROL
-setopt NO_CLOBBER
 
 HISTFILE="$ZSH_DATA_DIR/zsh_history"
 HISTSIZE=2000
@@ -40,11 +39,14 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias c='clear'
 
+alias ls='ls --group-directories-first --color=auto'
+
 if (( $+commands[eza] )); then
-  alias ls='eza --icons --all --group-directories-first'
-  alias l='ls --long --no-time --no-user --no-permissions'
-  alias la='ls --long --octal-permissions --time-style="+%Y-%m-%d %H:%M"'
-  alias lt='eza --tree'
+  alias ls='eza --icons --group-directories-first --color=auto'
+  alias l='eza -la --icons --group-directories-first --no-time --no-user --no-permissions'
+  alias la='eza -la --group-directories-first'
+  alias ll='eza -lh --icons --git --group-directories-first'
+  alias lt='eza --tree --level=2 --icons'
 fi
 
 alias mv='mv -iv'
@@ -79,7 +81,6 @@ alias gds='gd --staged'
 alias lg='lazygit'
 alias gcl='git clone --depth 1'
 
-alias ptree='ps --user "$USER" -o pid,cmd --no-headers --forest | grep -v firefox | sed -e "s/\\\_/├─/g" -e "s/|/│/g" | less -R'
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
 
@@ -104,6 +105,13 @@ function h() {
   fi
 }
 compdef _command h
+
+ptree() {
+  ps --user "$USER" -o pid,cmd --no-headers --forest \
+    | grep -v firefox \
+    | sed -e 's/\\_/├─/g' -e 's/|/│/g' \
+    | less -R
+}
 
 function y() {
   local tmp cwd

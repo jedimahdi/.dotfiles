@@ -10,10 +10,10 @@ user_pref("image.mem.decode_bytes_at_a_time", 32768);
 user_pref("gfx.canvas.accelerated.cache-items", 32768);
 user_pref("gfx.canvas.accelerated.cache-size", 4096);
 user_pref("gfx.content.skia-font-cache-size", 32);
-user_pref("media.cache_readahead_limit", 300); // 300s
-user_pref("media.cache_resume_threshold", 150); // 150s
 user_pref("network.ssl_tokens_cache_capacity", 10240); // Boost SSL token cache for quicker secure reconnects.
 user_pref("browser.sessionstore.interval", 60000); // save session every 60s instead of 15s
+user_pref("media.cache_readahead_limit", 300); // 300s
+user_pref("media.cache_resume_threshold", 150); // 150s
 
 user_pref("network.dnsCacheEntries", 10000); // Expand DNS cache to 10k entries for faster resolutions.
 user_pref("network.dnsCacheExpiration", 1800); // 30 minutes
@@ -115,8 +115,8 @@ user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
 
 // Language normalization
-user_pref("intl.accept_languages", "en-US, en");
-user_pref("javascript.use_us_english_locale", true);
+// user_pref("intl.accept_languages", "en-US, en");
+// user_pref("javascript.use_us_english_locale", true);
 
 // Tracking protection
 user_pref("privacy.trackingprotection.enabled", true);

@@ -1,0 +1,8 @@
+[mgr]
+ratio = [0, 5, 2]
+sort_dir_first = true
+
+[open]
+prepend_rules = [
+	{ url = "*.html", use = "open" },
+]

@@ -1,7 +1,6 @@
 # zmodload zsh/zprof
 
 ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-mkdir -p -- "$ZSH_DATA_DIR"
 
 PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 
@@ -10,16 +9,18 @@ setopt NO_BEEP
 setopt NO_FLOW_CONTROL
 
 HISTFILE="$ZSH_DATA_DIR/zsh_history"
-HISTSIZE=2000
-SAVEHIST=$HISTSIZE
+SAVEHIST=2000
+HISTSIZE=2999
+HISTORY_IGNORE="(c|ls|tc|l)"
 
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_REDUCE_BLANKS
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_SPACE
 # setopt HIST_IGNORE_DUPS
-# setopt APPEND_HISTORY
-# setopt INC_APPEND_HISTORY
 
 zshaddhistory() { (( ${#1} <= 2000 )) }
 
@@ -50,7 +51,7 @@ if (( $+commands[eza] )); then
 fi
 
 alias mv='mv -iv'
-alias rm='rm -vI'
+alias rm='rm -vI --preserve-root'
 alias cp='cp -iv'
 alias bc='bc -ql'
 alias gdb='gdb --silent'
@@ -58,6 +59,7 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto -u'
 alias ip='ip -color=auto'
 alias df='df -h'
+alias ping='ping -c 4'
 
 alias ta='tmux attach'
 alias tl='tmux list-sessions'
@@ -134,24 +136,7 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
-fzf-history-widget() {
-  local selected
-  selected=$(
-    fc -rl 1 |
-      sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//' |
-      awk '!seen[$0]++' |
-      fzf --scheme=history --query="$LBUFFER"
-  )
-  local ret=$?
-
-  if (( ret == 0 )) && [[ -n $selected ]]; then
-    LBUFFER=$selected
-  fi
-
-  zle reset-prompt
-}
-zle -N fzf-history-widget
-bindkey '^R' fzf-history-widget
+source <(fzf --zsh)
 
 # if [[ -z ${SSH_CONNECTION:-} ]]; then
 #   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"

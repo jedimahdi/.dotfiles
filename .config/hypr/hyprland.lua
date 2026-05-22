@@ -14,7 +14,7 @@ hl.config({
 		kb_rules = "",
 		repeat_rate = 35,
 		repeat_delay = 200,
-		follow_mouse = 1,
+		follow_mouse = 2,
 	},
 	general = {
 		gaps_in = 2,
@@ -49,10 +49,6 @@ hl.config({
 		force_default_wallpaper = 0,
 		disable_hyprland_logo = true,
 		disable_splash_rendering = true,
-	},
-
-	master = {
-		new_status = "master",
 	},
 
 	ecosystem = {
@@ -96,8 +92,16 @@ hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -n -a"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 3"))
 hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 1"))
 
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
+
+hl.bind(mainMod .. " + J", hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + K", hl.dsp.window.cycle_next({ next = false }))
+
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.swap({ next = true }))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.swap({ prev = true }))
+
+hl.bind(mainMod .. " + H", hl.dsp.window.resize({ x = -15, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + L", hl.dsp.window.resize({ x = 15, y = 0, relative = true }), { repeating = true })
 
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({ workspace = "previous" }))
 for i = 1, 10 do

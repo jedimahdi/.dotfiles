@@ -1,0 +1,14 @@
+[options]
+initial_pan = 0 0
+scaling_mode = crop
+fullscreen = true
+
+[binds]
+<Up>   = pan 0 400
+<Down> = pan 0 -400
+
+<space> = pan 0 -600
+<Shift+space> = pan 0 600
+
+l = next
+h = prev

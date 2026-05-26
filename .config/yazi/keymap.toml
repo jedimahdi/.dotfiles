@@ -1,0 +1,4 @@
+[[mgr.prepend_keymap]]
+on   = "i"
+run  = "shell 'imv .'"
+desc = "View images current directory"

@@ -38,7 +38,7 @@ select-word-style shell
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias c='clear'
+alias c='clear -x'
 
 alias ls='ls --group-directories-first --color=auto'
 
@@ -97,16 +97,6 @@ function ef() {
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf --scheme="path") || return
   command nvim "$file"
 }
-
-function h() {
-  (( $# )) || return
-  if (( $+commands[bat] )); then
-    command "$@" --help 2>&1 | bat --language=help
-  else
-    command "$@" --help
-  fi
-}
-compdef _command h
 
 ptree() {
   ps --user "$USER" -o pid,cmd --no-headers --forest \

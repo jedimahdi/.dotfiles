@@ -12,8 +12,8 @@ user_pref("gfx.canvas.accelerated.cache-size", 4096);
 user_pref("gfx.content.skia-font-cache-size", 32);
 user_pref("network.ssl_tokens_cache_capacity", 10240); // Boost SSL token cache for quicker secure reconnects.
 user_pref("browser.sessionstore.interval", 60000); // save session every 60s instead of 15s
-user_pref("media.cache_readahead_limit", 300); // 300s
-user_pref("media.cache_resume_threshold", 150); // 150s
+// user_pref("media.cache_readahead_limit", 300); // 300s
+// user_pref("media.cache_resume_threshold", 150); // 150s
 
 user_pref("network.dnsCacheEntries", 10000); // Expand DNS cache to 10k entries for faster resolutions.
 user_pref("network.dnsCacheExpiration", 1800); // 30 minutes

@@ -26,8 +26,8 @@ typeset -U path PATH
 path=(
   $HOME/.local/bin
   $HOME/.dotfiles/bin
-  $CARGO_HOME/bin
-  $GOBIN
+  # $CARGO_HOME/bin
+  # $GOBIN
   $path
 )
 

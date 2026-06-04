@@ -16,8 +16,9 @@ hl.config({
 		repeat_delay = 200,
 		follow_mouse = 2,
 	},
+
 	general = {
-		gaps_in = 2,
+		gaps_in = 1,
 		gaps_out = 0,
 		border_size = 0,
 		resize_on_border = false,

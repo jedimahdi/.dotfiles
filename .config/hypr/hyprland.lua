@@ -90,8 +90,12 @@ hl.bind(
 )
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -n -a"))
 
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 3"))
-hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 1"))
+hl.bind(mainMod .. " + Z", function()
+	hl.config({ cursor = { zoom_factor = 3 } })
+end)
+hl.bind(mainMod .. " + SHIFT + Z", function()
+	hl.config({ cursor = { zoom_factor = 1 } })
+end)
 
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 

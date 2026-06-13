@@ -1,4 +1,4 @@
 [[mgr.prepend_keymap]]
 on   = "i"
-run  = "shell 'imv .'"
+run  = "shell 'ls | sort -n | imv'"
 desc = "View images current directory"

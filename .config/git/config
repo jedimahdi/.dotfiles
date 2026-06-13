@@ -8,9 +8,6 @@
 [core]
   whitespace = error
 
-[http]
-	postBuffer = 524288000
-
 [advice]
   addEmptyPathspec = false
   ; pushNonFastForward = false

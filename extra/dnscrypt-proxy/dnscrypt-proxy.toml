@@ -1,0 +1,209 @@
+server_names = ['cs-swe', 'cs-milan', 'cs-ch', 'cs-austria', 'cs-czech']
+# server_names = ['cloudflare']
+# server_names = ['libredns-noads', 'cloudflare']
+# server_names = ['bortzmeyer', 'libredns-noads', 'adguard-dns-doh', 'blahdns-de-doh' ]
+# server_names = ['dnscry.pt-yerevan-ipv4', 'dnscry.pt-istanbul-ipv4', 'dnscry.pt-paris-ipv4', 'dct-de2']
+# server_names = ['dns.digitalsize.net', 'adguard-dns-unfiltered', 'dns4eu', 'dnsbunker']
+
+listen_addresses = ['127.0.0.1:53']
+max_clients = 250
+ipv4_servers = true
+ipv6_servers = false
+dnscrypt_servers = true
+doh_servers = true
+odoh_servers = false
+require_dnssec = false
+require_nolog = false
+require_nofilter = false
+disabled_server_names = []
+
+force_tcp = true
+http3 = false
+http3_probe = false
+
+timeout = 6000
+
+keepalive = 60
+
+# http_proxy = 'http://127.0.0.1:40443'
+# proxy = "http://127.0.0.1:40443"
+
+## 'wp2' (default): Weighted Power of Two - selects the better performing server
+## from two random candidates based on real-time RTT and success rates.
+## 'p2': Randomly choose 1 of the fastest 2 servers by latency.
+## 'ph': Randomly choose from fastest half of servers.
+## 'p<n>': Randomly choose from fastest n servers (e.g., 'p3' for fastest 3).
+## 'first': Always use the fastest server.
+## 'random': Randomly choose from all servers.
+lb_strategy = 'wp2'
+
+## Set to `true` to constantly try to estimate the latency of all the resolvers
+lb_estimator = true
+
+log_file = '/var/log/dnscrypt-proxy/dnscrypt-proxy.log'
+use_syslog = true
+log_files_max_size = 10
+log_files_max_age = 7
+log_files_max_backups = 1
+
+cert_refresh_delay = 240
+
+ignore_system_dns = true
+bootstrap_resolvers = ['178.22.122.100:53']
+netprobe_timeout = 60
+netprobe_address = '9.9.9.9:53'
+
+block_ipv6 = true
+block_unqualified = true
+block_undelegated = true
+reject_ttl = 10
+
+cache = true
+cache_size = 4096
+cache_min_ttl = 2400
+cache_max_ttl = 86400
+cache_neg_min_ttl = 60
+cache_neg_max_ttl = 600
+
+[query_log]
+format = 'tsv'
+
+[nx_log]
+format = 'tsv'
+
+[sources]
+[sources.public-resolvers]
+urls = [
+  'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md',
+  'https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md',
+  'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/public-resolvers.md'
+]
+cache_file = '/var/cache/dnscrypt-proxy/public-resolvers.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 73
+prefix = ''
+
+[sources.relays]
+urls = [
+  'https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/relays.md',
+  'https://download.dnscrypt.info/resolvers-list/v3/relays.md',
+  'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/relays.md'
+]
+cache_file = '/var/cache/dnscrypt-proxy/relays.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 73
+prefix = ''
+
+### ODoH (Oblivious DoH) servers and relays
+
+# [sources.odoh-servers]
+#   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-servers.md']
+#   cache_file = '/var/cache/dnscrypt-proxy/odoh-servers.md'
+#   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+#   refresh_delay = 73
+#   prefix = ''
+# [sources.odoh-relays]
+#   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-relays.md']
+#   cache_file = '/var/cache/dnscrypt-proxy/odoh-relays.md'
+#   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+#   refresh_delay = 73
+#   prefix = ''
+
+### Quad9
+
+# [sources.quad9-resolvers]
+#   urls = ['https://quad9.net/dnscrypt/quad9-resolvers.md']
+#   minisign_key = 'RWQBphd2+f6eiAqBsvDZEBXBGHQBJfeG6G+wJPPKxCZMoEQYpmoysKUN'
+#   cache_file = '/var/cache/dnscrypt-proxy/quad9-resolvers.md'
+#   prefix = 'quad9-'
+
+### Another example source, with resolvers censoring some websites not appropriate for children
+### This is a subset of the `public-resolvers` list, so enabling both is useless.
+
+# [sources.parental-control]
+#   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/parental-control.md', 'https://download.dnscrypt.info/resolvers-list/v3/parental-control.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/parental-control.md']
+#   cache_file = '/var/cache/dnscrypt-proxy/parental-control.md'
+#   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+
+### dnscry.pt servers - See https://www.dnscry.pt
+
+#  [sources.dnscry-pt-resolvers]
+#    urls = ["https://www.dnscry.pt/resolvers.md"]
+#    minisign_key = "RWQM31Nwkqh01x88SvrBL8djp1NH56Rb4mKLHz16K7qsXgEomnDv6ziQ"
+#    cache_file = "/var/cache/dnscrypt-proxy/dnscry.pt-resolvers.md"
+#    refresh_delay = 73
+#    prefix = "dnscry.pt-"
+
+
+[broken_implementations]
+fragments_blocked = [
+  'cisco',
+  'cisco-ipv6',
+  'cisco-familyshield',
+  'cisco-familyshield-ipv6',
+  'cisco-sandbox',
+  'cleanbrowsing-adult',
+  'cleanbrowsing-adult-ipv6',
+  'cleanbrowsing-family',
+  'cleanbrowsing-family-ipv6',
+  'cleanbrowsing-security',
+  'cleanbrowsing-security-ipv6',
+]
+
+[anonymized_dns]
+
+# routes = [
+#    { server_name='*', via=['anon-cs-czech', 'anon-cs-milan'] }
+# ]
+skip_incompatible = false
+# direct_cert_fallback = false
+
+[ip_encryption]
+algorithm = "none"
+key = ""
+
+[blocked_ips]
+blocked_ips_file = '/etc/my-dnscrypt-proxy/blocked-ips.txt'
+
+[monitoring_ui]
+enabled = true
+listen_address = "127.0.0.1:4300"
+username = ""
+password = ""
+tls_certificate = ""
+tls_key = ""
+enable_query_log = true
+privacy_level = 0
+max_query_log_entries = 100
+
+## Enable Prometheus metrics endpoint
+## Default: false
+# prometheus_enabled = false
+
+## Path for Prometheus metrics endpoint
+## Default: /metrics
+# prometheus_path = "/metrics"
+
+
+# [local_doh]
+# listen_addresses = ['127.0.0.1:3000']
+# path = '/dns-query'
+# cert_file = '/etc/my-dnscrypt-proxy/localhost.pem'
+# cert_key_file = '/etc/my-dnscrypt-proxy/localhost.pem'
+
+[static]
+
+[static.'cloudflare-ipv4']
+stamp = 'sdns://AgcAAAAAAAAADjEwNC4xNi4yNDguMjQ5ABJjbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ'
+
+# [static.'cloudflare-ipv4']
+# stamp = 'sdns://AgcAAAAAAAAABzEuMC4wLjEAEmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5'
+#
+# [static.'cloudflare-security-ipv4']
+# stamp = 'sdns://AgMAAAAAAAAABzEuMC4wLjIAG3NlY3VyaXR5LmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5'
+#
+# [static.'quad9-ipv4']
+# stamp = 'sdns://AgMAAAAAAAAABzkuOS45LjkADmRuczkucXVhZDkubmV0Ci9kbnMtcXVlcnk'
+
+# [static.mycloudflare]
+# stamp = 'sdns://AgcAAAAAAAAABzEuMC4wLjGgENk8mGSlIfMGXMOlIlCcKvq7AVgcrZxtjon911-ep0cg63Ul-I8NlFj4GplQGb_TTLiczclX57DvMV8Q-JdjgRgSZG5zLmNsb3VkZmxhcmUuY29tCi9kbnMtcXVlcnk'

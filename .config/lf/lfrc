@@ -1,0 +1,41 @@
+set info "size"
+set nopreview
+set ratios "1"
+
+cmd touch %{{
+    printf "File name: "
+    read file
+    if [ -n "$file" ]; then
+        touch "$file"
+    fi
+}}
+
+cmd mkdir %{{
+    printf "Directory name: "
+    read dir
+    if [ -n "$dir" ]; then
+        mkdir -p "$dir"
+    fi
+}}
+
+cmd touch %{{
+    printf "File name: "
+    read file
+    if [ -n "$file" ]; then
+        touch "$file"
+    fi
+}}
+
+cmd clear-all :unselect; clear
+
+map . set hidden!
+map f touch
+map D delete
+map R reload
+map <esc> clear-all
+map i %{{
+  ls | sort -V | imv 2>/dev/null
+}}
+map a mkdir
+map f touch
+map <enter> &mimeopen "$f"

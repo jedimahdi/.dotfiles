@@ -1,7 +1,7 @@
 // Cache
 user_pref("browser.cache.disk.enable", false);
 user_pref("browser.cache.memory.enable", true);
-user_pref("browser.cache.memory.capacity", 262144); // 256 MB memory cache
+// user_pref("browser.cache.memory.capacity", 262144); // 256 MB memory cache
 user_pref("browser.cache.memory.max_entry_size", 51200); // 50 MB max item
 user_pref("media.memory_cache_max_size", 524288); // 512 MB media memory cache
 user_pref("media.memory_caches_combined_limit_kb", 1048576); // 1 GB combined media cache
@@ -21,10 +21,7 @@ user_pref("network.dnsCacheExpiration", 1800); // 30 minutes
 
 user_pref("dom.security.https_only_mode", true); // Force HTTPS everywhere (reduces insecure requests; FF147 optimizes this).
 user_pref("dom.security.https_only_mode_send_http_background_request", false); // Block background HTTP requests in HTTPS mode.
-// user_pref("beacon.enabled", false); // Disable navigator.sendBeacon (prevents analytics pings on page close).
-user_pref("network.trr.mode", 5); // Disable DNS-over-HTTPS if you don't need it (avoids extra resolver requests; set to 2/3 if using a trusted provider like NextDNS for privacy).
-// user_pref("security.OCSP.enabled", 1); // [DEFAULT: 1]
-// user_pref("security.OCSP.require", true); // Enforce OCSP for cert checks but cache results (balances security and fewer requests; default is softer).
+
 user_pref("network.proxy.socks_remote_dns", true);
 
 user_pref("extensions.pocket.enabled", false);
@@ -63,23 +60,17 @@ user_pref("media.autoplay.default", 1); //  1 = block autoplay with sound, 5 = b
 user_pref("media.autoplay.blocking_policy", 0);
 
 user_pref("gfx.webrender.all", true); // force GPU rendering
-user_pref("gfx.webrender.compositor", true);
-user_pref("gfx.webrender.force-disabled", false);
-user_pref("gfx.webrender.precache-shaders", true);
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
 user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
-// user_perf("gfx.font_rendering.fontconfig.fontlist.enabled", true)
-// user_perf("layout.css.font-visibility.level", 3)
+user_pref("gfx.webrender.compositor", true);
+user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
 
 user_pref("browser.safebrowsing.malware.enabled", true);
 user_pref("browser.safebrowsing.phishing.enabled", true);
 
-user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
-user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
-user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-user_pref("browser.newtabpage.activity-stream.discoverystream.enabled", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
+// user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+// user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+// user_pref("browser.newtabpage.activity-stream.discoverystream.enabled", false);
 
 user_pref("accessibility.force_disabled", 1);
 user_pref("browser.tabs.animate", false);
@@ -92,7 +83,10 @@ user_pref("extensions.formautofill.creditCards.enabled", false);
 user_pref("extensions.formautofill.addresses.enabled", false);
 
 user_pref("browser.search.serpEventTelemetryCategorization.enabled", false);
-user_pref("browser.search.serpEventTelemetryCategorization.regionEnabled", false);
+user_pref(
+  "browser.search.serpEventTelemetryCategorization.regionEnabled",
+  false,
+);
 user_pref("identity.fxaccounts.telemetry.clientAssociationPing.enabled", false);
 user_pref("nimbus.telemetry.targetingContextEnabled", false);
 // user_pref("permissions.desktop-notification.telemetry.siteCategories", false);
@@ -108,15 +102,8 @@ user_pref("datareporting.usage.uploadEnabled", false);
 user_pref("browser.topsites.contile.enabled", false);
 user_pref("browser.preferences.moreFromMozilla", false);
 
-// user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Trim cross-origin referers
-// user_pref("network.http.referer.XOriginPolicy", 2); // Send referer only to same eTLD+1
-// user_pref("privacy.partition.network_state", true); // Network state partitioning
-// user_pref("privacy.partition.serviceWorkers", true); // Service worker partitioning
-user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
-
 // Language normalization
-// user_pref("intl.accept_languages", "en-US, en");
-// user_pref("javascript.use_us_english_locale", true);
+user_pref("intl.accept_languages", "en-us, en");
 
 // Tracking protection
 user_pref("privacy.trackingprotection.enabled", true);
@@ -135,7 +122,6 @@ user_pref("device.sensors.orientation.enabled", false);
 
 // Notification/push annoyances
 user_pref("dom.webnotifications.enabled", false);
-user_pref("dom.webnotifications.serviceworker.enabled", false);
 user_pref("dom.push.enabled", false);
 
 user_pref("permissions.default.geo", 2);
@@ -155,6 +141,7 @@ user_pref("browser.startup.page", 3);
 
 /* 0105: disable sponsored content on Firefox Home (Activity Stream)
  * [SETTING] Home>Firefox Home Content ***/
+user_pref("browser.newtabpage.enabled", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // [FF58+] Sponsored stories
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // [FF83+] Sponsored shortcuts
 user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false); // [FF140+] Support Firefox
@@ -180,9 +167,18 @@ user_pref("browser.discovery.enabled", false);
 /* 0335: disable Firefox Home (Activity Stream) telemetry ***/
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
-user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.enabled", false);
-user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.inferredInterests.enabled", false);
-user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.redactNewtabPing.enabled", false);
+user_pref(
+  "browser.newtabpage.activity-stream.telemetry.privatePing.enabled",
+  false,
+);
+user_pref(
+  "browser.newtabpage.activity-stream.telemetry.privatePing.inferredInterests.enabled",
+  false,
+);
+user_pref(
+  "browser.newtabpage.activity-stream.telemetry.privatePing.redactNewtabPing.enabled",
+  false,
+);
 
 /** STUDIES ***/
 /* 0340: disable Studies
@@ -223,7 +219,7 @@ user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
 /* 0603: disable predictor / prefetching ***/
 user_pref("network.predictor.enabled", false);
-user_pref("network.predictor.enable-prefetch", false); // [FF48+] [DEFAULT: false]
+// user_pref("network.predictor.enable-prefetch", false); // [FF48+] [DEFAULT: false]
 /* 0604: disable link-mouseover opening connection to linked server
  * [1] https://news.slashdot.org/story/15/08/14/2321202/how-to-quash-firefoxs-silent-requests ***/
 user_pref("network.http.speculative-parallel-limit", 0);
@@ -256,11 +252,13 @@ user_pref("browser.urlbar.trending.featureGate", false);
 /* 0806: disable urlbar suggestions ***/
 user_pref("browser.urlbar.addons.featureGate", false); // [FF115+]
 user_pref("browser.urlbar.amp.featureGate", false); // [FF141+] adMarketplace
-user_pref("browser.urlbar.fakespot.featureGate", false); // [FF130+] [DEFAULT: false]
+user_pref("browser.urlbar.importantDates.featureGate", false); // [FF143+]
+user_pref("browser.urlbar.market.featureGate", false); // [FF143+] stock market
 user_pref("browser.urlbar.mdn.featureGate", false); // [FF117+]
 user_pref("browser.urlbar.weather.featureGate", false); // [FF108+]
 user_pref("browser.urlbar.wikipedia.featureGate", false); // [FF141+]
 user_pref("browser.urlbar.yelp.featureGate", false); // [FF124+]
+user_pref("browser.urlbar.yelpRealtime.featureGate", false); // [FF144+]
 /* 0807: disable urlbar clipboard suggestions [FF118+] ***/
 // user_pref("browser.urlbar.clipboard.featureGate", false);
 /* 0808: disable recent searches [FF120+]
@@ -305,23 +303,17 @@ user_pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
 user_pref("toolkit.coverage.opt-out", true); // [FF64+] [HIDDEN PREF]
 user_pref("toolkit.coverage.endpoint.base", "");
 
-user_pref("browser.ping-centre.telemetry", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+user_pref(
+  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
+  false,
+);
+user_pref(
+  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
+  false,
+);
 user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
 user_pref("browser.uitour.enabled", false);
-user_pref("browser.shopping.experience2023.enabled", false); // [DEFAULT: false]
-user_pref("network.dns.skipTRR-when-parental-control-enabled", false);
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
-
-// user_pref("security.ssl.require_safe_negotiation", true);
-// user_pref("security.tls.enable_0rtt_data", false);
-// user_pref("security.cert_pinning.enforcement_level", 2);
-// user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-// user_pref("browser.xul.error_pages.expert_bad_cert", true);
-
-user_pref("security.remote_settings.crlite_filters.enabled", true);
-user_pref("security.pki.crlite_mode", 2);
 
 // Disable Containers
 user_pref("privacy.userContext.enabled", false);
@@ -341,3 +333,21 @@ user_pref("browser.ml.chat.shortcuts", false);
 user_pref("browser.ml.chat.menu", false);
 user_pref("browser.ml.enable", false);
 user_pref("extensions.ml.enabled", false);
+
+user_pref("security.ssl.require_safe_negotiation", true);
+user_pref("security.tls.enable_0rtt_data", false);
+user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
+user_pref("browser.xul.error_pages.expert_bad_cert", true);
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Trim cross-origin referers
+// user_pref("security.cert_pinning.enforcement_level", 2);
+user_pref("security.remote_settings.crlite_filters.enabled", true);
+user_pref("security.pki.crlite_mode", 2);
+user_pref("privacy.partition.network_state", true); // Network state partitioning
+user_pref("privacy.partition.serviceWorkers", true); // Service worker partitioning
+user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
+
+user_pref("network.trr.mode", 3);
+user_pref("network.trr.uri", "https://127.0.0.1:3000/dns-query");
+user_pref("network.trr.custom_uri", "https://127.0.0.1:3000/dns-query");
+user_pref("network.dns.echconfig.enabled", true);
+user_pref("network.dns.use_https_rr_as_altsvc", true);

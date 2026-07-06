@@ -2,6 +2,9 @@
 ratio = [0, 5, 2]
 sort_dir_first = true
 
+[preview]
+image_delay = 100
+
 [open]
 prepend_rules = [
 	{ url = "*.html", use = "open" },

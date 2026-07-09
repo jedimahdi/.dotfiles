@@ -56,6 +56,10 @@ hl.config({
 		no_update_news = true,
 		no_donation_nag = true,
 	},
+
+	xwayland = {
+		enabled = false,
+	},
 })
 
 hl.env("XCURSOR_SIZE", "24")

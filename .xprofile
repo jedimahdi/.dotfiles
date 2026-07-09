@@ -1,6 +1,6 @@
 #!/bin/sh
 
-picom -b
-$HOME/.dotfiles/bin/x11-keyboard-setup-daemon.sh &
-feh --bg-fill $HOME/.dotfiles/wallpaper/od_trail.jpg &
+# picom -b
+# $HOME/.dotfiles/bin/x11-keyboard-setup-daemon.sh &
+# feh --bg-fill $HOME/.dotfiles/wallpaper/od_trail.jpg &
 # clipmenud &

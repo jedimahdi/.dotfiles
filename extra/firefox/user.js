@@ -22,7 +22,7 @@ user_pref("network.dnsCacheExpiration", 1800); // 30 minutes
 user_pref("dom.security.https_only_mode", true); // Force HTTPS everywhere (reduces insecure requests; FF147 optimizes this).
 user_pref("dom.security.https_only_mode_send_http_background_request", false); // Block background HTTP requests in HTTPS mode.
 
-user_pref("network.proxy.socks_remote_dns", true);
+// user_pref("network.proxy.socks_remote_dns", true);
 
 user_pref("extensions.pocket.enabled", false);
 

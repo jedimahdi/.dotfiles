@@ -22,7 +22,7 @@ setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_SPACE
 # setopt HIST_IGNORE_DUPS
 
-zshaddhistory() { (( ${#1} <= 2000 )) }
+zshaddhistory() { ((${#1} <= 2000)); }
 
 autoload -Uz compinit
 compinit -C -d "$ZSH_DATA_DIR/.zcompdump"
@@ -38,14 +38,14 @@ select-word-style shell
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias c='clear -x'
+alias c='clear'
 
 alias ls='ls --group-directories-first --color=auto'
 
-if (( $+commands[eza] )); then
+if (($+commands[eza])); then
   alias ls='eza --icons --group-directories-first --color=auto'
   alias l='eza -la --icons --group-directories-first --no-time --no-user --no-permissions'
-  alias la='eza -la --group-directories-first'
+  alias la='eza -la --icons --group-directories-first'
   alias ll='eza -lh --icons --git --group-directories-first'
   alias lt='eza --tree --level=2 --icons'
 fi
@@ -85,8 +85,9 @@ alias gcl='git clone --depth 1'
 
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
-
+alias ssh-github='ssh -T git@github.com'
 alias d='date "+%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"; date "+%H:%M:%S"'
+alias lf='lfcd'
 
 function e() {
   command nvim "${1:-.}"
@@ -99,10 +100,10 @@ function ef() {
 }
 
 ptree() {
-  ps --user "$USER" -o pid,cmd --no-headers --forest \
-    | grep -v firefox \
-    | sed -e 's/\\_/├─/g' -e 's/|/│/g' \
-    | less -R
+  ps --user "$USER" -o pid,cmd --no-headers --forest |
+    grep -v firefox |
+    sed -e 's/\\_/├─/g' -e 's/|/│/g' |
+    less -R
 }
 
 function y() {
@@ -113,6 +114,18 @@ function y() {
     builtin cd -- "$cwd"
   fi
   command rm -f -- "$tmp"
+}
+
+lfcd() {
+  tmp="$(mktemp)"
+  command lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
+      cd "$dir"
+    fi
+  fi
 }
 
 autoload -U up-line-or-beginning-search

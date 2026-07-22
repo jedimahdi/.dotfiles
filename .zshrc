@@ -86,6 +86,7 @@ alias gcl='git clone --depth 1'
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
 alias ssh-github='ssh -T git@github.com'
+alias python-http-server="python -m http.server"
 alias d='date "+%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"; date "+%H:%M:%S"'
 alias lf='lfcd'
 

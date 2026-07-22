@@ -59,9 +59,9 @@ user_pref("geo.enabled", false); // disable geolocation API
 user_pref("media.autoplay.default", 1); //  1 = block autoplay with sound, 5 = block all autoplay
 user_pref("media.autoplay.blocking_policy", 0);
 
-user_pref("gfx.webrender.all", true); // force GPU rendering
+// user_pref("gfx.webrender.all", true); // force GPU rendering
+// user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
 user_pref("gfx.webrender.compositor", true);
 user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
 
@@ -349,5 +349,5 @@ user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
 user_pref("network.trr.mode", 3);
 user_pref("network.trr.uri", "https://127.0.0.1:3000/dns-query");
 user_pref("network.trr.custom_uri", "https://127.0.0.1:3000/dns-query");
-user_pref("network.dns.echconfig.enabled", true);
+// user_pref("network.dns.echconfig.enabled", false);
 user_pref("network.dns.use_https_rr_as_altsvc", true);

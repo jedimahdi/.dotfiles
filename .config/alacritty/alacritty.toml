@@ -2,9 +2,9 @@
 # TERM = "xterm-256color"
 
 [font]
-normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+normal = { family = "JetBrainsMono Nerd Font" }
 bold = { family = "JetBrainsMono Nerd Font", style = "SemiBold" }
-italic = { family = "JetBrainsMono Nerd Font", style = "Medium" }
+# italic = { family = "JetBrainsMono Nerd Font", style = "Medium" }
 size = 12
 offset = { x = -1, y = 3 }
 

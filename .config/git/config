@@ -41,9 +41,9 @@
 
 [color "diff-highlight"]
 	oldNormal = red
-	oldHighlight = red
+	; oldHighlight = red
 	newNormal = green
-	newHighlight = green
+	; newHighlight = magenta
 
 [interactive]
   diffFilter = diff-so-fancy --patch

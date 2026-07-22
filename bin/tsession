@@ -3,23 +3,24 @@ set -eu
 
 pick_session() {
   {
-    printf "%s\n" ".dotfiles" ".config/nvim"
-    fd . apps --base-directory="$HOME" --exact-depth=2 --type d --color=never --format '{}' --no-ignore 2>/dev/null
+    printf "%s\n" "home .dotfiles" "home .config/nvim"
+    fd --base-directory="$HOME/apps" --exact-depth=2 --type d --color=never --format '{}' --no-ignore 2>/dev/null | sed 's/^/apps /'
   } | fzf \
     --border rounded \
     --scheme path \
     --height 100% \
-    --preview "eza $HOME/{} --color=always --icons -l --group-directories-first --no-user --no-time --no-filesize --no-permissions" \
-    --preview-window=right:50%
+    --with-nth 2
 }
 
 selected="${1:-$(pick_session)}"
 [ -z "$selected" ] && exit 0
 
-# Handle both absolute and relative paths
-case "$selected" in
-/*) selected_path="$selected" ;;
-*) selected_path="$HOME/$selected" ;;
+read -r context path <<< "$selected"
+
+case "$context" in
+  "home") selected_path="$HOME/$path" ;;
+  "apps") selected_path="$HOME/apps/$path" ;;
+  *) echo "Unknown context: $context" >&2; exit 1 ;;
 esac
 
 selected_name=$(basename "$selected_path" | tr . _)

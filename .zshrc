@@ -82,6 +82,7 @@ alias gd='git diff'
 alias gds='gd --staged'
 alias lg='lazygit'
 alias gcl='git clone --depth 1'
+alias git-repo='firefox "$(git remote get-url origin | sed -e "s/git@\(.*\):/https:\/\/\1\//" -e "s/\.git$//")"'
 
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'

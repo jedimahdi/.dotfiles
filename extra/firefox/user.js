@@ -1,6 +1,7 @@
 // Cache
 user_pref("browser.cache.disk.enable", false);
 user_pref("browser.cache.memory.enable", true);
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 // user_pref("browser.cache.memory.capacity", 262144); // 256 MB memory cache
 user_pref("browser.cache.memory.max_entry_size", 51200); // 50 MB max item
 user_pref("media.memory_cache_max_size", 524288); // 512 MB media memory cache
@@ -31,6 +32,7 @@ user_pref("browser.theme.toolbar-theme", 0);
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.uidensity", 1);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.aboutwelcome.enabled", false);
@@ -59,8 +61,8 @@ user_pref("geo.enabled", false); // disable geolocation API
 user_pref("media.autoplay.default", 1); //  1 = block autoplay with sound, 5 = block all autoplay
 user_pref("media.autoplay.blocking_policy", 0);
 
-// user_pref("gfx.webrender.all", true); // force GPU rendering
-// user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
+user_pref("gfx.webrender.all", true); // force GPU rendering
+user_pref("layers.acceleration.force-enabled", true); // Force hardware acceleration if not auto-detected (check about:support > Graphics for "Compositing: WebRender").
 user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("gfx.webrender.compositor", true);
 user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender compositing for snappier UI (builds on your existing WebRender prefs).
@@ -303,16 +305,9 @@ user_pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
 user_pref("toolkit.coverage.opt-out", true); // [FF64+] [HIDDEN PREF]
 user_pref("toolkit.coverage.endpoint.base", "");
 
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
-  false,
-);
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
-  false,
-);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
-user_pref("browser.uitour.enabled", false);
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
 
 // Disable Containers
@@ -321,33 +316,57 @@ user_pref("privacy.userContext.ui.enabled", false);
 user_pref("browser.discovery.containers.enabled", false);
 
 user_pref("browser.tabs.groups.enabled", false);
-user_pref("browser.tabs.groups.smart.enabled", false);
 
 user_pref("browser.tabs.splitView.enabled", false);
 user_pref("sidebar.revamp", false);
 user_pref("sidebar.verticalTabs", false);
 
-// AI / ML features
-user_pref("browser.ml.chat.enabled", false);
-user_pref("browser.ml.chat.shortcuts", false);
-user_pref("browser.ml.chat.menu", false);
-user_pref("browser.ml.enable", false);
-user_pref("extensions.ml.enabled", false);
+user_pref("pdfjs.enableScripting", false);
 
-user_pref("security.ssl.require_safe_negotiation", true);
-user_pref("security.tls.enable_0rtt_data", false);
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-user_pref("browser.xul.error_pages.expert_bad_cert", true);
+user_pref("browser.download.manager.addToRecentDocs", false);
+
 user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Trim cross-origin referers
-// user_pref("security.cert_pinning.enforcement_level", 2);
-user_pref("security.remote_settings.crlite_filters.enabled", true);
-user_pref("security.pki.crlite_mode", 2);
 user_pref("privacy.partition.network_state", true); // Network state partitioning
 user_pref("privacy.partition.serviceWorkers", true); // Service worker partitioning
 user_pref("network.IDN_show_punycode", true); // Show punycode (anti-phishing)
 
-user_pref("network.trr.mode", 3);
+user_pref("network.trr.mode", 5);
 user_pref("network.trr.uri", "https://127.0.0.1:3000/dns-query");
 user_pref("network.trr.custom_uri", "https://127.0.0.1:3000/dns-query");
-// user_pref("network.dns.echconfig.enabled", false);
+user_pref("network.dns.echconfig.enabled", true);
 user_pref("network.dns.use_https_rr_as_altsvc", true);
+
+user_pref("browser.contentblocking.category", "standard");
+user_pref("browser.uitour.enabled", false);
+user_pref("privacy.globalprivacycontrol.enabled", true);
+
+user_pref("security.OCSP.enabled", 0);
+user_pref("security.csp.reporting.enabled", false);
+
+user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
+user_pref("browser.xul.error_pages.expert_bad_cert", true);
+user_pref("security.tls.enable_0rtt_data", false);
+user_pref("security.remote_settings.crlite_filters.enabled", true);
+user_pref("security.pki.crlite_mode", 2);
+// user_pref("security.ssl.require_safe_negotiation", true);
+// user_pref("security.cert_pinning.enforcement_level", 2);
+
+// fullscreen notice
+user_pref("full-screen-api.transition-duration.enter", "0 0"); // default=200 200
+user_pref("full-screen-api.transition-duration.leave", "0 0"); // default=200 200
+user_pref("full-screen-api.warning.timeout", 0); // default=3000; alt=1250
+user_pref("full-screen-api.warning.delay", -1); // default=500
+
+// ai
+user_pref("browser.ai.control.default", "blocked");
+user_pref("browser.ml.enable", false);
+user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
+user_pref("browser.ai.control.sidebarChatbot", "blocked");
+user_pref("browser.ai.control.pdfjsAltText", "blocked");
+user_pref("browser.ai.control.smartTabGroups", "blocked");
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.shortcuts", false);
+user_pref("browser.ml.chat.menu", false);
+user_pref("extensions.ml.enabled", false);

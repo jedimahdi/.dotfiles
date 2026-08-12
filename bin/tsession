@@ -1,10 +1,9 @@
-#!/bin/sh
-set -eu
+#!/bin/bash
 
 pick_session() {
   {
-    printf "%s\n" "home .dotfiles" "home .config/nvim"
-    fd --base-directory="$HOME/apps" --exact-depth=2 --type d --color=never --format '{}' --no-ignore 2>/dev/null | sed 's/^/apps /'
+    printf "%s\n" ". .dotfiles" ". .config/nvim"
+    fd --base-directory="$HOME/apps" --exact-depth=2 --type d --color=never --format 'apps {}' --no-ignore
   } | fzf \
     --border rounded \
     --scheme path \
@@ -13,16 +12,11 @@ pick_session() {
 }
 
 selected="${1:-$(pick_session)}"
-[ -z "$selected" ] && exit 0
+[[ -z "$selected" ]] && exit 0
 
-read -r context path <<< "$selected"
+read -r base path <<< "$selected"
 
-case "$context" in
-  "home") selected_path="$HOME/$path" ;;
-  "apps") selected_path="$HOME/apps/$path" ;;
-  *) echo "Unknown context: $context" >&2; exit 1 ;;
-esac
+selected_path="$HOME/$base/$path"
+selected_name="${selected_path##*/}"
 
-selected_name=$(basename "$selected_path" | tr . _)
-
-exec tconnect "$selected_path" "$selected_name"
+exec tconnect "$selected_name" "$selected_path"

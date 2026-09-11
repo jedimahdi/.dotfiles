@@ -1,6 +1,7 @@
 --smart-case
 --hidden
 --trim
+--no-search-zip
 --glob=!.git/*
 --glob=!node_modules/*
 --glob=!package-lock.json

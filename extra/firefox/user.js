@@ -93,7 +93,6 @@ user_pref("gfx.webrender.layer-compositor", true); // Enable advanced WebRender 
 user_pref("browser.safebrowsing.malware.enabled", true);
 user_pref("browser.safebrowsing.phishing.enabled", true);
 
-user_pref("accessibility.force_disabled", 1);
 user_pref("browser.tabs.animate", false);
 user_pref("browser.download.animateNotifications", false);
 user_pref("toolkit.cosmeticAnimations.enabled", false);
@@ -122,9 +121,6 @@ user_pref("browser.translations.automaticallyPopup", false);
 user_pref("datareporting.usage.uploadEnabled", false);
 user_pref("browser.topsites.contile.enabled", false);
 user_pref("browser.preferences.moreFromMozilla", false);
-
-// Language normalization
-user_pref("intl.accept_languages", "en-us, en");
 
 // Sensors off
 user_pref("device.sensors.ambientLight.enabled", false);
@@ -375,6 +371,7 @@ user_pref("browser.ml.chat.shortcuts", false);
 user_pref("browser.ml.chat.menu", false);
 user_pref("extensions.ml.enabled", false);
 
+// user_pref("intl.accept_languages", "en-us, en");
 user_pref("privacy.spoof_english", 2);
 user_pref("widget.non-native-theme.use-theme-accent", false);
 user_pref("browser.link.open_newwindow", 3);

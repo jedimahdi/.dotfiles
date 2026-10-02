@@ -8,18 +8,9 @@ user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
-user_pref(
-  "browser.newtabpage.activity-stream.telemetry.privatePing.enabled",
-  false,
-);
-user_pref(
-  "browser.newtabpage.activity-stream.telemetry.privatePing.inferredInterests.enabled",
-  false,
-);
-user_pref(
-  "browser.newtabpage.activity-stream.telemetry.privatePing.redactNewtabPing.enabled",
-  false,
-);
+user_pref( "browser.newtabpage.activity-stream.telemetry.privatePing.enabled", false);
+user_pref( "browser.newtabpage.activity-stream.telemetry.privatePing.inferredInterests.enabled", false);
+user_pref( "browser.newtabpage.activity-stream.telemetry.privatePing.redactNewtabPing.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.aboutwelcome.enabled", false);
 user_pref("browser.startup.homepage_override.mstone", "ignore");
@@ -116,8 +107,6 @@ user_pref("browser.tabs.firefox-view", false);
 user_pref("browser.vpn_promo.enabled", false); // VPN promo telemetry
 user_pref("browser.promo.focus.enabled", false); // Focus app promo
 user_pref("browser.promo.pin.enabled", false); // Pin promo
-user_pref("browser.translations.enable", false); // Translation feature (has telemetry)
-user_pref("browser.translations.automaticallyPopup", false);
 user_pref("datareporting.usage.uploadEnabled", false);
 user_pref("browser.topsites.contile.enabled", false);
 user_pref("browser.preferences.moreFromMozilla", false);
@@ -276,14 +265,8 @@ user_pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
 user_pref("toolkit.coverage.opt-out", true); // [FF64+] [HIDDEN PREF]
 user_pref("toolkit.coverage.endpoint.base", "");
 
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
-  false,
-);
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
-  false,
-);
+user_pref( "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref( "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
 
@@ -382,3 +365,6 @@ user_pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 user_pref("extensions.webextensions.restrictedDomains", "");
 
 user_pref("media.peerconnection.enabled", false);
+
+user_pref("browser.translations.enable", true); // Translation feature (has telemetry)
+user_pref("browser.translations.automaticallyPopup", false);

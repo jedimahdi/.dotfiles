@@ -1,52 +1,16 @@
-# zmodload zsh/zprof
+PS1='\[\e[36m\]\W\[\e[0m\] \[\e[37m\]❯\[\e[0m\] '
 
-ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+shopt -s histappend
 
-PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
-
-setopt INTERACTIVE_COMMENTS
-setopt NO_BEEP
-setopt NO_FLOW_CONTROL
-
-HISTFILE="$ZSH_DATA_DIR/zsh_history"
-SAVEHIST=2000
-HISTSIZE=2999
-HISTORY_IGNORE="(c|ls|tc|l|lg)"
-
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_REDUCE_BLANKS
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_SPACE
-# setopt HIST_IGNORE_DUPS
-
-zshaddhistory() { ((${#1} <= 2000)); }
-
-autoload -Uz compinit
-compinit -C -d "$ZSH_DATA_DIR/.zcompdump"
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' completer _complete
-
-bindkey -e
-
-autoload -Uz select-word-style
-select-word-style shell
+stty -ixon 2>/dev/null
 
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias c='clear'
-
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -1a'
 alias la='ls -la'
-
-if (($+commands[eza])); then
-  alias lt='eza --tree --level=2 --icons'
-fi
+alias c='clear'
 
 alias mv='mv -iv'
 alias rm='rm -vI --preserve-root'
@@ -79,7 +43,7 @@ alias ga='git add'
 alias gap='git add --patch'
 alias gl='gitar log --fzf'
 alias gd='git diff'
-alias gds='gd --staged'
+alias gds='git diff --staged'
 alias lg='lazygit'
 alias gcl='git clone --depth 1'
 alias git-repo='firefox "$(git remote get-url origin | sed -e "s/git@\(.*\):/https:\/\/\1\//" -e "s/\.git$//")"'
@@ -87,21 +51,30 @@ alias git-repo='firefox "$(git remote get-url origin | sed -e "s/git@\(.*\):/htt
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
 alias ssh-github='ssh -T git@github.com'
-alias python-http-server="python -m http.server"
+alias python-http-server='python -m http.server'
 alias d='date "+%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"; date "+%H:%M:%S"'
 alias lf='lfcd'
 
-function e() {
+e() {
   command nvim "${1:-.}"
 }
 
-function se() {
+se() {
   sudo -E nvim "${1:-.}"
 }
 
-function ef() {
+ef() {
   local file
-  file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf --scheme="path") || return
+
+  file=$(
+    rg --files \
+      --hidden \
+      -g '!node_modules/' \
+      -g '!.git/' \
+      -g '!target/' |
+      fzf --scheme=path
+  ) || return
+
   command nvim "$file"
 }
 
@@ -112,43 +85,43 @@ ptree() {
     less -R
 }
 
-function y() {
+y() {
   local tmp cwd
+
   tmp="$(mktemp -t yazi-cwd.XXXXXX)" || return
+
   yazi "$@" --cwd-file="$tmp"
-  if cwd="$(cat -- "$tmp")" && [[ -n $cwd && $cwd != $PWD ]]; then
-    builtin cd -- "$cwd"
+
+  if cwd="$(cat -- "$tmp")" &&
+    [[ -n $cwd && $cwd != "$PWD" ]]; then
+    cd -- "$cwd"
   fi
+
   command rm -f -- "$tmp"
 }
 
 lfcd() {
-  tmp="$(mktemp)"
+  local tmp dir
+
+  tmp="$(mktemp)" || return
+
   command lf -last-dir-path="$tmp" "$@"
-  if [ -f "$tmp" ]; then
+
+  if [[ -f "$tmp" ]]; then
     dir="$(cat "$tmp")"
-    rm -f "$tmp"
-    if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
-      cd "$dir"
+    command rm -f "$tmp"
+
+    if [[ -d "$dir" && "$dir" != "$PWD" ]]; then
+      cd -- "$dir"
     fi
   fi
 }
 
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey '^p' up-line-or-beginning-search
-bindkey '^n' down-line-or-beginning-search
+bind '"\C-p": history-search-backward'
+bind '"\C-n": history-search-forward'
 
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '^x^e' edit-command-line
+bind '"\C-x\C-e": edit-and-execute-command'
 
-source <(fzf --zsh)
-
-# if [[ -z ${SSH_CONNECTION:-} ]]; then
-#   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-# fi
-
-# zprof
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)" 2>/dev/null
+fi

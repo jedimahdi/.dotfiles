@@ -1,3 +1,6 @@
+[[ $- != *i* ]] && return
+
+
 PS1='\[\e[36m\]\W\[\e[0m\] \[\e[37m\]❯\[\e[0m\] '
 
 shopt -s histappend
@@ -125,3 +128,13 @@ bind '"\C-x\C-e": edit-and-execute-command'
 if command -v fzf >/dev/null 2>&1; then
   eval "$(fzf --bash)" 2>/dev/null
 fi
+
+# complete -A binding bind
+# complete -A setopt set
+# complete -A shopt shopt
+# complete -A helptopic help
+# complete -a alias unalias
+# complete -b builtin
+# complete -c type which
+# complete -cf man sudo
+# complete -d cd pushd rmdir

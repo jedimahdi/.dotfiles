@@ -1,9 +1,32 @@
+disableStartupPopups: true
 gui:
-  nerdFontsVersion: 3
+  showPanelJumps: false
+  sidePanels:
+    - [files, worktrees, submodules]
+    - [branches, remotes, tags]
+    - [commits, reflog]
+    - [stash]
+  mainPanelSplitMode: horizontal
   showCommandLog: false
   showRandomTip: false
+  showRootItemInFileTree: false
+  showFileTree: false
+  showNumstatInFilesView: true
+  showBottomLine: false
+  commitHashLength: 0
+  nerdFontsVersion: 3
+  border: hidden
+  screenMode: half
+  mouseEvents: false
+
   theme:
     selectedLineBgColor:
-    - '#424a57'
+      - '#424a57'
+git:
+  autoFetch: false
+  diffRenderers:
+    - colorArg: always
+      command: diff-so-fancy
+
 update:
   method: never

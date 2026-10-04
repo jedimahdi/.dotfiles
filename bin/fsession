@@ -16,7 +16,7 @@ selected_session=$(tmux list-sessions -F '#{session_name}' 2>/dev/null | fzf \
       IFS= read -r name;
       [ -n \"\$name\" ] && tmux rename-session -t {} \"\$name\"
     )+reload(tmux list-sessions -F '#{session_name}')" \
-  --preview 'tmux capture-pane -ep -t {}:')
+  )
 
 [[ -z "$selected_session" ]] && exit 0
 

@@ -1,9 +1,6 @@
-server_names = ['cs-swe', 'cs-milan', 'cs-ch', 'cs-austria', 'cs-czech']
-# server_names = ['cloudflare']
-# server_names = ['libredns-noads', 'cloudflare']
-# server_names = ['bortzmeyer', 'libredns-noads', 'adguard-dns-doh', 'blahdns-de-doh' ]
-# server_names = ['dnscry.pt-yerevan-ipv4', 'dnscry.pt-istanbul-ipv4', 'dnscry.pt-paris-ipv4', 'dct-de2']
-# server_names = ['dns.digitalsize.net', 'adguard-dns-unfiltered', 'dns4eu', 'dnsbunker']
+# server_names = ['adguard-dns']
+# server_names = ['cs-swe', 'cs-milan']
+server_names = ['adguard-dns-unfiltered', 'quad9-dnscrypt-ip4-filter-pri', 'quad9-dnscrypt-ip4-nofilter-pri']
 
 listen_addresses = ['127.0.0.1:53']
 max_clients = 250
@@ -11,22 +8,27 @@ ipv4_servers = true
 ipv6_servers = false
 dnscrypt_servers = true
 doh_servers = true
-odoh_servers = false
+odoh_servers = true
 require_dnssec = false
 require_nolog = false
 require_nofilter = false
 disabled_server_names = []
 
-force_tcp = true
+force_tcp = false
 http3 = false
 http3_probe = false
+dnscrypt_ephemeral_keys = false
+tls_disable_session_tickets = false
+# tls_prefer_rsa = false
 
-timeout = 6000
+timeout = 5000
+keepalive = 30
 
-keepalive = 60
+enable_hot_reload = false
+cloaking_rules = '/etc/dnscrypt-proxy/cloaking-rules.txt'
 
 # http_proxy = 'http://127.0.0.1:40443'
-# proxy = "http://127.0.0.1:40443"
+# proxy = "socks5://127.0.0.1:10808"
 
 ## 'wp2' (default): Weighted Power of Two - selects the better performing server
 ## from two random candidates based on real-time RTT and success rates.
@@ -49,7 +51,8 @@ log_files_max_backups = 1
 cert_refresh_delay = 240
 
 ignore_system_dns = true
-bootstrap_resolvers = ['178.22.122.100:53']
+bootstrap_resolvers = ['208.67.220.220:53', '9.9.9.9:53', '178.22.122.100:53']
+# bootstrap_resolvers = ['9.9.9.9:53', '178.22.122.100:53']
 netprobe_timeout = 60
 netprobe_address = '9.9.9.9:53'
 
@@ -58,17 +61,22 @@ block_unqualified = true
 block_undelegated = true
 reject_ttl = 10
 
+forwarding_rules = '/etc/dnscrypt-proxy/forwarding-rules.txt'
+
 cache = true
-cache_size = 4096
+cache_size = 8192
 cache_min_ttl = 2400
 cache_max_ttl = 86400
-cache_neg_min_ttl = 60
-cache_neg_max_ttl = 600
+cache_neg_min_ttl = 300
+cache_neg_max_ttl = 3600
 
 [query_log]
+# file = '/etc/dnscrypt-proxy/query.log'
 format = 'tsv'
+# ignored_qtypes = ['DNSKEY', 'NS']
 
 [nx_log]
+# file = '/etc/dnscrypt-proxy/nx.log'
 format = 'tsv'
 
 [sources]
@@ -94,20 +102,18 @@ minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
 refresh_delay = 73
 prefix = ''
 
-### ODoH (Oblivious DoH) servers and relays
-
-# [sources.odoh-servers]
-#   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-servers.md']
-#   cache_file = '/var/cache/dnscrypt-proxy/odoh-servers.md'
-#   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
-#   refresh_delay = 73
-#   prefix = ''
-# [sources.odoh-relays]
-#   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-relays.md']
-#   cache_file = '/var/cache/dnscrypt-proxy/odoh-relays.md'
-#   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
-#   refresh_delay = 73
-#   prefix = ''
+ [sources.odoh-servers]
+   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-servers.md']
+   cache_file = '/var/cache/dnscrypt-proxy/odoh-servers.md'
+   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+   refresh_delay = 73
+   prefix = ''
+ [sources.odoh-relays]
+   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md', 'https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/odoh-relays.md']
+   cache_file = '/var/cache/dnscrypt-proxy/odoh-relays.md'
+   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+   refresh_delay = 73
+   prefix = ''
 
 ### Quad9
 
@@ -152,9 +158,13 @@ fragments_blocked = [
 
 [anonymized_dns]
 
-# routes = [
-#    { server_name='*', via=['anon-cs-czech', 'anon-cs-milan'] }
-# ]
+routes = [
+   # { server_name='odoh-cloudflare', via=['odohrelay-crypto-sx'] },
+   { server_name='odoh-crypto-sx', via=['odohrelay-crypto-sx'] },
+   { server_name='pt-odoh-stockholm', via=['odohrelay-crypto-sx'] },
+   # { server_name='*', via=['odohrelay-numa', 'odohrelay-crypto-sx'] }
+   # { server_name='*', via=['anon-cs-milan', 'anon-cs-swe'] }
+]
 skip_incompatible = false
 # direct_cert_fallback = false
 
@@ -164,6 +174,9 @@ key = ""
 
 [blocked_ips]
 blocked_ips_file = '/etc/my-dnscrypt-proxy/blocked-ips.txt'
+
+[captive_portals]
+map_file = '/etc/dnscrypt-proxy/captive-portals.txt'
 
 [monitoring_ui]
 enabled = true
@@ -188,22 +201,7 @@ max_query_log_entries = 100
 # [local_doh]
 # listen_addresses = ['127.0.0.1:3000']
 # path = '/dns-query'
-# cert_file = '/etc/my-dnscrypt-proxy/localhost.pem'
-# cert_key_file = '/etc/my-dnscrypt-proxy/localhost.pem'
+# cert_file = '/etc/dnscrypt-proxy/localhost.pem'
+# cert_key_file = '/etc/dnscrypt-proxy/localhost.pem'
 
 [static]
-
-[static.'cloudflare-ipv4']
-stamp = 'sdns://AgcAAAAAAAAADjEwNC4xNi4yNDguMjQ5ABJjbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ'
-
-# [static.'cloudflare-ipv4']
-# stamp = 'sdns://AgcAAAAAAAAABzEuMC4wLjEAEmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5'
-#
-# [static.'cloudflare-security-ipv4']
-# stamp = 'sdns://AgMAAAAAAAAABzEuMC4wLjIAG3NlY3VyaXR5LmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5'
-#
-# [static.'quad9-ipv4']
-# stamp = 'sdns://AgMAAAAAAAAABzkuOS45LjkADmRuczkucXVhZDkubmV0Ci9kbnMtcXVlcnk'
-
-# [static.mycloudflare]
-# stamp = 'sdns://AgcAAAAAAAAABzEuMC4wLjGgENk8mGSlIfMGXMOlIlCcKvq7AVgcrZxtjon911-ep0cg63Ul-I8NlFj4GplQGb_TTLiczclX57DvMV8Q-JdjgRgSZG5zLmNsb3VkZmxhcmUuY29tCi9kbnMtcXVlcnk'

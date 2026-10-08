@@ -1,28 +1,28 @@
 # zmodload zsh/zprof
 
-ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-
 PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
+
+ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+HISTFILE="$ZSH_DATA_DIR/zsh_history"
+SAVEHIST=2000
+HISTSIZE=2200
 
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
 setopt NO_FLOW_CONTROL
 
-HISTFILE="$ZSH_DATA_DIR/zsh_history"
-SAVEHIST=2000
-HISTSIZE=2999
-HISTORY_IGNORE="(c|ls|tc|l|lg)"
-
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_REDUCE_BLANKS
-setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
-# setopt HIST_IGNORE_DUPS
 
-zshaddhistory() { ((${#1} <= 2000)); }
+zshaddhistory() {
+  local cmd="${1%%$'\n'}"
+  ((${#cmd} > 200 || ${#cmd} <= 2)) && return 1
+  [[ "$cmd" =~ '^(clear|tsession|pwd|exit)$' ]] && return 1
+  [[ "$cmd" =~ '^cd\s' ]] && return 2
+  return 0
+}
 
 autoload -Uz compinit
 compinit -C -d "$ZSH_DATA_DIR/.zcompdump"
@@ -41,8 +41,8 @@ alias ....='cd ../../..'
 alias c='clear'
 
 alias ls='ls --group-directories-first --color=auto'
-alias l='ls -1a'
-alias la='ls -la'
+alias l='ls -1A'
+alias la='ls -gAh --time-style=long-iso'
 
 alias mv='mv -iv'
 alias rm='rm -vI --preserve-root'

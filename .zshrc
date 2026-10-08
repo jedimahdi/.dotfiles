@@ -44,10 +44,6 @@ alias ls='ls --group-directories-first --color=auto'
 alias l='ls -1a'
 alias la='ls -la'
 
-if (($+commands[eza])); then
-  alias lt='eza --tree --level=2 --icons'
-fi
-
 alias mv='mv -iv'
 alias rm='rm -vI --preserve-root'
 alias cp='cp -iv'
@@ -91,15 +87,15 @@ alias python-http-server="python -m http.server"
 alias d='date "+%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"; date "+%H:%M:%S"'
 alias lf='lfcd'
 
-function e() {
+e() {
   command nvim "${1:-.}"
 }
 
-function se() {
+se() {
   sudo -E nvim "${1:-.}"
 }
 
-function ef() {
+ef() {
   local file
   file=$(rg --files --hidden -g '!node_modules/' -g '!.git/' -g '!target/' | fzf --scheme="path") || return
   command nvim "$file"
@@ -112,7 +108,7 @@ ptree() {
     less -R
 }
 
-function y() {
+y() {
   local tmp cwd
   tmp="$(mktemp -t yazi-cwd.XXXXXX)" || return
   yazi "$@" --cwd-file="$tmp"
@@ -123,15 +119,7 @@ function y() {
 }
 
 lfcd() {
-  tmp="$(mktemp)"
-  command lf -last-dir-path="$tmp" "$@"
-  if [ -f "$tmp" ]; then
-    dir="$(cat "$tmp")"
-    rm -f "$tmp"
-    if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
-      cd "$dir"
-    fi
-  fi
+  cd "$(command lf -print-last-dir "$@")"
 }
 
 autoload -U up-line-or-beginning-search
@@ -144,6 +132,14 @@ bindkey '^n' down-line-or-beginning-search
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
+
+export MANPAGER='nvim +Man!'
+export ESCDELAY=25
+export LESS='-RQKcig -j.5 --incsearch --no-vbell -x4 --use-color -DPw -DEw'
+export FZF_DEFAULT_OPTS="--style minimal \
+  --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' \
+  --layout=reverse --height 50% --prompt '❯ ' --gutter ' ' \
+  --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,ctrl-e:preview-down'"
 
 source <(fzf --zsh)
 

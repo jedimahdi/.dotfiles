@@ -104,20 +104,7 @@ y() {
 }
 
 lfcd() {
-  local tmp dir
-
-  tmp="$(mktemp)" || return
-
-  command lf -last-dir-path="$tmp" "$@"
-
-  if [[ -f "$tmp" ]]; then
-    dir="$(cat "$tmp")"
-    command rm -f "$tmp"
-
-    if [[ -d "$dir" && "$dir" != "$PWD" ]]; then
-      cd -- "$dir"
-    fi
-  fi
+  cd "$(command lf -print-last-dir "$@")"
 }
 
 bind '"\C-p": history-search-backward'
@@ -129,12 +116,10 @@ if command -v fzf >/dev/null 2>&1; then
   eval "$(fzf --bash)" 2>/dev/null
 fi
 
-# complete -A binding bind
-# complete -A setopt set
-# complete -A shopt shopt
-# complete -A helptopic help
-# complete -a alias unalias
-# complete -b builtin
-# complete -c type which
-# complete -cf man sudo
-# complete -d cd pushd rmdir
+export MANPAGER='nvim +Man!'
+export ESCDELAY=25
+export LESS='-RQKcig -j.5 --incsearch --no-vbell -x4 --use-color -DPw -DEw'
+export FZF_DEFAULT_OPTS="--style minimal \
+  --info inline-right --color 'bg+:-1,fg+:15,gutter:-1,pointer:4,border:8' \
+  --layout=reverse --height 50% --prompt '❯ ' --gutter ' ' \
+  --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,ctrl-e:preview-down'"

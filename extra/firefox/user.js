@@ -94,10 +94,7 @@ user_pref("extensions.formautofill.creditCards.enabled", false);
 user_pref("extensions.formautofill.addresses.enabled", false);
 
 user_pref("browser.search.serpEventTelemetryCategorization.enabled", false);
-user_pref(
-  "browser.search.serpEventTelemetryCategorization.regionEnabled",
-  false,
-);
+user_pref("browser.search.serpEventTelemetryCategorization.regionEnabled", false);
 user_pref("identity.fxaccounts.telemetry.clientAssociationPing.enabled", false);
 user_pref("nimbus.telemetry.targetingContextEnabled", false);
 // user_pref("permissions.desktop-notification.telemetry.siteCategories", false);
@@ -303,7 +300,7 @@ user_pref("browser.contentblocking.category", "strict");
 user_pref("browser.uitour.enabled", false);
 user_pref("privacy.globalprivacycontrol.enabled", true);
 
-user_pref("security.OCSP.enabled", 2);
+user_pref("security.OCSP.enabled", 0);
 user_pref("security.OCSP.require", false);
 
 user_pref("browser.contentanalysis.enabled", false);
@@ -361,10 +358,14 @@ user_pref("browser.link.open_newwindow", 3);
 user_pref("browser.link.open_newwindow.restriction", 0);
 user_pref("browser.urlbar.showSearchTerms.enabled", false);
 
-user_pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-user_pref("extensions.webextensions.restrictedDomains", "");
+user_pref("extensions.enabledScopes", 5);
+// user_pref("privacy.resistFingerprinting.block_mozAddonManager", true);
+// user_pref("extensions.webextensions.restrictedDomains", "");
 
 user_pref("media.peerconnection.enabled", false);
+//user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
+//user_pref("media.peerconnection.ice.default_address_only", true);
+//user_pref("media.peerconnection.ice.no_host", true);
 
 user_pref("browser.translations.enable", true); // Translation feature (has telemetry)
 user_pref("browser.translations.automaticallyPopup", false);

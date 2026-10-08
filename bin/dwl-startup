@@ -1,0 +1,10 @@
+#!/bin/bash
+
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XCURSOR_THEME XCURSOR_SIZE
+systemctl --user import-environment WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XCURSOR_THEME XCURSOR_SIZE
+systemctl --user reset-failed
+systemctl --user --no-block start dwl-session.target
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+wl-paste --type text --watch cliphist store &
+foot --server &

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=wlroots
+export XDG_SESSION_DESKTOP=wlroots
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_GTK_TITLEBAR_DECORATION=none
+export MOZ_DISABLE_RDD_SANDBOX=1
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+export GTK_THEME=Adwaita:dark
+export GDK_BACKEND=wayland
+export GTK_A11Y=none
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export XCURSOR_THEME='capitaine-cursors'
+export XCURSOR_SIZE=24
+
+exec dwl -s "$HOME/.dotfiles/bin/dwl-startup"

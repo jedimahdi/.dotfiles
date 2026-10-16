@@ -1,0 +1,61 @@
+{
+  "policies": {
+    "DisableAppUpdate": true,
+    "DisableFirefoxStudies": true,
+    "DisableRemoteImprovements": true,
+    "DisableFeedbackCommands": true,
+    "DisableSetDesktopBackground": true,
+    "DontCheckDefaultBrowser": true,
+    "SkipTermsOfUse": true,
+    "DisableTelemetry": true,
+    "NoDefaultBookmarks": true,
+
+    "FirefoxHome": {
+      "Weather": false,
+      "TopSites": false,
+      "SponsoredTopSites": false,
+      "Highlights": false,
+      "Stories": false,
+      "SponsoredStories": false
+    },
+    "FirefoxSuggest": {
+      "WebSuggestions": false,
+      "SponsoredSuggestions": false,
+      "ImproveSuggest": false
+    },
+
+    "GenerativeAI": {
+      "Enabled": false
+    },
+    "AIControls": {
+      "Translations": {
+        "Value": "blocked"
+      },
+      "PDFAltText": {
+        "Value": "blocked"
+      },
+      "SmartTabGroups": {
+        "Value": "blocked"
+      },
+      "LinkPreviewKeyPoints": {
+        "Value": "blocked"
+      },
+      "SidebarChatbot": {
+        "Value": "blocked"
+      },
+      "SmartWindow": {
+        "Value": "blocked"
+      },
+      "SpeechRecognition": {
+        "Value": "blocked"
+      }
+    },
+
+    "UserMessaging": {
+      "UrlbarInterventions": false,
+      "SkipOnboarding": true,
+      "MoreFromMozilla": false,
+      "FirefoxLabs": false
+    }
+  }
+}

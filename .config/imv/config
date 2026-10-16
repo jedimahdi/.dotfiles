@@ -12,3 +12,5 @@ fullscreen = true
 
 l = next
 h = prev
+k = pan 0 400
+j = pan 0 -400

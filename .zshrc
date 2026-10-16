@@ -5,7 +5,7 @@ PROMPT='%F{cyan}%1~%f %(?.%F{white}❯.%F{red}❯)%f '
 ZSH_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 HISTFILE="$ZSH_DATA_DIR/zsh_history"
 SAVEHIST=2000
-HISTSIZE=2200
+HISTSIZE=2000
 
 setopt INTERACTIVE_COMMENTS
 setopt NO_BEEP
@@ -19,7 +19,7 @@ setopt HIST_IGNORE_SPACE
 zshaddhistory() {
   local cmd="${1%%$'\n'}"
   ((${#cmd} > 200 || ${#cmd} <= 2)) && return 1
-  [[ "$cmd" =~ '^(clear|tsession|pwd|exit)$' ]] && return 1
+  [[ "$cmd" =~ '^(clear|tsession|pwd|exit|ppu|tpwd)$' ]] && return 1
   [[ "$cmd" =~ '^cd\s' ]] && return 2
   return 0
 }
@@ -63,7 +63,7 @@ alias tt='tsession'
 
 alias pi='sudo pacman -S --needed'
 alias pu='sudo pacman -Sy --needed archlinux-keyring && sudo pacman -Su'
-alias ppu='sudo proxychains pacman -Sy --needed archlinux-keyring && sudo proxychains pacman -Su'
+alias ppu='sudo proxychains -q pacman -Sy --needed archlinux-keyring && sudo proxychains -q pacman -Su'
 alias pf='pacman -Ss'
 alias pr='sudo pacman -Rns'
 alias fpac='/usr/bin/pacman -Slq | fzf --preview "/usr/bin/pacman -Si {}" --layout=reverse'

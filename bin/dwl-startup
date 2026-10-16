@@ -7,4 +7,4 @@ systemctl --user --no-block start dwl-session.target
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 wl-paste --type text --watch cliphist store &
-foot --server &
+foot --server 2>/dev/null &

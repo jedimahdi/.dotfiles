@@ -22,3 +22,7 @@ PROFILE_PATH="${PROFILE_DIR}/${PROFILE}"
 
 cp -f "${DOTFILES}/extra/firefox/${USER_JS}" "${PROFILE_PATH}/${USER_JS}"
 echo "✔ user.js copied to: ${PROFILE_PATH}/${USER_JS}"
+
+sudo mkdir -p /etc/firefox/policies/
+sudo cp -f "${DOTFILES}/extra/firefox/policies.json" "/etc/firefox/policies/policies.json"
+echo "✔ policies.js copied to: /etc/firefox/policies/policies.json"

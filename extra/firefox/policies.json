@@ -5,10 +5,105 @@
     "DisableRemoteImprovements": true,
     "DisableFeedbackCommands": true,
     "DisableSetDesktopBackground": true,
+    "DisableFirefoxScreenshots": true,
+    "DisableTelemetry": true,
     "DontCheckDefaultBrowser": true,
     "SkipTermsOfUse": true,
-    "DisableTelemetry": true,
     "NoDefaultBookmarks": true,
+
+    "3rdparty": {
+      "Extensions": {
+        "uBlock0@raymondhill.net": {
+          "adminSettings": {
+            "userSettings": {
+              "uiTheme": "dark",
+              "uiAccentCustom": false,
+              "cloudStorageEnabled": false,
+              "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
+            },
+            "selectedFilterLists": [
+              "user-filters",
+              "adguard-generic",
+              "adguard-spyware-url",
+              "easylist",
+              "easyprivacy",
+              "ublock-filters",
+              "ublock-badware",
+              "ublock-privacy",
+              "ublock-quick-fixes",
+              "ublock-unbreak",
+              "urlhaus-1",
+              "curben-phishing",
+              "plowe-0",
+              "IRN-0",
+              "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
+            ]
+          }
+        }
+      }
+    },
+
+    "ExtensionSettings": {
+      "*": {
+        "blocked_install_message": "I do not allow installing Language Packs.",
+        "installation_mode": "allowed",
+        "allowed_types": ["dictionary", "extension", "sitepermission", "theme"]
+      },
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
+        "private_browsing": true
+      },
+      "addon@darkreader.org": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
+      },
+      "vimium-c@gdh1995.cn": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/vimium-c/latest.xpi"
+      }
+    },
+
+    "SearchEngines": {
+      "PreventInstalls": false,
+      "Remove": ["Amazon.com", "eBay", "Perplexity", "Bing"],
+      "Default": "Google",
+      "Add": [
+        {
+          "Name": "Arch Wiki",
+          "URLTemplate": "https://wiki.archlinux.org/index.php?search={searchTerms}",
+          "Method": "GET",
+          "Alias": "@aw",
+          "Description": "Search the Arch Linux Wiki"
+        },
+        {
+          "Name": "Gentoo Wiki",
+          "URLTemplate": "https://wiki.gentoo.org/index.php?search={searchTerms}&go=Go",
+          "Method": "GET",
+          "Alias": "@gw"
+        },
+        {
+          "Name": "YouTube",
+          "URLTemplate": "https://www.youtube.com/results?search_query={searchTerms}",
+          "Method": "GET",
+          "Alias": "@yt"
+        },
+        {
+          "Name": "DuckDuckGo Lite",
+          "Alias": "@d",
+          "Method": "POST",
+          "URLTemplate": "https://duckduckgo.com/lite/?q={searchTerms}",
+          "PostData": "q={searchTerms}"
+        },
+        {
+          "Name": "SearXNG",
+          "Alias": "@sx",
+          "Method": "POST",
+          "URLTemplate": "https://searx.be/?q={searchTerms}",
+          "PostData": "q={searchTerms}&time_range=&language=en-US&category_general=on"
+        }
+      ]
+    },
 
     "FirefoxHome": {
       "Weather": false,
@@ -23,34 +118,9 @@
       "SponsoredSuggestions": false,
       "ImproveSuggest": false
     },
-
     "GenerativeAI": {
       "Enabled": false
     },
-    "AIControls": {
-      "Translations": {
-        "Value": "blocked"
-      },
-      "PDFAltText": {
-        "Value": "blocked"
-      },
-      "SmartTabGroups": {
-        "Value": "blocked"
-      },
-      "LinkPreviewKeyPoints": {
-        "Value": "blocked"
-      },
-      "SidebarChatbot": {
-        "Value": "blocked"
-      },
-      "SmartWindow": {
-        "Value": "blocked"
-      },
-      "SpeechRecognition": {
-        "Value": "blocked"
-      }
-    },
-
     "UserMessaging": {
       "UrlbarInterventions": false,
       "SkipOnboarding": true,

@@ -231,13 +231,16 @@ user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Trim cross-origin
 user_pref("privacy.partition.network_state", true); // Network state partitioning
 user_pref("privacy.partition.serviceWorkers", true); // Service worker partitioning
 
+user_pref("doh-rollout.provider-list", '[{"UIName":"Quad9 (No Filtering)","uri":"https://dns10.quad9.net/dns-query"}, {"UIName":"Quad9 (Malware blocking)","uri":"https://dns.quad9.net/dns-query"}, {"UIName":"LibreDNS (No Filtering)","uri":"https://doh.libredns.gr/dns-query"}, {"UIName":"LibreDNS (Adblocking)","uri":"https://doh.libredns.gr/noads"}, {"UIName":"Wikimedia DNS (No Filtering)","uri":"https://wikimedia-dns.org/dns-query"}, {"UIName":"DNS4All (No Filtering)","uri":"https://doh.dns4all.eu/dns-query"}, {"UIName":"Cloudflare DNS","uri":"https://cloudflare-dns.com/dns-query"}, {"UIName":"Mozilla Cloudflare","uri":"https://mozilla.cloudflare-dns.com/dns-query"}, {"UIName":"Google DNS","uri":"https://dns.google/dns-query"}, {"UIName":"AdGuard DNS (Default filtering)","uri":"https://dns.adguard-dns.com/dns-query"}]');
+user_pref("doh-rollout.enabled", false);
+user_pref("network.trr.useGET", false);
 user_pref("network.trr.mode", 5);
-user_pref("network.trr.uri", "https://127.0.0.1:3000/dns-query");
-user_pref("network.trr.custom_uri", "https://127.0.0.1:3000/dns-query");
+user_pref("network.trr.default_provider_uri", "https://dns.quad9.net/dns-query");
 user_pref("network.dns.echconfig.enabled", true);
 user_pref("network.dns.use_https_rr_as_altsvc", true);
 
 user_pref("browser.uitour.enabled", false);
+user_pref("browser.uitour.url", "");
 user_pref("privacy.globalprivacycontrol.enabled", true);
 
 user_pref("security.OCSP.enabled", 0);
@@ -273,33 +276,40 @@ user_pref("privacy.query_stripping.enabled.pbmode", true);
 user_pref("browser.ai.control.default", "blocked");
 user_pref("browser.ml.enable", false);
 user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.smartwindow.searchTheWebFast", false);
 user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.ml.linkPreview.blockListEnabled", false);
 user_pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
 user_pref("browser.ai.control.sidebarChatbot", "blocked");
 user_pref("browser.ai.control.pdfjsAltText", "blocked");
 user_pref("browser.ai.control.smartTabGroups", "blocked");
+user_pref("browser.ai.control.speechRecognition", "blocked");
 user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.chat.shortcuts", false);
 user_pref("browser.ml.chat.menu", false);
+user_pref("browser.preferences.aiControls", false);
 user_pref("extensions.ml.enabled", false);
+user_pref("extensions.formautofill.useml", false);
 
-// user_pref("intl.accept_languages", "en-us, en");
 user_pref("privacy.spoof_english", 2);
+user_pref("intl.accept_languages", "en-US, en");
+
 user_pref("widget.non-native-theme.use-theme-accent", false);
 user_pref("browser.link.open_newwindow", 3);
 user_pref("browser.link.open_newwindow.restriction", 0);
 
 user_pref("extensions.enabledScopes", 5);
-// user_pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-// user_pref("extensions.webextensions.restrictedDomains", "");
+user_pref("devtools.aboutdebugging.showHiddenAddons", true);
 
 user_pref("media.peerconnection.enabled", false);
-//user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
-//user_pref("media.peerconnection.ice.default_address_only", true);
+user_pref("media.peerconnection.ice.default_address_only", true);
+user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
 //user_pref("media.peerconnection.ice.no_host", true);
 
-user_pref("browser.translations.enable", true); // Translation feature (has telemetry)
+user_pref("browser.translations.enable", true);
 user_pref("browser.translations.automaticallyPopup", false);
 
-// user_pref("privacy.fingerprintingProtection", true);
-// user_pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC");
+user_pref("browser.region.network.url", "");
+user_pref("browser.region.update.enabled", false);
+
+user_pref("identity.fxaccounts.enabled", false);

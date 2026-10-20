@@ -141,7 +141,7 @@ export FZF_DEFAULT_OPTS="--style minimal \
   --layout=reverse --height 50% --prompt '❯ ' --gutter ' ' \
   --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,ctrl-e:preview-down'"
 
-source <(fzf --zsh)
+FZF_CTRL_T_COMMAND= FZF_ALT_C_COMMAND= source /usr/share/fzf/key-bindings.zsh
 
 # if [[ -z ${SSH_CONNECTION:-} ]]; then
 #   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"

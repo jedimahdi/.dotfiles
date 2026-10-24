@@ -10,6 +10,8 @@
     "DontCheckDefaultBrowser": true,
     "SkipTermsOfUse": true,
     "NoDefaultBookmarks": true,
+    "CaptivePortal": false,
+    "NetworkPrediction": false,
 
     "3rdparty": {
       "Extensions": {
@@ -44,6 +46,9 @@
     },
 
     "ExtensionSettings": {
+      "*": {
+        "installation_mode": "blocked"
+      },
       "uBlock0@raymondhill.net": {
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
@@ -60,16 +65,41 @@
     },
 
     "SearchEngines": {
-      "PreventInstalls": false,
-      "Remove": ["Amazon.com", "eBay", "Perplexity", "Bing"],
-      "Default": "Google",
+      "PreventInstalls": true,
+      "Remove": ["Wikipedia (en)", "Google", "Perplexity", "Bing", "DuckDuckGo"],
+      "Default": "Google Web",
       "Add": [
+        {
+          "Name": "Google Web",
+          "Alias": "@g",
+          "Method": "GET",
+          "URLTemplate": "https://www.google.com/search?q={searchTerms}&udm=14&hl=en&pws=0"
+        },
+        {
+          "Name": "DuckDuckGo NoAI",
+          "Alias": "@d",
+          "Method": "POST",
+          "URLTemplate": "https://noai.duckduckgo.com/",
+          "PostData": "q={searchTerms}&kp=-2"
+        },
+        {
+          "Name": "Wiktionary",
+          "Alias": "@w",
+          "Method": "GET",
+          "URLTemplate": "https://en.wiktionary.org/wiki/Special:Search?search={searchTerms}"
+        },
         {
           "Name": "Arch Wiki",
           "URLTemplate": "https://wiki.archlinux.org/index.php?search={searchTerms}",
           "Method": "GET",
           "Alias": "@aw",
           "Description": "Search the Arch Linux Wiki"
+        },
+        {
+          "Name": "Arch Packages",
+          "Alias": "@ap",
+          "Method": "GET",
+          "URLTemplate": "https://archlinux.org/packages/?q={searchTerms}"
         },
         {
           "Name": "Gentoo Wiki",
@@ -81,21 +111,20 @@
           "Name": "YouTube",
           "URLTemplate": "https://www.youtube.com/results?search_query={searchTerms}",
           "Method": "GET",
-          "Alias": "@yt"
+          "Alias": "@y"
         },
         {
-          "Name": "DuckDuckGo Lite",
-          "Alias": "@d",
-          "Method": "POST",
-          "URLTemplate": "https://duckduckgo.com/lite/?q={searchTerms}",
-          "PostData": "q={searchTerms}"
+          "Name": "X",
+          "Alias": "@x",
+          "Method": "GET",
+          "URLTemplate": "https://x.com/search?q={searchTerms}&src=typed_query"
         },
         {
           "Name": "SearXNG",
           "Alias": "@sx",
           "Method": "POST",
-          "URLTemplate": "https://searx.be/?q={searchTerms}",
-          "PostData": "q={searchTerms}&time_range=&language=en-US&category_general=on"
+          "URLTemplate": "https://searx.be/search",
+          "PostData": "q={searchTerms}&language=en-US&safesearch=0"
         }
       ]
     },
@@ -103,10 +132,12 @@
     "FirefoxHome": {
       "Weather": false,
       "TopSites": false,
-      "SponsoredTopSites": false,
       "Highlights": false,
       "Stories": false,
-      "SponsoredStories": false
+      "Pocket": false,
+      "SponsoredTopSites": false,
+      "SponsoredStories": false,
+      "SponsoredPocket": false
     },
     "FirefoxSuggest": {
       "WebSuggestions": false,
@@ -117,10 +148,13 @@
       "Enabled": false
     },
     "UserMessaging": {
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
       "UrlbarInterventions": false,
       "SkipOnboarding": true,
       "MoreFromMozilla": false,
-      "FirefoxLabs": false
+      "FirefoxLabs": false,
+      "Locked": true
     }
   }
 }

@@ -82,9 +82,12 @@ alias git-repo='firefox "$(git remote get-url origin | sed -e "s/git@\(.*\):/htt
 
 alias ctree='systemd-cgls --user'
 alias sc='systemctl --user'
+alias ju='sudo journalctl -u'
+alias jfu='sudo journalctl -fu'
 alias ssh-github='ssh -T git@github.com'
 alias python-http-server="python -m http.server"
-alias d='date "+%Y-%m-%d %A"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"; date "+%H:%M:%S"'
+alias ports='sudo ss -tulpn'
+alias d='date "+%H:%M:%S %A"; date "+%Y-%m-%d"; LC_TIME=fa_IR.UTF-8 date "+%Y-%m-%d"'
 alias lf='lfcd'
 
 e() {
@@ -141,10 +144,10 @@ export FZF_DEFAULT_OPTS="--style minimal \
   --layout=reverse --height 50% --prompt '❯ ' --gutter ' ' \
   --bind 'ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,ctrl-e:preview-down'"
 
-FZF_CTRL_T_COMMAND= FZF_ALT_C_COMMAND= source /usr/share/fzf/key-bindings.zsh
+if [[ -z ${SSH_CONNECTION:-} ]]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
 
-# if [[ -z ${SSH_CONNECTION:-} ]]; then
-#   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-# fi
+FZF_CTRL_T_COMMAND= FZF_ALT_C_COMMAND= source /usr/share/fzf/key-bindings.zsh
 
 # zprof

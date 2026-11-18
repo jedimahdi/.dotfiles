@@ -52,6 +52,11 @@ hl.config({
 		disable_splash_rendering = true,
 	},
 
+	cursor = {
+		hide_on_key_press = true,
+		no_warps = true,
+	},
+
 	ecosystem = {
 		no_update_news = true,
 		no_donation_nag = true,
@@ -156,8 +161,11 @@ hl.window_rule({ match = { class = "footclient" }, tag = "+term" })
 hl.window_rule({ match = { class = "foot" }, tag = "+term" })
 hl.window_rule({ match = { class = "Alacritty" }, tag = "+term" })
 hl.window_rule({ match = { class = "kitty" }, tag = "+term" })
+hl.window_rule({ match = { tag = "term" }, opacity = "0.95" })
 
-hl.window_rule({ match = { tag = "term" }, opacity = "0.9" })
+hl.window_rule({ match = { class = "xdg-desktop-portal-gtk" }, float = true, center = true, size = { 1200, 800 } })
+hl.window_rule({ match = { class = "mpv" }, float = true, center = true, size = { 1200, 800 } })
+hl.window_rule({ match = { class = "imv" }, float = true, center = true })
 
 hl.window_rule({
 	name = "fzfmenu",
